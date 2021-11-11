@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @benaja-bendo
 - 👀 I’m interested in Manga
-- 🌱 I’m currently learning Dart
+- 🌱 I’m currently learning reactJs
 
 
 <!---
