@@ -2,10 +2,12 @@ import React from "react";
 import './Header.scss'
 
 export const Header: React.FC = () => {
-    return (
-        <div>
-            <h1>Home</h1>
-            <p>ma home page</p>
-        </div>
-    )
+    return (<>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </nav>
+    </>)
 }
