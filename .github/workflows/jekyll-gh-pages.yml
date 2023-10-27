@@ -25,31 +25,37 @@ env:
   NODE_OPTIONS: --max-old-space-size=6144
 
 jobs:
-  # Single deploy job since we're just deploying
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install ViteJS
+        run: npm install vite@latest
+      - name: Build React app with ViteJS
+        run: npm run build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build
+          path: dist
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
         with:
-          node-version: 16.x
-          cache: npm
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload entire repository
-          path: build
-      - name: Deploy to GitHub Pages
+          name: react-build
+          path: /tmp/react-build
+      - name: Deploy React app to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          source: /tmp/react-build
+
