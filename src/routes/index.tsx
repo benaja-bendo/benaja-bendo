@@ -17,4 +17,6 @@ const routes: RouteObject[] = [
 ];
 
 
-export const Router = createBrowserRouter(routes);
+export const Router = createBrowserRouter(routes, {
+    basename: "/benaja-bendo/",
+});
