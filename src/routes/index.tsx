@@ -7,12 +7,12 @@ const routes: RouteObject[] = [
     {
         path: "/",
         element: <Home/>,
-        errorElement: <p>404</p>,
+        errorElement: <p>404 index</p>,
     },
     {
         path: "/about",
         element: <p>About</p>,
-        errorElement: <p>404</p>,
+        errorElement: <p>404 about</p>,
     }
 ];
 
