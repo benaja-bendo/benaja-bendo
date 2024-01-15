@@ -26,6 +26,3 @@
   <img height="180em" src="https://github-readme-stats.vercel.app/api?username=benaja-bendo&show_icons=true&theme=algolia&count_private=true" alt="benaja-bendo" />
   <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=benaja-bendo&theme=algolia&layout=compact" alt="benaja-bendo" />
 </p>
-<div align="center">
-  <img src="https://streak-stats.demolab.com?user=benaja-bendo&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="streak graph"  />
-</div>
