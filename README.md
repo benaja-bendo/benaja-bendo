@@ -1,10 +1,4 @@
 
-
-<div align="center">
-  <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="linkedin logo"  />
-  <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"  />
-</div>
-
 ## 👩‍💻  À propos de moi 
 <p align="left">Je suis benaja-bendo. Passionné par le monde de la technologie et du code, je me décris comme un travailleur acharné et créatif, constamment en quête de défis stimulants..<br><br>- 🔭 Je travaille en tant que développeur(euse) de logiciels, mettant en œuvre mes compétences approfondies dans la programmation pour créer des solutions innovantes. Mon parcours professionnel m'a permis de travailler sur une variété de projets, de la conception de systèmes complexes à la résolution de problèmes techniques.<br>
 - 📚 Actuellement, je me perfectionne continuellement en explorant de nouvelles technologies et en approfondissant mes connaissances en programmation. Que ce soit en apprenant de nouveaux langages de programmation, en suivant des cours en ligne, ou en participant à des meetups tech, je m'efforce de rester à la pointe de mon domaine.<br>
