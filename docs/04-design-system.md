@@ -1,5 +1,12 @@
 # Proposition de design system — benaja-bendo.fr
 
+> ⛔ **PÉRIMÉ — non retenu.** Direction « Console » (acier + teal, emblème Canvas animé),
+> proposée le 25/07/2026, jamais appliquée. Remplacée le 13/08/2026 par
+> **[05-design-system-papier-pixels.md](05-design-system-papier-pixels.md)**, seule
+> spécification qui fait foi. Document conservé pour l'historique des arbitrages —
+> notamment le choix de couleur (sapin-teal + ambre) et la paire IBM Plex, tous deux
+> repris dans la doc 05.
+
 *Établi le 25 juillet 2026. À critiquer avant application. Le site tourne aujourd'hui sur une baseline neutre volontaire ([global.css](../src/styles/global.css)) ; ce document propose l'identité visuelle qui la remplacera une fois validée.*
 
 > Maquette visuelle interactive (hero, cartes, palette, typo, emblème pixel animé, bascule clair/sombre) publiée en artifact — c'est l'objet à critiquer. Ce document en est la spécification écrite.

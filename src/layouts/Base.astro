@@ -38,7 +38,8 @@ const csp = [
       <meta http-equiv="Content-Security-Policy" content={csp} />
     )}
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#11131a" />
+    <meta name="theme-color" content="#fcfaf3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12161a" media="(prefers-color-scheme: dark)" />
 
     <title>{title}</title>
     <meta name="description" content={description} />

@@ -1,38 +1,90 @@
-/*
- * Design baseline — volontairement neutre et sobre.
- * Sert de canevas propre : le design system (palette, typo, composants) est
- * proposé et critiqué à l'étape 2, puis remplacera ces variables.
- */
+/* =============================================================================
+ * Design system — « Papier & pixels »
+ * Spécification écrite : docs/05-design-system-papier-pixels.md (lire avant de modifier)
+ *
+ * Le principe en une phrase : une feuille de papier chaude, une encre franche,
+ * des blocs qui ont une épaisseur (bordure pleine + ombre dure, jamais floue),
+ * et le pixel comme signature — dessiné en CSS, jamais importé en image.
+ *
+ * Trois invariants à ne pas casser :
+ *   1. Les ombres sont DURES (0 flou). `--pop`, jamais de `blur`.
+ *   2. Tout est dessiné en CSS (dégradés à arrêts nets pour les pixels) —
+ *      aucune image tierce, la CSP `img-src 'self'` reste intacte.
+ *   3. Une seule couleur d'accent porteuse (teal). L'ambre est un SIGNAL
+ *      (jamais du texte courant : 3.75:1, réservé aux aplats et graphiques).
+ * ========================================================================== */
 
 :root {
-  --bg: #ffffff;
-  --surface: #f7f7f8;
-  --fg: #16171b;
-  --muted: #5c5f66;
-  --accent: #3a4ee8;
-  --accent-fg: #ffffff;
-  --border: #e6e6ea;
+  color-scheme: light dark;
+
+  /* --- Surfaces & encre -------------------------------------------------- */
+  --bg: #fcfaf3; /* papier chaud */
+  --surface: #ffffff; /* cartes : ressortent sur le papier */
+  --surface-2: #f4f0e4; /* encarts, tuiles */
+  --fg: #16212b; /* encre */
+  --muted: #5a6673; /* secondaire — 5.6:1 sur papier */
+  --border: #16212b; /* les bordures structurelles sont en encre pleine */
+  --rule: #e2dccb; /* filets discrets (séparateurs) */
+
+  /* --- Accents ----------------------------------------------------------- */
+  --accent: #0e7c66; /* sapin-teal — 4.9:1 sur papier */
+  --accent-strong: #0b5f4e;
+  --accent-fg: #f6fffc;
+  --signal: #b9700a; /* ambre — aplats et graphiques uniquement */
   --ok: #1a7f4b;
 
-  --maxw: 62rem;
-  --radius: 10px;
-  --space: 1rem;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  /* --- Surligneurs (marqueur) -------------------------------------------- */
+  --mark-1: #a9e5d3; /* teal pâle — la preuve */
+  --mark-2: #fbdfa4; /* ambre pâle — le temps, la disponibilité */
+  --mark-3: #f7cdbb; /* argile pâle — l'humain, le parcours */
+
+  /* --- Trait & relief ---------------------------------------------------- */
+  --edge: 2px; /* épaisseur de bordure structurelle */
+  --pop: 4px 4px 0 var(--border); /* ombre dure — 0 flou, c'est la règle */
+  --pop-sm: 3px 3px 0 var(--border);
+  --pop-lg: 6px 6px 0 var(--border);
+
+  /* --- Mesures ----------------------------------------------------------- */
+  --maxw: 68rem;
+  --prose: 44rem;
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* --- Typographie ------------------------------------------------------- */
+  /* Pile système pour l'instant : l'API Fonts d'Astro inline son @font-face et
+     se heurte à la CSP `style-src 'self'` (voir astro.config.mjs).
+     Le jour où des webfonts sont auto-hébergées à la main, il suffit de définir
+     --font-sans / --font-mono ici — rien d'autre à toucher dans la feuille. */
+  --font: var(--font-sans, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif);
+  --mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e0f13;
-    --surface: #16171d;
-    --fg: #e9e9ec;
-    --muted: #9a9da6;
-    --accent: #8aa0ff;
-    --accent-fg: #0e0f13;
-    --border: #262832;
-    --ok: #4ade80;
+    --bg: #12161a; /* nuit chaude, jamais de noir pur */
+    --surface: #1a2025;
+    --surface-2: #212a2f;
+    --fg: #eceae3; /* encre claire, légèrement crème */
+    --muted: #98a2ab; /* 7.1:1 sur la nuit */
+    --border: #eceae3; /* l'encre s'inverse : les traits deviennent clairs */
+    --rule: #2b343a;
+
+    --accent: #34d0ae;
+    --accent-strong: #57e0c2;
+    --accent-fg: #06110d;
+    --signal: #f6b24b;
+    --ok: #46c67e;
+
+    /* Surligneurs en aplats profonds : le texte reste l'encre claire */
+    --mark-1: #17493e;
+    --mark-2: #4b3812;
+    --mark-3: #4d2f24;
   }
 }
+
+/* =============================================================================
+ * Base
+ * ========================================================================== */
 
 *,
 *::before,
@@ -42,12 +94,6 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 body {
@@ -68,37 +114,68 @@ body {
   padding-inline: 1.25rem;
 }
 
+/* =============================================================================
+ * Typographie
+ * ========================================================================== */
+
 h1,
 h2,
 h3 {
-  line-height: 1.2;
+  line-height: 1.15;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(1.9rem, 1.2rem + 3vw, 3rem);
+  font-size: clamp(2.1rem, 1.3rem + 3.4vw, 3.4rem);
   margin: 0 0 0.5rem;
 }
 
 h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.5vw, 1.9rem);
+  font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2.1rem);
   margin: 0 0 0.75rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Surligneur au marqueur : le mot qui porte la preuve.
+   Deux maximum par bloc de texte — au-delà, plus rien ne ressort. */
+mark {
+  background: var(--mark-1);
+  color: inherit;
+  padding: 0.06em 0.22em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+mark.mark-time {
+  background: var(--mark-2);
+}
+mark.mark-human {
+  background: var(--mark-3);
 }
 
 a {
   color: var(--accent);
-  text-underline-offset: 0.15em;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
 }
-
 a:hover {
-  text-decoration: underline;
+  color: var(--accent-strong);
+  text-decoration-color: var(--accent-strong);
 }
 
 :focus-visible {
   outline: 3px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
 .skip-link {
@@ -108,6 +185,7 @@ a:hover {
   background: var(--accent);
   color: var(--accent-fg);
   padding: 0.5rem 1rem;
+  border: var(--edge) solid var(--border);
   z-index: 100;
 }
 .skip-link:focus {
@@ -115,46 +193,98 @@ a:hover {
   top: 0.5rem;
 }
 
-/* Header */
+/* =============================================================================
+ * Signature pixel — tout est dessiné en CSS
+ * ========================================================================== */
+
+/* Liseré : une rangée de pixels à arrêts nets, jamais un dégradé lissé. */
+.pixel-rule,
+.card::before,
+.stats li::before,
+.hero-proof::before {
+  content: "";
+  display: block;
+  flex: none;
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+/* Glyphe 4 pixels devant chaque intertitre : 3 teal + 1 ambre. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 0.85rem;
+}
+.eyebrow::before {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 3px;
+  background: var(--accent);
+  box-shadow:
+    5px 0 0 var(--accent),
+    0 5px 0 var(--signal),
+    5px 5px 0 var(--accent);
+  margin-right: 5px;
+}
+
+/* =============================================================================
+ * Header
+ * ========================================================================== */
+
 .site-header {
-  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
   z-index: 10;
+  background: var(--bg);
+  border-bottom: var(--edge) solid var(--border);
 }
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  min-height: 3.5rem;
+  min-height: 4rem;
   flex-wrap: wrap;
 }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-weight: 700;
   text-decoration: none;
   color: var(--fg);
 }
+/* Monogramme : un bloc pixel, coins vifs, ombre dure. */
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2rem;
+  height: 2rem;
   background: var(--accent);
   color: var(--accent-fg);
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 800;
+  border: var(--edge) solid var(--border);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--border);
+  font-size: 0.7rem;
+  font-weight: 700;
   font-family: var(--mono);
+  letter-spacing: -0.03em;
 }
 .site-header nav ul {
   display: flex;
-  gap: 0.25rem 1rem;
+  gap: 0.25rem 1.35rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -164,202 +294,333 @@ a:hover {
 .site-header nav a {
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.95rem;
-  padding: 0.25rem 0;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
 }
-.site-header nav a:hover,
-.site-header nav a[aria-current="page"] {
+.site-header nav a:hover {
   color: var(--fg);
 }
+/* La page courante est marquée par un trait d'encre, pas par une couleur. */
+.site-header nav a[aria-current="page"] {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
 .cv-link {
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 0.25rem 0.85rem !important;
+  border: var(--edge) solid var(--border) !important;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  box-shadow: var(--pop-sm);
+  padding: 0.3rem 0.9rem !important;
   color: var(--fg) !important;
+  font-weight: 600;
+}
+.cv-link:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--border);
 }
 
-/* Sections */
+/* Mobile : le header s'empile. Il lui faut sa propre respiration, sinon
+   l'ombre dure de la pastille CV déborde sous le filet — et un recruteur
+   ouvre d'abord sur téléphone. */
+@media (max-width: 48rem) {
+  .header-inner {
+    min-height: 0;
+    padding-block: 0.75rem;
+    gap: 0.6rem;
+  }
+  .site-header nav ul {
+    gap: 0.5rem 1.1rem;
+  }
+  .site-header nav a {
+    font-size: 0.8rem;
+  }
+}
+
+/* =============================================================================
+ * Sections
+ * ========================================================================== */
+
 main > section {
-  padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
-  border-bottom: 1px solid var(--border);
+  padding-block: clamp(2.75rem, 1.5rem + 4.5vw, 5rem);
+  border-bottom: 1px solid var(--rule);
 }
-
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--muted);
-  margin: 0 0 0.75rem;
+main > section:last-child {
+  border-bottom: 0;
 }
 
 .lead {
   font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem);
-  color: var(--fg);
   max-width: 46rem;
 }
-
 .muted {
   color: var(--muted);
 }
-
 .section-gap {
   margin-top: 2.5rem;
 }
 
-/* Hero */
+/* =============================================================================
+ * Hero
+ * ========================================================================== */
+
 .hero h1 span.role {
   display: block;
-  font-size: clamp(1rem, 0.9rem + 0.8vw, 1.4rem);
-  font-weight: 600;
+  font-family: var(--mono);
+  font-size: clamp(0.95rem, 0.85rem + 0.7vw, 1.25rem);
+  font-weight: 400;
   color: var(--muted);
-  margin-top: 0.35rem;
-  letter-spacing: 0;
+  margin-top: 0.6rem;
+  letter-spacing: -0.01em;
 }
+
+/* L'encart de preuve : le bloc le plus « épais » de la page, c'est voulu —
+   c'est la seule chose qu'un recruteur doit lire s'il ne lit qu'une chose. */
 .hero-proof {
-  margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  border-left: 3px solid var(--accent);
-  background: var(--surface);
-  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 1.75rem 0;
   max-width: 46rem;
+  background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop);
+  overflow: hidden;
 }
+.hero-proof p {
+  margin: 0;
+  padding: 1.1rem 1.35rem 1.25rem;
+}
+
 .cta-row {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.85rem;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
+
+/* =============================================================================
+ * Boutons — bordure pleine + ombre dure ; au survol ils se soulèvent,
+ * au clic ils s'enfoncent. Aucun dégradé, aucun flou.
+ * ========================================================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.65rem 1.2rem;
-  border-radius: 999px;
-  font-weight: 600;
+  min-height: 2.75rem; /* cible tactile ≥ 44px */
+  padding: 0.6rem 1.3rem;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop);
+  font-weight: 700;
   text-decoration: none;
-  border: 1px solid var(--border);
+  color: var(--fg);
+  background: var(--surface);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 140ms ease-out;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--pop-lg);
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--border);
 }
 .btn-primary {
   background: var(--accent);
   color: var(--accent-fg);
-  border-color: var(--accent);
 }
 .btn-primary:hover {
-  text-decoration: none;
-  filter: brightness(1.05);
+  color: var(--accent-fg);
 }
 .btn-ghost {
-  color: var(--fg);
+  background: var(--surface-2);
 }
 
-/* Grilles de cartes */
+/* =============================================================================
+ * Cartes
+ * ========================================================================== */
+
 .cards {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  margin-top: 1.5rem;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin-top: 1.75rem;
 }
 .card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
   background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  overflow: hidden;
+  transition:
+    transform 140ms ease-out,
+    box-shadow 140ms ease-out;
+}
+.card::before {
+  margin-bottom: 1.15rem;
+}
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--pop-lg);
+}
+/* Les enfants portent la gouttière, pas la carte : le liseré pixel doit
+   toucher les bords. */
+.card > * {
+  padding-inline: 1.25rem;
 }
 .card h3 {
   margin: 0;
-  font-size: 1.1rem;
 }
 .card .period {
-  font-size: 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
   color: var(--muted);
 }
 .card ul {
-  margin: 0.25rem 0 0;
-  padding-left: 1.1rem;
+  margin: 0.35rem 0 0;
+  padding-left: 2.1rem; /* gouttière 1.25rem + puce + respiration */
+  list-style: none;
+}
+/* Puce carrée : un pixel, pas un rond. */
+.card li {
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+.card li::before {
+  content: "";
+  position: absolute;
+  left: -0.85rem;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
 }
 .card a {
   margin-top: auto;
-  font-weight: 600;
+  padding-block: 1rem 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.card a:hover {
+  text-decoration: underline;
 }
 
-/* Chiffres (TL;DR) */
+/* =============================================================================
+ * Tuiles de chiffres
+ * ========================================================================== */
+
 .stats {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  margin: 1.5rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin: 1.75rem 0;
   padding: 0;
   list-style: none;
 }
 .stats li {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
   background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  overflow: hidden;
+}
+.stats li::before {
+  margin: -1px -1px 0.9rem;
 }
 .stats .value {
   display: block;
-  font-size: 1.6rem;
-  font-weight: 800;
+  padding-inline: 1rem;
   font-family: var(--mono);
-  letter-spacing: -0.02em;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 .stats .label {
+  display: block;
+  padding: 0.15rem 1rem 1rem;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
-/* Chips (stack, tags) */
+/* =============================================================================
+ * Chips (stack, tags)
+ * ========================================================================== */
+
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
   padding: 0;
-  margin: 0.75rem 0 0;
+  margin: 0.9rem 0 0;
   list-style: none;
 }
 .chips li {
-  font-size: 0.82rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 0.2rem 0.7rem;
-  color: var(--muted);
-  background: var(--bg);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.15rem 0.6rem;
+  color: var(--fg);
+  background: var(--surface-2);
 }
 
-/* Prose (corps des études de cas) */
+/* =============================================================================
+ * Prose (corps des études de cas)
+ * ========================================================================== */
+
 .prose {
-  max-width: 44rem;
+  max-width: var(--prose);
 }
 .prose h2 {
-  margin-top: 2rem;
+  margin-top: 2.25rem;
 }
 .prose p {
   margin: 0 0 1rem;
 }
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  border-left: 6px solid var(--accent);
+  background: var(--surface-2);
+}
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
 
-/* Timeline (parcours) */
+/* =============================================================================
+ * Timeline (parcours)
+ * ========================================================================== */
+
 .timeline {
   list-style: none;
-  margin: 1.5rem 0 0;
+  margin: 1.75rem 0 0;
   padding: 0;
   display: grid;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 .timeline li {
   display: grid;
   grid-template-columns: 7rem 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 .timeline .when {
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.85rem;
-  padding-top: 0.15rem;
+  font-size: 0.82rem;
+  padding-top: 0.25rem;
 }
 .timeline h3 {
   margin: 0 0 0.2rem;
@@ -372,9 +633,14 @@ main > section {
   }
 }
 
-/* Footer */
+/* =============================================================================
+ * Footer
+ * ========================================================================== */
+
 .site-footer {
-  padding-block: 2rem 1.5rem;
+  padding-block: 2.5rem 1.75rem;
+  border-top: var(--edge) solid var(--border);
+  background: var(--surface-2);
   color: var(--muted);
 }
 .footer-inner {
@@ -388,30 +654,36 @@ main > section {
   color: var(--fg);
   font-weight: 600;
 }
+/* Pastille de disponibilité : un carré. Un pixel, pas une LED. */
 .footer-status .dot {
   display: inline-block;
   width: 0.6rem;
   height: 0.6rem;
-  border-radius: 50%;
   background: var(--ok);
-  margin-right: 0.4rem;
+  border-radius: 0;
+  margin-right: 0.5rem;
 }
 .footer-loc {
-  margin: 0.25rem 0 0;
+  margin: 0.3rem 0 0;
   font-size: 0.9rem;
 }
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
   align-items: flex-start;
+  font-family: var(--mono);
+  font-size: 0.88rem;
 }
 .footer-legal {
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
+  margin-top: 1.75rem;
+  font-size: 0.82rem;
 }
 
-/* 404 */
+/* =============================================================================
+ * 404 — la seule vraie fantaisie de la v1
+ * ========================================================================== */
+
 .notfound {
   text-align: center;
   padding-block: 5rem;
@@ -420,9 +692,33 @@ main > section {
   justify-content: center;
 }
 .notfound .code {
+  display: block;
   font-family: var(--mono);
   font-size: clamp(3rem, 2rem + 8vw, 6rem);
-  font-weight: 800;
+  font-weight: 700;
   color: var(--accent);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  text-shadow: var(--pop-lg);
+}
+
+/* =============================================================================
+ * Mouvement — tout est optionnel, rien n'est essentiel à la lecture
+ * ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .btn:hover,
+  .card:hover,
+  .cv-link:hover {
+    transform: none;
+  }
 }
