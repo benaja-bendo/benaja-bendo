@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { version as astroVersion } from 'astro/package.json';
+---
+
+<Base
+  title="Colophon — comment ce site est fait"
+  description="Ce site est un site statique Astro, sans traceur, avec une politique de sécurité stricte. Voici comment il est construit et déployé."
+>
+  <section class="container">
+    <p class="eyebrow">Colophon</p>
+    <h1>Comment ce site est fait</h1>
+    <p class="lead">
+      Ce site est lui-même un échantillon de travail : statique, rapide, sans
+      traceur, avec une politique de sécurité stricte.
+    </p>
+
+    <div class="prose">
+      <h2>Technique</h2>
+      <p>
+        Construit avec <a href="https://astro.build" rel="noopener">Astro</a>
+        {` ${astroVersion}`}, en HTML statique — zéro JavaScript envoyé au
+        navigateur par défaut. Le contenu est géré en collections typées (schémas
+        validés au build), les pages en Markdown. Pas de framework d’interface,
+        pas de dépendance superflue.
+      </p>
+
+      <h2>Sécurité &amp; vie privée</h2>
+      <p>
+        Politique de sécurité de contenu (CSP) stricte&nbsp;: aucune ressource,
+        aucun script ni style tiers. En production, les en-têtes complets
+        (HSTS, <code>X-Content-Type-Options</code>, <code>Referrer-Policy</code>,
+        <code>Permissions-Policy</code>, protection anti-clickjacking) sont posés
+        côté hébergeur. Aucun cookie, aucun traceur, aucune bannière de
+        consentement — parce qu’il n’y a rien à consentir.
+      </p>
+
+      <h2>Chaîne de livraison</h2>
+      <p>
+        Intégration continue GitHub Actions avec dépendances verrouillées
+        (<code>npm ci</code>), actions épinglées par empreinte de commit, et mises
+        à jour surveillées par Dependabot. Le tout se veut cohérent avec la manière
+        dont je livre mes autres projets.
+      </p>
+    </div>
+  </section>
+</Base>

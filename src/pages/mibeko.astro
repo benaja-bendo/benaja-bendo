@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { getEntry, render } from 'astro:content';
+
+const entry = await getEntry('etudes', 'mibeko');
+if (!entry) {
+  throw new Error('Étude de cas « mibeko » introuvable dans src/content/etudes/');
+}
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<Base
+  title={`${data.titre} — étude de cas | Bénaja Bendo-Matondo`}
+  description={data.resume}
+>
+  <section class="container">
+    <p class="eyebrow">Étude de cas · {data.periode}</p>
+    <h1>{data.titre}</h1>
+    {data.sousTitre && <p class="lead muted">{data.sousTitre}</p>}
+    <p class="lead">{data.resume}</p>
+
+    {data.chiffres.length > 0 && (
+      <ul class="stats">
+        {data.chiffres.map((c) => (
+          <li>
+            <span class="value">{c.valeur}</span>
+            <span class="label">{c.label}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <div class="cta-row">
+      {data.liens.map((l) => (
+        <a class="btn btn-primary" href={l.url} rel="noopener">{l.label}</a>
+      ))}
+      <a class="btn btn-ghost" href="mailto:contact@benaja-bendo.fr">Me contacter</a>
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {data.stack.length > 0 && (
+      <>
+        <h2 class="section-gap">Stack technique</h2>
+        <ul class="chips">
+          {data.stack.map((s) => <li>{s}</li>)}
+        </ul>
+      </>
+    )}
+  </section>
+</Base>

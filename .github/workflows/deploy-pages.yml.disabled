@@ -1,0 +1,70 @@
+# -----------------------------------------------------------------------------
+# Déploiement GitHub Pages — DÉSACTIVÉ (extension .disabled : GitHub l'ignore).
+#
+# Le site est destiné à benaja-bendo.fr. Deux façons de le mettre en ligne :
+#
+#   A) Hébergeur avec en-têtes personnalisés (RECOMMANDÉ pour la sécurité) :
+#      VPS Apache (voir deploy/apache-benaja-bendo.conf), Cloudflare Pages ou
+#      Netlify (voir public/_headers). C'est la seule voie pour un score A+.
+#
+#   B) GitHub Pages + domaine personnalisé : renommer ce fichier en
+#      « deploy-pages.yml », pointer le DNS de benaja-bendo.fr vers GitHub Pages
+#      (enregistrements A/AAAA + CNAME), et activer Pages = « GitHub Actions »
+#      dans les réglages du dépôt. Limite : Pages ne pose AUCUN en-tête
+#      personnalisé (pas de HSTS custom, pas de frame-ancestors) — la CSP se
+#      limite à la balise <meta> injectée par le site.
+#
+# Toutes les actions sont épinglées par empreinte de commit.
+# -----------------------------------------------------------------------------
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install (dépendances verrouillées)
+        run: npm ci
+      - name: Build
+        run: npm run build
+      # Domaine personnalisé : sert le site à la racine de benaja-bendo.fr
+      # (cohérent avec base '/' dans astro.config.mjs).
+      - name: CNAME
+        run: echo "benaja-bendo.fr" > dist/CNAME
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

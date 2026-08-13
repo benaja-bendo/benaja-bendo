@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+
+const parcours = [
+  { when: '2016–2019', quoi: 'Licence Génie des systèmes industriels', ou: 'Institut International (2i), Pointe-Noire' },
+  { when: '2019–2023', quoi: 'Développeur web & mobile — InfraOne, puis freelance', ou: 'Pointe-Noire, Congo' },
+  { when: '2022–2024', quoi: 'Bachelor Concepteur Développeur d’Applications', ou: 'EPSI Bordeaux' },
+  { when: '2023–2026', quoi: 'Développeur fullstack — Capgemini (stage puis alternance)', ou: 'Bordeaux' },
+  { when: '2024–2026', quoi: 'Titre RNCP niveau 7 (Bac+5), Expert en informatique', ou: 'EPSI Bordeaux' },
+  { when: 'déc. 2025', quoi: 'Mibeko — SaaS LegalTech, en production', ou: 'Projet personnel, opéré seul' },
+];
+---
+
+<Base
+  title="À propos — Bénaja Bendo-Matondo"
+  description="De la maintenance industrielle à Pointe-Noire au développement de systèmes en production : un parcours qui a un fil conducteur — construire des outils utiles, de bout en bout."
+>
+  <section class="container">
+    <p class="eyebrow">À propos</p>
+    <h1>J’ai commencé par réparer des machines.</h1>
+    <p class="lead">
+      Je construis maintenant des systèmes logiciels qui n’ont pas besoin de moi
+      pour tourner. Entre les deux, un fil conducteur : comprendre un problème réel,
+      construire l’outil qui le règle, et le faire tenir dans la durée.
+    </p>
+
+    <div class="prose">
+      <h2>Les machines</h2>
+      <p>
+        J’ai d’abord appris l’ingénierie des systèmes industriels à Pointe-Noire :
+        diagnostiquer une panne, remettre en marche, fiabiliser ce qui ne doit pas
+        s’arrêter. Cette manière de penser ne m’a jamais quitté — elle décrit assez
+        bien ce que fait un bon logiciel en production.
+      </p>
+
+      <h2>Le code</h2>
+      <p>
+        Je suis passé au développement au Congo, avec de vrais clients avant les
+        diplômes : applications mobiles Flutter, API Laravel et Node.js chez
+        InfraOne puis en freelance. Mon arrivée à Bordeaux n’a pas été un départ de
+        zéro, mais un changement d’échelle : un Bachelor, puis un titre d’expert
+        (Bac+5) en alternance chez Capgemini, sur des systèmes des finances
+        publiques.
+      </p>
+
+      <h2>Les outils</h2>
+      <p>
+        Aujourd’hui, je développe des microservices Java / Spring Boot le jour, et
+        j’opère Mibeko le reste du temps — un SaaS qui rend le droit congolais et
+        OHADA consultable, construit seul et mis en production. La boucle se referme :
+        je me sers de tout ce que j’ai appris en France pour construire un outil
+        utile à mon pays d’origine.
+      </p>
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Repères</p>
+    <h2>Parcours</h2>
+    <ol class="timeline">
+      {parcours.map((p) => (
+        <li>
+          <span class="when">{p.when}</span>
+          <div>
+            <h3>{p.quoi}</h3>
+            <p class="muted">{p.ou}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/mibeko">Voir Mibeko</a>
+      <a class="btn btn-ghost" href="mailto:contact@benaja-bendo.fr">Me contacter</a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+
+const proofs = [
+  {
+    titre: 'Mibeko — SaaS LegalTech en production',
+    period: 'Depuis déc. 2025 · seul',
+    points: [
+      'Assistant qui cite l’article exact d’où vient chaque réponse (RAG)',
+      '~730 tests automatisés, CI/CD, déploiement continu',
+      'Web + apps iOS/Android publiées sur les deux stores',
+    ],
+    href: '/mibeko',
+    cta: 'Lire l’étude de cas',
+  },
+  {
+    titre: 'Capgemini — 3 ans, du back au décisionnel',
+    period: '2023 – 2026',
+    points: [
+      'Microservices Java / Spring Boot à l’AIFE (finances publiques)',
+      'Un service Spring Boot qui automatise la collecte de 400+ collaborateurs',
+      'Tableaux de bord Power BI utilisés au quotidien',
+    ],
+    href: '/experiences',
+    cta: 'Voir les expériences',
+  },
+  {
+    titre: 'Expert en informatique (Bac+5)',
+    period: 'RNCP niveau 7 · EPSI Bordeaux · sept. 2026',
+    points: [
+      'Titre RNCP niveau 7 en alternance chez Capgemini',
+      'Bachelor Concepteur Développeur d’Applications (2024)',
+      'Parcours parti du génie des systèmes industriels',
+    ],
+    href: '/a-propos',
+    cta: 'Mon parcours',
+  },
+];
+---
+
+<Base
+  title="Bénaja Bendo-Matondo — Développeur Fullstack Java / Spring Boot · React"
+  description="Développeur fullstack. J’ai conçu et j’opère seul Mibeko, SaaS LegalTech en production depuis décembre 2025. Disponible en CDI à partir du 28 septembre 2026."
+>
+  <section class="hero container">
+    <p class="eyebrow">Développeur fullstack · Bordeaux</p>
+    <h1>
+      Bénaja Bendo-Matondo
+      <span class="role">Développeur Fullstack Java / Spring Boot · React</span>
+    </h1>
+
+    <p class="hero-proof">
+      J’ai conçu et j’opère <strong>seul</strong> <a href="/mibeko">Mibeko</a>, un
+      SaaS LegalTech <strong>en production depuis décembre 2025</strong> :
+      un assistant qui répond aux questions de droit en citant ses sources,
+      ~730 tests, applications publiées sur l’App&nbsp;Store et le Play&nbsp;Store.
+    </p>
+
+    <p class="lead muted">
+      Disponible en CDI à partir du <strong>28 septembre 2026</strong>.
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/mibeko">Voir Mibeko</a>
+      <a class="btn btn-ghost" href="mailto:contact@benaja-bendo.fr">Me contacter</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Les preuves</p>
+    <h2>Ce que j’ai construit et livré</h2>
+    <div class="cards">
+      {proofs.map((p) => (
+        <article class="card">
+          <h3>{p.titre}</h3>
+          <span class="period">{p.period}</span>
+          <ul>
+            {p.points.map((pt) => <li>{pt}</li>)}
+          </ul>
+          <a href={p.href}>{p.cta} →</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">En deux mots</p>
+    <h2>Du diagnostic à la production</h2>
+    <p class="lead">
+      J’ai commencé par réparer des machines à Pointe-Noire. Je construis
+      maintenant des systèmes logiciels qui n’ont pas besoin de moi pour tourner —
+      et je les opère en production.
+    </p>
+    <p><a href="/a-propos">Lire mon parcours →</a></p>
+  </section>
+</Base>
