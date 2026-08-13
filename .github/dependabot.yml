@@ -11,6 +11,15 @@ updates:
         patterns:
           - "astro"
           - "@astrojs/*"
+    ignore:
+      # TypeScript 7 est bloqué en amont, pas chez nous : @astrojs/check (0.9.10,
+      # dernière version publiée au 13/08/2026) déclare `typescript@^5 || ^6` en
+      # peer dependency. `npm ci` échoue donc en CI — elle a raison de refuser.
+      # On ignore la seule MAJEURE : les 6.x continuent d'arriver normalement.
+      # À RETIRER dès qu'une version d'@astrojs/check accepte TS 7 :
+      #   npm view @astrojs/check@latest peerDependencies
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # Actions GitHub (met à jour les empreintes de commit épinglées)
   - package-ecosystem: github-actions
