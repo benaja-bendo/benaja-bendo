@@ -2,8 +2,12 @@
 
 Dossier de travail établi le 24 juillet 2026, avant toute refonte. À lire dans l'ordre :
 
-1. **[01-audit-existant.md](01-audit-existant.md)** — État des lieux factuel des trois surfaces (benaja-bendo.fr, GitHub Pages, profil GitHub) : déploiement cassé, vulnérabilités, et le problème central — le site en ligne (2022) contredit les CV (2026).
-2. **[02-profil-et-strategie-image.md](02-profil-et-strategie-image.md)** — Qui est Bénaja (synthèse des deux CV), diagnostic d'image, positionnement retenu (hiérarchie des identités, tagline, message en 3 temps), **ligne éditoriale**, cohérence site/GitHub/LinkedIn/CV, place du pixel art.
+1. `01-audit-existant.md` — 🔒 **non publié**. État des lieux de l'existant, dont les vulnérabilités du site encore en ligne : tant qu'il n'est pas dépublié, ce document serait un mode d'emploi.
+2. `02-profil-et-strategie-image.md` — 🔒 **non publié**. Positionnement, ligne éditoriale, cohérence entre les surfaces. Notes personnelles, sans intérêt pour un lecteur du dépôt.
+
+> Ces deux fichiers existent **en local uniquement** et sont exclus par `.gitignore` : ils
+> n'ont jamais été poussés. Les documents suivants les citent parfois en référence — c'est
+> volontaire, ils restent la source du « pourquoi ».
 3. **[03-proposition-refonte.md](03-proposition-refonte.md)** — Le plan : Phase 0 d'urgence, surfaces satellites, refonte Astro 7 (architecture des pages, hero, stack, hébergement VPS + en-têtes de sécurité, CI durcie), effort estimé, critères de réussite.
 4. ~~[04-design-system.md](04-design-system.md)~~ — **périmé** : direction « Console », jamais appliquée. Conservé pour l'historique.
 5. **[05-design-system-papier-pixels.md](05-design-system-papier-pixels.md)** — 🎨 **Le design qui fait foi**, appliqué dans `src/styles/global.css` : d'où vient la direction et où on s'arrête, tokens, les trois règles non négociables, composants, la décision ouverte sur les webfonts.

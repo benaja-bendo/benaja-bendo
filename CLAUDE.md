@@ -16,8 +16,8 @@ npm run check    # astro check (types)
 
 | Question | Document |
 | --- | --- |
-| Pourquoi ce site existe, ce qu'il doit prouver | [docs/02-profil-et-strategie-image.md](docs/02-profil-et-strategie-image.md) |
-| Comment on écrit (ton, mots bannis) | [docs/02](docs/02-profil-et-strategie-image.md) §4 |
+| Pourquoi ce site existe, ce qu'il doit prouver | `docs/02` *(local, hors dépôt)* |
+| Comment on écrit (ton, mots bannis) | `docs/02` *(local)* §4 |
 | Architecture des pages, stack, sécurité | [docs/03-proposition-refonte.md](docs/03-proposition-refonte.md) |
 | **Design : tokens, composants, règles** | [docs/05-design-system-papier-pixels.md](docs/05-design-system-papier-pixels.md) |
 | Ce qui reste à faire / à mettre à jour | [docs/06-chantiers-futurs.md](docs/06-chantiers-futurs.md) |

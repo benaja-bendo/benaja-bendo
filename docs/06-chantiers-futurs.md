@@ -81,7 +81,8 @@ Le site est propre ; son écosystème ne l'est pas encore.
 | Quoi | État au 13/08/2026 | Action |
 | --- | --- | --- |
 | `/cv-benaja-bendo.pdf` | **404** — le header et le footer pointent dans le vide | Déposer le CV « parapluie » dans `public/` |
-| README de profil GitHub | Texte générique (« passionate about building innovative solutions »), liste des technos fausse (Python, Django, Flask) — contredit les CV | Réécrire selon [doc 02](02-profil-et-strategie-image.md) §5 |
+| ~~README de profil GitHub~~ | ✅ **Réécrit le 13/08/2026** : positionnement, écosystème Mibeko (5 dépôts liés), Capgemini, stack réelle, disponibilité | ⚠️ Contient « disponible au 28/09/2026 » — **à mettre à jour dès la signature** |
+| Épinglage GitHub | Encore les dépôts d'école : `electronjs-with-typescript`, `back-app-quiz`, `louka-loca-docs`, `env-vps`, `fluxo-erp` | Épingler `mibeko-dashboard`, `mibeko-python`, `mibeko-app-kmp`, `vps_infra`, ce dépôt |
 | Site en ligne benaja-bendo.fr | La SPA de 2022 tourne toujours | Dépublier le jour de la mise en ligne |
 | GitHub Pages | Déploiement zombie | Désactiver dans Settings → Pages |
 | Branches distantes | `dev` (fusionnée), `optimisation-site-web-bcac0` (1 commit sur la stack React morte), `output` (artefact GitHub Pages) | Supprimer une fois la décision de déploiement prise |
@@ -121,7 +122,7 @@ l'hébergement — trancher avant la mise en ligne :
 ## Partie 3 — Choix n°2 : quel contenu proposer
 
 Le site fait aujourd'hui **une seule chose** : convaincre un recruteur en 5 secondes,
-30 secondes, 3 minutes ([doc 02](02-profil-et-strategie-image.md) §3). La question est de
+30 secondes, 3 minutes (doc 02 *(notes locales, non publiées)* §3). La question est de
 savoir ce qu'on lui ajoute — sachant que **chaque type de contenu est un engagement de
 rythme**, et qu'un contenu abandonné fait plus de mal que pas de contenu du tout.
 

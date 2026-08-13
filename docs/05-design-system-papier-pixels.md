@@ -43,7 +43,7 @@ Donc : **on garde la construction, on change l'identité.**
 Pourquoi ça lui va : son art de jeu est **100 % généré par code**, et le pixel est
 formellement d'accord avec le néo-brutalisme (arêtes nettes, pas de flou, pas de
 dégradé lissé). La forme raconte le fond. Le pixel reste un **accent** — jamais la
-porte d'entrée, jamais un obstacle à la lecture (ligne rouge de [doc 02](02-profil-et-strategie-image.md) §6).
+porte d'entrée, jamais un obstacle à la lecture (ligne rouge de doc 02 *(notes locales, non publiées)* §6).
 
 ## 1. Tokens
 

@@ -36,3 +36,9 @@ lerna-debug.log*
 # host adapters / caches
 .vercel
 .netlify
+
+# Notes de travail personnelles — jamais publiées (dépôt public).
+# Audit de l'existant : décrit les failles du site encore en ligne.
+# Stratégie d'image : positionnement et notes de candidature.
+docs/01-audit-existant.md
+docs/02-profil-et-strategie-image.md
