@@ -361,7 +361,10 @@ a:hover {
   color: var(--fg);
   border-bottom-color: var(--accent);
 }
-.cv-link {
+/* La pastille du header : une seule action mise en avant, la plus utile à un
+   recruteur — joindre quelqu'un. (Portait le CV PDF jusqu'au 14/08/2026 ; le
+   fichier n'existait pas, le lien est devenu /contact.) */
+.nav-cta {
   border: var(--edge) solid var(--border) !important;
   border-radius: var(--radius-sm);
   background: var(--surface-2);
@@ -370,13 +373,19 @@ a:hover {
   color: var(--fg) !important;
   font-weight: 600;
 }
-.cv-link:hover {
+.nav-cta:hover {
   transform: translate(-1px, -1px);
   box-shadow: 4px 4px 0 var(--border);
 }
+/* La bordure pleine de la pastille écrase le soulignement d'accent qui signale
+   la page courante ailleurs dans le menu : on rend l'état par le fond. */
+.nav-cta[aria-current='page'] {
+  background: var(--accent);
+  color: var(--accent-fg) !important;
+}
 
 /* Mobile : le header s'empile. Il lui faut sa propre respiration, sinon
-   l'ombre dure de la pastille CV déborde sous le filet — et un recruteur
+   l'ombre dure de la pastille déborde sous le filet — et un recruteur
    ouvre d'abord sur téléphone. */
 @media (max-width: 48rem) {
   .header-inner {
@@ -772,7 +781,7 @@ main > section:last-child {
   }
   .btn:hover,
   .card:hover,
-  .cv-link:hover {
+  .nav-cta:hover {
     transform: none;
   }
 }

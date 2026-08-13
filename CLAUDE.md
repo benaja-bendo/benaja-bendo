@@ -61,7 +61,7 @@ Ne jamais inventer un chiffre, une techno ou une date. En cas de doute sur un fa
 src/
   layouts/Base.astro     # <head>, CSP en <meta>, SEO/OG, skip-link
   components/            # SiteHeader, SiteFooter
-  pages/                 # index, mibeko, experiences, a-propos, colophon, 404, rss.xml.js
+  pages/                 # index, mibeko, experiences, a-propos, contact, colophon, 404, rss.xml.js
   content/etudes/        # études de cas (content collections, schéma Zod dans content.config.ts)
   styles/global.css      # LE design system — @font-face, tokens, composants
 public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)

@@ -29,7 +29,13 @@ const isActive = (href: string) =>
           </li>
         ))}
         <li>
-          <a class="cv-link" href="/cv-benaja-bendo.pdf">CV (PDF)</a>
+          <a
+            class="nav-cta"
+            href="/contact"
+            aria-current={isActive('/contact') ? 'page' : undefined}
+          >
+            Contact
+          </a>
         </li>
       </ul>
     </nav>

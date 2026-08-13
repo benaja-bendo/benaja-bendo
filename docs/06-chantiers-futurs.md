@@ -89,7 +89,7 @@ Le site est propre ; son écosystème ne l'est pas encore.
 
 | Quoi | État au 13/08/2026 | Action |
 | --- | --- | --- |
-| `/cv-benaja-bendo.pdf` | **404** — le header et le footer pointent dans le vide | Déposer le CV « parapluie » dans `public/` |
+| ~~`/cv-benaja-bendo.pdf`~~ | ✅ **Lien retiré le 14/08/2026.** Seul le header pointait dans le vide — le footer ne l'a jamais référencé, contrairement à ce que disait cette ligne. La pastille du header mène désormais à la page `/contact` | Trancher si un CV « parapluie » doit exister sur le site : s'il est déposé dans `public/`, le relier depuis `/contact` plutôt que depuis le header |
 | ~~README de profil GitHub~~ | ✅ **Réécrit le 13/08/2026** : positionnement, écosystème Mibeko (5 dépôts liés), Capgemini, stack réelle, disponibilité | ⚠️ Contient « disponible au 28/09/2026 » — **à mettre à jour dès la signature** |
 | Épinglage GitHub | Encore les dépôts d'école : `electronjs-with-typescript`, `back-app-quiz`, `louka-loca-docs`, `env-vps`, `fluxo-erp` | Épingler `mibeko-dashboard`, `mibeko-python`, `mibeko-app-kmp`, `vps_infra`, ce dépôt |
 | Site en ligne benaja-bendo.fr | La SPA de 2022 tourne toujours | Dépublier le jour de la mise en ligne |
