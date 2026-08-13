@@ -20,80 +20,60 @@ contenu Markdown + composants Astro
   request interne, production uniquement depuis `main`.
 - Le **nom de domaine et la messagerie restent chez Infomaniak**. Seuls les
   enregistrements DNS du site Web pointeront vers Firebase.
-- Aucun fichier `.firebaserc` n'est requis en CI : l'identifiant exact du projet est une
-  variable GitHub, `FIREBASE_PROJECT_ID`.
+- `.firebaserc` associe le dépôt local au projet `benaja-bendo`. Le workflow indique
+  également cet ID explicitement afin que le déploiement CI ne dépende pas d'un alias.
 
-## 1. Relever l'identifiant exact du projet
+## 1. Projet Firebase — configuré
 
-Dans Firebase Console : **roue dentée → Paramètres du projet → Général → ID du projet**.
+Le projet existant a été associé par `firebase init` le 14/08/2026 :
 
-L'ID n'est pas forcément le nom affiché « benaja-bendo ». S'il est par exemple
-`benaja-bendo-4f21a`, conserver exactement cette valeur. Ne pas utiliser le numéro de
-projet ni l'identifiant d'application Web.
+```text
+Nom : benaja-bendo
+ID  : benaja-bendo
+```
 
 Vérifier également dans **Utilisation et facturation** que le projet est sur le plan
 **Spark**. Le site n'a besoin d'aucun produit imposant le plan Blaze.
 
-## 2. Initialiser Hosting dans Firebase Console
+## 2. Firebase Hosting — initialisé et corrigé
 
-Dans **Build → Hosting**, cliquer sur **Commencer** pour activer le parcours Hosting.
-Quand Firebase affiche les instructions de ligne de commande, il est possible de
-s'arrêter : les fichiers locaux sont déjà préparés dans ce dépôt et le premier workflow
-GitHub publiera le site par défaut. Il n'est pas nécessaire d'enregistrer une application
-Web Firebase ni de copier un SDK JavaScript : le site ne consomme aucun service Firebase
-depuis le navigateur.
+Hosting a été initialisé avec la CLI le 14/08/2026. Les réponses `public` et « SPA »
+données pendant l'assistant ont ensuite été corrigées : Astro publie `dist/` et chaque
+page dispose de son propre HTML. Il ne doit donc exister ni réécriture globale vers
+`/index.html`, ni page d'accueil Firebase dans `public/`.
+
+Le paquet npm `firebase`, installé pendant l'initialisation, a été retiré : il s'agit du
+SDK client pour Auth/Firestore/etc., pas de l'outil d'hébergement. La CLI
+`firebase-tools` globale suffit pour les commandes manuelles et n'est pas une dépendance
+du site.
 
 Ne pas choisir **App Hosting**. Ne pas activer Firestore, Authentication ou Functions.
 
-## 3. Créer un compte de service dédié à GitHub
+## 3. Compte de service GitHub — configuré
 
-Dans Google Cloud Console, avec le bon projet sélectionné :
+La commande `firebase init` a créé le compte `github-action-347491180` avec les droits
+Firebase Hosting nécessaires et a envoyé sa clé directement dans les secrets GitHub.
+Cette clé ne doit jamais être exportée dans le dépôt, dans `.env`, dans un ticket ou dans
+une conversation.
 
-1. ouvrir **IAM et administration → Comptes de service** ;
-2. créer `github-firebase-hosting` ;
-3. lui attribuer les rôles :
-   - **Administrateur Firebase Hosting** (`roles/firebasehosting.admin`) ;
-   - **Lecteur de clés API** (`roles/serviceusage.apiKeysViewer`) ;
-   - **Administrateur Firebase Authentication** (`roles/firebaseauth.admin`), utilisé
-     par l'action officielle pour autoriser les domaines des aperçus ;
-   - **Lecteur Cloud Run** (`roles/run.viewer`), rôle en lecture seule demandé par
-     l'action officielle lors de l'inspection des réécritures Hosting.
-4. ouvrir le compte créé, puis **Clés → Ajouter une clé → Créer une clé → JSON**.
+## 4. GitHub Actions — configuré
 
-Cette clé est un secret. Ne jamais la placer dans le dépôt, dans `.env`, dans un ticket
-ou dans une conversation. Elle doit être copiée une seule fois dans GitHub, puis le
-fichier téléchargé doit être supprimé de l'ordinateur.
-
-## 4. Configurer GitHub
-
-Dans le dépôt GitHub : **Settings → Secrets and variables → Actions**.
-
-### Secret
-
-Dans l'onglet **Secrets**, créer un *repository secret* :
+Le secret suivant a été créé automatiquement dans le dépôt GitHub :
 
 ```text
-Nom     : FIREBASE_SERVICE_ACCOUNT
-Valeur  : tout le contenu du fichier JSON du compte de service
+FIREBASE_SERVICE_ACCOUNT_BENAJA_BENDO
 ```
 
-### Variable
-
-Dans l'onglet **Variables**, créer une *repository variable* :
-
-```text
-Nom     : FIREBASE_PROJECT_ID
-Valeur  : l'ID exact relevé à l'étape 1
-```
-
-Le workflow est volontairement configuré pour ne pas fournir ce secret aux forks ni à
-Dependabot. Un push sur `main` publie le canal `live`. Une pull request créée depuis une
-branche du dépôt reçoit une URL d'aperçu valable sept jours.
+Les deux workflows génériques créés par la CLI ont été supprimés au profit du workflow
+unique `.github/workflows/ci.yml`, qui effectue déjà le type-check et le build. Il est
+volontairement configuré pour ne pas fournir le secret aux forks ni à Dependabot. Un
+push sur `main` publie le canal `live`. Une pull request créée depuis une branche du
+dépôt reçoit une URL d'aperçu valable sept jours.
 
 ## 5. Premier déploiement
 
-Quand le secret et la variable existent, pousser le commit de configuration sur GitHub.
-Dans l'onglet **Actions**, le workflow **CI & Firebase Hosting** doit terminer avec :
+Pousser le commit de configuration sur GitHub. Dans l'onglet **Actions**, le workflow
+**CI & Firebase Hosting** doit terminer avec :
 
 1. installation verrouillée (`npm ci`) ;
 2. vérification Astro ;

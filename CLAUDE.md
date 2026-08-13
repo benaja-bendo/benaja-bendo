@@ -66,8 +66,10 @@ src/
   styles/global.css      # LE design system — @font-face, tokens, composants
 public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)
 firebase.json            # déploiement Firebase Hosting, en-têtes et cache
+.firebaserc               # alias local du projet Firebase benaja-bendo
 public/_headers          # copie portable des en-têtes (Cloudflare/Netlify)
 deploy/                  # ancienne solution Apache, conservée comme retour arrière
+.agents/skills/           # compétences Firebase officielles installées par la CLI
 ```
 
 ## Décisions actées (13/08/2026) — ne pas les rouvrir sans raison
