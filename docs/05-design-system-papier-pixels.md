@@ -30,8 +30,8 @@ Donc : **on garde la construction, on change l'identité.**
 | On reprend (le langage) | On change (l'identité) |
 | --- | --- |
 | Fond papier chaud, encre non-noire | Palette : sapin-teal + ambre, pas lavande/rose/menthe |
-| Bordure pleine + ombre dure, 0 flou | Police : pile humaniste + **mono** pour les données |
-| Surligneur au marqueur sur les mots-clés | Le mono comme voix « ingénierie » (absent chez lui) |
+| Bordure pleine + ombre dure, 0 flou | Police : **IBM Plex Sans**, pas Atkinson Hyperlegible |
+| Surligneur au marqueur sur les mots-clés | **IBM Plex Mono** pour les données (il n'a pas de mono) |
 | Beaucoup de blanc, grille large | **Mode sombre** (il n'en a pas) |
 | | Signature : **pixels dessinés en CSS**, pas d'illustrations |
 
@@ -100,28 +100,34 @@ Le **mono** n'est pas décoratif : il porte tout ce qui est **donnée ou méta**
 rôle, intertitres, navigation, dates, chiffres, chips. C'est ce qui donne le grain
 « ingénierie » et ce qui éloigne le plus de la référence de départ.
 
-### ⚠️ Décision ouverte : les webfonts
+### ✅ Décidé le 13/08/2026 : IBM Plex auto-hébergée à la main
 
-L'état actuel utilise la **pile système** (`system-ui` + mono système). C'est propre et
-rapide, mais c'est le poste qui laisse le plus de personnalité sur la table.
+**IBM Plex Sans + IBM Plex Mono**, fichiers dans `public/fonts/`, `@font-face` écrit à la
+main en tête de `global.css`. **92 Ko au total** (moins que les ~200 Ko estimés) :
 
-**Pourquoi pas l'API Fonts d'Astro 7** : testée le 13/08/2026, elle fonctionne (build OK,
+| Fichier | Contenu | Poids |
+| --- | --- | --- |
+| `ibm-plex-sans-var-latin.woff2` | **variable**, graisses 400→700 | 39 Ko |
+| `ibm-plex-sans-var-latin-ext.woff2` | variable, latin étendu | 25 Ko |
+| `ibm-plex-mono-400-latin.woff2` | mono régulier | 9,8 Ko |
+| `ibm-plex-mono-600-latin.woff2` | mono demi-gras | 9,9 Ko |
+
+Sous-ensembles **latin uniquement** — le français est entièrement couvert. Le fichier du
+corps est préchargé dans `Base.astro` ; le latin-ext ne se télécharge que si un caractère
+le réclame (vérifié : `unloaded` sur l'accueil). Licence **SIL OFL 1.1**, redistribuée
+dans `public/fonts/LICENSE-IBM-Plex.txt` comme la licence l'exige.
+
+**Pourquoi pas l'API Fonts d'Astro 7** — testée le 13/08/2026 : elle fonctionne (build OK,
 6 fichiers auto-hébergés) mais son composant `<Font/>` injecte le `@font-face` via
-`<style set:html>` — un style **inline**, bloqué par la CSP `style-src 'self'` servie par
-`public/_headers` et la conf Apache. Constaté en préproduction : 10 violations CSP.
-Il n'existe pas d'option pour émettre un fichier CSS externe.
+`<style set:html>`, donc un style **inline**, bloqué par la CSP `style-src 'self'` servie
+par `public/_headers` et la conf Apache. Constaté : **10 violations CSP**. Aucune option
+n'émet un fichier CSS externe. L'autre sortie possible (`security.csp` d'Astro + report
+des mêmes hashes dans les en-têtes serveur) a été écartée : deux sources de vérité à
+resynchroniser à chaque changement de police, et la fragilité est exactement ce qui tue
+ce projet à long terme.
 
-Les deux sorties propres, à arbitrer :
-
-- **A — woff2 commités à la main** (~4 fichiers, ≈200 Ko) + `@font-face` dans `global.css`.
-  CSP intacte, build sans réseau, zéro dépendance. Coût : des binaires dans le dépôt et
-  le sous-ensemblage (subsetting) à faire soi-même une fois.
-- **B — `security.csp` d'Astro** (hashes auto dans le `<meta>`) **+ report des mêmes hashes
-  dans les en-têtes serveur**. Deux sources de vérité à synchroniser à chaque changement
-  de police : fragile, et la fragilité est exactement ce qui tue ce projet à long terme.
-
-**Recommandation : A.** Candidates cohérentes avec la direction : IBM Plex Sans + IBM Plex
-Mono (voix ingénierie, la paire déjà retenue en doc 04), ou Public Sans + JetBrains Mono.
+**Pour ajouter un alphabet plus tard** : récupérer le woff2 du sous-ensemble voulu, le
+déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-range`.
 
 ## 4. Composants (tous dans `global.css`, classes inchangées)
 
@@ -155,7 +161,7 @@ Mono (voix ingénierie, la paire déjà retenue en doc 04), ou Public Sans + Jet
 
 ## 6. Ce qui reste à faire sur le design
 
-- [ ] Trancher la question des webfonts (§3) — le plus gros gain restant.
+- [x] ~~Trancher la question des webfonts~~ — fait le 13/08/2026 (§3).
 - [ ] Favicon : le passer en pixel sur l'accent teal (il est encore générique).
 - [ ] Image Open Graph dédiée (l'aperçu LinkedIn est un cas d'usage majeur ici).
 - [ ] Décliner le système sur `/mibeko`, `/experiences`, `/a-propos`, `/colophon` : les

@@ -1,8 +1,27 @@
 # Chantiers futurs — la règle de mise à jour, et les choix ouverts
 
 *Établi le 13 août 2026. Ce document a deux rôles : poser **la règle** que tout chantier
-sur ce projet doit suivre, et présenter les **choix qui restent à trancher** — techno et
-type de contenu — avec ce que chacun coûte et rapporte. Les choix sont à Bénaja.*
+sur ce projet doit suivre, et présenter les **choix** — techno et type de contenu — avec
+ce que chacun coûte et rapporte.*
+
+---
+
+## ✅ Décisions prises le 13/08/2026
+
+Les options sont conservées plus bas avec leur argumentaire : c'est ce qui permettra de
+rouvrir un choix en connaissance de cause plutôt que de le refaire de zéro.
+
+| Sujet | Décision | Détail |
+| --- | --- | --- |
+| **Techno** | **Astro**, on garde | Partie 2 — rien ne justifiait d'en changer |
+| **Dépôt** | **Le site reste dans ce dépôt, sur `main`** | Il cohabite avec le README de profil GitHub, qui reste à réécrire (voir tableau ci-dessous) |
+| **Typographie** | **IBM Plex auto-hébergée** | Appliqué — [doc 05](05-design-system-papier-pixels.md) §3 |
+| **Contenu** | **Études de cas** + **vitrine Mibeko sur GitHub** + **notes techniques** | Partie 3 — voir l'ordre de mise en œuvre |
+| **Hébergement** | ⏳ **non tranché** | VPS existant ou Cloudflare Pages — à décider avant la mise en ligne (fin de la partie 2) |
+
+⚠️ Conséquence du choix « notes techniques » : c'est le format le plus exigeant en
+rythme (1 par mois tenu). La règle qui l'accompagne est en partie 3 — **n'ouvrir la
+rubrique que le jour où le premier texte est écrit**, jamais avant.
 
 ---
 
@@ -115,15 +134,25 @@ rythme**, et qu'un contenu abandonné fait plus de mal que pas de contenu du tou
 | **E. Vitrine Mibeko publique** — README d'architecture, schémas, décisions, chiffres (code produit privé) | Le vaisseau amiral, vérifiable en un clic. **Un README d'architecture prouve plus qu'un repo de tutoriel** | Une fois, puis figé | Faible. Fort effet de levier |
 | **F. Veille / newsletter** | Une audience | Hebdomadaire, sans fin | ❌ Élevé, et ça ne prouve pas qu'il sait construire |
 
-**Ce que ça donnerait, par ordre de rendement** — à l'échéance du 28/09/2026 :
+### ✅ Retenu : B + E + C — dans cet ordre
 
-1. **E** (vitrine Mibeko sur GitHub) — quelques heures, effet immédiat sur la crédibilité.
-2. **B** (les 3 études de cas terminées) — c'est le cœur des 3 minutes, et c'est fini une
-   fois écrit.
-3. **D** (le Labo) — **après** la signature. C'est le plaisir, et c'est ce qui fera qu'il
-   entretiendra le site.
-4. **C** (les notes) — seulement si un premier texte est écrit sans se forcer. Sinon **A**
-   assumé vaut mieux qu'une rubrique « Notes » qui affiche un article vieux de deux ans.
+L'ordre n'est pas négociable, il est dicté par l'échéance du 28/09/2026 :
+
+1. **E — vitrine Mibeko sur GitHub.** Quelques heures, effet immédiat sur la crédibilité.
+   README d'architecture, schémas, décisions, chiffres ; le code produit reste privé.
+2. **B — les trois études de cas terminées** (Mibeko, France Travail, AIFE). C'est le cœur
+   des « 3 minutes », et c'est **fini une fois écrit** — aucun engagement de rythme.
+   Les fichiers existent déjà dans `src/content/etudes/`.
+3. **C — les notes techniques.** ⚠️ **Règle** : la rubrique « Notes » ne s'ouvre pas avant
+   que le **premier article soit écrit et publiable**. Une rubrique vide, ou qui affichera
+   dans deux ans un unique billet daté, fait plus de mal que pas de rubrique du tout —
+   c'est littéralement la maladie de ce projet (partie 1). Le RSS et le sitemap sont déjà
+   en place pour le jour J. Premiers sujets, tirés de la prod Mibeko : pipeline
+   documentaire traçable, provenance SHA-256, recherche hybride, RAG sourcé.
+
+**Non retenu pour l'instant : D (le Labo / devlogs pixel art)** — reporté après la
+signature du CDI, conformément à [doc 03](03-proposition-refonte.md). Rien de la v1 n'en
+dépend, et c'est ce qui donnera envie d'entretenir le site une fois la pression retombée.
 
 **Le piège à éviter** : la référence de départ ([romainlanz.com](https://romainlanz.com))
 est un **site de contenu** — sa page d'accueil est une liste d'articles, parce que son

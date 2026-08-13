@@ -14,12 +14,11 @@ export default defineConfig({
     // pour une CSP stricte `style-src 'self'` sans hash ni 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
-  // ⚠️ Polices : NE PAS activer l'API Fonts d'Astro (`fonts: [...]` + <Font/>)
-  // en l'état. Son composant injecte le @font-face via <style set:html>, donc
-  // un style INLINE — bloqué par la CSP `style-src 'self'` servie par
-  // public/_headers et deploy/apache-benaja-bendo.conf (vérifié le 13/08/2026).
-  // Les deux seules sorties propres sont documentées dans
-  // docs/05-design-system-papier-pixels.md §Typographie. En attendant, la pile
-  // système est utilisée via --font-sans / --font-mono dans global.css.
+  // ⚠️ Polices : NE PAS activer l'API Fonts d'Astro (`fonts: [...]` + <Font/>).
+  // Son composant injecte le @font-face via <style set:html>, donc un style
+  // INLINE — bloqué par la CSP `style-src 'self'` servie par public/_headers et
+  // deploy/apache-benaja-bendo.conf (constaté le 13/08/2026 : 10 violations).
+  // IBM Plex est donc auto-hébergée à la main : fichiers dans public/fonts/,
+  // @font-face en tête de src/styles/global.css. Voir docs/05 §Typographie.
   integrations: [mdx(), sitemap()],
 });

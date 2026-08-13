@@ -45,6 +45,16 @@ const csp = [
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    {/* Police du corps : préchargée car elle bloque le premier rendu utile.
+        Les autres coupes (latin-ext, mono) se chargent normalement. */}
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-sans-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link

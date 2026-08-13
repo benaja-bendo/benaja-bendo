@@ -34,6 +34,8 @@ npm run check    # astro check (types)
    ```
    Conséquence directe : **ne pas activer l'API Fonts d'Astro** (`fonts: []` + `<Font/>`),
    son composant injecte `<style set:html>`. Voir le commentaire dans `astro.config.mjs`.
+   IBM Plex est donc auto-hébergée **à la main** : fichiers dans `public/fonts/`,
+   `@font-face` écrit en tête de `global.css`.
 2. **Zéro requête tierce.** Pas de CDN, pas de Google Fonts, pas d'image externe, pas
    d'analytics à cookies. Tout est servi depuis le domaine.
 3. **Zéro JS par défaut.** Aucun framework UI (pas de React ici). Si une interaction
@@ -61,10 +63,19 @@ src/
   components/            # SiteHeader, SiteFooter
   pages/                 # index, mibeko, experiences, a-propos, colophon, 404, rss.xml.js
   content/etudes/        # études de cas (content collections, schéma Zod dans content.config.ts)
-  styles/global.css      # LE design system — tokens + composants
+  styles/global.css      # LE design system — @font-face, tokens, composants
+public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)
 public/_headers          # en-têtes sécurité (Cloudflare/Netlify)
 deploy/                  # conf Apache pour le VPS
 ```
+
+## Décisions actées (13/08/2026) — ne pas les rouvrir sans raison
+
+Astro **conservé** · le site vit **dans ce dépôt, sur `main`** · typographie **IBM Plex
+auto-hébergée** · contenu : **études de cas + vitrine Mibeko GitHub + notes techniques**
+(dans cet ordre ; la rubrique Notes ne s'ouvre qu'une fois le premier article écrit).
+Encore ouvert : **l'hébergement** (VPS existant ou Cloudflare Pages).
+Argumentaire complet : [docs/06](docs/06-chantiers-futurs.md).
 
 ## Vérification avant de rendre la main
 
