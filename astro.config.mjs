@@ -5,8 +5,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Domaine cible : le site est destiné à benaja-bendo.fr (VPS / hébergeur avec
-  // en-têtes personnalisés). Le base path racine convient à l'apex domain.
+  // Domaine cible : le site est servi à la racine de benaja-bendo.fr par
+  // Firebase Hosting. Le base path racine convient à l'apex domain.
   site: 'https://benaja-bendo.fr',
   trailingSlash: 'ignore',
   build: {
@@ -16,8 +16,9 @@ export default defineConfig({
   },
   // ⚠️ Polices : NE PAS activer l'API Fonts d'Astro (`fonts: [...]` + <Font/>).
   // Son composant injecte le @font-face via <style set:html>, donc un style
-  // INLINE — bloqué par la CSP `style-src 'self'` servie par public/_headers et
-  // deploy/apache-benaja-bendo.conf (constaté le 13/08/2026 : 10 violations).
+  // INLINE — bloqué par la CSP `style-src 'self'` servie par firebase.json
+  // (et par public/_headers sur les hébergeurs compatibles). Constaté le
+  // 13/08/2026 : 10 violations.
   // IBM Plex est donc auto-hébergée à la main : fichiers dans public/fonts/,
   // @font-face en tête de src/styles/global.css. Voir docs/05 §Typographie.
   integrations: [mdx(), sitemap()],

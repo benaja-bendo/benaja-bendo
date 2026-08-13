@@ -8,10 +8,11 @@ Dossier de travail établi le 24 juillet 2026, avant toute refonte. À lire dans
 > Ces deux fichiers existent **en local uniquement** et sont exclus par `.gitignore` : ils
 > n'ont jamais été poussés. Les documents suivants les citent parfois en référence — c'est
 > volontaire, ils restent la source du « pourquoi ».
-3. **[03-proposition-refonte.md](03-proposition-refonte.md)** — Le plan : Phase 0 d'urgence, surfaces satellites, refonte Astro 7 (architecture des pages, hero, stack, hébergement VPS + en-têtes de sécurité, CI durcie), effort estimé, critères de réussite.
+3. **[03-proposition-refonte.md](03-proposition-refonte.md)** — Le plan initial : Phase 0 d'urgence, surfaces satellites, refonte Astro 7, architecture des pages et critères de réussite. Sa recommandation VPS est historique ; Firebase est désormais retenu (doc 07).
 4. ~~[04-design-system.md](04-design-system.md)~~ — **périmé** : direction « Console », jamais appliquée. Conservé pour l'historique.
 5. **[05-design-system-papier-pixels.md](05-design-system-papier-pixels.md)** — 🎨 **Le design qui fait foi**, appliqué dans `src/styles/global.css` : d'où vient la direction et où on s'arrête, tokens, les trois règles non négociables, composants, la décision ouverte sur les webfonts.
-6. **[06-chantiers-futurs.md](06-chantiers-futurs.md)** — ⚠️ **La règle de mise à jour** (tout chantier commence par une remise à niveau), ce qui est encore périmé, et les deux choix ouverts : **quelle techno** et **quel type de contenu**.
+6. **[06-chantiers-futurs.md](06-chantiers-futurs.md)** — ⚠️ **La règle de mise à jour** (tout chantier commence par une remise à niveau), les décisions techno/contenu/hébergement et ce qui est encore périmé.
+7. **[07-deploiement-firebase.md](07-deploiement-firebase.md)** — 🔥 **Le guide de mise en ligne** : séparation des responsabilités, configuration Firebase/GitHub/Infomaniak, premier déploiement, DNS et contrôles.
 
 > **Pour une session Claude qui démarre** : lire [../CLAUDE.md](../CLAUDE.md) d'abord — il
 > contient les commandes, les invariants à ne pas casser (CSP stricte, zéro requête tierce,

@@ -65,16 +65,19 @@ src/
   content/etudes/        # études de cas (content collections, schéma Zod dans content.config.ts)
   styles/global.css      # LE design system — @font-face, tokens, composants
 public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)
-public/_headers          # en-têtes sécurité (Cloudflare/Netlify)
-deploy/                  # conf Apache pour le VPS
+firebase.json            # déploiement Firebase Hosting, en-têtes et cache
+public/_headers          # copie portable des en-têtes (Cloudflare/Netlify)
+deploy/                  # ancienne solution Apache, conservée comme retour arrière
 ```
 
 ## Décisions actées (13/08/2026) — ne pas les rouvrir sans raison
 
 Astro **conservé** · le site vit **dans ce dépôt, sur `main`** · typographie **IBM Plex
 auto-hébergée** · contenu : **études de cas + vitrine Mibeko GitHub + notes techniques**
-(dans cet ordre ; la rubrique Notes ne s'ouvre qu'une fois le premier article écrit).
-Encore ouvert : **l'hébergement** (VPS existant ou Cloudflare Pages).
+(dans cet ordre ; la rubrique Notes ne s'ouvre qu'une fois le premier article écrit) ·
+hébergement **Firebase Hosting, plan Spark, statique uniquement**. Voir
+[docs/07](docs/07-deploiement-firebase.md). Ne pas activer Firestore, Authentication,
+Functions ou App Hosting sans un besoin fonctionnel explicite.
 Argumentaire complet : [docs/06](docs/06-chantiers-futurs.md).
 
 ## Vérification avant de rendre la main

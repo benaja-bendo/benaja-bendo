@@ -17,7 +17,7 @@ rouvrir un choix en connaissance de cause plutôt que de le refaire de zéro.
 | **Dépôt** | **Le site reste dans ce dépôt, sur `main`** | Il cohabite avec le README de profil GitHub, qui reste à réécrire (voir tableau ci-dessous) |
 | **Typographie** | **IBM Plex auto-hébergée** | Appliqué — [doc 05](05-design-system-papier-pixels.md) §3 |
 | **Contenu** | **Études de cas** + **vitrine Mibeko sur GitHub** + **notes techniques** | Partie 3 — voir l'ordre de mise en œuvre |
-| **Hébergement** | ⏳ **non tranché** | VPS existant ou Cloudflare Pages — à décider avant la mise en ligne (fin de la partie 2) |
+| **Hébergement** | **Firebase Hosting (Spark)** | Décidé le 13/08/2026 — statique uniquement, voir [doc 07](07-deploiement-firebase.md) |
 
 ⚠️ Conséquence du choix « notes techniques » : c'est le format le plus exigeant en
 rythme (1 par mois tenu). La règle qui l'accompagne est en partie 3 — **n'ouvrir la
@@ -121,14 +121,16 @@ statique, durable, sûr) correspond exactement à ce pour quoi Astro est fait, q
 déjà debout et testé, et qu'à six semaines de l'échéance du 28/09/2026 le seul risque
 réel est de repartir de zéro.
 
-**La seule question qui vaut vraiment**, et elle n'est pas de la technologie mais de
-l'hébergement — trancher avant la mise en ligne :
+### ✅ Hébergement retenu : Firebase Hosting, plan Spark
 
-- **VPS existant (Apache/Traefik)** — le domaine ne bouge pas, la conf est déjà écrite
-  ([deploy/](../deploy/apache-benaja-bendo.conf)), et l'infra devient une ligne du colophon
-  qui prouve ce que le CV affirme. Coût : c'est lui qui l'opère.
-- **Cloudflare Pages** — gratuit, zéro maintenance serveur, `public/_headers` déjà prêt.
-  Coût : une dépendance de plus, et un argument « j'opère ma prod » en moins.
+Le 13/08/2026, Firebase Hosting a été retenu pour le site statique : aucun serveur à
+administrer, domaine personnalisé et TLS, aperçus de pull requests et quota gratuit
+suffisant pour le build actuel. Le domaine et la messagerie restent chez Infomaniak.
+
+Ce choix ne transforme pas le site en application Firebase : **pas de Firestore,
+Authentication, Functions ni App Hosting** sans un besoin futur démontré. Le contenu
+reste dans Git et le build `dist/` reste portable vers un autre hébergeur. Configuration
+et procédure : [doc 07](07-deploiement-firebase.md).
 
 ## Partie 3 — Choix n°2 : quel contenu proposer
 

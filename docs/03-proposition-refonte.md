@@ -2,6 +2,10 @@
 
 *Établi le 24 juillet 2026. S'appuie sur l'audit (doc 01) et la stratégie d'image (doc 02). Révise la proposition initiale « La Borne » à la lumière des CV : la personne d'abord, les jeux plus tard.*
 
+> **Document de planification historique.** La recommandation VPS des sections
+> déploiement a été remplacée le 13/08/2026 par **Firebase Hosting statique (Spark)**.
+> La décision et la procédure actuelles sont dans [docs/07](07-deploiement-firebase.md).
+
 ## Objectifs, dans l'ordre
 
 1. **Décrocher un CDI à partir du 28/09/2026** — le site sert d'abord les recruteurs qui cliquent depuis le CV.
