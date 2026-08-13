@@ -72,7 +72,11 @@ Puis, dans le même passage :
       le marque périmé **dans le même commit**. Un document périmé ment plus longtemps
       que du code périmé (`04-design-system.md` est marqué ainsi).
 - [ ] **Les majeures en attente** : elles ne se font pas en douce, elles se décident.
-      En cours au 13/08/2026 : **TypeScript 6 → 7** (majeure, non appliquée).
+      En cours au 13/08/2026 : **TypeScript 6 → 7**, proposé par Dependabot en
+      [PR #31](https://github.com/benaja-bendo/benaja-bendo/pull/31) — **la CI la refuse,
+      et elle a raison** : `@astrojs/check@0.9.10` déclare `typescript@^5 || ^6` en peer
+      dependency. Le blocage est en amont. **Ne pas forcer** avec `--legacy-peer-deps` :
+      attendre qu'`@astrojs/check` accepte TS 7, puis relancer la PR.
 
 ### Ce qui est encore périmé aujourd'hui, hors du site
 
@@ -86,6 +90,8 @@ Le site est propre ; son écosystème ne l'est pas encore.
 | Site en ligne benaja-bendo.fr | La SPA de 2022 tourne toujours | Dépublier le jour de la mise en ligne |
 | GitHub Pages | Déploiement zombie | Désactiver dans Settings → Pages |
 | Branches distantes | `dev` (fusionnée), `optimisation-site-web-bcac0` (1 commit sur la stack React morte), `output` (artefact GitHub Pages) | Supprimer une fois la décision de déploiement prise |
+| Protection de `main` | Règle « toute modification passe par une PR » (1 revue requise), mais `enforce_admins: false` — le propriétaire la contourne à chaque push direct | Trancher : soit passer par des PR (même seul, ça documente), soit retirer une règle qui ne s'applique à personne |
+| [PR #30](https://github.com/benaja-bendo/benaja-bendo/pull/30) | « Update from task f760a1b4… », ouverte, origine inconnue | Relire et fermer ou fusionner |
 | Favicon, image Open Graph | Génériques / absente | Voir [doc 05](05-design-system-papier-pixels.md) §6 |
 
 ## Partie 2 — Choix n°1 : sur quelle techno partir
