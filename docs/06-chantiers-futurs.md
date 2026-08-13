@@ -93,9 +93,9 @@ Le site est propre ; son écosystème ne l'est pas encore.
 | ~~README de profil GitHub~~ | ✅ **Réécrit le 13/08/2026** : positionnement, écosystème Mibeko (5 dépôts liés), Capgemini, stack réelle, disponibilité | ⚠️ Contient « disponible au 28/09/2026 » — **à mettre à jour dès la signature** |
 | Épinglage GitHub | Encore les dépôts d'école : `electronjs-with-typescript`, `back-app-quiz`, `louka-loca-docs`, `env-vps`, `fluxo-erp` | Épingler `mibeko-dashboard`, `mibeko-python`, `mibeko-app-kmp`, `vps_infra`, ce dépôt |
 | Site en ligne benaja-bendo.fr | La SPA de 2022 tourne toujours | Dépublier le jour de la mise en ligne |
-| GitHub Pages | Déploiement zombie | Désactiver dans Settings → Pages |
-| Branches distantes | `dev` (fusionnée), `optimisation-site-web-bcac0` (1 commit sur la stack React morte), `output` (artefact GitHub Pages) | Supprimer une fois la décision de déploiement prise |
-| Protection de `main` | Règle « toute modification passe par une PR » (1 revue requise), mais `enforce_admins: false` — le propriétaire la contourne à chaque push direct | Trancher : soit passer par des PR (même seul, ça documente), soit retirer une règle qui ne s'applique à personne |
+| ~~GitHub Pages~~ | ✅ **Désactivé le 14/08/2026.** Le déploiement zombie servait encore la SPA React de 2022 sur `benaja-bendo.github.io/benaja-bendo/` ; les workflows `snake.yml` et `vite-deploy.yml` étaient partis avec la refonte, mais Pages restait activé côté GitHub | — |
+| ~~Branches distantes~~ | ✅ **Supprimées le 14/08/2026.** `dev` (fusionnée, 0 commit absent de `main`), `optimisation-site-web-bcac0` (PR #30 fermée), `output` (artefact `snake.svg`, plus alimenté depuis la suppression de `snake.yml`). Le remote n'a plus que `main` | Maintenu propre par `deleteBranchOnMerge` (activé le 14/08/2026) : les branches de PR — Dependabot en tête — s'effacent à la fusion |
+| Protection de `main` | Règle « toute modification passe par une PR » (1 revue requise), mais `enforce_admins: false` — le propriétaire la contourne à chaque push direct. **Décision volontairement repoussée le 14/08/2026** : réglage laissé intact | Trancher : soit passer par des PR (même seul, ça documente), soit retirer une règle qui ne s'applique à personne |
 | ~~PR ouvertes~~ | ✅ **Aucune au 13/08/2026.** #31 (TS 7) fermée par Dependabot suite à la règle d'exclusion ; #30 fermée — elle mettait à jour les dépendances de la SPA React supprimée | — |
 | Favicon, image Open Graph | Génériques / absente | Voir [doc 05](05-design-system-papier-pixels.md) §6 |
 

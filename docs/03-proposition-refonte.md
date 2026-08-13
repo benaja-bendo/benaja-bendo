@@ -20,7 +20,7 @@ Le CV circule **maintenant** ; la refonte prendra des semaines. Donc, aujourd'hu
 
 - [ ] Publier sur benaja-bendo.fr une **one-page intérimaire statique** alignée sur les CV : nom, « Développeur Fullstack Java / Spring Boot · React », phrase Mibeko + lien mibeko.fr, « Disponible en CDI à partir du 28 septembre 2026 », email, GitHub, LinkedIn, CV PDF parapluie. Sobre et juste — *moche mais vrai bat joli mais faux*. Pas de photo ni de tagline définitive : ne pas coupler l'urgence à des décisions de branding.
 - [ ] **Dépublier la SPA de 2022** le même jour (la one-page la remplace au même endroit sur le VPS).
-- [ ] **Désactiver le site GitHub Pages zombie** (Settings → Pages) et supprimer/neutraliser `vite-deploy.yml` et `snake.yml` — rien de public ne reste agonisant.
+- [x] **Désactiver le site GitHub Pages zombie** (Settings → Pages) et supprimer/neutraliser `vite-deploy.yml` et `snake.yml` — rien de public ne reste agonisant. ✅ Workflows supprimés à la refonte (13/08/2026), site Pages désactivé et branches distantes purgées le 14/08/2026 — cf. [doc 06](06-chantiers-futurs.md) §Partie 1.
 - [ ] Jamais de bandeau « site en construction » : publier fini par tranches.
 
 ### Phase 1 — J+3 : les surfaces satellites (≈ 3-4 h)
