@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import LigneRealisation from '../../components/LigneRealisation.astro';
+import { getRealisations, taxonomiesRealisations } from '../../lib/contenu';
+
+const realisations = await getRealisations();
+const { domaines, techs } = await taxonomiesRealisations();
+---
+
+<Base
+  title="Réalisations — Bénaja Bendo-Matondo"
+  description="L’inventaire : produits, missions, outils. Pour chacun, le rôle exact que j’y ai tenu, son statut aujourd’hui et ce que j’en retiens."
+>
+  <section class="container">
+    <p class="eyebrow">Réalisations</p>
+    <h1>Ce que j’ai construit</h1>
+    <p class="lead">
+      Un inventaire, pas une sélection. Chaque fiche dit ce que c’est, quel rôle
+      j’y ai réellement tenu, où ça en est aujourd’hui et ce que j’en retiens —
+      y compris quand la réponse n’est pas flatteuse.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="lignes">
+      {
+        realisations.map((realisation) => (
+          <LigneRealisation realisation={realisation} />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Parcourir</p>
+    <h2>Par domaine, par technologie</h2>
+    <p class="lead muted">
+      Un filtre n’existe que s’il regroupe au moins deux réalisations&nbsp;: une page
+      qui n’affiche qu’une seule ligne n’aide personne à naviguer.
+    </p>
+
+    <h3 class="section-gap">Domaines</h3>
+    <ul class="chips chips-compte" aria-label="Domaines">
+      {
+        domaines.map((groupe) => (
+          <li>
+            <a href={`/realisations/domaine/${groupe.slug}`}>
+              {groupe.label}
+              <span class="compte">{groupe.entrees.length}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h3 class="section-gap">Technologies</h3>
+    <ul class="chips chips-compte" aria-label="Technologies">
+      {
+        techs.map((groupe) => (
+          <li>
+            <a href={`/realisations/tech/${groupe.slug}`}>
+              {groupe.label}
+              <span class="compte">{groupe.entrees.length}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

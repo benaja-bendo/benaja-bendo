@@ -1,0 +1,41 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LigneNote from '../../../components/LigneNote.astro';
+import { sujetsNotes, type Groupe, type Note } from '../../../lib/contenu';
+
+// Comme pour les réalisations, un sujet n'obtient sa page qu'à partir de deux
+// notes. Tant qu'aucun sujet n'atteint le seuil, cette route ne génère aucune
+// page — et les puces de sujet restent de simples libellés.
+export async function getStaticPaths() {
+  const { sujets } = await sujetsNotes();
+  return sujets.map((groupe) => ({
+    params: { sujet: groupe.slug },
+    props: { groupe },
+  }));
+}
+
+interface Props {
+  groupe: Groupe<Note>;
+}
+
+const { groupe } = Astro.props;
+---
+
+<Base
+  title={`${groupe.label} — notes | Bénaja Bendo-Matondo`}
+  description={`Les notes de Bénaja Bendo-Matondo sur le sujet « ${groupe.label} ».`}
+>
+  <section class="container">
+    <p class="eyebrow">Sujet</p>
+    <h1>{groupe.label}</h1>
+    <p class="lead">{groupe.entrees.length} notes sur ce sujet.</p>
+  </section>
+
+  <section class="container">
+    <div class="lignes">
+      {groupe.entrees.map((note) => <LigneNote note={note} />)}
+    </div>
+
+    <p class="retour"><a href="/notes">← Toutes les notes</a></p>
+  </section>
+</Base>

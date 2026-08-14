@@ -1,18 +1,30 @@
 ---
-const path = Astro.url.pathname;
+import { getEtudes, getNotes, getRealisations } from '../lib/contenu';
+
+// Une rubrique vide n'apparaît pas dans la navigation (docs/08 §6). Le test se
+// fait sur le contenu publié, pas sur l'existence du dossier : le jour où la
+// dernière note passe en brouillon, l'entrée disparaît d'elle-même.
+const [realisations, etudes, notes] = await Promise.all([
+  getRealisations(),
+  getEtudes(),
+  getNotes(),
+]);
+
 const nav = [
-  { href: '/', label: 'Accueil' },
-  { href: '/mibeko', label: 'Mibeko' },
-  { href: '/experiences', label: 'Expériences' },
-  { href: '/a-propos', label: 'À propos' },
-];
+  { href: '/realisations', label: 'Réalisations', actif: realisations.length > 0 },
+  { href: '/etudes', label: 'Études', actif: etudes.length > 0 },
+  { href: '/notes', label: 'Notes', actif: notes.length > 0 },
+  { href: '/a-propos', label: 'À propos', actif: true },
+].filter((item) => item.actif);
+
+const path = Astro.url.pathname;
 const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href);
+  href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/">
+    <a class="brand" href="/" aria-current={path === '/' ? 'page' : undefined}>
       <span class="brand-mark" aria-hidden="true">BB</span>
       <span class="brand-name">Bénaja&nbsp;Bendo</span>
     </a>

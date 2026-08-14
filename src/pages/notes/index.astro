@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import LigneNote from '../../components/LigneNote.astro';
+import { STATUTS_NOTE, getNotes, sujetsNotes } from '../../lib/contenu';
+
+const notes = await getNotes();
+const { sujets } = await sujetsNotes();
+const legende = Object.values(STATUTS_NOTE);
+---
+
+<Base
+  title="Notes — Bénaja Bendo-Matondo"
+  description="La mémoire de travail : diagnostics, configurations et décisions techniques, datés et avec leur niveau de finition affiché."
+>
+  <section class="container">
+    <p class="eyebrow">Notes</p>
+    <h1>Ma mémoire de travail</h1>
+    <p class="lead">
+      J’écris ces notes d’abord pour moi dans six mois, quand j’aurai oublié
+      pourquoi j’avais tranché comme ça. Elles sont datées, leur niveau de
+      finition est écrit noir sur blanc, et aucune fréquence de publication
+      n’est promise&nbsp;: une note utile vaut mieux qu’un billet mensuel.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="lignes">
+      {notes.map((note) => <LigneNote note={note} />)}
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Lire les statuts</p>
+    <h2>Ce que vaut une note</h2>
+    <p class="lead muted">
+      Le niveau de finition est affiché parce qu’il change ce que vous pouvez
+      en faire.
+    </p>
+    <dl class="legende">
+      {
+        legende.map((statut) => (
+          <div>
+            <dt>{statut.label}</dt>
+            <dd>{statut.aide}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    {
+      sujets.length > 0 && (
+        <>
+          <h3 class="section-gap">Par sujet</h3>
+          <ul class="chips chips-compte" aria-label="Sujets">
+            {sujets.map((groupe) => (
+              <li>
+                <a href={`/notes/sujet/${groupe.slug}`}>
+                  {groupe.label}
+                  <span class="compte">{groupe.entrees.length}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+
+    <div class="cta-row">
+      <a class="btn btn-ghost" href="/rss.xml">Suivre en RSS</a>
+    </div>
+  </section>
+</Base>

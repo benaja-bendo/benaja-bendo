@@ -1,98 +1,133 @@
 ---
 import Base from '../layouts/Base.astro';
+import Statut from '../components/Statut.astro';
+import {
+  STATUTS_REALISATION,
+  dateISO,
+  formatDate,
+  getEtudes,
+  getNotes,
+  getRealisations,
+} from '../lib/contenu';
 
-const proofs = [
-  {
-    titre: 'Mibeko — SaaS LegalTech en production',
-    period: 'Depuis déc. 2025 · seul',
-    points: [
-      'Assistant qui cite l’article exact d’où vient chaque réponse (RAG)',
-      '~730 tests automatisés, CI/CD, déploiement continu',
-      'Web + apps iOS/Android publiées sur les deux stores',
-    ],
-    href: '/mibeko',
-    cta: 'Lire l’étude de cas',
-  },
-  {
-    titre: 'Capgemini — 3 ans, du back au décisionnel',
-    period: '2023 – 2026',
-    points: [
-      'Microservices Java / Spring Boot à l’AIFE (finances publiques)',
-      'Un service Spring Boot qui automatise la collecte de 400+ collaborateurs',
-      'Tableaux de bord Power BI utilisés au quotidien',
-    ],
-    href: '/experiences',
-    cta: 'Voir les expériences',
-  },
-  {
-    titre: 'Expert en informatique (Bac+5)',
-    period: 'RNCP niveau 7 · EPSI Bordeaux · sept. 2026',
-    points: [
-      'Titre RNCP niveau 7 en alternance chez Capgemini',
-      'Bachelor Concepteur Développeur d’Applications (2024)',
-      'Parcours parti du génie des systèmes industriels',
-    ],
-    href: '/a-propos',
-    cta: 'Mon parcours',
-  },
-];
+// Trois portes d'entrée, une par espace du site (docs/08 §2). Chacune montre
+// une vraie entrée : rien n'est écrit en dur ici, donc rien ne peut mentir
+// quand le contenu change.
+const realisations = await getRealisations();
+const etudes = await getEtudes();
+const notes = await getNotes();
+
+const realisation = realisations[0];
+// La porte « étude » ne doit pas répéter la porte « réalisation » : on prend la
+// première étude qui parle d'autre chose, et on retombe sur la première s'il
+// n'y en a qu'une.
+const etude =
+  etudes.find((e) => e.data.realisation !== realisation.id) ?? etudes[0];
+const note = notes[0];
+const statut = STATUTS_REALISATION[realisation.data.statut];
 ---
 
 <Base
-  title="Bénaja Bendo-Matondo — Développeur Fullstack Java / Spring Boot · React"
-  description="Développeur fullstack. J’ai conçu et j’opère seul Mibeko, SaaS LegalTech en production depuis décembre 2025. Disponible en CDI à partir du 28 septembre 2026."
+  title="Bénaja Bendo-Matondo — développeur fullstack, Bordeaux"
+  description="Je construis des systèmes logiciels et je les fais tenir en production. Mibeko, SaaS LegalTech opéré seul depuis décembre 2025 ; microservices Java / Spring Boot chez Capgemini."
 >
   <section class="hero container">
-    <p class="eyebrow">Développeur fullstack · Bordeaux</p>
+    <p class="eyebrow">Bordeaux · développeur fullstack</p>
     <h1>
       Bénaja Bendo-Matondo
-      <span class="role">Développeur Fullstack Java / Spring Boot · React</span>
+      <span class="role">
+        Je construis des systèmes logiciels, et je les fais tenir en production.
+      </span>
     </h1>
 
     <div class="hero-proof">
       <p>
-        J’ai conçu et j’opère <mark>seul</mark> <a href="/mibeko">Mibeko</a>, un
-        SaaS LegalTech <mark class="mark-time">en production depuis décembre 2025</mark> :
-        un assistant qui répond aux questions de droit en citant ses sources,
-        ~730 tests, applications publiées sur l’App&nbsp;Store et le Play&nbsp;Store.
+        Le plus complet s’appelle <a href="/realisations/mibeko">Mibeko</a>&nbsp;: un
+        assistant qui rend le droit congolais consultable en citant l’article
+        exact d’où vient chaque réponse. Conçu, développé et <mark>opéré seul</mark>
+        — du backend aux applications publiées sur les deux stores. Le jour,
+        j’écris des microservices Java&nbsp;/&nbsp;Spring Boot sur des systèmes
+        des finances publiques.
       </p>
     </div>
 
-    <p class="lead">
-      Disponible en CDI à partir du <mark class="mark-time">28&nbsp;septembre&nbsp;2026</mark>.
-    </p>
-
     <div class="cta-row">
-      <a class="btn btn-primary" href="/mibeko">Voir Mibeko</a>
-      <a class="btn btn-ghost" href="mailto:contact@benaja-bendo.fr">Me contacter</a>
+      <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
+      <a class="btn btn-ghost" href="/a-propos">Qui je suis</a>
     </div>
   </section>
 
   <section class="container">
-    <p class="eyebrow">Les preuves</p>
-    <h2>Ce que j’ai construit et livré</h2>
+    <p class="eyebrow">Trois portes d’entrée</p>
+    <h2>Par où commencer</h2>
+    <p class="lead muted">
+      Selon ce que vous cherchez&nbsp;: ce que j’ai construit, comment je décide, ou
+      ce que j’apprends en chemin.
+    </p>
+
     <div class="cards">
-      {proofs.map((p) => (
-        <article class="card">
-          <h3>{p.titre}</h3>
-          <span class="period">{p.period}</span>
-          <ul>
-            {p.points.map((pt) => <li>{pt}</li>)}
-          </ul>
-          <a href={p.href}>{p.cta} →</a>
-        </article>
-      ))}
+      <article class="card">
+        <span class="period">Une réalisation</span>
+        <h3><a href={`/realisations/${realisation.id}`}>{realisation.data.nom}</a></h3>
+        <p class="card-resume">{realisation.data.resume}</p>
+        <p class="card-statut">
+          <Statut label={statut.label} ton={statut.ton} />
+        </p>
+        <a href="/realisations">Voir l’inventaire →</a>
+      </article>
+
+      <article class="card">
+        <span class="period">Une étude de cas</span>
+        <h3><a href={`/etudes/${etude.id}`}>{etude.data.titre}</a></h3>
+        <p class="card-resume">{etude.data.resume}</p>
+        <a href="/etudes">Toutes les études →</a>
+      </article>
+
+      <article class="card">
+        <span class="period">
+          Une note · <time datetime={dateISO(note.data.date)}>{formatDate(note.data.date)}</time>
+        </span>
+        <h3><a href={`/notes/${note.id}`}>{note.data.titre}</a></h3>
+        <p class="card-resume">{note.data.resume}</p>
+        <a href="/notes">Toutes les notes →</a>
+      </article>
     </div>
   </section>
 
   <section class="container">
     <p class="eyebrow">En deux mots</p>
-    <h2>Du diagnostic à la production</h2>
+    <h2>J’ai commencé par réparer des machines</h2>
+    <div class="prose">
+      <p>
+        Licence de génie des systèmes industriels à Pointe-Noire, puis le
+        développement — chez un employeur, en freelance, et aujourd’hui en
+        alternance chez Capgemini à Bordeaux. Le fil conducteur n’a pas bougé&nbsp;:
+        comprendre un problème réel, construire l’outil qui le règle, et le
+        faire tenir dans la durée.
+      </p>
+      <p>
+        Ce site est le même exercice appliqué à moi-même&nbsp;: il
+        est <a href="/realisations/benaja-bendo-fr">construit comme les autres</a>,
+        avec ses contraintes et ses compromis écrits noir sur blanc.
+      </p>
+      <p><a href="/a-propos">Lire le parcours →</a></p>
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Pratique</p>
+    <h2>Disponibilité</h2>
     <p class="lead">
-      J’ai commencé par réparer des machines à Pointe-Noire. Je construis
-      maintenant des systèmes logiciels qui n’ont pas besoin de moi pour tourner —
-      et je les opère en production.
+      Je termine mon alternance chez Capgemini et je serai disponible en CDI à
+      partir du <mark class="mark-time">28&nbsp;septembre&nbsp;2026</mark>, à
+      Bordeaux&nbsp;/&nbsp;Mérignac.
     </p>
-    <p><a href="/a-propos">Lire mon parcours →</a></p>
+    <p class="muted">
+      Le reste du site ne dépend pas de cette ligne&nbsp;: il vit aussi bien une fois
+      le poste signé.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/contact">Me contacter</a>
+    </div>
   </section>
 </Base>

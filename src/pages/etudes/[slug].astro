@@ -1,0 +1,110 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Taxo from '../../components/Taxo.astro';
+import {
+  dateISO,
+  formatDate,
+  getEtudes,
+  getRealisations,
+  taxonomiesRealisations,
+  type Etude,
+} from '../../lib/contenu';
+
+export async function getStaticPaths() {
+  const etudes = await getEtudes();
+  return etudes.map((etude) => ({
+    params: { slug: etude.id },
+    props: { etude },
+  }));
+}
+
+interface Props {
+  etude: Etude;
+}
+
+const { etude } = Astro.props;
+const { data } = etude;
+const { Content } = await render(etude);
+const { aUnePage } = await taxonomiesRealisations();
+
+// La fiche d'inventaire correspondante, si elle est publiée : l'étude raconte,
+// la fiche situe. On ne lie que ce qui existe vraiment.
+const realisations = await getRealisations();
+const realisation = data.realisation
+  ? realisations.find((r) => r.id === data.realisation)
+  : undefined;
+---
+
+<Base
+  title={`${data.titre} — étude de cas | Bénaja Bendo-Matondo`}
+  description={data.resume}
+>
+  <section class="container">
+    <p class="eyebrow">Étude de cas · {data.periode}</p>
+    <h1>{data.titre}</h1>
+    {data.sousTitre && <p class="lead muted">{data.sousTitre}</p>}
+    <p class="lead">{data.resume}</p>
+
+    {
+      data.confidentiel && (
+        <p class="note-cadre">
+          Mission client. Je décris mon rôle, mes décisions et ce que j’en
+          retiens — aucune donnée, aucun code ni architecture appartenant au
+          client ne figure ici.
+        </p>
+      )
+    }
+
+    {
+      data.chiffres.length > 0 && (
+        <ul class="stats">
+          {data.chiffres.map((chiffre) => (
+            <li>
+              <span class="value">{chiffre.valeur}</span>
+              <span class="label">{chiffre.label}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      (data.liens.length > 0 || realisation) && (
+        <div class="cta-row">
+          {data.liens.map((lien) => (
+            <a class="btn btn-primary" href={lien.url} rel="noopener">
+              {lien.label}
+            </a>
+          ))}
+          {realisation && (
+            <a class="btn btn-ghost" href={`/realisations/${realisation.id}`}>
+              La fiche en bref
+            </a>
+          )}
+        </div>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Repères</p>
+    <h2>Stack technique</h2>
+    <Taxo
+      valeurs={data.stack}
+      base="/realisations/tech"
+      aUnePage={aUnePage}
+      etiquette="Stack technique"
+    />
+
+    <p class="relecture">
+      Étude relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>.
+    </p>
+
+    <p class="retour"><a href="/etudes">← Toutes les études de cas</a></p>
+  </section>
+</Base>

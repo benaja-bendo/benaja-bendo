@@ -3,9 +3,53 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro:schema';
 
 /**
- * Collection « etudes » — études de cas (Mibeko, missions Capgemini…).
- * Content Layer API (Astro 5+) : chargeur glob + schéma Zod typé.
+ * Modèle de contenu — voir docs/08-plan-contenu.md §4.
+ *
+ * Trois collections, trois niveaux de finition assumés :
+ *   realisations : l'inventaire. Court, factuel, avec un enseignement obligatoire.
+ *   etudes       : les décisions derrière quelques réalisations. Format long.
+ *   notes        : la mémoire de travail. Daté, statué, publiable court.
+ *
+ * `brouillon: true` exclut une entrée de TOUTES les routes et du RSS (helpers
+ * dans src/lib/contenu.ts) : c'est le seul mécanisme de non-publication.
  */
+
+const lien = z.object({ label: z.string(), url: z.string().url() });
+
+const realisations = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/realisations' }),
+  schema: z.object({
+    nom: z.string(),
+    resume: z.string(),
+    /** Statut public. Une archive est un état, pas un abandon. */
+    statut: z.enum([
+      'production',
+      'en-cours',
+      'maintenu',
+      'termine',
+      'pause',
+      'archive',
+    ]),
+    /** Période affichée, écrite en toutes lettres (« Depuis décembre 2025 »). */
+    periode: z.string(),
+    role: z.string(),
+    stack: z.array(z.string()).default([]),
+    domaines: z.array(z.string()).default([]),
+    liens: z.array(lien).default([]),
+    /** Obligatoire : sans lui, l'inventaire redevient un CV en liste. */
+    enseignement: z.string(),
+    /** Identifiant de l'étude de cas associée, si elle existe. */
+    etude: z.string().optional(),
+    epingle: z.boolean().default(false),
+    ordre: z.number().default(50),
+    /** Date de dernière relecture, affichée. */
+    maj: z.coerce.date(),
+    brouillon: z.boolean().default(false),
+    /** Mission client : aucun lien public exigé, périmètre borné à la place. */
+    confidentiel: z.boolean().default(false),
+  }),
+});
+
 const etudes = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/etudes' }),
   schema: z.object({
@@ -18,11 +62,35 @@ const etudes = defineCollection({
     chiffres: z
       .array(z.object({ valeur: z.string(), label: z.string() }))
       .default([]),
-    liens: z
-      .array(z.object({ label: z.string(), url: z.string().url() }))
-      .default([]),
+    liens: z.array(lien).default([]),
+    /** Réalisation dont cette étude approfondit les décisions. */
+    realisation: z.string().optional(),
+    confidentiel: z.boolean().default(false),
     ordre: z.number().default(0),
+    maj: z.coerce.date(),
+    brouillon: z.boolean().default(false),
   }),
 });
 
-export const collections = { etudes };
+const notes = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/notes' }),
+  schema: z.object({
+    titre: z.string(),
+    date: z.coerce.date(),
+    maj: z.coerce.date().optional(),
+    resume: z.string(),
+    sujets: z.array(z.string()).default([]),
+    /** Niveau de finition, explicite et non caché. */
+    statut: z
+      .enum(['fragment', 'testee', 'stable', 'obsolete'])
+      .default('fragment'),
+    /** `article` reste un format de note, pas une collection à part. */
+    format: z.enum(['note', 'article']).default('note'),
+    /** Identifiant de la note qui remplace celle-ci, si elle est obsolète. */
+    remplaceePar: z.string().optional(),
+    sources: z.array(lien).default([]),
+    brouillon: z.boolean().default(false),
+  }),
+});
+
+export const collections = { realisations, etudes, notes };

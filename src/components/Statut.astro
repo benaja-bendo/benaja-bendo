@@ -1,0 +1,15 @@
+---
+import type { Ton } from '../lib/contenu';
+
+/** Pastille d'état — un carré, pas une LED (docs/05 §4). */
+interface Props {
+  label: string;
+  ton?: Ton;
+}
+
+const { label, ton = 'calme' } = Astro.props;
+---
+
+<span class:list={['statut', `statut-${ton}`]}>
+  <span class="statut-pixel" aria-hidden="true"></span>{label}
+</span>

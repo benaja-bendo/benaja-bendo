@@ -1,72 +1,68 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import { getEtudes } from '../lib/contenu';
 
-const missions = (await getCollection('etudes'))
-  .filter((e) => e.id !== 'mibeko')
-  .sort((a, b) => a.data.ordre - b.data.ordre);
-
-const rendered = await Promise.all(
-  missions.map(async (e) => ({
-    id: e.id,
-    data: e.data,
-    Content: (await render(e)).Content,
-  })),
-);
+/**
+ * Page de compatibilité. Elle existe pour une seule raison : `/experiences#aife`
+ * et `/experiences#france-travail` ont été distribués dans des candidatures.
+ * Un fragment d'URL n'atteint jamais le serveur, donc aucune règle de
+ * redirection ne peut envoyer ces deux ancres vers deux pages différentes —
+ * voir /notes/fragment-url-et-redirections.
+ *
+ * Elle ne duplique pas les études : elle oriente et s'efface. À retirer le jour
+ * où plus personne n'arrive par ces liens.
+ */
+const missions = (await getEtudes()).filter((etude) => etude.id !== 'mibeko');
 ---
 
 <Base
-  title="Expériences — Bénaja Bendo-Matondo"
-  description="Trois ans chez Capgemini : microservices Java / Spring Boot à l’AIFE, automatisation et décisionnel sur le compte France Travail, plus le parcours web/mobile au Congo."
+  title="Expériences professionnelles — Bénaja Bendo-Matondo"
+  description="Trois ans chez Capgemini : microservices Java / Spring Boot à l’AIFE, automatisation et décisionnel sur le compte France Travail. Chaque mission a son étude de cas."
 >
   <section class="container">
     <p class="eyebrow">Expériences professionnelles</p>
     <h1>Du back au décisionnel, en équipe et en production</h1>
     <p class="lead">
-      Trois ans chez Capgemini, sur des systèmes exigeants — finances publiques et
-      compte France Travail. Ici, les faits et les résultats ; le détail vit dans
-      chaque étude de cas.
+      Trois ans chez Capgemini, sur des systèmes exigeants — finances publiques
+      et compte France Travail. Chaque mission a maintenant son étude de cas&nbsp;:
+      cette page ne garde que le résumé et le chemin.
     </p>
   </section>
 
-  {rendered.map(({ id, data, Content }) => (
-    <section class="container" id={id}>
-      <p class="eyebrow">{data.periode}</p>
-      <h2>{data.titre}</h2>
-      {data.sousTitre && <p class="lead muted">{data.sousTitre}</p>}
-
-      {data.chiffres.length > 0 && (
-        <ul class="stats">
-          {data.chiffres.map((c) => (
-            <li>
-              <span class="value">{c.valeur}</span>
-              <span class="label">{c.label}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div class="prose">
-        <Content />
-      </div>
-
-      {data.stack.length > 0 && (
-        <ul class="chips">
-          {data.stack.map((s) => <li>{s}</li>)}
-        </ul>
-      )}
-    </section>
-  ))}
+  {
+    missions.map((etude) => (
+      <section class="container" id={etude.id}>
+        <p class="eyebrow">{etude.data.periode}</p>
+        <h2>{etude.data.titre}</h2>
+        {etude.data.sousTitre && <p class="lead muted">{etude.data.sousTitre}</p>}
+        <p class="lead">{etude.data.resume}</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={`/etudes/${etude.id}`}>
+            Lire l’étude de cas
+          </a>
+          {etude.data.realisation && (
+            <a class="btn btn-ghost" href={`/realisations/${etude.data.realisation}`}>
+              La fiche en bref
+            </a>
+          )}
+        </div>
+      </section>
+    ))
+  }
 
   <section class="container">
     <p class="eyebrow">Avant Capgemini</p>
     <h2>Congo — développeur web & mobile</h2>
-    <p class="prose">
-      Reconversion de la maintenance industrielle vers le développement : salarié
-      chez InfraOne System (2019–2020), puis freelance (2021–2023) à Pointe-Noire.
-      Applications mobiles Flutter, API Laravel / Node.js, logiciels livrés à des
-      clients réels — du recueil du besoin à la mise en production.
-      <a href="/a-propos"> Voir le parcours complet →</a>
+    <p class="lead">
+      Reconversion de la maintenance industrielle vers le développement&nbsp;:
+      salarié chez InfraOne System (2019–2020), puis freelance (2021–2023) à
+      Pointe-Noire. Applications mobiles Flutter, API Laravel / Node.js,
+      logiciels livrés à des clients réels — du recueil du besoin à la mise en
+      production.
     </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/a-propos">Le parcours complet</a>
+      <a class="btn btn-ghost" href="/realisations">Toutes les réalisations</a>
+    </div>
   </section>
 </Base>

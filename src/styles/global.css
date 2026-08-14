@@ -283,6 +283,11 @@ a:hover {
 .eyebrow::before {
   content: "";
   flex: none;
+  /* Aligné sur la PREMIÈRE ligne, pas au centre du bloc : sur mobile, un
+     intertitre passe volontiers sur deux lignes et le glyphe se retrouvait
+     flottant au milieu. Le décalage vaut le centrage optique d'une ligne. */
+  align-self: flex-start;
+  margin-top: 0.4rem;
   width: 3px;
   height: 3px;
   background: var(--accent);
@@ -573,6 +578,24 @@ main > section:last-child {
 .card a:hover {
   text-decoration: underline;
 }
+/* Un titre de carte peut être un lien : il reste de l'encre, souligné d'accent.
+   Il faut annuler ce que `.card a` pose pour le lien d'action en pied de carte. */
+.card h3 a {
+  margin-top: 0;
+  padding: 0;
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+}
+.card h3 a:hover {
+  color: var(--accent);
+}
+.card-resume {
+  margin: 0.2rem 0 0;
+}
+.card-statut {
+  margin: 0.7rem 0 0;
+}
 
 /* =============================================================================
  * Tuiles de chiffres
@@ -631,8 +654,283 @@ main > section:last-child {
   border: var(--edge) solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.15rem 0.6rem;
-  color: var(--fg);
+  color: var(--muted);
   background: var(--surface-2);
+}
+/* Dans une même liste, certaines puces mènent à une page filtrée et d'autres non.
+   La différence doit se voir sans survoler : encre + accent souligné pour les
+   liens, gris pour les libellés. La couleur ne porte donc jamais seule
+   l'information. La marge négative fait de la pastille entière la zone de clic. */
+.chips a {
+  display: inline-block;
+  margin: -0.15rem -0.6rem;
+  padding: 0.15rem 0.6rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.chips a:hover {
+  background: var(--mark-1);
+  color: var(--accent-strong);
+}
+.chips-compte {
+  margin-top: 1rem;
+}
+.chips-compte .compte {
+  margin-left: 0.5rem;
+  color: var(--muted);
+}
+
+/* =============================================================================
+ * Inventaire — lignes de réalisations et de notes
+ *
+ * Volontairement plus léger qu'une carte : une carte attire l'œil sur UNE
+ * chose, une liste doit se parcourir. Filets discrets, pas de bordure pleine.
+ * ========================================================================== */
+
+.lignes {
+  margin-top: 2rem;
+}
+.ligne + .ligne {
+  margin-top: 2.75rem;
+  padding-top: 2.75rem;
+  border-top: 1px solid var(--rule);
+}
+.ligne-tete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  flex-wrap: wrap;
+}
+.ligne-titre {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.4rem);
+}
+.ligne-titre a {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+.ligne-titre a:hover {
+  color: var(--accent);
+}
+.ligne-periode {
+  margin: 0.4rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.ligne-resume {
+  margin: 0.7rem 0 0;
+  max-width: var(--prose);
+}
+.ligne-liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+  margin: 0.75rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+.ligne-liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem; /* cible tactile : c'est une rangée d'actions */
+  font-weight: 600;
+  text-decoration: none;
+}
+.ligne-liens a:hover {
+  text-decoration: underline;
+}
+
+/* Étiquette de champ : mono, capitales, discrète — c'est de la méta, pas du texte. */
+.etiq {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.champ {
+  margin: 1rem 0 0;
+  max-width: var(--prose);
+}
+
+/* L'enseignement — le champ obligatoire de l'inventaire. Même idiome visuel
+   que la citation en prose : filet d'accent épais + aplat. */
+.retenu {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1.1rem;
+  max-width: var(--prose);
+  border-left: 6px solid var(--accent);
+  background: var(--surface-2);
+}
+.retenu-bloc {
+  margin-top: 2.25rem;
+  border: var(--edge) solid var(--border);
+  border-left: 6px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  padding: 1rem 1.25rem;
+}
+.retenu-bloc p:last-child {
+  margin: 0;
+}
+
+/* =============================================================================
+ * Pastille d'état — un carré, jamais une LED (docs/05 §4)
+ * ========================================================================== */
+
+.statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: none;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.statut-pixel {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--muted);
+}
+.statut-vif .statut-pixel {
+  background: var(--ok);
+}
+.statut-alerte .statut-pixel {
+  background: var(--signal);
+}
+
+/* =============================================================================
+ * Fiche de faits — rangées libellé / valeur, même gabarit que la timeline.
+ *
+ * Une grille de tuiles avait l'air plus riche, mais un nombre de faits qui ne
+ * tombe pas juste laissait une case vide au bout : ici, il n'y a jamais de trou,
+ * et une valeur longue garde toute la largeur.
+ * ========================================================================== */
+
+.fiche {
+  margin: 2rem 0;
+  padding: 0;
+  background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  overflow: hidden;
+}
+.fiche > div {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 0.2rem 1.25rem;
+  align-items: baseline;
+  padding: 0.8rem 1.1rem;
+  border-top: 1px solid var(--rule);
+}
+.fiche > div:first-child {
+  border-top: 0;
+}
+.fiche dt {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fiche dd {
+  margin: 0;
+}
+.fiche dd a {
+  display: inline-block;
+  margin-right: 0.8rem;
+}
+@media (max-width: 34rem) {
+  .fiche > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Légende des statuts de notes */
+.legende {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+}
+.legende > div {
+  padding-left: 0.9rem;
+  border-left: 6px solid var(--rule);
+}
+.legende dt {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.legende dd {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Encadré de mise au point (confidentialité, note remplacée) : l'ambre en aplat,
+   jamais en texte. */
+.note-cadre {
+  margin: 1.5rem 0;
+  padding: 0.85rem 1.1rem;
+  max-width: var(--prose);
+  border: var(--edge) solid var(--rule);
+  border-left: 6px solid var(--signal);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.95rem;
+}
+.note-statut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.8rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* Dates de relecture et retours arrière : de la méta, donc du mono. */
+.relecture {
+  margin-top: 2rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.retour {
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+}
+.retour a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.retour a:hover {
+  text-decoration: underline;
 }
 
 /* =============================================================================
@@ -642,11 +940,25 @@ main > section:last-child {
 .prose {
   max-width: var(--prose);
 }
+.prose > :first-child {
+  margin-top: 0;
+}
 .prose h2 {
   margin-top: 2.25rem;
 }
+.prose h3 {
+  margin-top: 1.75rem;
+}
 .prose p {
   margin: 0 0 1rem;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
+}
+.prose li {
+  margin-bottom: 0.4rem;
 }
 .prose blockquote {
   margin: 1.5rem 0;
@@ -661,6 +973,26 @@ main > section:last-child {
   border: 1px solid var(--rule);
   border-radius: 4px;
   padding: 0.1em 0.35em;
+}
+/* Bloc de code : mis en forme ici et nulle part ailleurs. La coloration
+   syntaxique est désactivée dans astro.config.mjs — Shiki écrit ses couleurs en
+   style inline, ce que la CSP interdit. */
+.prose pre {
+  margin: 1.25rem 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.prose pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
 }
 
 /* =============================================================================

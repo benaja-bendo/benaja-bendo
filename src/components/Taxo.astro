@@ -1,0 +1,36 @@
+---
+import { slugifie } from '../lib/contenu';
+
+/**
+ * Puces de taxonomie. Une puce ne devient un lien que si la page filtrée
+ * correspondante existe réellement (seuil dans src/lib/contenu.ts) : pas de
+ * lien vers une page qu'on n'a pas générée, pas de page pour un seul élément.
+ */
+interface Props {
+  valeurs: string[];
+  base?: string;
+  aUnePage?: Set<string>;
+  etiquette: string;
+}
+
+const { valeurs, base, aUnePage, etiquette } = Astro.props;
+---
+
+{
+  valeurs.length > 0 && (
+    <ul class="chips" aria-label={etiquette}>
+      {valeurs.map((valeur) => {
+        const slug = slugifie(valeur);
+        return (
+          <li>
+            {base && aUnePage?.has(slug) ? (
+              <a href={`${base}/${slug}`}>{valeur}</a>
+            ) : (
+              valeur
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  )
+}

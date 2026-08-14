@@ -1,0 +1,122 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Statut from '../../components/Statut.astro';
+import Taxo from '../../components/Taxo.astro';
+import {
+  STATUTS_REALISATION,
+  formatDate,
+  dateISO,
+  getRealisations,
+  taxonomiesRealisations,
+  type Realisation,
+} from '../../lib/contenu';
+
+export async function getStaticPaths() {
+  const realisations = await getRealisations();
+  return realisations.map((realisation) => ({
+    params: { slug: realisation.id },
+    props: { realisation },
+  }));
+}
+
+interface Props {
+  realisation: Realisation;
+}
+
+const { realisation } = Astro.props;
+const { data } = realisation;
+const { Content } = await render(realisation);
+const statut = STATUTS_REALISATION[data.statut];
+const { aUnePage } = await taxonomiesRealisations();
+---
+
+<Base
+  title={`${data.nom} — réalisation | Bénaja Bendo-Matondo`}
+  description={data.resume}
+>
+  <section class="container">
+    <p class="eyebrow">Réalisation · {data.periode}</p>
+    <h1>{data.nom}</h1>
+    <p class="lead">{data.resume}</p>
+
+    <dl class="fiche">
+      <div>
+        <dt>Statut</dt>
+        <dd><Statut label={statut.label} ton={statut.ton} /></dd>
+      </div>
+      <div>
+        <dt>Période</dt>
+        <dd>{data.periode}</dd>
+      </div>
+      <div>
+        <dt>Mon rôle</dt>
+        <dd>{data.role}</dd>
+      </div>
+      <div>
+        <dt>Preuve</dt>
+        <dd>
+          {
+            data.liens.length > 0 ? (
+              data.liens.map((lien) => (
+                <a href={lien.url} rel="noopener">
+                  {lien.label} ↗
+                </a>
+              ))
+            ) : data.confidentiel ? (
+              <span class="muted">Mission client — aucun lien public</span>
+            ) : (
+              <span class="muted">—</span>
+            )
+          }
+        </dd>
+      </div>
+    </dl>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div class="retenu retenu-bloc">
+      <p class="etiq">Ce que j’en retiens</p>
+      <p>{data.enseignement}</p>
+    </div>
+
+    {
+      data.etude && (
+        <div class="cta-row">
+          <a class="btn btn-primary" href={`/etudes/${data.etude}`}>
+            Lire l’étude de cas
+          </a>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Repères</p>
+    <h2>Technologies et domaines</h2>
+
+    <h3 class="section-gap">Stack</h3>
+    <Taxo
+      valeurs={data.stack}
+      base="/realisations/tech"
+      aUnePage={aUnePage}
+      etiquette="Technologies"
+    />
+
+    <h3 class="section-gap">Domaines</h3>
+    <Taxo
+      valeurs={data.domaines}
+      base="/realisations/domaine"
+      aUnePage={aUnePage}
+      etiquette="Domaines"
+    />
+
+    <p class="relecture">
+      Fiche relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>.
+    </p>
+
+    <p class="retour"><a href="/realisations">← Toutes les réalisations</a></p>
+  </section>
+</Base>

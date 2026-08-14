@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getEtudes } from '../../lib/contenu';
+
+const etudes = await getEtudes();
+---
+
+<Base
+  title="Études de cas — Bénaja Bendo-Matondo"
+  description="Les décisions derrière quelques réalisations : le problème, mon rôle, les compromis assumés, le résultat et ce que je ferais autrement aujourd’hui."
+>
+  <section class="container">
+    <p class="eyebrow">Études de cas</p>
+    <h1>Les décisions, pas seulement le résultat</h1>
+    <p class="lead">
+      Une étude approfondit une réalisation quand il y a assez de matière&nbsp;:
+      le problème, mon rôle exact, une à trois décisions importantes avec leur
+      compromis, et le recul que j’ai aujourd’hui. Une étude qui ne montrerait
+      qu’un succès n’aurait pas grand intérêt.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="cards">
+      {
+        etudes.map((etude) => (
+          <article class="card">
+            <h3>
+              <a href={`/etudes/${etude.id}`}>{etude.data.titre}</a>
+            </h3>
+            <span class="period">{etude.data.periode}</span>
+            <p class="card-resume">{etude.data.resume}</p>
+            <a href={`/etudes/${etude.id}`}>Lire l’étude →</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Voir aussi</p>
+    <h2>L’inventaire complet</h2>
+    <p class="lead muted">
+      Toutes les réalisations n’ont pas une étude&nbsp;: certaines tiennent en une
+      fiche, et c’est très bien ainsi.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/realisations">Voir les réalisations</a>
+      <a class="btn btn-ghost" href="/notes">Lire les notes</a>
+    </div>
+  </section>
+</Base>
