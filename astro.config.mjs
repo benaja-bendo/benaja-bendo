@@ -42,6 +42,11 @@ export default defineConfig({
   // est le filet de sécurité portable, y compris en `npm run preview`.
   redirects: {
     '/mibeko': '/etudes/mibeko',
+    // Renommée le 14/08/2026. Un CHEMIN se redirige côté serveur, contrairement
+    // à un fragment (voir /notes/fragment-url-et-redirections) : la 301 est
+    // donc réelle, servie par firebase.json, et cette entrée n'est que le
+    // filet portable pour `npm run preview`.
+    '/a-propos': '/parcours',
   },
   build: {
     // Émet toujours le CSS en fichiers externes (aucun <style> inline) : condition

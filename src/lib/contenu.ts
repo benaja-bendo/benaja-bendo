@@ -219,7 +219,10 @@ export async function navigationPrincipale() {
     // cliqué en cherchant les diplômes et a trouvé Mibeko. L'URL ne bouge pas.
     { href: '/etudes', label: 'Études de cas', actif: etudes.length > 0 },
     { href: '/notes', label: 'Notes', actif: notes.length > 0 },
-    { href: '/a-propos', label: 'À propos', actif: true },
+    // « Parcours » et non « À propos » : c'est le mot qu'on cherche quand on
+    // veut savoir d'où vient quelqu'un, et c'est déjà celui que le site employait
+    // dans ses propres liens (« Lire le parcours → », « Le parcours complet »).
+    { href: '/parcours', label: 'Parcours', actif: true },
   ].filter((item) => item.actif);
 }
 

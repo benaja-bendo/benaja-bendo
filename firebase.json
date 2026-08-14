@@ -13,6 +13,11 @@
         "source": "/mibeko",
         "destination": "/etudes/mibeko",
         "type": 301
+      },
+      {
+        "source": "/a-propos",
+        "destination": "/parcours",
+        "type": 301
       }
     ],
     "headers": [

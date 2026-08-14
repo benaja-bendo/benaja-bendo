@@ -1,0 +1,169 @@
+---
+import Base from '../layouts/Base.astro';
+
+/**
+ * Une page, deux altitudes.
+ *
+ * Le libellé a longtemps été « À propos », alors que le site lui-même y
+ * renvoyait par « Lire le parcours → » et « Le parcours complet ». Le menu a
+ * rattrapé le vocabulaire déjà employé partout ailleurs.
+ *
+ * Conséquence sur la structure : la chronologie remonte AVANT le récit. Un
+ * libellé qui promet un parcours et qui ouvre sur trois essais reproduit le
+ * défaut qu'avait « Études » — le lecteur ne trouve pas ce que le mot annonce.
+ * Le h1 ne bouge pas pour autant : il porte l'accroche, les faits arrivent
+ * dans le même écran, le récit reste pour qui continue.
+ */
+
+// Séparées parce qu'un lecteur pressé ne cherche jamais les deux en même
+// temps : un recruteur vérifie le niveau d'études d'un côté, l'expérience de
+// l'autre. Mélangées, elles donnaient une liste où ni l'un ni l'autre ne
+// ressortait.
+const experiences = [
+  {
+    when: '2023–2026',
+    quoi: 'Développeur fullstack — Capgemini',
+    ou: 'Bordeaux · stage puis alternance · AIFE, puis compte France Travail',
+  },
+  {
+    when: '2021–2023',
+    quoi: 'Développeur web & mobile, en freelance',
+    ou: 'Pointe-Noire, Congo · clients directs',
+  },
+  {
+    when: '2020–2021',
+    quoi: 'Développeur fullstack — InfraOne System',
+    ou: 'Pointe-Noire, Congo · salarié',
+  },
+];
+
+const formation = [
+  {
+    when: '2024–2026',
+    // L'intitulé humain d'abord, la référence administrative ensuite, le statut
+    // daté en dernier : « Bac+5 » à côté d'une période « 2024–2026 » sans
+    // mention se lisait comme inachevé.
+    quoi: 'Expert en informatique — Bac+5 (titre RNCP niveau 7)',
+    ou: 'EPSI Bordeaux · en attente de soutenance',
+  },
+  {
+    when: '2022–2023',
+    quoi: 'Bachelor Concepteur Développeur d’Applications',
+    ou: 'EPSI Bordeaux · obtenu en septembre 2023',
+  },
+  {
+    when: '2016–2019',
+    quoi: 'Licence Génie des systèmes industriels — spécialité maintenance',
+    ou: 'Institut International (2i), Pointe-Noire',
+  },
+];
+---
+
+<Base
+  title="Parcours — Bénaja Bendo-Matondo"
+  description="Développeur depuis 2020, chez Capgemini depuis 2023 sur des systèmes des finances publiques. Bac+5 en informatique, EPSI Bordeaux. De la maintenance industrielle à Pointe-Noire aux systèmes en production à Bordeaux."
+>
+  <section class="container">
+    <p class="eyebrow">Parcours</p>
+    <h1>J’ai commencé par réparer des machines.</h1>
+    <p class="lead">
+      Je construis maintenant des systèmes logiciels qui n’ont pas besoin de moi
+      pour tourner. Entre les deux, un fil conducteur&nbsp;: comprendre un problème
+      réel, construire l’outil qui le règle, et le faire tenir dans la durée.
+    </p>
+
+    <h2 class="section-gap">Expériences</h2>
+    <ol class="timeline">
+      {experiences.map((p) => (
+        <li>
+          <span class="when">{p.when}</span>
+          <div>
+            <h3>{p.quoi}</h3>
+            <p class="muted">{p.ou}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <h2 class="section-gap">Formation</h2>
+    <ol class="timeline">
+      {formation.map((p) => (
+        <li>
+          <span class="when">{p.when}</span>
+          <div>
+            <h3>{p.quoi}</h3>
+            <p class="muted">{p.ou}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
+      <a class="btn btn-ghost" href="/contact">Me contacter</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Le fil</p>
+    <h2>Des machines au code</h2>
+    <div class="prose">
+      <h3>Les machines</h3>
+      <p>
+        J’ai d’abord appris l’ingénierie des systèmes industriels à Pointe-Noire&nbsp;:
+        diagnostiquer une panne, remettre en marche, fiabiliser ce qui ne doit pas
+        s’arrêter. Cette manière de penser ne m’a jamais quitté — elle décrit assez
+        bien ce que fait un bon logiciel en production.
+      </p>
+
+      <h3>Le code</h3>
+      <p>
+        Je suis passé au développement au Congo, avec de vrais clients avant les
+        diplômes&nbsp;: développeur fullstack salarié chez InfraOne System
+        de 2020 à 2021, puis freelance jusqu’en 2023 — applications mobiles
+        Flutter, API Laravel et Node.js. Mon arrivée à Bordeaux en août 2022 n’a
+        pas été un départ de zéro, mais un changement d’échelle&nbsp;: un
+        Bachelor, puis un titre d’expert (Bac+5) en alternance chez Capgemini,
+        sur des systèmes des finances publiques.
+      </p>
+
+      <h3>Les outils</h3>
+      <p>
+        Aujourd’hui, je développe des microservices Java / Spring Boot le jour, et
+        j’opère <a href="/realisations/mibeko">Mibeko</a> le reste du temps — un
+        SaaS qui rend le droit congolais et OHADA consultable, construit seul et
+        mis en production. La boucle se referme&nbsp;: je me sers de tout ce que j’ai
+        appris en France pour construire un outil utile à mon pays d’origine.
+      </p>
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Ma manière de travailler</p>
+    <h2>Ce que je cherche dans un problème</h2>
+    <div class="prose">
+      <p>
+        Les problèmes qui m’intéressent sont ceux où la sortie doit
+        être <strong>vérifiable</strong>. Sur Mibeko, ce n’est pas la qualité de la
+        réponse qui m’a occupé le plus longtemps, c’est la traçabilité&nbsp;: pouvoir
+        remonter de chaque phrase à l’article dont elle vient. Sur un service
+        interne, ce n’est pas l’élégance du code, c’est de savoir si le geste
+        manuel a réellement disparu.
+      </p>
+      <p>
+        Je préfère les contraintes posées tôt et tenues jusqu’au bout aux
+        contraintes négociées en cours de route. Ce site en est un exemple
+        volontairement excessif&nbsp;: une politique de sécurité stricte y
+        interdit tout style en ligne, ce qui m’a coûté une fonctionnalité
+        officielle du framework — et m’a évité toutes les discussions
+        suivantes. Les détails sont dans
+        le <a href="/colophon">colophon</a> et dans les <a href="/notes">notes</a>.
+      </p>
+      <p>
+        Ce que je veux approfondir maintenant&nbsp;: continuer à opérer ce que je
+        construis. Écrire du code que quelqu’un déploie ailleurs et écrire du code
+        qu’on réveille soi-même à 23&nbsp;h ne produisent pas les mêmes décisions.
+      </p>
+    </div>
+  </section>
+</Base>

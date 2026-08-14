@@ -1,6 +1,6 @@
 ---
 # BROUILLON — invisible sur le site, le RSS et le sitemap tant que
-# `brouillon: true`. Les faits ci-dessous viennent de /a-propos et de
+# `brouillon: true`. Les faits ci-dessous viennent de /parcours et de
 # /experiences (déjà publics) ; ce qui manque, c’est ce que TOI seul peux
 # écrire : quels projets nommer, pour quels clients, et ce que tu en retiens.
 # Pour publier : compléter `resume` et `enseignement`, puis passer
