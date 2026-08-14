@@ -49,6 +49,13 @@ const csp = [
     <meta name="theme-color" content="#fcfaf3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#12161a" media="(prefers-color-scheme: dark)" />
 
+    {/* Le seul script du site. Volontairement SANS `defer` : il pose
+        `data-theme` sur <html> avant le premier rendu, sinon la page clignote
+        dans le thème du système avant de basculer. Fichier local, 1,5 Ko
+        compressé, `script-src 'self'` respectée — voir l'en-tête de
+        public/js/theme.js. */}
+    <script src="/js/theme.js" is:inline></script>
+
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, follow" />}

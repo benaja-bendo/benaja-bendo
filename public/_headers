@@ -11,3 +11,12 @@
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+
+# Chemins non empreintés (pas de hash dans le nom) : une semaine, jamais
+# `immutable`. Les fichiers de /_astro/ portent un hash et sont gérés par
+# l'hébergeur ou par firebase.json.
+/fonts/*
+  Cache-Control: public, max-age=604800
+
+/js/*
+  Cache-Control: public, max-age=604800

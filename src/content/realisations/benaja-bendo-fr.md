@@ -1,6 +1,6 @@
 ---
 nom: "benaja-bendo.fr"
-resume: "Ce site : statique, zéro JavaScript, zéro requête tierce, sous une politique de sécurité de contenu stricte assumée jusqu’au bout."
+resume: "Ce site : statique, zéro requête tierce, un seul fichier JavaScript de 1,5 Ko, sous une politique de sécurité de contenu stricte assumée jusqu’au bout."
 statut: "production"
 periode: "Version 2022 remplacée en août 2026"
 role: "Conception, design system, développement, déploiement"
@@ -15,9 +15,15 @@ maj: 2026-08-14
 ---
 
 Un site personnel est le seul endroit où je peux tenir mes propres contraintes de
-bout en bout. Celui-ci est entièrement statique : aucun JavaScript envoyé par
-défaut, aucune ressource tierce, aucun cookie, aucune bannière de consentement —
-il n’y a rien à consentir.
+bout en bout. Celui-ci est entièrement statique : aucune ressource tierce, aucun
+cookie, aucune bannière de consentement — il n’y a rien à consentir.
+
+Il n'a envoyé aucun JavaScript pendant ses six premiers mois. Il en envoie un
+depuis le 14 août 2026 : 1,5 Ko qui mémorisent le choix clair/sombre. C'est le
+genre de renoncement qui mérite d'être écrit plutôt que caché — une préférence
+qui survit à la navigation exige un stockage local, et une bascule en CSS pur se
+réinitialise à chaque lien suivi. La contrainte tenue reste celle qui compte :
+rien en ligne, rien chez un tiers.
 
 La politique de sécurité de contenu est stricte au point d’interdire tout `<style>`
 inline, ce qui a des conséquences concrètes : l’API Fonts du framework devient

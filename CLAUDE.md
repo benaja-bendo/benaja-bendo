@@ -1,6 +1,6 @@
 # benaja-bendo.fr — instructions projet
 
-Site personnel de Bénaja Bendo-Matondo. **Astro 7, 100 % statique, zéro JS par défaut.**
+Site personnel de Bénaja Bendo-Matondo. **Astro 7, 100 % statique, un seul fichier JS.**
 Le site est une **mémoire professionnelle publique** : il documente ce que Bénaja
 construit, les décisions prises et les apprentissages à retrouver. Il doit aussi permettre
 à un pair, un recruteur ou un client de comprendre rapidement son travail, sans réduire
@@ -52,8 +52,16 @@ npm run check    # astro check (types)
      blocs de code sont mis en forme par `.prose pre` dans `global.css`.
 2. **Zéro requête tierce.** Pas de CDN, pas de Google Fonts, pas d'image externe, pas
    d'analytics à cookies. Tout est servi depuis le domaine.
-3. **Zéro JS par défaut.** Aucun framework UI (pas de React ici). Si une interaction
-   devient indispensable, c'est du vanilla dans un fichier `.js` externe — jamais inline.
+3. **Un seul fichier JS, et il se justifie.** Aucun framework UI (pas de React ici).
+   Une interaction indispensable se code en vanilla dans un fichier `.js` externe —
+   jamais inline, sinon la CSP la bloque. Aujourd'hui il y en a **un** :
+   `public/js/theme.js` (1,5 Ko compressés), qui mémorise le choix clair/sombre —
+   une préférence qui survit à la navigation exige `localStorage`, et une bascule
+   en CSS pur se réinitialise à chaque lien suivi. Il est chargé **sans `defer`**
+   dans le `<head>` pour poser `data-theme` avant le premier rendu ; avec `defer`,
+   la page clignote. Avant d'en ajouter un deuxième : la fonctionnalité vaut-elle
+   une requête bloquante ? Et mettre à jour le colophon, qui énumère ce qui est
+   envoyé.
 4. **Le design est un système, pas des styles à l'unité.** Toute couleur, tout rayon,
    toute ombre vient d'un token de `src/styles/global.css`. Pas de valeur en dur dans
    une page. Les ombres sont **dures** (0 flou) — c'est la signature, voir docs/05.

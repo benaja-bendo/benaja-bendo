@@ -19,10 +19,18 @@ import { version as astroVersion } from 'astro/package.json';
       <h2>Technique</h2>
       <p>
         Construit avec <a href="https://astro.build" rel="noopener">Astro</a>
-        {` ${astroVersion}`}, en HTML statique — zéro JavaScript envoyé au
-        navigateur par défaut. Le contenu est géré en collections typées (schémas
-        validés au build), les pages en Markdown. Pas de framework d’interface,
-        pas de dépendance superflue.
+        {` ${astroVersion}`}, en HTML statique. Le contenu est géré en collections
+        typées (schémas validés au build), les pages en Markdown. Pas de framework
+        d’interface, pas de dépendance superflue.
+      </p>
+      <p>
+        Un seul fichier JavaScript est envoyé&nbsp;: <code>theme.js</code>,
+        1,5&nbsp;Ko compressés, qui mémorise le choix clair/sombre. Le site s’en
+        est passé jusqu’au 14&nbsp;août 2026 — une préférence qui survit à la
+        navigation exige un stockage local, et une bascule en CSS pur se
+        réinitialise à chaque lien suivi. Aucune autre page n’exécute de script,
+        et sans lui tout reste lisible&nbsp;: seul le sélecteur de thème
+        disparaît.
       </p>
 
       <h2>Sécurité &amp; vie privée</h2>
@@ -45,8 +53,9 @@ import { version as astroVersion } from 'astro/package.json';
         généré par code. L’unique illustration éditoriale de l’accueil adapte
         l’icône <a href="https://koboyo.com/icons/citation-footnote" rel="noopener">Citation footnote de Koboyo</a>,
         stockée dans le code du site et recolorée par le thème&nbsp;: aucune ressource
-        n’est chargée depuis un tiers. Thème clair et sombre selon les préférences
-        du système, sans JavaScript.
+        n’est chargée depuis un tiers. Thème clair et sombre&nbsp;: le système
+        décide par défaut, et un sélecteur en pied de page permet de forcer l’un
+        ou l’autre.
       </p>
 
       <h2>Chaîne de livraison</h2>

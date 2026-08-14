@@ -48,6 +48,17 @@ const path = Astro.url.pathname;
     </nav>
   </div>
   <div class="container footer-legal">
+    {/* Masquée tant que public/js/theme.js n'a pas posé `data-theme-pret` sur
+        <html> : sans script, ces boutons ne feraient rien. */}
+    <div class="theme-commande" data-theme-commande>
+      <span class="etiq" id="theme-titre">Thème</span>
+      <div class="theme-boutons" role="group" aria-labelledby="theme-titre">
+        <button type="button" data-theme-choix="clair" aria-pressed="false">Clair</button>
+        <button type="button" data-theme-choix="sombre" aria-pressed="false">Sombre</button>
+        <button type="button" data-theme-choix="auto" aria-pressed="true">Système</button>
+      </div>
+    </div>
+
     <p>© {year} Bénaja Bendo-Matondo</p>
   </div>
 </footer>

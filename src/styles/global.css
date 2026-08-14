@@ -119,8 +119,25 @@
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* =============================================================================
+ * Thème sombre — TROIS états, pas deux
+ *
+ *   1. « auto » (défaut) : aucun attribut sur <html>, le système décide ;
+ *   2. « sombre » : `data-theme="sombre"`, gagne même si le système est clair ;
+ *   3. « clair »  : `data-theme="clair"`, gagne même si le système est sombre.
+ *
+ * D'où le `:not([data-theme="clair"])` sur la règle média : sans lui, un
+ * visiteur qui force le clair sur un système en sombre garderait la nuit.
+ *
+ * ⚠️ LES DEUX BLOCS CI-DESSOUS DOIVENT RESTER IDENTIQUES. La duplication est
+ * assumée : `light-dark()` permettrait une source unique, mais un navigateur
+ * qui ne le connaît pas rend la déclaration invalide et perd la couleur —
+ * un recruteur sur un poste verrouillé n'a pas à hériter de ce risque.
+ * Toute modification de palette se fait ici, deux fois, ou nulle part.
+ * ========================================================================== */
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="clair"]) {
     --bg: #12161a; /* nuit chaude, jamais de noir pur */
     --surface: #1a2025;
     --surface-2: #212a2f;
@@ -146,6 +163,37 @@
     --mark-2: #4b3812;
     --mark-3: #4d2f24;
   }
+}
+
+/* Copie conforme du bloc ci-dessus — voir l'avertissement. */
+:root[data-theme="sombre"] {
+  --bg: #12161a;
+  --surface: #1a2025;
+  --surface-2: #212a2f;
+  --fg: #eceae3;
+  --muted: #98a2ab;
+  --border: #eceae3;
+  --rule: #2b343a;
+  --shadow: #1f5c4d;
+
+  --accent: #34d0ae;
+  --accent-strong: #57e0c2;
+  --accent-fg: #06110d;
+  --signal: #f6b24b;
+  --ok: #46c67e;
+
+  --mark-1: #17493e;
+  --mark-2: #4b3812;
+  --mark-3: #4d2f24;
+}
+
+/* `color-scheme` suit le choix : sans lui, les ascenseurs, les champs et les
+   contrôles natifs resteraient peints par le système. */
+:root[data-theme="clair"] {
+  color-scheme: light;
+}
+:root[data-theme="sombre"] {
+  color-scheme: dark;
 }
 
 /* =============================================================================
@@ -1463,6 +1511,59 @@ main > section:last-child {
 .footer-legal {
   margin-top: 1.75rem;
   font-size: 0.82rem;
+}
+
+/* =============================================================================
+ * Commande de thème — trois états explicites
+ *
+ * Trois boutons plutôt qu'une bascule à deux positions : « Système » est un
+ * état à part entière, et une bascule ne sait pas le représenter. L'état
+ * courant se lit sans survol, porté par `aria-pressed` — donc par le fond ET
+ * par le poids du texte, jamais par la couleur seule.
+ * ========================================================================== */
+
+.theme-commande {
+  display: none; /* révélée par public/js/theme.js — pas de bouton mort */
+  margin-bottom: 1.1rem;
+}
+:root[data-theme-pret] .theme-commande {
+  display: block;
+}
+
+.theme-boutons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 0.3rem;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  overflow: hidden;
+  background: var(--surface);
+}
+.theme-boutons button {
+  min-height: 2.75rem; /* cible tactile */
+  padding: 0.35rem 0.9rem;
+  border: 0;
+  border-left: 1px solid var(--rule);
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.theme-boutons button:first-child {
+  border-left: 0;
+}
+.theme-boutons button:hover {
+  background: var(--surface-2);
+}
+/* L'état actif : aplat d'accent + graisse. Deux signaux, pas un. */
+.theme-boutons button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
 }
 
 /* =============================================================================
