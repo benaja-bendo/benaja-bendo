@@ -21,9 +21,11 @@ const { aUnePage } = await sujetsNotes();
 
 <article class="ligne">
   <div class="ligne-tete">
-    <h3 class="ligne-titre">
+    {/* h2 : même raison que dans LigneRealisation — la ligne suit le h1 de la
+        page (index des notes, /notes/sujet/…). */}
+    <h2 class="ligne-titre">
       <a href={`/notes/${id}`}>{data.titre}</a>
-    </h3>
+    </h2>
     <Statut label={statut.label} ton={statut.ton} />
   </div>
 

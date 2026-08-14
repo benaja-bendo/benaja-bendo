@@ -25,9 +25,17 @@ const etudes = await getEtudes();
       {
         etudes.map((etude) => (
           <article class="card">
-            <h3>
+            {/* h2 : ces cartes suivent directement le h1 de la page. */}
+            <h2 class="card-titre">
               <a href={`/etudes/${etude.id}`}>{etude.data.titre}</a>
-            </h3>
+            </h2>
+            {/* Le cadre d'exercice, affiché ici et pas seulement sur la fiche :
+                sans lui, la page se lit comme une liste de clients — donc comme
+                du freelance. La donnée existait déjà dans le frontmatter et
+                n'était rendue nulle part. */}
+            {etude.data.sousTitre && (
+              <p class="card-cadre">{etude.data.sousTitre}</p>
+            )}
             <span class="period">{etude.data.periode}</span>
             <p class="card-resume">{etude.data.resume}</p>
             <a href={`/etudes/${etude.id}`}>Lire l’étude →</a>

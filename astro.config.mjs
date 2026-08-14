@@ -67,5 +67,15 @@ export default defineConfig({
   // @font-face en tête de src/styles/global.css. Voir docs/05 §Typographie.
   // L'intégration sitemap exclut d'elle-même les routes de `redirects` :
   // vérifié le 14/08/2026, /mibeko n'apparaît pas dans sitemap-0.xml.
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      // /experiences est une page de compatibilité : aucun lien du site n'y
+      // mène, et elle redit ce que disent les études de cas. Indexée, elle met
+      // le site en concurrence avec lui-même sur ses propres missions. Elle
+      // reste servie (des candidatures pointent dessus) mais porte un
+      // `noindex, follow` et sort du plan de site.
+      filter: (page) => !page.includes('/experiences'),
+    }),
+  ],
 });

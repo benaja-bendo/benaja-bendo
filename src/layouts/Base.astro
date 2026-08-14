@@ -6,9 +6,16 @@ import SiteFooter from '../components/SiteFooter.astro';
 interface Props {
   title: string;
   description: string;
+  /**
+   * Page utile aux humains, pas aux moteurs. Sert aujourd'hui à /experiences,
+   * conservée pour les liens envoyés en candidature mais qui doublonne les
+   * études de cas : indexée, elle met Google en concurrence avec lui-même.
+   * `follow` est conservé — les liens qu'elle porte doivent rester suivis.
+   */
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL('/og/benaja-bendo.png', Astro.site);
 
@@ -44,6 +51,7 @@ const csp = [
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
 
     {/* Police du corps : préchargée car elle bloque le premier rendu utile.

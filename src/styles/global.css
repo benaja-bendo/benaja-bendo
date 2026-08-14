@@ -95,9 +95,15 @@
 
   /* --- Trait & relief ---------------------------------------------------- */
   --edge: 2px; /* épaisseur de bordure structurelle */
-  --pop: 4px 4px 0 var(--border); /* ombre dure — 0 flou, c'est la règle */
-  --pop-sm: 3px 3px 0 var(--border);
-  --pop-lg: 6px 6px 0 var(--border);
+  /* L'ombre a son propre token, distinct de `--border`. En clair les deux
+     valent la même encre ; en sombre, `--border` s'inverse en clair pour
+     dessiner les contours, mais une ombre claire projetée derrière chaque bloc
+     devenait l'élément le plus lumineux de la page. Une ombre est un manque de
+     lumière : elle reste sombre dans les deux thèmes. */
+  --shadow: #16212b;
+  --pop: 4px 4px 0 var(--shadow); /* ombre dure — 0 flou, c'est la règle */
+  --pop-sm: 3px 3px 0 var(--shadow);
+  --pop-lg: 6px 6px 0 var(--shadow);
 
   /* --- Mesures ----------------------------------------------------------- */
   --maxw: 68rem;
@@ -122,6 +128,12 @@
     --muted: #98a2ab; /* 7.1:1 sur la nuit */
     --border: #eceae3; /* l'encre s'inverse : les traits deviennent clairs */
     --rule: #2b343a;
+    /* Sur un fond déjà proche du noir, une ombre PLUS SOMBRE disparaît : le noir
+       pur ne donne que 1,16:1 avec `--bg`. Le décalage devient donc un aplat
+       teal profond — 2,33:1 avec le fond, 2,11:1 avec les cartes, et 6,5 fois
+       plus sombre que l'encre : il se lit comme une épaisseur, jamais comme un
+       halo, et ne concurrence pas le texte. */
+    --shadow: #1f5c4d;
 
     --accent: #34d0ae;
     --accent-strong: #57e0c2;
@@ -148,6 +160,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* L'en-tête est collant sur desktop : sans cette réserve, une arrivée sur une
+     ancre (/experiences#aife, distribué dans des candidatures) place la section
+     à y=0 et le menu recouvre son titre. */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -211,6 +227,13 @@ mark {
 }
 mark.mark-time {
   background: var(--mark-2);
+}
+/* Quand une ponctuation suit immédiatement le surligneur, la gouttière droite
+   de l'aplat la détache du mot : « … 2026 , à Bordeaux ». On rend cette
+   gouttière au texte suivant. L'asymétrie gauche/droite ne se voit pas ;
+   l'espace parasite, si. */
+mark.mark-ponct {
+  padding-right: 0.06em;
 }
 mark.mark-human {
   background: var(--mark-3);
@@ -335,7 +358,7 @@ a:hover {
   color: var(--accent-fg);
   border: var(--edge) solid var(--border);
   border-radius: 0;
-  box-shadow: 2px 2px 0 var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
   font-size: 0.7rem;
   font-weight: 700;
   font-family: var(--mono);
@@ -380,7 +403,7 @@ a:hover {
 }
 .nav-cta:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
 }
 /* La bordure pleine de la pastille écrase le soulignement d'accent qui signale
    la page courante ailleurs dans le menu : on rend l'état par le fond. */
@@ -389,21 +412,46 @@ a:hover {
   color: var(--accent-fg) !important;
 }
 
-/* Mobile : le header s'empile. Il lui faut sa propre respiration, sinon
-   l'ombre dure de la pastille déborde sous le filet — et un recruteur
-   ouvre d'abord sur téléphone. */
+/* Mobile : l'en-tête se réduit à la marque et à Contact.
+   Les cinq entrées s'empilaient sur trois rangs — 132 px collants, puis 158 px
+   une fois les cibles remises à 44 px, soit 19 % de l'écran avant le premier mot
+   de contenu. Or c'est exactement ce premier écran qui doit répondre à un
+   recruteur arrivé depuis un CV.
+   Les sections ne disparaissent pas : le pied de page les porte, avec le même
+   contenu et la même source (navigationPrincipale). L'en-tête peut redevenir
+   collant puisqu'il ne coûte plus qu'une barre — et Contact reste ainsi
+   accessible tout au long de la page. */
 @media (max-width: 48rem) {
+  .site-header nav .nav-section {
+    display: none;
+  }
   .header-inner {
-    min-height: 0;
-    padding-block: 0.75rem;
-    gap: 0.6rem;
+    flex-wrap: nowrap;
+    min-height: 3.5rem;
+    padding-block: 0.4rem;
+    gap: 0.75rem;
   }
-  .site-header nav ul {
-    gap: 0.5rem 1.1rem;
+  .brand {
+    min-height: 2.75rem;
   }
-  .site-header nav a {
-    font-size: 0.8rem;
+  /* `min-height` seul restait sans effet : un `<a>` est en rendu inline, il
+     faut le passer en boîte pour que la hauteur s'applique. */
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
   }
+}
+
+/* Le pied porte deux colonnes de liens : les sections du site et le reste.
+   L'étiquette les distingue — sur mobile, la première est la seule navigation
+   disponible, elle ne peut pas être un tas de liens anonymes. */
+.footer-links .etiq {
+  margin-bottom: 0.35rem;
+}
+.footer-sections a[aria-current="page"] {
+  color: var(--fg);
+  font-weight: 600;
 }
 
 /* =============================================================================
@@ -505,7 +553,7 @@ main > section:last-child {
 }
 .source-illustration-link:hover .source-illustration-stage {
   transform: translate(-2px, -2px) rotate(-0.5deg);
-  box-shadow: 8px 8px 0 var(--border);
+  box-shadow: 8px 8px 0 var(--shadow);
 }
 .source-illustration-stage::before {
   content: "";
@@ -523,7 +571,7 @@ main > section:last-child {
   width: min(9rem, 55%);
   height: auto;
   fill: currentColor;
-  filter: drop-shadow(5px 5px 0 var(--mark-2));
+  filter: drop-shadow(5px 5px 0 var(--shadow));
 }
 .source-illustration-meta,
 .source-illustration-tag {
@@ -619,7 +667,7 @@ main > section:last-child {
 }
 .btn:active {
   transform: translate(2px, 2px);
-  box-shadow: 0 0 0 var(--border);
+  box-shadow: 0 0 0 var(--shadow);
 }
 .btn-primary {
   background: var(--accent);
@@ -667,8 +715,23 @@ main > section:last-child {
 .card > * {
   padding-inline: 1.25rem;
 }
-.card h3 {
+/* Le titre d'une carte est un h2 ou un h3 selon ce qui le précède dans la page
+   (h2 quand la carte suit directement le h1). Le NIVEAU suit la structure du
+   document, la TAILLE reste celle de la carte : les deux ne se commandent pas. */
+.card h3,
+.card .card-titre {
   margin: 0;
+  font-size: 1.15rem;
+}
+
+/* Le cadre d'exercice : employeur, équipe, nature du produit. De l'encre pleine
+   et non du `--muted` — c'est un fait qui rassure, pas une métadonnée. */
+.card-cadre {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--fg);
 }
 .card .period {
   font-family: var(--mono);
@@ -723,14 +786,16 @@ main > section:last-child {
 }
 /* Un titre de carte peut être un lien : il reste de l'encre, souligné d'accent.
    Il faut annuler ce que `.card a` pose pour le lien d'action en pied de carte. */
-.card h3 a {
+.card h3 a,
+.card .card-titre a {
   margin-top: 0;
   padding: 0;
   color: var(--fg);
   text-decoration: underline;
   text-decoration-color: var(--accent);
 }
-.card h3 a:hover {
+.card h3 a:hover,
+.card .card-titre a:hover {
   color: var(--accent);
 }
 .card-resume {
@@ -817,6 +882,37 @@ main > section:last-child {
   background: var(--mark-1);
   color: var(--accent-strong);
 }
+/* Cibles tactiles : la règle des 44 px du projet vaut là où on touche l'écran.
+   Sur desktop les pastilles restent compactes — grossir une pastille pointée à
+   la souris ne sert personne et déséquilibre la rangée. */
+@media (max-width: 48rem) {
+  .chips {
+    gap: 0.6rem;
+  }
+  .chips li {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.75rem;
+  }
+  .chips a {
+    display: inline-flex;
+    align-items: center;
+    align-self: stretch;
+    margin: 0 -0.75rem;
+    padding-inline: 0.75rem;
+  }
+  .footer-links a,
+  .legende a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+  .footer-links {
+    gap: 0;
+  }
+}
+
 .chips-compte {
   margin-top: 1rem;
 }
@@ -934,7 +1030,10 @@ main > section:last-child {
   gap: 0.45rem;
   flex: none;
   padding: 0.2rem 0.6rem;
-  border: 1px solid var(--rule);
+  /* `--rule` ne donnait que 1,3:1 avec le fond : la limite d'un composant qui
+     porte une information demande 3:1 (WCAG 1.4.11). Le libellé, écrit en
+     toutes lettres, reste ce qui porte l'état — la couleur n'est jamais seule. */
+  border: 1px solid var(--muted);
   border-radius: var(--radius-sm);
   background: var(--surface-2);
   color: var(--fg);

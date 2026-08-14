@@ -20,9 +20,13 @@ const { aUnePage } = await taxonomiesRealisations();
 
 <article class="ligne">
   <div class="ligne-tete">
-    <h3 class="ligne-titre">
+    {/* h2 et non h3 : une ligne d'inventaire suit toujours directement le h1 de
+        sa page (index, /tech/…, /domaine/…). Un saut de niveau fait manquer une
+        étape à la navigation par titres d'un lecteur d'écran. La taille vient de
+        `.ligne-titre`, pas du niveau : le rendu est identique. */}
+    <h2 class="ligne-titre">
       <a href={`/realisations/${id}`}>{data.nom}</a>
-    </h3>
+    </h2>
     <Statut label={statut.label} ton={statut.ton} />
   </div>
 

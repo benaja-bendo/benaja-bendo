@@ -8,8 +8,8 @@
 nom: "Développement web & mobile au Congo"
 resume: "À compléter — les applications et logiciels livrés à Pointe-Noire, chez InfraOne System puis en freelance."
 statut: "archive"
-periode: "2019 – 2023"
-role: "Développeur salarié chez InfraOne System (2019–2020), puis freelance (2021–2023)"
+periode: "2020 – 2023"
+role: "Développeur fullstack salarié chez InfraOne System (2020–2021), puis freelance (2021–2023)"
 stack: ["Flutter", "Laravel", "Node.js"]
 domaines: ["Mobile", "Back-end"]
 enseignement: "À écrire : ce que ces années m’ont appris que l’école n’apprend pas."

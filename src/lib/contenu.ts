@@ -191,3 +191,41 @@ const enFrancais = new Intl.DateTimeFormat('fr-FR', {
 
 export const formatDate = (date: Date) => enFrancais.format(date);
 export const dateISO = (date: Date) => date.toISOString().slice(0, 10);
+
+/* -----------------------------------------------------------------------------
+ * Navigation
+ * -------------------------------------------------------------------------- */
+
+/**
+ * Les sections du site, dans l'ordre de lecture. Une rubrique vide n'apparaît
+ * pas (docs/08 §6) : le test porte sur le contenu publié, pas sur l'existence
+ * du dossier.
+ *
+ * Source unique parce que la liste est rendue à DEUX endroits : l'en-tête sur
+ * grand écran, le pied de page partout. Sur mobile l'en-tête n'affiche plus que
+ * la marque et Contact — il occupait 158 px, soit 19 % de l'écran, avant le
+ * moindre mot de contenu.
+ */
+export async function navigationPrincipale() {
+  const [realisations, etudes, notes] = await Promise.all([
+    getRealisations(),
+    getEtudes(),
+    getNotes(),
+  ]);
+
+  return [
+    { href: '/realisations', label: 'Réalisations', actif: realisations.length > 0 },
+    // « Études » seul se lit « parcours scolaire » en français : un relecteur a
+    // cliqué en cherchant les diplômes et a trouvé Mibeko. L'URL ne bouge pas.
+    { href: '/etudes', label: 'Études de cas', actif: etudes.length > 0 },
+    { href: '/notes', label: 'Notes', actif: notes.length > 0 },
+    { href: '/a-propos', label: 'À propos', actif: true },
+  ].filter((item) => item.actif);
+}
+
+/** Une entrée est active sur sa page et sur toutes ses sous-pages. */
+export function estActif(chemin: string, href: string): boolean {
+  return href === '/'
+    ? chemin === '/'
+    : chemin === href || chemin.startsWith(`${href}/`);
+}
