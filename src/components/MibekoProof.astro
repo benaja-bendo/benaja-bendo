@@ -1,3 +1,84 @@
+---
+/**
+ * La preuve visuelle de Mibeko.
+ *
+ * Le problème que ce composant doit résoudre — et ne résout pas encore
+ * entièrement : le site affirme partout que l'assistant « cite l'article exact
+ * d'où vient chaque réponse », mais rien ne le MONTRE. La capture actuelle est
+ * la page d'accueil publique, et l'assistant sourcé vit derrière l'espace Pro
+ * de mibeko.fr : un lecteur qui clique « Voir Mibeko en ligne » ne peut donc pas
+ * vérifier la seule chose qui distingue le produit d'un chatbot.
+ *
+ * D'où la galerie ci-dessous, prête mais vide. Chaque entrée passe à l'écran
+ * dès que `pret` vaut true ET que le fichier existe dans public/images/. Tant
+ * qu'une capture n'est pas prise, elle ne laisse AUCUNE trace publique : pas de
+ * cadre gris, pas de « bientôt disponible ». L'invariant n°5 du projet interdit
+ * de laisser vivre du périmé ou de l'inachevé en ligne — une promesse de
+ * capture en est une forme.
+ *
+ * Format attendu, pour que la grille reste stable :
+ *   - vues larges   : 1280 × 720 (16/9), JPEG ou WebP, < 150 Ko
+ *   - vues mobiles  :  750 × 1334 (9/16), JPEG ou WebP, < 120 Ko
+ * Aucune donnée client, aucun compte réel, aucune adresse e-mail visible.
+ */
+
+interface Capture {
+  fichier: string;
+  largeur: number;
+  hauteur: number;
+  /** Description pour les lecteurs d'écran — ce qu'on voit, pas « capture ». */
+  alt: string;
+  etiquette: string;
+  legende: string;
+  /** Ce que cette capture démontre. Sert à décider si elle mérite sa place. */
+  prouve: string;
+  format: 'large' | 'mobile';
+  /** Passer à true UNIQUEMENT quand le fichier est déposé dans public/images/. */
+  pret: boolean;
+}
+
+const captures: Capture[] = [
+  {
+    fichier: '/images/mibeko-reponse-citation.jpg',
+    largeur: 1280,
+    hauteur: 720,
+    alt: 'Une question de droit posée à l’assistant Mibeko, et sa réponse accompagnée de la référence de l’article cité',
+    etiquette: 'La promesse, vérifiée',
+    legende: 'Une question, une réponse, et l’article exact d’où elle vient.',
+    prouve:
+      'La traçabilité annoncée partout sur le site. C’est LA capture manquante : sans elle, la différence avec un chatbot reste une affirmation.',
+    format: 'large',
+    pret: false,
+  },
+  {
+    fichier: '/images/mibeko-article-source.jpg',
+    largeur: 1280,
+    hauteur: 720,
+    alt: 'L’article de loi cité, ouvert dans Mibeko à l’endroit exact d’où provient la réponse',
+    etiquette: 'La source, en entier',
+    legende: 'Le lien de citation ouvre le texte officiel à l’article concerné.',
+    prouve:
+      'Que la citation n’est pas décorative : elle mène au texte, pas à une page d’accueil.',
+    format: 'large',
+    pret: false,
+  },
+  {
+    fichier: '/images/mibeko-mobile.jpg',
+    largeur: 750,
+    hauteur: 1334,
+    alt: 'L’application mobile Mibeko affichant une réponse et sa source sur un écran de téléphone',
+    etiquette: 'Sur mobile',
+    legende: 'La même chaîne, dans l’application publiée sur les deux stores.',
+    prouve:
+      'Que les applications existent vraiment et rendent la même promesse que le web.',
+    format: 'mobile',
+    pret: false,
+  },
+];
+
+const visibles = captures.filter((capture) => capture.pret);
+---
+
 <section class="proof-gallery" aria-labelledby="preuves-mibeko">
   <div class="proof-gallery-heading">
     <div>
@@ -28,6 +109,29 @@
       <span>Recherche, textes officiels, démarches et guides sur <a href="https://mibeko.fr" rel="noopener">mibeko.fr ↗</a></span>
     </figcaption>
   </figure>
+
+  {
+    visibles.length > 0 && (
+      <div class="proof-captures">
+        {visibles.map((capture) => (
+          <figure class:list={['capture', `capture-${capture.format}`]}>
+            <img
+              src={capture.fichier}
+              width={capture.largeur}
+              height={capture.hauteur}
+              loading="lazy"
+              decoding="async"
+              alt={capture.alt}
+            />
+            <figcaption>
+              <span class="etiq">{capture.etiquette}</span>
+              <span>{capture.legende}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    )
+  }
 
   <ol class="trust-flow" aria-label="Chaîne de traçabilité de Mibeko">
     <li>

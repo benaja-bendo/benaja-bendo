@@ -28,12 +28,15 @@ const voies = [
     titre: 'GitHub',
     period: 'Juger sur pièces',
     points: [
-      'Les dépôts Mibeko : API, ingestion, dashboard, apps mobiles',
-      'L’infrastructure du VPS : Ansible, Docker, Traefik',
+      'Six dépôts publics : API, ingestion, dashboard, apps mobiles, infrastructure',
+      'Chacun est listé et expliqué dans l’étude de cas Mibeko',
     ],
-    href: 'https://github.com/benaja-bendo',
-    cta: 'github.com/benaja-bendo',
-    externe: true,
+    // Le profil compte 88 dépôts : y envoyer quelqu'un sans dire lesquels
+    // regarder, c'est l'envoyer nulle part. L'étude de cas porte la liste
+    // commentée, dépôt par dépôt — c'est elle, la bonne porte d'entrée.
+    href: '/etudes/mibeko#preuves-titre',
+    cta: 'Les dépôts, commentés un par un',
+    externe: false,
   },
 ];
 ---
@@ -114,14 +117,20 @@ const voies = [
         qu’une note absente, et je préfère la réparer que la laisser en ligne.
       </p>
       <p>
+        Si vous avez besoin d’un CV à transmettre en interne, il est
+        sur <a href="/cv">cette page</a>. Il n’y a pas de PDF à télécharger, mais une
+        mise en page d’impression faite pour ça — Cmd/Ctrl&nbsp;+&nbsp;P produit un
+        fichier propre, et forcément à jour.
+      </p>
+      <p>
         Si un message reste sans réponse, il est probablement tombé dans les
         indésirables&nbsp;: relancez-moi via <a href="https://www.linkedin.com/in/benaja-bendo" rel="me noopener">LinkedIn</a>.
       </p>
     </div>
 
     <div class="cta-row">
-      <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
-      <a class="btn btn-ghost" href="/etudes">Les études de cas</a>
+      <a class="btn btn-primary" href="/cv">Le CV</a>
+      <a class="btn btn-ghost" href="/realisations">Ce que j’ai construit</a>
     </div>
   </section>
 </Base>

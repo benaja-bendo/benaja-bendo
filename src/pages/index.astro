@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Statut from '../components/Statut.astro';
 import SourceIllustration from '../components/SourceIllustration.astro';
+import StackVisuelle from '../components/StackVisuelle.astro';
 import {
   STATUTS_REALISATION,
   dateISO,
@@ -30,7 +31,7 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
 
 <Base
   title="Bénaja Bendo-Matondo — développeur fullstack, Bordeaux"
-  description="Je construis des systèmes logiciels et je les fais tenir en production. Mibeko, SaaS LegalTech opéré seul depuis décembre 2025 ; microservices Java / Spring Boot chez Capgemini."
+  description="Développeur fullstack Java / Spring Boot · React à Bordeaux. Je construis des systèmes logiciels et je les fais tenir en production : Mibeko, SaaS LegalTech opéré seul depuis décembre 2025 ; services Spring Boot et décisionnel chez Capgemini."
 >
   <section class="hero container">
     <div class="hero-layout">
@@ -46,14 +47,22 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
           </span>
         </h1>
 
+        {/* La mission citée ici doit être la mission EN COURS. La version
+            précédente disait au présent « microservices Java / Spring Boot […]
+            sur des systèmes des finances publiques » : c'est l'AIFE, terminée
+            en 2024 d'après notre propre étude de cas. Un lecteur qui enchaînait
+            l'accueil puis /etudes voyait l'écart de deux ans — exactement ce que
+            la règle de contenu n°1 interdit. */}
         <div class="hero-proof">
           <p>
             Le plus complet s’appelle <a href="/etudes/mibeko">Mibeko</a>&nbsp;: un
             assistant qui rend le droit congolais consultable en citant l’article
             exact d’où vient chaque réponse. Conçu, développé et <mark>opéré seul</mark> — du
-            backend aux applications publiées sur les deux stores. Le jour,
-            j’écris des microservices Java&nbsp;/&nbsp;Spring Boot chez <strong>Capgemini</strong>,
-            sur des systèmes des finances publiques.
+            backend aux applications publiées sur les deux stores. Le jour, je
+            suis développeur chez <strong>Capgemini</strong>&nbsp;: aujourd’hui un service
+            Java&nbsp;/&nbsp;Spring Boot et les tableaux de bord d’un compte
+            France&nbsp;Travail, auparavant des microservices sur des systèmes des
+            finances publiques.
           </p>
         </div>
 
@@ -67,6 +76,25 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
         <SourceIllustration />
       </div>
     </div>
+  </section>
+
+  {/* Placée juste après le hero, avant les portes d'entrée : la question qu'un
+      lecteur se pose en dixième seconde n'est pas « par où commencer » mais
+      « est-ce que ça correspond à ce que je cherche ». Variante compacte — la
+      liste complète vit sur /cv, dont c'est le sujet. */}
+  <section class="container">
+    <p class="eyebrow">Ce avec quoi je travaille</p>
+    <h2>La stack, sans jauge ni pourcentage</h2>
+    <p class="lead muted">
+      Ce que j’utilise réellement, en entreprise ou sur mes propres produits.
+      Aucun niveau affiché&nbsp;: une barre de progression sur une techno est une
+      opinion déguisée en mesure. La preuve est dans
+      les <a href="/realisations">réalisations</a>.
+    </p>
+    <StackVisuelle variante="compacte" />
+    <p class="lead">
+      <a href="/cv">La stack complète et le CV →</a>
+    </p>
   </section>
 
   <section class="container">
@@ -149,6 +177,7 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
     </p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/contact">Me contacter</a>
+      <a class="btn btn-ghost" href="/cv">Voir le CV</a>
     </div>
   </section>
 </Base>

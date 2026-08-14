@@ -943,10 +943,17 @@ main > section:last-child {
     min-height: 2.75rem;
     padding-inline: 0.75rem;
   }
+  /* `align-self: stretch` ne suffit PAS à donner 44 px au lien : il l'étire à la
+     boîte de CONTENU de la puce, c'est-à-dire 44 px moins la bordure (2 × 2 px)
+     et le rembourrage vertical (2 × 2,4 px) — soit 35 px mesurés au doigt, sous
+     la règle du projet. La puce paraissait conforme, le lien ne l'était pas.
+     On impose donc la hauteur au lien lui-même, et c'est lui qui pousse la
+     puce. Mesuré le 14/08/2026 sur /etudes/mibeko à 375 px. */
   .chips a {
     display: inline-flex;
     align-items: center;
     align-self: stretch;
+    min-height: 2.75rem;
     margin: 0 -0.75rem;
     padding-inline: 0.75rem;
   }
@@ -967,6 +974,173 @@ main > section:last-child {
 .chips-compte .compte {
   margin-left: 0.5rem;
   color: var(--muted);
+}
+
+/* =============================================================================
+ * Preuves — les liens qu'on ouvre pour vérifier
+ *
+ * Deux colonnes sur grand écran : le lien à gauche, ce qu'il prouve à droite.
+ * L'alignement compte plus que la décoration ici — on doit pouvoir descendre la
+ * colonne de gauche à l'œil et s'arrêter sur le seul dépôt qui nous intéresse.
+ * ========================================================================== */
+
+.preuves {
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: var(--edge) solid var(--border);
+}
+.preuves-groupe {
+  margin-top: 2rem;
+}
+.preuves-famille {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.preuves-aide {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+.preuves-liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.preuves-liste li {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0;
+}
+.preuves-liste li + li {
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 42rem) {
+  .preuves-liste li {
+    grid-template-columns: 14rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+}
+.preuves-liste a {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.preuves-liste a:hover {
+  color: var(--accent-strong);
+  background: var(--mark-1);
+}
+.preuves-quoi {
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+/* Cibles tactiles : la règle des 44 px du projet. La ligne entière fait déjà
+   plus de 44 px de haut, mais le lien seul non — on l'étire. */
+@media (max-width: 48rem) {
+  .preuves-liste a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}
+
+/* =============================================================================
+ * Stack — logos monochromes, groupés par famille
+ *
+ * Trois décisions à ne pas défaire sans y penser :
+ *
+ * 1. Les icônes sont en `--accent`, pas en couleur de marque. Vingt teintes
+ *    officielles feraient un album d'autocollants et sortiraient du système ;
+ *    et les poser par puce demanderait un `style=` interdit par la CSP.
+ * 2. Pas d'ombre dure sur les puces. La signature du site perd sa force quand
+ *    elle est appliquée vingt fois dans le même bloc — le liseré reste pour les
+ *    cartes et les moments importants, la stack se contente de son trait.
+ * 3. Les puces ne sont pas cliquables. Seules quelques technos ont une page de
+ *    taxonomie (seuil de deux réalisations) : une rangée où un tiers des puces
+ *    répond au clic et deux tiers non est plus frustrante qu'utile.
+ * ========================================================================== */
+
+.stack {
+  display: grid;
+  gap: 1.9rem;
+  margin-top: 1.9rem;
+}
+@media (min-width: 48rem) {
+  .stack {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 2.25rem 2.5rem;
+  }
+}
+.stack-titre {
+  margin: 0;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stack-precision {
+  margin: 0.65rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.stack-puces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.stack-puce {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.65rem 0.3rem 0.5rem;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--fg);
+}
+.icone-tech {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--accent);
+}
+/* Repli sans logo libre : un monogramme encadré, qui assume de ne pas être un
+   logo au lieu d'imiter maladroitement celui de la marque. */
+.icone-tech-mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.52rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
 /* =============================================================================
@@ -1275,6 +1449,63 @@ main > section:last-child {
 .product-window figcaption .etiq {
   margin: 0;
 }
+
+/* Galerie de captures — l'emplacement est prêt, les images viendront.
+   Voir src/components/MibekoProof.astro : une entrée non prête ne rend rien du
+   tout, donc ces règles ne s'appliquent aujourd'hui à aucun élément. Elles sont
+   écrites maintenant pour que déposer un fichier dans public/images/ et passer
+   `pret: true` suffise, sans rouvrir la feuille de style.
+   Formats : 1280 × 720 pour les vues larges, 750 × 1334 pour les vues mobiles —
+   le `aspect-ratio` verrouille la place AVANT le chargement, donc pas de saut
+   de mise en page. */
+.proof-captures {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 52rem) {
+  .proof-captures {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    align-items: start;
+  }
+  /* Une vue mobile au milieu de vues larges ne doit pas être étirée : elle
+     garde sa colonne étroite et se centre. */
+  .capture-mobile {
+    max-width: 20rem;
+    justify-self: center;
+  }
+}
+.capture {
+  margin: 0;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--pop-sm);
+  overflow: hidden;
+}
+.capture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: var(--edge) solid var(--border);
+}
+.capture-large img {
+  aspect-ratio: 16 / 9;
+}
+.capture-mobile img {
+  aspect-ratio: 750 / 1334;
+}
+.capture figcaption {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem 1rem 0.95rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.capture figcaption .etiq {
+  margin: 0;
+}
+
 .trust-flow {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1606,5 +1837,307 @@ main > section:last-child {
   .card:hover,
   .nav-cta:hover {
     transform: none;
+  }
+}
+
+/* =============================================================================
+ * CV — écran
+ *
+ * Une seule colonne, des repères temporels à gauche sur grand écran. Volontaire-
+ * ment plus sobre que le reste du site : cette page se lit en diagonale, souvent
+ * en trente secondes, parfois sur papier. Les ombres dures et les liserés pixel
+ * y seraient du bruit — la signature du site vit sur les autres pages.
+ * ========================================================================== */
+
+.cv {
+  padding-block: 3rem 4rem;
+}
+.cv-entete {
+  display: grid;
+  gap: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: var(--edge) solid var(--border);
+}
+@media (min-width: 52rem) {
+  .cv-entete {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 2.5rem;
+  }
+}
+.cv-entete h1 {
+  margin: 0.35rem 0 0;
+}
+.cv-role {
+  margin: 0.6rem 0 0;
+  font-family: var(--mono);
+  font-size: 1.02rem;
+  color: var(--accent);
+}
+.cv-situation {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+}
+.cv-contacts {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+}
+.cv-contacts li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+.cv-contacts .etiq {
+  min-width: 4.5rem;
+  margin: 0;
+}
+.cv-contacts a {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+}
+/* Ce sont les actions principales de la page — dont l'adresse e-mail, qui est
+   littéralement ce qu'on vient chercher ici. Elles passent à 44 px au doigt,
+   sans grossir le texte : c'est la zone tactile qu'on étire, pas la typo. */
+@media (max-width: 48rem) {
+  .cv-contacts a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}
+
+.cv-section {
+  margin-top: 2.75rem;
+}
+.cv-section > h2 {
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 1.15rem;
+}
+.cv-accroche p {
+  max-width: var(--prose);
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.cv-liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cv-entree {
+  display: grid;
+  gap: 0.35rem;
+  /* Une entrée ne doit jamais être coupée en deux par un saut de page. */
+  break-inside: avoid;
+}
+.cv-entree + .cv-entree {
+  margin-top: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 46rem) {
+  .cv-entree {
+    grid-template-columns: 9rem 1fr;
+    gap: 0 2rem;
+  }
+}
+.cv-quand {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.cv-detail h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.cv-ou {
+  margin: 0.2rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.cv-points {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.5rem;
+  max-width: var(--prose);
+}
+.cv-points li {
+  line-height: 1.6;
+}
+
+.cv-export {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  box-shadow: var(--pop-sm);
+}
+.cv-export p:not(.etiq) {
+  margin: 0.5rem 0 0;
+  max-width: var(--prose);
+}
+
+/* =============================================================================
+ * CV — impression
+ *
+ * L'export PDF du site, sans JavaScript : Cmd/Ctrl + P suffit. Trois problèmes
+ * à régler, et rien de plus.
+ *
+ * 1. Le thème. Une page imprimée depuis le mode sombre sortirait en encre noire
+ *    pleine page — ou, selon le navigateur, en texte clair invisible. On force
+ *    donc les tokens clairs, y compris sous `[data-theme="sombre"]` que
+ *    theme.js a pu poser sur <html>.
+ * 2. Le décor. En-tête collant, pied de page, bascule de thème, boutons : rien
+ *    de tout cela n'a de sens sur papier, et le lien d'évitement encore moins.
+ * 3. Les coupures. Un intitulé de poste séparé de ses missions par un saut de
+ *    page est le défaut classique du CV imprimé depuis le web.
+ *
+ * Le reste du site reste imprimable sans être optimisé : c'est cette page-ci
+ * qui promet un PDF présentable.
+ * ========================================================================== */
+
+@page {
+  size: A4;
+  margin: 14mm 15mm;
+}
+
+@media print {
+  /* Thème clair forcé, quelle que soit la préférence en vigueur à l'écran.
+     ⚠️ Les sélecteurs ci-dessous ne sont pas décoratifs. `prefers-color-scheme`
+     n'est PAS neutralisé à l'impression : sur une machine réglée en sombre, la
+     règle `:root:not([data-theme="clair"])` du bloc média reste active, et sa
+     spécificité (0,2,0) écraserait un simple `:root` (0,1,0). On reprend donc
+     le même sélecteur, à spécificité égale — ce bloc étant le dernier du
+     fichier, il gagne par ordre d'apparition. Le cas « auto sur système
+     sombre » est le plus courant : c'est celui qu'on perdrait en silence. */
+  :root:not([data-theme='clair']),
+  :root[data-theme='sombre'],
+  :root[data-theme='clair'] {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #ffffff;
+    --fg: #000000;
+    --muted: #3a3a3a;
+    --border: #000000;
+    --rule: #b8b8b8;
+    --accent: #0b5f4e;
+    --accent-strong: #0b5f4e;
+    --shadow: transparent;
+    --pop: none;
+    --pop-sm: none;
+    --pop-lg: none;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+    font-size: 10.5pt;
+  }
+
+  .skip-link,
+  .site-header,
+  .site-footer,
+  .cv-export,
+  .cta-row {
+    display: none !important;
+  }
+
+  main {
+    padding: 0;
+  }
+
+  .cv,
+  .container {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Les liens restent lisibles en noir : sur papier, une couleur d'accent
+     n'apporte rien et disparaît sur une imprimante monochrome. Les URL ne sont
+     PAS dépliées en `attr(href)` — celles qui comptent (email, site, GitHub,
+     LinkedIn) sont déjà écrites en toutes lettres dans l'en-tête, et déplier
+     les autres remplirait la page de parenthèses. */
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: 21pt;
+  }
+  .cv-role {
+    font-size: 11pt;
+  }
+  .cv-section > h2 {
+    font-size: 12pt;
+    /* Un titre de section ne reste jamais seul en bas de page. */
+    break-after: avoid;
+  }
+  .cv-detail h3 {
+    font-size: 11pt;
+    break-after: avoid;
+  }
+
+  .cv-section {
+    margin-top: 1.5rem;
+    break-inside: auto;
+  }
+  .cv-entete {
+    padding-bottom: 1rem;
+  }
+  .cv-entree + .cv-entree {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  .cv-points {
+    margin-top: 0.45rem;
+  }
+  .cv-points li {
+    line-height: 1.45;
+  }
+
+  /* La stack tient en une bande compacte plutôt qu'en colonnes qui se
+     répartiraient à cheval sur deux pages. */
+  .stack {
+    display: block;
+  }
+  .stack-groupe {
+    break-inside: avoid;
+  }
+  .stack-groupe + .stack-groupe {
+    margin-top: 0.75rem;
+  }
+  .stack-puce {
+    border-width: 1px;
+    padding: 0.1rem 0.35rem;
+    font-size: 8.5pt;
+  }
+  .icone-tech {
+    width: 0.85rem;
+    height: 0.85rem;
+    color: #000000;
+  }
+
+  /* Aucune surface teintée : les aplats de fond sont souvent désactivés à
+     l'impression, ce qui laisserait des cadres vides et incohérents. */
+  .capture,
+  .card,
+  .ligne,
+  .retenu-bloc {
+    box-shadow: none;
+    background: #ffffff;
   }
 }

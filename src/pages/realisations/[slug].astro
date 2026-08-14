@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Statut from '../../components/Statut.astro';
 import Taxo from '../../components/Taxo.astro';
+import Preuves from '../../components/Preuves.astro';
 import {
   STATUTS_REALISATION,
   formatDate,
@@ -91,6 +92,8 @@ const { aUnePage } = await taxonomiesRealisations();
         </div>
       )
     }
+
+    <Preuves preuves={data.preuves} />
   </section>
 
   <section class="container">

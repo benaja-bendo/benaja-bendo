@@ -1,0 +1,51 @@
+---
+import { ICONES_TECH } from '../lib/icones-tech';
+
+/**
+ * Le logo d'une technologie, ou son monogramme s'il n'existe pas de logo libre.
+ *
+ * Deux règles portent tout le composant :
+ *
+ * 1. `fill="currentColor"` — jamais la couleur de marque. Vingt teintes en dur
+ *    contrediraient l'invariant n°4 (toute couleur vient d'un token), et la
+ *    seule façon de les poser par puce serait un `style=` que la CSP interdit.
+ *    En monochrome, les icônes suivent l'encre et le thème sombre sans effort.
+ * 2. `aria-hidden` — le nom de la techno est TOUJOURS écrit à côté. L'icône est
+ *    une aide à la reconnaissance, pas une information : la répéter aux
+ *    lecteurs d'écran ne ferait que doubler chaque libellé.
+ *
+ * Le repli en monogramme n'est pas un pis-aller décoratif : Power BI et AWS
+ * n'ont pas d'icône librement redistribuable, et dessiner un logo « à peu près »
+ * serait à la fois faux et une contrefaçon molle.
+ */
+interface Props {
+  /** Clé de ICONES_TECH. Absente ou inconnue : on tombe sur le monogramme. */
+  icone?: string;
+  /** Monogramme de repli, 2 à 3 caractères. */
+  mono?: string;
+  /** Nom de la techno, utilisé pour dériver un monogramme en dernier recours. */
+  nom: string;
+}
+
+const { icone, mono, nom } = Astro.props;
+const dessin = icone ? ICONES_TECH[icone] : undefined;
+---
+
+{
+  dessin ? (
+    <svg
+      class="icone-tech"
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d={dessin.path} fill="currentColor" />
+    </svg>
+  ) : (
+    <span class="icone-tech icone-tech-mono" aria-hidden="true">
+      {mono ?? nom.slice(0, 2)}
+    </span>
+  )
+}

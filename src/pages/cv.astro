@@ -1,0 +1,184 @@
+---
+import Base from '../layouts/Base.astro';
+import StackVisuelle from '../components/StackVisuelle.astro';
+import {
+  CONTACT,
+  DISPONIBILITE,
+  EXPERIENCES,
+  FORMATION,
+} from '../lib/parcours';
+
+/**
+ * Le CV — et la décision qui va avec.
+ *
+ * L'audit du 14/08/2026 a relevé qu'un site de recherche d'emploi ne proposait
+ * aucun CV : rien à transmettre en interne pour un recruteur convaincu. Les
+ * deux sorties possibles étaient un PDF maintenu à part, ou une page qui assume
+ * de remplacer le PDF. La seconde est retenue, pour la raison qui gouverne tout
+ * ce projet : un PDF déposé quelque part est exactement le genre d'artefact qui
+ * se périme sans prévenir (invariant n°5, et le site de 2022 resté quatre ans
+ * en ligne). Une page se corrige en une ligne et se redéploie.
+ *
+ * L'export tient donc dans la feuille de style : `@page` en A4, en-tête, pied,
+ * navigation et bascule de thème retirés à l'impression, thème clair forcé,
+ * ombres supprimées, coupures de page contrôlées. Cmd/Ctrl + P produit un PDF
+ * présentable — sans JavaScript, donc sans bouton « imprimer » : un
+ * `onclick="window.print()"` serait du script en ligne, bloqué par la CSP, et
+ * ne mérite de toute façon pas un deuxième fichier JS (invariant n°3).
+ *
+ * Règle de contenu : cette page ne contient AUCUN fait qui ne soit pas déjà
+ * ailleurs sur le site. Les données viennent de src/lib/parcours.ts, partagé
+ * avec /parcours — deux pages qui récitent un CV de mémoire finissent toujours
+ * par diverger d'une date.
+ */
+
+const anneesExperience = 6; // 2020 → 2026, première expérience salariée en 2020.
+---
+
+<Base
+  title="CV — Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot"
+  description={`CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot · React à Bordeaux. Disponible en CDI à partir du ${DISPONIBILITE.texte}. Page imprimable, toujours à jour.`}
+>
+  <article class="cv container">
+    <header class="cv-entete">
+      <div class="cv-identite">
+        <p class="eyebrow">Curriculum vitæ</p>
+        <h1>Bénaja Bendo‑Matondo</h1>
+        <p class="cv-role">
+          Développeur fullstack — Java&nbsp;/&nbsp;Spring Boot · React
+        </p>
+        <p class="cv-situation">
+          {DISPONIBILITE.lieu} · {anneesExperience} ans d’expérience · disponible en
+          CDI à partir du <time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time>
+        </p>
+      </div>
+
+      <ul class="cv-contacts">
+        <li>
+          <span class="etiq">Email</span>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        </li>
+        <li>
+          <span class="etiq">Site</span>
+          <a href="/">{CONTACT.site}</a>
+        </li>
+        <li>
+          <span class="etiq">GitHub</span>
+          <a href={`https://${CONTACT.github}`} rel="me noopener">{CONTACT.github}</a>
+        </li>
+        <li>
+          <span class="etiq">LinkedIn</span>
+          <a href={`https://${CONTACT.linkedin}`} rel="me noopener">{CONTACT.linkedin}</a>
+        </li>
+      </ul>
+    </header>
+
+    <section class="cv-section cv-accroche">
+      <p>
+        Je conçois, je livre et j’<strong>opère</strong> des produits complets en
+        production. Le plus parlant est <strong>Mibeko</strong>, un SaaS LegalTech
+        que j’ai porté seul de l’idée à la production — API, ingestion documentaire,
+        applications mobiles publiées et infrastructure comprises. En entreprise,
+        je développe des services Java&nbsp;/&nbsp;Spring Boot sur des systèmes
+        exigeants, chez Capgemini depuis 2023.
+      </p>
+    </section>
+
+    <section class="cv-section">
+      <h2>Expérience</h2>
+      <ol class="cv-liste">
+        {
+          EXPERIENCES.map((etape) => (
+            <li class="cv-entree">
+              <p class="cv-quand">{etape.quand}</p>
+              <div class="cv-detail">
+                <h3>{etape.quoi}</h3>
+                <p class="cv-ou">{etape.ou}</p>
+                {etape.points && (
+                  <ul class="cv-points">
+                    {etape.points.map((point) => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section">
+      <h2>Projet personnel en production</h2>
+      <ol class="cv-liste">
+        <li class="cv-entree">
+          <p class="cv-quand">Depuis déc. 2025</p>
+          <div class="cv-detail">
+            <h3>Mibeko — SaaS LegalTech, conçu et opéré seul</h3>
+            <p class="cv-ou">mibeko.fr · applications iOS et Android publiées · six dépôts publics</p>
+            <ul class="cv-points">
+              <li>
+                Un assistant qui rend le droit congolais et OHADA consultable en
+                langage naturel, <strong>en citant l’article exact</strong> d’où vient
+                chaque réponse — la traçabilité prime sur la formulation.
+              </li>
+              <li>
+                Chaîne d’ingestion documentaire&nbsp;: OCR, structuration par modèle
+                de langage validée par un schéma strict, provenance conservée jusqu’à
+                l’empreinte SHA-256 du fichier source.
+              </li>
+              <li>
+                Recherche hybride PostgreSQL&nbsp;/&nbsp;pgvector combinant plein
+                texte, proximité orthographique et similarité sémantique.
+              </li>
+              <li>
+                Mise en production et exploitation&nbsp;: ~730 tests automatisés,
+                CI/CD GitHub Actions, déploiement continu sur un VPS administré
+                avec Docker, Ansible et Traefik.
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cv-section cv-section-stack">
+      <h2>Compétences techniques</h2>
+      <StackVisuelle variante="complete" dense />
+    </section>
+
+    <section class="cv-section">
+      <h2>Formation</h2>
+      <ol class="cv-liste">
+        {
+          FORMATION.map((etape) => (
+            <li class="cv-entree">
+              <p class="cv-quand">{etape.quand}</p>
+              <div class="cv-detail">
+                <h3>{etape.quoi}</h3>
+                <p class="cv-ou">{etape.ou}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    {/* Bloc écran uniquement : à l'impression, il n'aurait aucun sens sur le
+        papier qu'il vient de produire. */}
+    <aside class="cv-export">
+      <p class="etiq">Emporter ce CV</p>
+      <p>
+        Il n’y a pas de PDF à télécharger, et c’est volontaire&nbsp;: un fichier
+        déposé quelque part se périme sans prévenir, cette page non.
+        <strong> Cmd&nbsp;+&nbsp;P</strong> (ou <strong>Ctrl&nbsp;+&nbsp;P</strong>)
+        puis « Enregistrer au format PDF »&nbsp;: la mise en page d’impression est
+        écrite pour ça — format A4, sans menu ni décor.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>Me contacter</a>
+        <a class="btn btn-ghost" href="/realisations">Ce que j’ai construit</a>
+      </div>
+    </aside>
+  </article>
+</Base>

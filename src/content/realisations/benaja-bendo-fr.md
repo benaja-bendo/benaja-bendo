@@ -8,6 +8,11 @@ stack: ["Astro", "TypeScript", "CSS", "Firebase Hosting", "GitHub Actions"]
 domaines: ["Web", "Infra"]
 liens:
   - { label: "Le dépôt", url: "https://github.com/benaja-bendo/benaja-bendo" }
+preuves:
+  - label: "benaja-bendo"
+    url: "https://github.com/benaja-bendo/benaja-bendo"
+    quoi: "Le dépôt de ce site : contenu, design system et documentation de décisions. C’est aussi le dépôt de mon profil GitHub."
+    famille: "code"
 enseignement: "Une contrainte posée tôt — ici style-src 'self', sans exception — élimine des dizaines de décisions plus tard, mais interdit aussi des fonctionnalités officielles du framework. Le vrai risque de ce site n’a jamais été technique : c’est de le laisser en ligne périmé, comme la version 2022 restée quatre ans."
 epingle: true
 ordre: 4

@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+/**
+ * « Juger sur pièces » — les liens qu'on ouvre pour vérifier, pas pour décorer.
+ *
+ * Ce bloc répond à un manque mesuré sur le build du 14/08/2026 : le site ne
+ * sortait que vers LinkedIn, la racine du profil GitHub et l'accueil de Mibeko.
+ * Six dépôts publics et deux fiches de stores existaient sans être liés une
+ * seule fois. Un lecteur technique qui voulait juger le code partait donc d'un
+ * profil de 88 dépôts, sans savoir lesquels regarder.
+ *
+ * Chaque entrée porte sa justification (`quoi`) : un mur de liens nus oblige à
+ * tous les ouvrir pour trouver le bon, ce qui revient à n'en ouvrir aucun.
+ *
+ * Le groupement suit l'ordre dans lequel on vérifie quelque chose : d'abord le
+ * produit tourne, ensuite il est livré, enfin le code se lit.
+ */
+type Preuve = CollectionEntry<'etudes'>['data']['preuves'][number];
+
+interface Props {
+  preuves: Preuve[];
+  /** Niveau du titre du bloc, selon la page hôte. */
+  titre?: string;
+}
+
+const { preuves, titre = 'Juger sur pièces' } = Astro.props;
+
+const FAMILLES = [
+  {
+    cle: 'produit' as const,
+    label: 'Le produit en ligne',
+    aide: 'Ce qui tourne, accessible sans compte.',
+  },
+  {
+    cle: 'application' as const,
+    label: 'Les applications publiées',
+    aide: 'Les fiches officielles, sur les deux stores.',
+  },
+  {
+    cle: 'code' as const,
+    label: 'Le code source',
+    aide: 'Dépôts publics — historique, tests et CI compris.',
+  },
+];
+
+const groupes = FAMILLES.map((famille) => ({
+  ...famille,
+  entrees: preuves.filter((p) => p.famille === famille.cle),
+})).filter((groupe) => groupe.entrees.length > 0);
+---
+
+{
+  groupes.length > 0 && (
+    <section class="preuves" aria-labelledby="preuves-titre">
+      <p class="eyebrow">Vérifiable</p>
+      <h2 id="preuves-titre">{titre}</h2>
+      <p class="lead muted">
+        Tout ce qui suit est public. Rien n’oblige à me croire sur parole.
+      </p>
+
+      {groupes.map((groupe) => (
+        <div class="preuves-groupe">
+          <h3 class="preuves-famille">
+            {groupe.label}
+            <span class="preuves-aide">{groupe.aide}</span>
+          </h3>
+          <ul class="preuves-liste">
+            {groupe.entrees.map((entree) => (
+              <li>
+                <a href={entree.url} rel="noopener">
+                  {entree.label} ↗
+                </a>
+                <span class="preuves-quoi">{entree.quoi}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )
+}

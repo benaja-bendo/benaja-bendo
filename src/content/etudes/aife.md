@@ -26,6 +26,3 @@ J’ai développé des **microservices Java / Spring Boot** : PI planning, estim
 revues de code, tests, démonstrations client. J’ai aussi contribué à un projet
 **cloud AWS** (Python, Lambda, S3, PostgreSQL) dans une équipe agile de 8 —
 tickets, pair programming, revues de pull requests.
-
-C’est l’expérience qui ancre la crédibilité « entreprise » : livrer du code de
-qualité dans un cadre exigeant, à plusieurs, sur un système critique.

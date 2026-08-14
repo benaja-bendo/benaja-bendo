@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Taxo from '../../components/Taxo.astro';
 import MibekoProof from '../../components/MibekoProof.astro';
+import Preuves from '../../components/Preuves.astro';
 import {
   dateISO,
   formatDate,
@@ -92,6 +93,8 @@ const realisation = data.realisation
     <div class="prose">
       <Content />
     </div>
+
+    <Preuves preuves={data.preuves} />
   </section>
 
   <section class="container">

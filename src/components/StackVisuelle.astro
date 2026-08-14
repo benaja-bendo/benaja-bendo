@@ -1,0 +1,50 @@
+---
+import IconeTech from './IconeTech.astro';
+import { STACK, stackCompacte, type GroupeStack } from '../lib/stack';
+
+/**
+ * La stack, rendue lisible en un coup d'œil.
+ *
+ * Ce que ce composant corrige : les technologies n'existaient que dans le
+ * frontmatter des réalisations, donc à deux ou trois clics de l'accueil. Un
+ * recruteur qui cherche « Java Spring Boot React » ne clique pas trois fois.
+ *
+ * Ce qu'il ne fait PAS, et c'est délibéré : aucun niveau, aucune barre, aucune
+ * étoile. Une jauge « React 80 % » n'est pas une mesure, c'est une opinion mise
+ * en graphique — et elle se fait démonter au premier entretien technique. Le
+ * groupe et sa légende disent le contexte ; la preuve est dans les réalisations.
+ *
+ * `variante` :
+ *  - `compacte` (accueil) — seulement les entrées `cle`, pour ne pas transformer
+ *    la page d'accueil en album de vignettes ;
+ *  - `complete` (CV) — tout, puisque c'est précisément ce qu'on vient y chercher.
+ */
+interface Props {
+  variante?: 'compacte' | 'complete';
+  /** Rendu à plat, sans les légendes de groupe : utilisé par la page CV. */
+  dense?: boolean;
+}
+
+const { variante = 'complete', dense = false } = Astro.props;
+const groupes: GroupeStack[] =
+  variante === 'compacte' ? stackCompacte() : STACK;
+---
+
+<div class:list={['stack', dense && 'stack-dense']}>
+  {
+    groupes.map((groupe) => (
+      <section class="stack-groupe">
+        <h3 class="stack-titre">{groupe.titre}</h3>
+        {!dense && <p class="stack-precision">{groupe.precision}</p>}
+        <ul class="stack-puces">
+          {groupe.technos.map((techno) => (
+            <li class="stack-puce">
+              <IconeTech icone={techno.icone} mono={techno.mono} nom={techno.nom} />
+              <span>{techno.nom}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>

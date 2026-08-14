@@ -223,6 +223,12 @@ export async function navigationPrincipale() {
     // veut savoir d'où vient quelqu'un, et c'est déjà celui que le site employait
     // dans ses propres liens (« Lire le parcours → », « Le parcours complet »).
     { href: '/parcours', label: 'Parcours', actif: true },
+    // Le CV entre dans la navigation principale, et pas seulement dans le pied
+    // de page : pendant une recherche de poste, c'est la page qu'un lecteur
+    // pressé cherche en premier, et la seule qu'il puisse transmettre en
+    // interne. Sur mobile, où l'en-tête ne montre que la marque et Contact,
+    // cette entrée est portée par le pied de page comme les autres sections.
+    { href: '/cv', label: 'CV', actif: true },
   ].filter((item) => item.actif);
 }
 

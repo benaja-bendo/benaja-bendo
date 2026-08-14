@@ -22,12 +22,15 @@ npm run check    # astro check (types)
 | --- | --- |
 | Pourquoi ce site existe, ce qu'il doit prouver | `docs/02` *(local, hors dépôt)* |
 | Comment on écrit (ton, mots bannis) | `docs/02` *(local)* §4 |
-| Architecture des pages, stack, sécurité | [docs/03-proposition-refonte.md](docs/03-proposition-refonte.md) |
+| **Le site comme outil de recherche d'emploi** (preuves, CV, stack) | [docs/10-audit-recherche-emploi.md](docs/10-audit-recherche-emploi.md) |
 | **Design : tokens, composants, règles** | [docs/05-design-system-papier-pixels.md](docs/05-design-system-papier-pixels.md) |
 | Ce qui reste à faire / à mettre à jour | [docs/06-chantiers-futurs.md](docs/06-chantiers-futurs.md) |
 | **Contenu : quoi écrire, dans quel ordre, quand ouvrir une rubrique** | [docs/08-plan-contenu.md](docs/08-plan-contenu.md) |
 
-`docs/04-design-system.md` est **périmé** (direction « Console », non retenue) — gardé pour l'historique.
+Ce qui a servi et ne sert plus vit dans [docs/archives/](docs/archives/README.md) —
+la proposition de refonte (exécutée), le design system « Console » (jamais retenu)
+et l'audit Codex (traité). Rien n'y fait autorité : en cas de contradiction avec
+un document de `docs/`, c'est `docs/` qui gagne.
 
 ## Invariants — ne pas casser sans le dire explicitement
 
@@ -89,10 +92,15 @@ npm run check    # astro check (types)
 ```
 src/
   layouts/Base.astro     # <head>, CSP en <meta>, SEO/OG, skip-link
-  components/            # SiteHeader, SiteFooter
-  pages/                 # index, mibeko, experiences, a-propos, contact, colophon, 404, rss.xml.js
-  content/etudes/        # études de cas (content collections, schéma Zod dans content.config.ts)
-  styles/global.css      # LE design system — @font-face, tokens, composants
+  components/            # SiteHeader, SiteFooter, Preuves, StackVisuelle, IconeTech…
+  pages/                 # index, cv, contact, parcours, colophon, 404, rss.xml.ts
+                         # + realisations/, etudes/, notes/ (index, [slug], taxonomies)
+                         # /mibeko et /a-propos ne sont que des redirections (astro.config.mjs)
+  content/{realisations,etudes,notes}/   # collections, schéma Zod dans content.config.ts
+  lib/                   # contenu.ts (accès + navigation), stack.ts, parcours.ts,
+                         # icones-tech.ts (GÉNÉRÉ — voir scripts/generer-icones.mjs)
+  styles/global.css      # LE design system — @font-face, tokens, composants, impression
+scripts/generer-icones.mjs # régénère les tracés de logos depuis simple-icons (CC0)
 public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)
 firebase.json            # déploiement Firebase Hosting, en-têtes et cache
 .firebaserc               # alias local du projet Firebase benaja-bendo
@@ -110,6 +118,23 @@ hébergement **Firebase Hosting, plan Spark, statique uniquement**. Voir
 [docs/07](docs/07-deploiement-firebase.md). Ne pas activer Firestore, Authentication,
 Functions ou App Hosting sans un besoin fonctionnel explicite.
 Argumentaire complet : [docs/06](docs/06-chantiers-futurs.md).
+
+## Décisions actées (14/08/2026) — chantier « recherche d'emploi »
+
+Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
+
+- **Le CV est une page, pas un PDF.** `/cv` est la seule surface ; l'export passe
+  par `@media print` + `@page` (A4, thème clair forcé, décor retiré) et
+  `Cmd/Ctrl + P`. Un PDF déposé quelque part se périme sans prévenir — c'est
+  l'invariant n°5. Pas de bouton « Imprimer » : ce serait du script en ligne.
+- **Les logos de technos sont vendorisés et monochromes.** Tracés générés depuis
+  `simple-icons` (CC0) puis le paquet retiré ; rendus en `currentColor`, jamais
+  en couleur de marque — sinon il faudrait un `style=` par puce (CSP) et vingt
+  couleurs hors tokens (invariant n°4). Sans icône libre : un monogramme, jamais
+  un logo approximatif.
+- **Un lien de preuve est vérifié avant d'être publié.** Les `preuves:` du
+  frontmatter portent l'URL *et* ce qu'elle démontre. Un lien mort transforme un
+  argument en négligence visible — la commande de contrôle est dans docs/10.
 
 ## Vérification avant de rendre la main
 

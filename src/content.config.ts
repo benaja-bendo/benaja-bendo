@@ -16,6 +16,27 @@ import { z } from 'astro:schema';
 
 const lien = z.object({ label: z.string(), url: z.string().url() });
 
+/**
+ * Une preuve publique : un lien qu'un lecteur peut ouvrir pour vérifier une
+ * affirmation, avec la mention de CE QU'IL prouve.
+ *
+ * Pourquoi un type distinct de `lien` : un audit du build du 14/08/2026 a
+ * montré que le site ne sortait que vers LinkedIn, la racine du profil GitHub
+ * et la page d'accueil de Mibeko. Les six dépôts publics et les deux fiches de
+ * stores — c'est-à-dire tout ce qui permet de juger sur pièces — n'étaient liés
+ * nulle part. Un `liens` générique n'aurait pas suffi : rendu en rangée de
+ * boutons, huit liens indifférenciés ne disent pas lequel ouvrir.
+ *
+ * `famille` sert au regroupement à l'affichage, `quoi` à la légende.
+ */
+const preuve = z.object({
+  label: z.string(),
+  url: z.string().url(),
+  /** Ce que ce lien démontre, en une ligne. Pas un slogan : une justification. */
+  quoi: z.string(),
+  famille: z.enum(['produit', 'application', 'code']).default('code'),
+});
+
 const realisations = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/realisations' }),
   schema: z.object({
@@ -36,6 +57,8 @@ const realisations = defineCollection({
     stack: z.array(z.string()).default([]),
     domaines: z.array(z.string()).default([]),
     liens: z.array(lien).default([]),
+    /** Liens vérifiables — dépôts, fiches de stores, produit en ligne. */
+    preuves: z.array(preuve).default([]),
     /** Obligatoire : sans lui, l'inventaire redevient un CV en liste. */
     enseignement: z.string(),
     /** Identifiant de l'étude de cas associée, si elle existe. */
@@ -63,6 +86,8 @@ const etudes = defineCollection({
       .array(z.object({ valeur: z.string(), label: z.string() }))
       .default([]),
     liens: z.array(lien).default([]),
+    /** Liens vérifiables — dépôts, fiches de stores, produit en ligne. */
+    preuves: z.array(preuve).default([]),
     /** Réalisation dont cette étude approfondit les décisions. */
     realisation: z.string().optional(),
     confidentiel: z.boolean().default(false),
