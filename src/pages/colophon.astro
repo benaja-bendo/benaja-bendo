@@ -24,13 +24,21 @@ import { version as astroVersion } from 'astro/package.json';
         d’interface, pas de dépendance superflue.
       </p>
       <p>
-        Un seul fichier JavaScript est envoyé&nbsp;: <code>theme.js</code>,
-        1,5&nbsp;Ko compressés, qui mémorise le choix clair/sombre. Le site s’en
-        est passé jusqu’au 14&nbsp;août 2026 — une préférence qui survit à la
-        navigation exige un stockage local, et une bascule en CSS pur se
-        réinitialise à chaque lien suivi. Aucune autre page n’exécute de script,
-        et sans lui tout reste lisible&nbsp;: seul le sélecteur de thème
-        disparaît.
+        Deux fichiers JavaScript existent, et un seul est envoyé partout&nbsp;:
+        <code>theme.js</code>, 1,5&nbsp;Ko compressés, qui mémorise le choix
+        clair/sombre. Le site s’en est passé jusqu’au 14&nbsp;août 2026 — une
+        préférence qui survit à la navigation exige un stockage local, et une
+        bascule en CSS pur se réinitialise à chaque lien suivi. Le second,
+        <code>cv.js</code>, n’est chargé que par la page <a href="/cv">CV</a>&nbsp;:
+        il ouvre la fenêtre d’impression, une action qui n’a aucun équivalent en
+        CSS.
+      </p>
+      <p>
+        Sans JavaScript, tout reste lisible et rien ne ment&nbsp;: le sélecteur de
+        thème et le bouton d’impression sont masqués tant que leur script n’a pas
+        signalé qu’il fonctionnait. Un bouton qui ne fait rien est pire que pas de
+        bouton — le raccourci clavier reste écrit sur la page du CV, et donne
+        exactement le même résultat.
       </p>
 
       <h2>Sécurité &amp; vie privée</h2>

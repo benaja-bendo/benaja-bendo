@@ -112,8 +112,19 @@ part est exactement le genre d'artefact qui se périme sans prévenir — c'est
 l'invariant n°5, et le site de 2022 resté quatre ans en ligne. Une page se
 corrige en une ligne et se redéploie.
 
-Aucun bouton « Imprimer » : `onclick="window.print()"` serait du script en ligne
-bloqué par la CSP, et cela ne mérite pas un deuxième fichier JS (invariant n°3).
+**Revirement du 14/08/2026, assumé :** la première version ne donnait que
+l'indication clavier `Cmd/Ctrl + P`, au motif qu'un second fichier JS ne se
+justifiait pas. C'était un raisonnement de développeur. Le lecteur visé par
+cette page est un recruteur ou un RH : lui demander un raccourci clavier pour
+récupérer un CV revient à lui demander de renoncer. `/cv` porte donc deux
+boutons — un dans l'en-tête, un en pied de page — servis par `public/js/cv.js`,
+chargé **en `defer` et sur cette seule page** via la prop `script` de
+`Base.astro`. `onclick=` reste exclu : la CSP bloque tout script en ligne.
+
+Le contrat de dégradation est le même que celui de la bascule de thème : les
+boutons sont masqués tant que le script n'a pas posé `data-cv-pret` sur `<html>`,
+et l'indication clavier reste écrite sur la page. Sans JavaScript, personne ne
+voit un bouton mort et le résultat reste atteignable.
 
 > ⚠️ Piège rencontré, à ne pas défaire : `prefers-color-scheme` **n'est pas**
 > neutralisé à l'impression. Sur une machine réglée en sombre, la règle

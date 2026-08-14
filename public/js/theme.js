@@ -1,5 +1,8 @@
 /**
- * Choix du thème — le SEUL JavaScript envoyé par ce site.
+ * Choix du thème — le seul JavaScript envoyé sur TOUTES les pages.
+ *
+ * (Le site en compte un second depuis le 14/08/2026, `cv.js`, chargé par la
+ * seule page /cv pour son bouton d'impression. Voir l'invariant n°3.)
  *
  * Pourquoi il existe : une préférence de thème doit survivre à la navigation.
  * Sur un site multi-pages, une bascule en CSS pur (`:has()` + case à cocher) se

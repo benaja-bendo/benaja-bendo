@@ -1975,6 +1975,45 @@ main > section:last-child {
   line-height: 1.6;
 }
 
+/* Bouton d'impression — même contrat que la bascule de thème : il n'existe à
+   l'écran que si /js/cv.js a pu poser `data-cv-pret` sur <html>. Sans script il
+   ne ferait rien, et un bouton mort est pire que pas de bouton. L'indication
+   clavier du bas de page, elle, reste visible dans tous les cas. */
+.cv-imprimer {
+  display: none;
+}
+:root[data-cv-pret] .cv-imprimer {
+  display: inline-flex;
+  align-items: center;
+}
+/* Dans l'en-tête, coordonnées et bouton forment un seul enfant de grille — d'où
+   `.cv-actions`. Le bouton se pose sous les coordonnées et s'aligne sur elles. */
+.cv-actions {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+@media (min-width: 52rem) {
+  .cv-actions {
+    justify-items: end;
+  }
+}
+
+.cv-export-clavier {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.cv-export-clavier kbd {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.82em;
+  color: var(--fg);
+}
+
 .cv-export {
   margin-top: 3rem;
   padding: 1.5rem;
@@ -2046,10 +2085,14 @@ main > section:last-child {
     font-size: 10.5pt;
   }
 
+  /* `.cv-imprimer` est listé explicitement : celui de l'en-tête vit dans
+     `.cv-actions`, pas dans `.cta-row`, et imprimer un bouton « imprimer » sur
+     la feuille qu'il vient de produire n'aurait aucun sens. */
   .skip-link,
   .site-header,
   .site-footer,
   .cv-export,
+  .cv-imprimer,
   .cta-row {
     display: none !important;
   }

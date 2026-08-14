@@ -19,12 +19,19 @@ import {
  * se périme sans prévenir (invariant n°5, et le site de 2022 resté quatre ans
  * en ligne). Une page se corrige en une ligne et se redéploie.
  *
- * L'export tient donc dans la feuille de style : `@page` en A4, en-tête, pied,
+ * L'export tient dans la feuille de style : `@page` en A4, en-tête, pied,
  * navigation et bascule de thème retirés à l'impression, thème clair forcé,
- * ombres supprimées, coupures de page contrôlées. Cmd/Ctrl + P produit un PDF
- * présentable — sans JavaScript, donc sans bouton « imprimer » : un
- * `onclick="window.print()"` serait du script en ligne, bloqué par la CSP, et
- * ne mérite de toute façon pas un deuxième fichier JS (invariant n°3).
+ * ombres supprimées, coupures de page contrôlées.
+ *
+ * Le déclencheur, lui, est un bouton — et c'est un revirement assumé. La
+ * première version ne donnait que l'indication clavier Cmd/Ctrl + P, au motif
+ * qu'un second fichier JS ne se justifiait pas. C'était un raisonnement de
+ * développeur : le lecteur visé par cette page est un recruteur ou un RH, et
+ * lui demander un raccourci clavier pour récupérer un CV revient à lui demander
+ * de renoncer. Le script vit dans public/js/cv.js, chargé en `defer` sur cette
+ * page seulement (jamais sur les 27 autres) ; `onclick=` reste exclu, la CSP
+ * bloquant tout script en ligne. L'indication clavier reste affichée : c'est le
+ * chemin de repli quand le bouton est masqué faute de JavaScript.
  *
  * Règle de contenu : cette page ne contient AUCUN fait qui ne soit pas déjà
  * ailleurs sur le site. Les données viennent de src/lib/parcours.ts, partagé
@@ -38,6 +45,7 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
 <Base
   title="CV — Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot"
   description={`CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot · React à Bordeaux. Disponible en CDI à partir du ${DISPONIBILITE.texte}. Page imprimable, toujours à jour.`}
+  script="/js/cv.js"
 >
   <article class="cv container">
     <header class="cv-entete">
@@ -53,24 +61,35 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
         </p>
       </div>
 
-      <ul class="cv-contacts">
-        <li>
-          <span class="etiq">Email</span>
-          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-        </li>
-        <li>
-          <span class="etiq">Site</span>
-          <a href="/">{CONTACT.site}</a>
-        </li>
-        <li>
-          <span class="etiq">GitHub</span>
-          <a href={`https://${CONTACT.github}`} rel="me noopener">{CONTACT.github}</a>
-        </li>
-        <li>
-          <span class="etiq">LinkedIn</span>
-          <a href={`https://${CONTACT.linkedin}`} rel="me noopener">{CONTACT.linkedin}</a>
-        </li>
-      </ul>
+      {/* Coordonnées et bouton dans un même bloc : l'en-tête est une grille à
+          deux colonnes, un troisième enfant retomberait sous le nom. */}
+      <div class="cv-actions">
+        <ul class="cv-contacts">
+          <li>
+            <span class="etiq">Email</span>
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          </li>
+          <li>
+            <span class="etiq">Site</span>
+            <a href="/">{CONTACT.site}</a>
+          </li>
+          <li>
+            <span class="etiq">GitHub</span>
+            <a href={`https://${CONTACT.github}`} rel="me noopener">{CONTACT.github}</a>
+          </li>
+          <li>
+            <span class="etiq">LinkedIn</span>
+            <a href={`https://${CONTACT.linkedin}`} rel="me noopener">{CONTACT.linkedin}</a>
+          </li>
+        </ul>
+
+        {/* Masqué par le CSS tant que /js/cv.js n'a pas posé `data-cv-pret` sur
+            <html> : sans script, ce bouton ne ferait rien. L'indication clavier
+            du bas de page reste, elle, toujours affichée. */}
+        <button class="btn btn-primary cv-imprimer" type="button" data-imprimer>
+          Imprimer ou enregistrer en PDF
+        </button>
+      </div>
     </header>
 
     <section class="cv-section cv-accroche">
@@ -169,16 +188,24 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
     <aside class="cv-export">
       <p class="etiq">Emporter ce CV</p>
       <p>
-        Il n’y a pas de PDF à télécharger, et c’est volontaire&nbsp;: un fichier
-        déposé quelque part se périme sans prévenir, cette page non.
-        <strong> Cmd&nbsp;+&nbsp;P</strong> (ou <strong>Ctrl&nbsp;+&nbsp;P</strong>)
-        puis « Enregistrer au format PDF »&nbsp;: la mise en page d’impression est
-        écrite pour ça — format A4, sans menu ni décor.
+        Il n’y a pas de fichier à télécharger, et c’est volontaire&nbsp;: un PDF
+        déposé quelque part se périme sans prévenir, cette page non. Le bouton
+        ci-dessous ouvre la fenêtre d’impression, où «&nbsp;Enregistrer au format
+        PDF&nbsp;» donne un fichier propre — format A4, sans menu ni décor.
       </p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>Me contacter</a>
-        <a class="btn btn-ghost" href="/realisations">Ce que j’ai construit</a>
+        <button class="btn btn-primary cv-imprimer" type="button" data-imprimer>
+          Imprimer ou enregistrer en PDF
+        </button>
+        <a class="btn btn-ghost" href={`mailto:${CONTACT.email}`}>Me contacter</a>
       </div>
+      {/* Toujours visible, y compris sans JavaScript : c'est le chemin de
+          repli quand le bouton est masqué, et il donne exactement le même
+          résultat. */}
+      <p class="cv-export-clavier">
+        Au clavier, si vous préférez&nbsp;: <kbd>Cmd</kbd>&nbsp;+&nbsp;<kbd>P</kbd> sur
+        Mac, <kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>P</kbd> ailleurs.
+      </p>
     </aside>
   </article>
 </Base>

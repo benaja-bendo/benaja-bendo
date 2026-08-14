@@ -55,16 +55,24 @@ un document de `docs/`, c'est `docs/` qui gagne.
      blocs de code sont mis en forme par `.prose pre` dans `global.css`.
 2. **Zéro requête tierce.** Pas de CDN, pas de Google Fonts, pas d'image externe, pas
    d'analytics à cookies. Tout est servi depuis le domaine.
-3. **Un seul fichier JS, et il se justifie.** Aucun framework UI (pas de React ici).
-   Une interaction indispensable se code en vanilla dans un fichier `.js` externe —
-   jamais inline, sinon la CSP la bloque. Aujourd'hui il y en a **un** :
-   `public/js/theme.js` (1,5 Ko compressés), qui mémorise le choix clair/sombre —
-   une préférence qui survit à la navigation exige `localStorage`, et une bascule
-   en CSS pur se réinitialise à chaque lien suivi. Il est chargé **sans `defer`**
-   dans le `<head>` pour poser `data-theme` avant le premier rendu ; avec `defer`,
-   la page clignote. Avant d'en ajouter un deuxième : la fonctionnalité vaut-elle
-   une requête bloquante ? Et mettre à jour le colophon, qui énumère ce qui est
-   envoyé.
+3. **Chaque fichier JS se justifie, et il n'y en a que deux.** Aucun framework UI
+   (pas de React ici). Une interaction indispensable se code en vanilla dans un
+   fichier `.js` externe — jamais inline, sinon la CSP la bloque.
+   - `public/js/theme.js` (1,5 Ko compressés) mémorise le choix clair/sombre :
+     une préférence qui survit à la navigation exige `localStorage`, et une
+     bascule en CSS pur se réinitialise à chaque lien suivi. Chargé sur **toutes**
+     les pages et **sans `defer`**, pour poser `data-theme` avant le premier
+     rendu ; avec `defer`, la page clignote.
+   - `public/js/cv.js` déclenche l'impression de `/cv`. Chargé **avec `defer`**
+     et **sur cette seule page**, via la prop `script` de `Base.astro`.
+     `window.print()` n'a aucun équivalent CSS, et l'indication clavier seule
+     excluait de fait les lecteurs non techniques — qui sont le public de cette
+     page.
+   Avant d'en ajouter un troisième : la fonctionnalité vaut-elle une requête, et
+   peut-elle être limitée aux pages concernées ? Toute interaction ainsi ajoutée
+   doit rester **masquée tant que son script n'a pas signalé qu'il est prêt**
+   (`data-theme-pret`, `data-cv-pret`) — jamais de bouton mort. Et mettre à jour
+   le colophon, qui énumère ce qui est envoyé.
 4. **Le design est un système, pas des styles à l'unité.** Toute couleur, tout rayon,
    toute ombre vient d'un token de `src/styles/global.css`. Pas de valeur en dur dans
    une page. Les ombres sont **dures** (0 flou) — c'est la signature, voir docs/05.

@@ -13,9 +13,19 @@ interface Props {
    * `follow` est conservé — les liens qu'elle porte doivent rester suivis.
    */
   noindex?: boolean;
+  /**
+   * Script propre à une page, servi depuis notre domaine et chargé en `defer`.
+   *
+   * Volontairement une exception, pas une facilité : l'invariant n°3 demande
+   * qu'un fichier JS se justifie avant d'exister. Une page qui en a besoin le
+   * déclare ici pour que les autres ne le paient pas — aujourd'hui seule /cv
+   * s'en sert, pour son bouton d'impression. Le `defer` marque la différence
+   * avec theme.js : un script qui ne décide pas du rendu ne le bloque pas.
+   */
+  script?: string;
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, script } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL('/og/benaja-bendo.png', Astro.site);
 
@@ -55,6 +65,11 @@ const csp = [
         compressé, `script-src 'self'` respectée — voir l'en-tête de
         public/js/theme.js. */}
     <script src="/js/theme.js" is:inline></script>
+
+    {/* Script de page, s'il y en a un. `is:inline` pour qu'Astro ne le reprenne
+        pas dans son graphe de modules : le fichier est déjà servi tel quel
+        depuis public/, et `script-src 'self'` le couvre. */}
+    {script && <script src={script} defer is:inline></script>}
 
     <title>{title}</title>
     <meta name="description" content={description} />
