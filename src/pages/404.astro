@@ -4,15 +4,20 @@ import Base from '../layouts/Base.astro';
 
 <Base
   title="Page introuvable (404) — Bénaja Bendo-Matondo"
-  description="Cette page n’existe pas ou plus."
+  description="Cette page n’existe pas ou plus. Voici les trois endroits utiles du site."
 >
   <section class="container notfound">
     <p class="code">404</p>
     <h1>Cette page a changé d’adresse</h1>
-    <p class="lead muted">Le lien est cassé ou la page n’existe plus.</p>
+    <p class="lead muted">
+      Le lien est cassé, ou la page a été retirée — ici, un contenu périmé est
+      supprimé, pas laissé à l’abandon. Les trois espaces du site&nbsp;:
+    </p>
     <div class="cta-row cta-center">
-      <a class="btn btn-primary" href="/">Retour à l’accueil</a>
-      <a class="btn btn-ghost" href="/mibeko">Voir Mibeko</a>
+      <a class="btn btn-primary" href="/realisations">Réalisations</a>
+      <a class="btn btn-ghost" href="/etudes">Études de cas</a>
+      <a class="btn btn-ghost" href="/notes">Notes</a>
     </div>
+    <p class="retour"><a href="/">← Retour à l’accueil</a></p>
   </section>
 </Base>

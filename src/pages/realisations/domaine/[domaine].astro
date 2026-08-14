@@ -1,0 +1,48 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LigneRealisation from '../../../components/LigneRealisation.astro';
+import {
+  taxonomiesRealisations,
+  type Groupe,
+  type Realisation,
+} from '../../../lib/contenu';
+
+export async function getStaticPaths() {
+  const { domaines } = await taxonomiesRealisations();
+  return domaines.map((groupe) => ({
+    params: { domaine: groupe.slug },
+    props: { groupe },
+  }));
+}
+
+interface Props {
+  groupe: Groupe<Realisation>;
+}
+
+const { groupe } = Astro.props;
+---
+
+<Base
+  title={`${groupe.label} — réalisations | Bénaja Bendo-Matondo`}
+  description={`Les réalisations de Bénaja Bendo-Matondo dans le domaine « ${groupe.label} ».`}
+>
+  <section class="container">
+    <p class="eyebrow">Domaine</p>
+    <h1>{groupe.label}</h1>
+    <p class="lead">
+      {groupe.entrees.length} réalisations rangées dans ce domaine.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="lignes">
+      {
+        groupe.entrees.map((realisation) => (
+          <LigneRealisation realisation={realisation} />
+        ))
+      }
+    </div>
+
+    <p class="retour"><a href="/realisations">← Toutes les réalisations</a></p>
+  </section>
+</Base>

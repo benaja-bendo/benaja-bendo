@@ -1,0 +1,47 @@
+---
+import Statut from './Statut.astro';
+import Taxo from './Taxo.astro';
+import {
+  STATUTS_NOTE,
+  dateISO,
+  formatDate,
+  sujetsNotes,
+  type Note,
+} from '../lib/contenu';
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { id, data } = note;
+const statut = STATUTS_NOTE[data.statut];
+const { aUnePage } = await sujetsNotes();
+---
+
+<article class="ligne">
+  <div class="ligne-tete">
+    <h3 class="ligne-titre">
+      <a href={`/notes/${id}`}>{data.titre}</a>
+    </h3>
+    <Statut label={statut.label} ton={statut.ton} />
+  </div>
+
+  <p class="ligne-periode">
+    <time datetime={dateISO(data.date)}>{formatDate(data.date)}</time>
+    {data.maj && <> · relue le {formatDate(data.maj)}</>}
+  </p>
+
+  <p class="ligne-resume">{data.resume}</p>
+
+  <Taxo
+    valeurs={data.sujets}
+    base="/notes/sujet"
+    aUnePage={aUnePage}
+    etiquette={`Sujets — ${data.titre}`}
+  />
+
+  <p class="ligne-liens">
+    <a href={`/notes/${id}`}>Lire la note →</a>
+  </p>
+</article>

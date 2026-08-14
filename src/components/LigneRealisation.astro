@@ -1,0 +1,60 @@
+---
+import Statut from './Statut.astro';
+import Taxo from './Taxo.astro';
+import {
+  STATUTS_REALISATION,
+  taxonomiesRealisations,
+  type Realisation,
+} from '../lib/contenu';
+
+/** Une entrée de l'inventaire. Répond aux six questions de docs/08 §2. */
+interface Props {
+  realisation: Realisation;
+}
+
+const { realisation } = Astro.props;
+const { id, data } = realisation;
+const statut = STATUTS_REALISATION[data.statut];
+const { aUnePage } = await taxonomiesRealisations();
+---
+
+<article class="ligne">
+  <div class="ligne-tete">
+    <h3 class="ligne-titre">
+      <a href={`/realisations/${id}`}>{data.nom}</a>
+    </h3>
+    <Statut label={statut.label} ton={statut.ton} />
+  </div>
+
+  <p class="ligne-periode">{data.periode}</p>
+  <p class="ligne-resume">{data.resume}</p>
+
+  <p class="champ">
+    <span class="etiq">Mon rôle</span>
+    {data.role}
+  </p>
+
+  <p class="retenu">
+    <span class="etiq">Ce que j’en retiens</span>
+    {data.enseignement}
+  </p>
+
+  <Taxo
+    valeurs={data.stack}
+    base="/realisations/tech"
+    aUnePage={aUnePage}
+    etiquette={`Technologies — ${data.nom}`}
+  />
+
+  <p class="ligne-liens">
+    <a href={`/realisations/${id}`}>La fiche →</a>
+    {data.etude && <a href={`/etudes/${data.etude}`}>L’étude de cas →</a>}
+    {
+      data.liens.map((lien) => (
+        <a href={lien.url} rel="noopener">
+          {lien.label} ↗
+        </a>
+      ))
+    }
+  </p>
+</article>

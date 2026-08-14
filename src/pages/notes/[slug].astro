@@ -1,0 +1,102 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Statut from '../../components/Statut.astro';
+import Taxo from '../../components/Taxo.astro';
+import {
+  STATUTS_NOTE,
+  dateISO,
+  formatDate,
+  getNotes,
+  sujetsNotes,
+  type Note,
+} from '../../lib/contenu';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { data } = note;
+const { Content } = await render(note);
+const statut = STATUTS_NOTE[data.statut];
+const { aUnePage } = await sujetsNotes();
+
+// Une note obsolète doit pointer sa remplaçante, sinon elle induit en erreur.
+const notes = await getNotes();
+const remplacante = data.remplaceePar
+  ? notes.find((n) => n.id === data.remplaceePar)
+  : undefined;
+---
+
+<Base title={`${data.titre} — note | Bénaja Bendo-Matondo`} description={data.resume}>
+  <section class="container">
+    <p class="eyebrow">Note · <time datetime={dateISO(data.date)}>{formatDate(data.date)}</time></p>
+    <h1>{data.titre}</h1>
+
+    <p class="note-statut">
+      <Statut label={statut.label} ton={statut.ton} />
+      <span class="muted">{statut.aide}</span>
+    </p>
+
+    {
+      remplacante && (
+        <p class="note-cadre">
+          Cette note est remplacée par{' '}
+          <a href={`/notes/${remplacante.id}`}>{remplacante.data.titre}</a>.
+        </p>
+      )
+    }
+
+    <p class="lead">{data.resume}</p>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {
+      data.sources.length > 0 && (
+        <div class="prose">
+          <h2>Sources</h2>
+          <ul>
+            {data.sources.map((source) => (
+              <li>
+                <a href={source.url} rel="noopener">
+                  {source.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="container">
+    <p class="eyebrow">Repères</p>
+    <h2>Sujets</h2>
+    <Taxo
+      valeurs={data.sujets}
+      base="/notes/sujet"
+      aUnePage={aUnePage}
+      etiquette="Sujets"
+    />
+
+    <p class="relecture">
+      Écrite le <time datetime={dateISO(data.date)}>{formatDate(data.date)}</time>{
+        data.maj && (
+          <>
+            , relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>
+          </>
+        )
+      }.
+    </p>
+
+    <p class="retour"><a href="/notes">← Toutes les notes</a></p>
+  </section>
+</Base>

@@ -16,12 +16,11 @@ rouvrir un choix en connaissance de cause plutôt que de le refaire de zéro.
 | **Techno** | **Astro**, on garde | Partie 2 — rien ne justifiait d'en changer |
 | **Dépôt** | **Le site reste dans ce dépôt, sur `main`** | Il cohabite avec le README de profil GitHub, qui reste à réécrire (voir tableau ci-dessous) |
 | **Typographie** | **IBM Plex auto-hébergée** | Appliqué — [doc 05](05-design-system-papier-pixels.md) §3 |
-| **Contenu** | **Études de cas** + **vitrine Mibeko sur GitHub** + **notes techniques** | Partie 3 — voir l'ordre de mise en œuvre |
+| **Contenu** | **Réalisations** + **études de cas** + **notes** | Stratégie révisée le 14/08/2026 — [doc 08](08-plan-contenu.md) |
 | **Hébergement** | **Firebase Hosting (Spark)** | Décidé le 13/08/2026 — statique uniquement, voir [doc 07](07-deploiement-firebase.md) |
 
-⚠️ Conséquence du choix « notes techniques » : c'est le format le plus exigeant en
-rythme (1 par mois tenu). La règle qui l'accompagne est en partie 3 — **n'ouvrir la
-rubrique que le jour où le premier texte est écrit**, jamais avant.
+Les notes n'imposent aucun rythme. Une note utile, datée et publiable suffit à ouvrir la
+rubrique ; l'ancien seuil mensuel confondait jardin numérique et média éditorial.
 
 ---
 
@@ -134,6 +133,11 @@ et procédure : [doc 07](07-deploiement-firebase.md).
 
 ## Partie 3 — Choix n°2 : quel contenu proposer
 
+> **Révisé le 14/08/2026.** L'analyse ci-dessous est conservée comme historique du choix,
+> mais sa prémisse (« chaque type de contenu est un engagement de rythme ») et son ordre
+> centré sur l'échéance de recrutement sont remplacés par la stratégie durable de
+> [docs/08-plan-contenu.md](08-plan-contenu.md).
+
 Le site fait aujourd'hui **une seule chose** : convaincre un recruteur en 5 secondes,
 30 secondes, 3 minutes (doc 02 *(notes locales, non publiées)* §3). La question est de
 savoir ce qu'on lui ajoute — sachant que **chaque type de contenu est un engagement de
@@ -148,7 +152,7 @@ rythme**, et qu'un contenu abandonné fait plus de mal que pas de contenu du tou
 | **E. Vitrine Mibeko publique** — README d'architecture, schémas, décisions, chiffres (code produit privé) | Le vaisseau amiral, vérifiable en un clic. **Un README d'architecture prouve plus qu'un repo de tutoriel** | Une fois, puis figé | Faible. Fort effet de levier |
 | **F. Veille / newsletter** | Une audience | Hebdomadaire, sans fin | ❌ Élevé, et ça ne prouve pas qu'il sait construire |
 
-### ✅ Retenu : B + E + C — dans cet ordre
+### Historique : B + E + C — dans cet ordre
 
 L'ordre n'est pas négociable, il est dicté par l'échéance du 28/09/2026 :
 

@@ -1,0 +1,49 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LigneRealisation from '../../../components/LigneRealisation.astro';
+import {
+  taxonomiesRealisations,
+  type Groupe,
+  type Realisation,
+} from '../../../lib/contenu';
+
+export async function getStaticPaths() {
+  const { techs } = await taxonomiesRealisations();
+  return techs.map((groupe) => ({
+    params: { tech: groupe.slug },
+    props: { groupe },
+  }));
+}
+
+interface Props {
+  groupe: Groupe<Realisation>;
+}
+
+const { groupe } = Astro.props;
+---
+
+<Base
+  title={`${groupe.label} — réalisations | Bénaja Bendo-Matondo`}
+  description={`Où Bénaja Bendo-Matondo a utilisé ${groupe.label}, et dans quel rôle.`}
+>
+  <section class="container">
+    <p class="eyebrow">Technologie</p>
+    <h1>{groupe.label}</h1>
+    <p class="lead">
+      {groupe.entrees.length} réalisations où {groupe.label} est en jeu — avec le
+      rôle que j’y ai tenu, pas seulement la mention de l’outil.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="lignes">
+      {
+        groupe.entrees.map((realisation) => (
+          <LigneRealisation realisation={realisation} />
+        ))
+      }
+    </div>
+
+    <p class="retour"><a href="/realisations">← Toutes les réalisations</a></p>
+  </section>
+</Base>
