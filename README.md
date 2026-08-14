@@ -1,74 +1,63 @@
 # Bénaja Bendo-Matondo
 
-**Développeur Fullstack Java / Spring Boot · React** — Bordeaux / Mérignac (33)
+**Développeur fullstack** — Java / Spring Boot · TypeScript / React · Bordeaux / Mérignac (33)
 
-Je conçois, je livre et j'**opère** des produits complets en production. Le plus parlant
-est [Mibeko](https://mibeko.fr) : un SaaS LegalTech qui rend le droit congolais et OHADA
-consultable, que j'ai conçu et que j'opère seul depuis décembre 2025 — API, ingestion
-documentaire, apps mobiles et infrastructure comprises.
+[benaja-bendo.fr](https://www.benaja-bendo.fr) · [LinkedIn](https://www.linkedin.com/in/benaja-bendo) · [contact@benaja-bendo.fr](mailto:contact@benaja-bendo.fr)
 
-🟢 **Disponible en CDI à partir du 28 septembre 2026** (fin d'alternance chez Capgemini et
-du titre RNCP niveau 7).
+Je conçois, je livre et j'**opère** des produits complets : API, interfaces web, apps
+mobiles et l'infrastructure qui les porte. En alternance chez **Capgemini** depuis 2023
+(AIFE puis France Travail) et, en parallèle, seul aux commandes de
+**[Mibeko](https://mibeko.fr)** — un SaaS LegalTech en production depuis décembre 2025.
 
----
-
-## 🏛️ Mibeko — l'écosystème
-
-Le droit du Congo-Brazzaville existe, mais il dort dans des PDF scannés. Mibeko le rend
-cherchable, structuré et citable. Cinq dépôts, une seule base de vérité :
-
-| Dépôt | Rôle | Stack |
-| --- | --- | --- |
-| [`mibeko-dashboard`](https://github.com/benaja-bendo/mibeko-dashboard) | API et source de vérité : fonds juridique, auth, assistant IA, facturation | Laravel 13, PostgreSQL |
-| [`mibeko-python`](https://github.com/benaja-bendo/mibeko-python) | Ingestion : OCR (MinerU), extraction et structuration des textes | FastAPI, S3/MinIO |
-| [`mibeko-front`](https://github.com/benaja-bendo/mibeko-front) | Dashboard des avocats et juristes | React, Vite, TypeScript |
-| [`mibeko-app-kmp`](https://github.com/benaja-bendo/mibeko-app-kmp) | Apps Android + iOS, consultation partiellement hors-ligne | Kotlin Multiplatform |
-| [`mibeko-site`](https://github.com/benaja-bendo/mibeko-site) | Portail public du fonds juridique | Astro |
-
-Ce qui fait la différence côté IA : l'assistant **cite l'article exact d'où vient chaque
-réponse** (RAG), le LLM propose mais un **schéma valide** avant écriture, et chaque
-document garde sa provenance (empreinte SHA-256). Recherche hybride : plein texte,
-trigrammes, `pgvector`.
-
-**En production** : ~730 tests automatisés, CI/CD GitHub Actions, déploiement continu,
-apps publiées sur l'App Store et le Play Store.
-
-L'infra qui porte tout ça est publique elle aussi :
-[`vps_infra`](https://github.com/benaja-bendo/vps_infra) — Ansible, Docker, Traefik,
-PostgreSQL, MinIO.
-
-## 💼 En entreprise
-
-**Capgemini**, Bordeaux — janvier 2023 → septembre 2026 (stage puis alternance)
-
-- **France Travail** (2024-2026) : refonte de deux applications fragiles en un service
-  Spring Boot unique sur OpenShift, qui automatise la collecte des prévisions de
-  **400+ collaborateurs**. Tableaux de bord Power BI utilisés au quotidien.
-- **AIFE** (finances publiques) : microservices Java / Spring Boot, agilité à l'échelle,
-  au sein d'une équipe backend de 10 personnes.
+🟢 Disponible en **CDI à partir du 28 septembre 2026**.
 
 ## 🛠️ Stack
 
-**Backend** — Java · Spring Boot · Laravel / PHP · Python (FastAPI) · Node.js
-**Frontend** — TypeScript · React · Astro · Vue
-**Mobile** — Kotlin Multiplatform · Flutter
-**Données & IA** — PostgreSQL · pgvector · recherche plein texte et trigrammes · pipelines RAG · OCR
-**Ops** — Docker · Ansible · Traefik · GitHub Actions · OpenShift · VPS Linux
+| | |
+| --- | --- |
+| **Back-end** | Java · Spring Boot · Laravel / PHP · Python · FastAPI · Node.js |
+| **Front-end** | TypeScript · React · Astro · Vue |
+| **Mobile** | Kotlin Multiplatform · Flutter |
+| **Données & IA** | PostgreSQL · pgvector · recherche plein texte et trigrammes · RAG sourcé · OCR · Power BI |
+| **Ops** | Docker · Ansible · Traefik · GitHub Actions · OpenShift · AWS · Linux (VPS) |
 
-## 🧭 Le fil conducteur
+Ni niveaux ni étoiles : une barre de progression sur une techno est une opinion déguisée
+en mesure. Chaque ligne ci-dessus est adossée à un projet livré ou à une mission — et la
+plupart sont lisibles dans les dépôts ci-dessous.
 
-J'ai commencé par réparer des machines à Pointe-Noire, en maintenance industrielle. Je
-construis maintenant des systèmes logiciels qui n'ont pas besoin de moi pour tourner — et
-je les opère. Entre les deux : développeur web et mobile au Congo puis en freelance,
-avant l'EPSI Bordeaux (Bachelor CDA, puis RNCP niveau 7).
+## 📦 Par où commencer
+
+| Dépôt | Ce qu'il montre | Stack |
+| --- | --- | --- |
+| [`mibeko-dashboard`](https://github.com/benaja-bendo/mibeko-dashboard) | L'API et la source de vérité de Mibeko : fonds juridique, auth, assistant IA, facturation | Laravel, PostgreSQL |
+| [`mibeko-app-kmp`](https://github.com/benaja-bendo/mibeko-app-kmp) | Les apps Android et iOS, consultation partiellement hors-ligne | Kotlin Multiplatform |
+| [`mibeko-python`](https://github.com/benaja-bendo/mibeko-python) | L'ingestion documentaire : OCR, extraction, structuration des textes de loi | FastAPI, S3/MinIO |
+| [`mibeko-front`](https://github.com/benaja-bendo/mibeko-front) | Le dashboard des avocats et juristes | React, Vite, TypeScript |
+| [`vps_infra`](https://github.com/benaja-bendo/vps_infra) | L'infrastructure qui porte tout ça, en Infrastructure as Code | Ansible, Docker, Traefik |
+| [`benaja-bendo`](https://github.com/benaja-bendo/benaja-bendo) | Ce dépôt : mon site, 100 % statique, CSP stricte, un seul fichier JS | Astro |
+
+Ce que Mibeko prouve concrètement : ~730 tests automatisés, CI/CD GitHub Actions,
+déploiement continu, apps publiées sur l'App Store et le Play Store — et un assistant IA
+qui **cite l'article exact d'où vient chaque réponse**.
+
+## 💼 Expérience
+
+- **Capgemini**, Bordeaux — *2023 → 2026, stage puis alternance*
+  **France Travail** : refonte de deux applications fragiles en un service Spring Boot
+  unique sur OpenShift, qui automatise la collecte des prévisions de **400+ collaborateurs**
+  — plus les tableaux de bord Power BI utilisés au quotidien.
+  **AIFE** (finances publiques) : microservices Java / Spring Boot, équipe backend de 10,
+  agilité à l'échelle.
+- **Pointe-Noire, Congo** — *2020 → 2023*
+  Développeur web & mobile, salarié puis en freelance : apps Flutter et API Laravel /
+  Node.js livrées à des clients réels, du besoin à la mise en production.
+- **EPSI Bordeaux** — titre RNCP niveau 7 (Bac+5), en attente de soutenance ; Bachelor
+  Concepteur Développeur d'Applications obtenu en 2023. Avant le code : une licence en
+  maintenance industrielle, et des machines à réparer.
 
 À côté, j'écris des jeux navigateur en Phaser 3 dont **l'art pixel est intégralement
 généré par code** — pas une image importée.
 
-## 📫 Me contacter
-
-[benaja-bendo.fr](https://www.benaja-bendo.fr) · [contact@benaja-bendo.fr](mailto:contact@benaja-bendo.fr) · [LinkedIn](https://www.linkedin.com/in/benaja-bendo)
-
-<sub>🇬🇧 Fullstack developer (Java / Spring Boot · React) based in Bordeaux, France.
+<sub>🇬🇧 Fullstack developer (Java / Spring Boot · TypeScript / React) based in Bordeaux, France.
 I design, ship and operate <a href="https://mibeko.fr">Mibeko</a>, a LegalTech SaaS in
 production since December 2025. Available for a permanent role from 28 September 2026.</sub>
