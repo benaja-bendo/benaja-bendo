@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Taxo from '../../components/Taxo.astro';
+import MibekoProof from '../../components/MibekoProof.astro';
 import {
   dateISO,
   formatDate,
@@ -85,6 +86,8 @@ const realisation = data.realisation
         </div>
       )
     }
+
+    {etude.id === 'mibeko' && <MibekoProof />}
 
     <div class="prose">
       <Content />

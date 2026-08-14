@@ -10,6 +10,7 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL('/og/benaja-bendo.png', Astro.site);
 
 // CSP stricte, sans script/style tiers ni inline (le CSS est émis en fichiers
 // externes via build.inlineStylesheets:'never'). Injectée uniquement dans le
@@ -70,9 +71,14 @@ const csp = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bénaja Bendo-Matondo — systèmes logiciels, décisions et apprentissages" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
   </head>
   <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>

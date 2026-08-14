@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Statut from '../components/Statut.astro';
+import SourceIllustration from '../components/SourceIllustration.astro';
 import {
   STATUTS_REALISATION,
   dateISO,
@@ -32,28 +33,36 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
   description="Je construis des systèmes logiciels et je les fais tenir en production. Mibeko, SaaS LegalTech opéré seul depuis décembre 2025 ; microservices Java / Spring Boot chez Capgemini."
 >
   <section class="hero container">
-    <p class="eyebrow">Bordeaux · développeur fullstack</p>
-    <h1>
-      Bénaja Bendo-Matondo
-      <span class="role">
-        Je construis des systèmes logiciels, et je les fais tenir en production.
-      </span>
-    </h1>
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <p class="eyebrow">Bordeaux · développeur fullstack</p>
+        <h1>
+          Bénaja Bendo-Matondo
+          <span class="role">
+            Je construis des systèmes logiciels, et je les fais tenir en production.
+          </span>
+        </h1>
 
-    <div class="hero-proof">
-      <p>
-        Le plus complet s’appelle <a href="/realisations/mibeko">Mibeko</a>&nbsp;: un
-        assistant qui rend le droit congolais consultable en citant l’article
-        exact d’où vient chaque réponse. Conçu, développé et <mark>opéré seul</mark>
-        — du backend aux applications publiées sur les deux stores. Le jour,
-        j’écris des microservices Java&nbsp;/&nbsp;Spring Boot sur des systèmes
-        des finances publiques.
-      </p>
-    </div>
+        <div class="hero-proof">
+          <p>
+            Le plus complet s’appelle <a href="/etudes/mibeko">Mibeko</a>&nbsp;: un
+            assistant qui rend le droit congolais consultable en citant l’article
+            exact d’où vient chaque réponse. Conçu, développé et <mark>opéré seul</mark> — du
+            backend aux applications publiées sur les deux stores. Le jour,
+            j’écris des microservices Java&nbsp;/&nbsp;Spring Boot sur des systèmes
+            des finances publiques.
+          </p>
+        </div>
 
-    <div class="cta-row">
-      <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
-      <a class="btn btn-ghost" href="/a-propos">Qui je suis</a>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
+          <a class="btn btn-ghost" href="/a-propos">Qui je suis</a>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <SourceIllustration />
+      </div>
     </div>
   </section>
 
@@ -66,8 +75,11 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
     </p>
 
     <div class="cards">
-      <article class="card">
-        <span class="period">Une réalisation</span>
+      <article class="card door-card">
+        <div class="door-card-head">
+          <span class="period">Une réalisation</span>
+          <span class="door-index" aria-hidden="true">01</span>
+        </div>
         <h3><a href={`/realisations/${realisation.id}`}>{realisation.data.nom}</a></h3>
         <p class="card-resume">{realisation.data.resume}</p>
         <p class="card-statut">
@@ -76,17 +88,23 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
         <a href="/realisations">Voir l’inventaire →</a>
       </article>
 
-      <article class="card">
-        <span class="period">Une étude de cas</span>
+      <article class="card door-card">
+        <div class="door-card-head">
+          <span class="period">Une étude de cas</span>
+          <span class="door-index" aria-hidden="true">02</span>
+        </div>
         <h3><a href={`/etudes/${etude.id}`}>{etude.data.titre}</a></h3>
         <p class="card-resume">{etude.data.resume}</p>
         <a href="/etudes">Toutes les études →</a>
       </article>
 
-      <article class="card">
-        <span class="period">
-          Une note · <time datetime={dateISO(note.data.date)}>{formatDate(note.data.date)}</time>
-        </span>
+      <article class="card door-card">
+        <div class="door-card-head">
+          <span class="period">
+            Une note · <time datetime={dateISO(note.data.date)}>{formatDate(note.data.date)}</time>
+          </span>
+          <span class="door-index" aria-hidden="true">03</span>
+        </div>
         <h3><a href={`/notes/${note.id}`}>{note.data.titre}</a></h3>
         <p class="card-resume">{note.data.resume}</p>
         <a href="/notes">Toutes les notes →</a>

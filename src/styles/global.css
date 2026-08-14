@@ -8,8 +8,8 @@
  *
  * Trois invariants à ne pas casser :
  *   1. Les ombres sont DURES (0 flou). `--pop`, jamais de `blur`.
- *   2. Tout est dessiné en CSS (dégradés à arrêts nets pour les pixels) —
- *      aucune image tierce, la CSP `img-src 'self'` reste intacte.
+ *   2. La signature pixel est dessinée en CSS. Une illustration éditoriale
+ *      locale est permise si elle explique une idée précise — jamais de hotlink.
  *   3. Une seule couleur d'accent porteuse (teal). L'ambre est un SIGNAL
  *      (jamais du texte courant : 3.75:1, réservé aux aplats et graphiques).
  * ========================================================================== */
@@ -443,6 +443,19 @@ main > section:last-child {
   letter-spacing: -0.01em;
 }
 
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(15rem, 0.75fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.hero-copy {
+  min-width: 0;
+}
+.hero-art {
+  min-width: 0;
+}
+
 /* L'encart de preuve : le bloc le plus « épais » de la page, c'est voulu —
    c'est la seule chose qu'un recruteur doit lire s'il ne lit qu'une chose. */
 .hero-proof {
@@ -457,6 +470,118 @@ main > section:last-child {
 .hero-proof p {
   margin: 0;
   padding: 1.1rem 1.35rem 1.25rem;
+}
+
+/* Illustration éditoriale unique de l'accueil. Le dessin vient de Koboyo mais
+   son dispositif — papier, pixels, méta et relief — appartient au système. */
+.source-illustration {
+  margin: 0;
+}
+.source-illustration-link {
+  display: block;
+  color: var(--fg);
+  text-decoration: none;
+}
+.source-illustration-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 21rem;
+  padding: 3.5rem 2rem 2.75rem;
+  overflow: hidden;
+  color: var(--accent);
+  background-color: var(--surface);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 23px,
+    var(--rule) 23px 24px
+  );
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop-lg);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 140ms ease-out;
+}
+.source-illustration-link:hover .source-illustration-stage {
+  transform: translate(-2px, -2px) rotate(-0.5deg);
+  box-shadow: 8px 8px 0 var(--border);
+}
+.source-illustration-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 10px,
+    var(--signal) 10px 20px,
+    transparent 20px 30px
+  );
+}
+.source-illustration-icon {
+  width: min(9rem, 55%);
+  height: auto;
+  fill: currentColor;
+  filter: drop-shadow(5px 5px 0 var(--mark-2));
+}
+.source-illustration-meta,
+.source-illustration-tag {
+  position: absolute;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.source-illustration-meta {
+  top: 1.15rem;
+  left: 1rem;
+  color: var(--muted);
+}
+.source-illustration-tag {
+  padding: 0.25rem 0.55rem;
+  color: var(--fg);
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  box-shadow: var(--pop-sm);
+}
+.source-illustration-tag-in {
+  top: 3.2rem;
+  right: 1rem;
+  transform: rotate(2deg);
+}
+.source-illustration-tag-out {
+  bottom: 1.4rem;
+  left: 1rem;
+  background: var(--mark-1);
+  transform: rotate(-2deg);
+}
+.source-illustration figcaption {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 1.25rem;
+  padding-left: 0.2rem;
+  font-size: 0.88rem;
+}
+.source-illustration figcaption strong {
+  color: var(--fg);
+}
+.source-illustration figcaption span {
+  color: var(--muted);
+}
+
+@media (max-width: 52rem) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+  .hero-art {
+    max-width: 30rem;
+  }
+  .source-illustration-stage {
+    min-height: 17rem;
+  }
 }
 
 .cta-row {
@@ -549,6 +674,24 @@ main > section:last-child {
   font-family: var(--mono);
   font-size: 0.8rem;
   color: var(--muted);
+}
+.door-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.door-card-head .period {
+  padding-inline: 0;
+  padding-top: 0.35rem;
+}
+.door-index {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.08em;
 }
 .card ul {
   margin: 0.35rem 0 0;
@@ -908,6 +1051,154 @@ main > section:last-child {
   gap: 0.5rem 0.8rem;
   margin: 0 0 1.25rem;
   font-size: 0.95rem;
+}
+
+/* =============================================================================
+ * Preuves produit — une capture réelle et la chaîne qui l'explique
+ * ========================================================================== */
+
+.proof-gallery {
+  margin-block: clamp(3rem, 7vw, 5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--rule);
+}
+.proof-gallery-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.7fr);
+  gap: 1.5rem 3rem;
+  align-items: end;
+  margin-bottom: 1.75rem;
+}
+.proof-gallery-heading h2 {
+  margin-bottom: 0;
+}
+.proof-gallery-intro {
+  margin: 0;
+  color: var(--muted);
+}
+.product-window {
+  margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop-lg);
+}
+.product-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.6rem;
+  padding-inline: 0.9rem;
+  background: var(--surface-2);
+  border-bottom: var(--edge) solid var(--border);
+}
+.product-window-bar > span:not(.product-window-url) {
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--accent);
+}
+.product-window-bar > span:nth-child(2) {
+  background: var(--signal);
+}
+.product-window-bar > span:nth-child(3) {
+  background: var(--muted);
+}
+.product-window-url {
+  margin-left: 0.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+}
+.product-window img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--surface);
+  border-bottom: var(--edge) solid var(--border);
+}
+.product-window figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding: 0.9rem 1.1rem 1rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+.product-window figcaption .etiq {
+  margin: 0;
+}
+.trust-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  overflow: hidden;
+}
+.trust-flow li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  min-height: 11rem;
+  padding: 1.15rem 1rem;
+  border-left: 1px solid var(--rule);
+}
+.trust-flow li:first-child {
+  border-left: 0;
+}
+.trust-flow li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+  right: -0.65rem;
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  color: var(--accent-fg);
+  background: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.trust-flow-number {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.trust-flow li > span:last-child {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+@media (max-width: 48rem) {
+  .proof-gallery-heading,
+  .trust-flow {
+    grid-template-columns: 1fr;
+  }
+  .trust-flow li {
+    min-height: 0;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .trust-flow li:first-child {
+    border-top: 0;
+  }
+  .trust-flow li:not(:last-child)::after {
+    top: auto;
+    right: 1rem;
+    bottom: -0.65rem;
+    content: "↓";
+  }
 }
 
 /* Dates de relecture et retours arrière : de la méta, donc du mono. */

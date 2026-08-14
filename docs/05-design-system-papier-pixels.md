@@ -33,7 +33,7 @@ Donc : **on garde la construction, on change l'identité.**
 | Bordure pleine + ombre dure, 0 flou | Police : **IBM Plex Sans**, pas Atkinson Hyperlegible |
 | Surligneur au marqueur sur les mots-clés | **IBM Plex Mono** pour les données (il n'a pas de mono) |
 | Beaucoup de blanc, grille large | **Mode sombre** (il n'en a pas) |
-| | Signature : **pixels dessinés en CSS**, pas d'illustrations |
+| | Signature : **pixels dessinés en CSS** ; illustration éditoriale rare et justifiée |
 
 ## Le parti pris en une phrase
 
@@ -85,9 +85,10 @@ c'est volontaire, c'est la même mécanique lue en négatif. `--muted` y tient 7
 
 1. **Les ombres sont dures.** `0 flou`, toujours. Une `box-shadow` avec un rayon de flou
    quelque part dans ce projet est un bug, pas un choix.
-2. **Tout est dessiné en CSS.** Les pixels sont des dégradés à arrêts nets
-   (`repeating-linear-gradient`) et des `box-shadow` décalées. Aucune image, aucun SVG
-   externe → `img-src 'self'` reste intacte et il n'y a aucun asset à maintenir.
+2. **La signature reste dessinée en CSS.** Les pixels sont des dégradés à arrêts nets
+   (`repeating-linear-gradient`) et des `box-shadow` décalées. Une illustration
+   éditoriale est admise seulement si elle explique une idée précise, reste rare et est
+   stockée localement. Aucun hotlink ni bibliothèque d'icônes chargée au runtime.
 3. **Un seul accent porteur.** Le teal porte, l'ambre **signale**. L'ambre ne passe jamais
    en texte courant (3.75:1). Deux accents qui se disputent = plus aucun accent.
 
@@ -137,7 +138,9 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
   Media query dédiée < 48rem : sans elle l'ombre de la pastille déborde sous le filet.
 - **Hero** — eyebrow (glyphe 4 pixels : 3 teal + 1 ambre), nom en h1, rôle en mono.
   **`.hero-proof` est le bloc le plus épais de la page** : c'est voulu, c'est la seule
-  chose à lire si on ne lit qu'une chose.
+  chose à lire si on ne lit qu'une chose. Sur l'accueil, une illustration éditoriale
+  « citation footnote » de Koboyo matérialise la traçabilité de Mibeko. Elle est intégrée
+  dans un composant Astro, recolorée par les tokens et ne déclenche aucune requête tierce.
 - **Surligneur `<mark>`** — `.mark-1` (défaut) = la preuve · `.mark-time` = le temps, la
   disponibilité · `.mark-human` = le parcours. **Deux marques maximum par bloc** :
   au-delà, plus rien ne ressort.
@@ -162,8 +165,8 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
 ## 6. Ce qui reste à faire sur le design
 
 - [x] ~~Trancher la question des webfonts~~ — fait le 13/08/2026 (§3).
-- [ ] Favicon : le passer en pixel sur l'accent teal (il est encore générique).
-- [ ] Image Open Graph dédiée (l'aperçu LinkedIn est un cas d'usage majeur ici).
+- [x] Favicon pixel sur l'accent teal.
+- [x] Image Open Graph dédiée 1200×630 pour les aperçus sociaux.
 - [ ] Décliner le système sur `/mibeko`, `/experiences`, `/a-propos`, `/colophon` : les
       classes existent déjà, mais ces pages n'ont pas été relues une par une.
 - [ ] Scène pixel de la 404 (aujourd'hui : seulement le code en gros).
