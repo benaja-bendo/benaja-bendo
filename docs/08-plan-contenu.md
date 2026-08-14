@@ -103,11 +103,21 @@ pas l'architecture du site.
 
 #### `/` — orienter, pas tout raconter
 
-- une phrase d'identité moins étroite qu'un intitulé de poste ;
-- une courte phrase sur le type de problèmes et de systèmes construits ;
-- trois portes d'entrée : une réalisation, une étude de cas, une note récente ou utile ;
+- un intitulé de poste explicite, suivi d'une courte phrase sur le type de
+  problèmes et de systèmes construits ;
+- deux niveaux de preuve dans le hero : produit porté de bout en bout, puis
+  expérience en équipe ;
+- trois repères factuels scannables sans lire les paragraphes ;
+- deux travaux sélectionnés et complémentaires : une preuve publique et une
+  mission d'entreprise racontable sans exposer le client ;
+- la stack après les travaux, pour que les mots-clés restent reliés à des faits ;
 - un aperçu humain bref ;
 - la disponibilité et le contact dans un bloc secondaire, exact et facile à réviser.
+
+Les réalisations, études et notes restent trois espaces distincts dans la
+navigation. Elles n'ont pas pour autant à occuper chacune une carte sur
+l'accueil : une note sur la construction du site ne doit pas prendre la place
+d'une preuve de livraison pour satisfaire la symétrie du modèle de contenu.
 
 L'accueil ne doit plus afficher le diplôme comme une « preuve » au même niveau qu'un
 produit construit. Le diplôme appartient au parcours ; la preuve principale est le
@@ -157,8 +167,11 @@ Capgemini, Mibeko et les expérimentations. Il peut aussi dire :
 
 #### `/contact` — ouvrir une conversation
 
-Email, LinkedIn et GitHub suffisent. La page peut donner les informations utiles à une
-prise de contact sans s'adresser uniquement aux recruteurs.
+Email, LinkedIn et GitHub suffisent comme canaux. La page organise d'abord les
+**intentions** — recruter ou exposer un besoin technique — puis donne à chacune
+les faits, les preuves et un objet d'email adaptés. Elle ne prétend pas à une
+offre de services détaillée tant que périmètre, disponibilité et modalités ne
+sont pas formalisés.
 
 ---
 
@@ -290,7 +303,7 @@ Créer les collections `realisations`, `etudes` étendue et `notes`, avec brouil
 statuts et dates. Construire les routes uniquement pour les contenus publiables présents.
 Le filtrage reste statique avec des URL partageables ; aucun JavaScript n'est nécessaire.
 
-### Étape 3 — Trois portes d'entrée solides
+### Étape 3 — Deux preuves solides, trois espaces accessibles
 
 Publier :
 
@@ -298,7 +311,10 @@ Publier :
 - une étude de cas Mibeko complète ;
 - une première note réellement utile à Bénaja.
 
-Cela suffit pour tester la nouvelle identité du site : travail, réflexion et mémoire.
+Cela suffit pour tester la nouvelle identité du site : travail, réflexion et
+mémoire. Sur l'accueil, les preuves de livraison sont sélectionnées selon leur
+force ; les trois espaces restent accessibles dans la navigation sans imposer
+une carte à chacun.
 
 ### Étape 4 — Réécrire le parcours public
 

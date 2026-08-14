@@ -136,11 +136,13 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
   bordure encre, ombre 2px. Nav en mono ; la page courante est marquée par un **trait
   d'encre sous le lien**, pas par une couleur. Pastille « CV (PDF) » en relief.
   Media query dédiée < 48rem : sans elle l'ombre de la pastille déborde sous le filet.
-- **Hero** — eyebrow (glyphe 4 pixels : 3 teal + 1 ambre), nom en h1, rôle en mono.
-  **`.hero-proof` est le bloc le plus épais de la page** : c'est voulu, c'est la seule
-  chose à lire si on ne lit qu'une chose. Sur l'accueil, une illustration éditoriale
-  « citation footnote » de Koboyo matérialise la traçabilité de Mibeko. Elle est intégrée
-  dans un composant Astro, recolorée par les tokens et ne déclenche aucune requête tierce.
+- **Hero** — eyebrow (glyphe 4 pixels : 3 teal + 1 ambre), nom en h1, intitulé de
+  poste en mono puis proposition de valeur courte. **`.hero-proof` reste le bloc
+  le plus épais de la page**, mais sa variante `.hero-proof-split` sépare la preuve
+  produit de la preuve entreprise. `.hero-facts` porte les trois repères lus en
+  diagonale. Sur l'accueil, une illustration éditoriale « citation footnote » de
+  Koboyo matérialise la traçabilité de Mibeko. Elle est intégrée dans un composant
+  Astro, recolorée par les tokens et ne déclenche aucune requête tierce.
 - **Surligneur `<mark>`** — `.mark-1` (défaut) = la preuve · `.mark-time` = le temps, la
   disponibilité · `.mark-human` = le parcours. **Deux marques maximum par bloc** :
   au-delà, plus rien ne ressort.
@@ -149,7 +151,13 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
 - **Cartes** — liseré pixel en tête (6px), puces **carrées** teal, soulèvement au survol.
   La gouttière est portée par les enfants (`.card > *`), pas par la carte : c'est ce qui
   permet au liseré de toucher les bords.
+- **Cartes de contact** — même grammaire, mais organisées par intention
+  (« recruter » / « besoin technique ») plutôt que par canal. L'email est
+  l'action ; CV, études et réalisations sont les preuves secondaires.
 - **Tuiles de chiffres** — grand nombre en mono teal, `tabular-nums`, liseré pixel.
+- **Flux d'impact** — `.trust-flow` sert aussi aux schémas code-native. La
+  variante `.impact-flow` raconte un avant / intervention / après sans prétendre
+  reconstituer l'architecture d'un client confidentiel.
 - **Footer** — fond `--surface-2`, pastille de disponibilité **carrée** (un pixel, pas une
   LED), liens en mono.
 - **404** — le code en mono géant avec ombre dure. La seule vraie fantaisie de la v1.

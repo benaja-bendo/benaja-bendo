@@ -3,30 +3,20 @@ import Base from '../layouts/Base.astro';
 import Statut from '../components/Statut.astro';
 import SourceIllustration from '../components/SourceIllustration.astro';
 import StackVisuelle from '../components/StackVisuelle.astro';
+import { DISPONIBILITE } from '../lib/parcours';
 import {
   STATUTS_REALISATION,
-  dateISO,
-  formatDate,
-  getEtudes,
-  getNotes,
   getRealisations,
 } from '../lib/contenu';
 
-// Trois portes d'entrée, une par espace du site (docs/08 §2). Chacune montre
-// une vraie entrée : rien n'est écrit en dur ici, donc rien ne peut mentir
-// quand le contenu change.
+// L'accueil sélectionne deux preuves complémentaires : un produit public porté
+// de bout en bout et une mission d'entreprise confidentielle mais mesurable.
+// Les notes restent accessibles dans la navigation ; les mettre au même niveau
+// qu'une preuve de livraison ralentissait le parcours recrutement / mission.
 const realisations = await getRealisations();
-const etudes = await getEtudes();
-const notes = await getNotes();
-
-const realisation = realisations[0];
-// La porte « étude » ne doit pas répéter la porte « réalisation » : on prend la
-// première étude qui parle d'autre chose, et on retombe sur la première s'il
-// n'y en a qu'une.
-const etude =
-  etudes.find((e) => e.data.realisation !== realisation.id) ?? etudes[0];
-const note = notes[0];
-const statut = STATUTS_REALISATION[realisation.data.statut];
+const travaux = ['mibeko', 'france-travail-collecte']
+  .map((id) => realisations.find((entree) => entree.id === id))
+  .filter((entree) => entree !== undefined);
 ---
 
 <Base
@@ -36,16 +26,21 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
   <section class="hero container">
     <div class="hero-layout">
       <div class="hero-copy">
-        <p class="eyebrow">Bordeaux · développeur fullstack</p>
+        <p class="eyebrow">Produit · back-end · production</p>
         {/* Trait d'union insécable (U+2011) : sur 375 px, `text-wrap: balance`
             coupait volontiers « Bénaja Bendo- / Matondo » — une césure sur son
             propre nom, en première ligne de la page d'accueil. */}
         <h1>
           Bénaja Bendo‑Matondo
           <span class="role">
-            Je construis des systèmes logiciels, et je les fais tenir en production.
+            Développeur fullstack Java / Spring Boot · Bordeaux
           </span>
         </h1>
+
+        <p class="hero-value">
+          Je transforme des processus métier fragiles en services fiables, et je
+          porte mes propres produits jusqu’en production.
+        </p>
 
         {/* La mission citée ici doit être la mission EN COURS. La version
             précédente disait au présent « microservices Java / Spring Boot […]
@@ -53,22 +48,41 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
             en 2024 d'après notre propre étude de cas. Un lecteur qui enchaînait
             l'accueil puis /etudes voyait l'écart de deux ans — exactement ce que
             la règle de contenu n°1 interdit. */}
-        <div class="hero-proof">
-          <p>
-            Le plus complet s’appelle <a href="/etudes/mibeko">Mibeko</a>&nbsp;: un
-            assistant qui rend le droit congolais consultable en citant l’article
-            exact d’où vient chaque réponse. Conçu, développé et <mark>opéré seul</mark> — du
-            backend aux applications publiées sur les deux stores. Le jour, je
-            suis développeur chez <strong>Capgemini</strong>&nbsp;: aujourd’hui un service
-            Java&nbsp;/&nbsp;Spring Boot et les tableaux de bord d’un compte
-            France&nbsp;Travail, auparavant des microservices sur des systèmes des
-            finances publiques.
-          </p>
+        <div class="hero-proof hero-proof-split" aria-label="Deux preuves de travail">
+          <div class="hero-proof-item">
+            <p class="hero-proof-label">Produit livré et opéré</p>
+            <p>
+              <a href="/etudes/mibeko">Mibeko</a>&nbsp;: assistant juridique sourcé,
+              <mark>porté seul</mark> jusqu’aux stores et à la production.
+            </p>
+          </div>
+          <div class="hero-proof-item">
+            <p class="hero-proof-label">Expérience en équipe</p>
+            <p>
+              Chez <strong>Capgemini</strong>&nbsp;: Java&nbsp;/&nbsp;Spring Boot et décisionnel
+              pour France Travail&nbsp;; microservices finances publiques auparavant.
+            </p>
+          </div>
         </div>
 
+        <dl class="hero-facts" aria-label="Repères rapides">
+          <div>
+            <dt>Depuis 2023</dt>
+            <dd>Capgemini</dd>
+          </div>
+          <div>
+            <dt>Depuis déc. 2025</dt>
+            <dd>Mibeko en production</dd>
+          </div>
+          <div>
+            <dt><time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time></dt>
+            <dd>Disponible en CDI</dd>
+          </div>
+        </dl>
+
         <div class="cta-row">
-          <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
-          <a class="btn btn-ghost" href="/parcours">Mon parcours</a>
+          <a class="btn btn-primary" href="#travaux-selectionnes">Voir les preuves</a>
+          <a class="btn btn-ghost" href="/cv">Consulter le CV</a>
         </div>
       </div>
 
@@ -78,69 +92,59 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
     </div>
   </section>
 
-  {/* Placée juste après le hero, avant les portes d'entrée : la question qu'un
-      lecteur se pose en dixième seconde n'est pas « par où commencer » mais
-      « est-ce que ça correspond à ce que je cherche ». Variante compacte — la
-      liste complète vit sur /cv, dont c'est le sujet. */}
-  <section class="container">
-    <p class="eyebrow">Ce avec quoi je travaille</p>
-    <h2>La stack, sans jauge ni pourcentage</h2>
+  <section class="container" id="travaux-selectionnes">
+    <p class="eyebrow">Travaux sélectionnés</p>
+    <h2>Deux contextes, deux preuves</h2>
     <p class="lead muted">
-      Ce que j’utilise réellement, en entreprise ou sur mes propres produits.
-      Aucun niveau affiché&nbsp;: une barre de progression sur une techno est une
-      opinion déguisée en mesure. La preuve est dans
-      les <a href="/realisations">réalisations</a>.
+      Un produit public pour juger l’autonomie de bout en bout. Une mission en
+      entreprise pour juger l’impact dans un cadre collectif et confidentiel.
     </p>
-    <StackVisuelle variante="compacte" />
-    <p class="lead">
-      <a href="/cv">La stack complète et le CV →</a>
+
+    <div class="cards cards-selection">
+      {travaux.map((travail, index) => {
+        const statut = STATUTS_REALISATION[travail.data.statut];
+        const href = travail.data.etude
+          ? `/etudes/${travail.data.etude}`
+          : `/realisations/${travail.id}`;
+        return (
+          <article class="card door-card">
+            <div class="door-card-head">
+              <span class="period">{travail.data.periode}</span>
+              <span class="door-index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+            </div>
+            <h3><a href={href}>{travail.data.nom}</a></h3>
+            <p class="card-cadre">Mon rôle · {travail.data.role}</p>
+            <p class="card-resume">{travail.data.resume}</p>
+            <p class="card-statut">
+              <Statut label={statut.label} ton={statut.ton} />
+            </p>
+            <a href={href}>Lire l’étude de cas →</a>
+          </article>
+        );
+      })}
+    </div>
+
+    <p class="section-link">
+      <a href="/realisations">Voir tout l’inventaire des réalisations →</a>
     </p>
   </section>
 
+  {/* La stack vient après les preuves : elle permet le scan par mots-clés sans
+      demander au lecteur de croire une liste avant d'avoir vu le travail. */}
   <section class="container">
-    <p class="eyebrow">Trois portes d’entrée</p>
-    <h2>Par où commencer</h2>
+    <p class="eyebrow">Compétences en contexte</p>
+    <h2>Une stack reliée à du travail réel</h2>
     <p class="lead muted">
-      Selon ce que vous cherchez&nbsp;: ce que j’ai construit, comment je décide, ou
-      ce que j’apprends en chemin.
+      Java, Spring Boot, React, Kotlin, Laravel et l’exploitation qui les fait
+      tenir. Chaque technologie ci-dessous est utilisée dans une mission ou un
+      produit décrit sur ce site.
     </p>
-
-    <div class="cards">
-      <article class="card door-card">
-        <div class="door-card-head">
-          <span class="period">Une réalisation</span>
-          <span class="door-index" aria-hidden="true">01</span>
-        </div>
-        <h3><a href={`/realisations/${realisation.id}`}>{realisation.data.nom}</a></h3>
-        <p class="card-resume">{realisation.data.resume}</p>
-        <p class="card-statut">
-          <Statut label={statut.label} ton={statut.ton} />
-        </p>
-        <a href="/realisations">Voir l’inventaire →</a>
-      </article>
-
-      <article class="card door-card">
-        <div class="door-card-head">
-          <span class="period">Une étude de cas</span>
-          <span class="door-index" aria-hidden="true">02</span>
-        </div>
-        <h3><a href={`/etudes/${etude.id}`}>{etude.data.titre}</a></h3>
-        <p class="card-resume">{etude.data.resume}</p>
-        <a href="/etudes">Toutes les études →</a>
-      </article>
-
-      <article class="card door-card">
-        <div class="door-card-head">
-          <span class="period">
-            Une note · <time datetime={dateISO(note.data.date)}>{formatDate(note.data.date)}</time>
-          </span>
-          <span class="door-index" aria-hidden="true">03</span>
-        </div>
-        <h3><a href={`/notes/${note.id}`}>{note.data.titre}</a></h3>
-        <p class="card-resume">{note.data.resume}</p>
-        <a href="/notes">Toutes les notes →</a>
-      </article>
-    </div>
+    <StackVisuelle variante="compacte" />
+    <p class="section-link">
+      <a href="/cv">Voir la stack complète dans le CV →</a>
+    </p>
   </section>
 
   <section class="container">
@@ -154,11 +158,6 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
         comprendre un problème réel, construire l’outil qui le règle, et le
         faire tenir dans la durée.
       </p>
-      <p>
-        Ce site est le même exercice appliqué à moi-même&nbsp;: il
-        est <a href="/realisations/benaja-bendo-fr">construit comme les autres</a>,
-        avec ses contraintes et ses compromis écrits noir sur blanc.
-      </p>
       <p><a href="/parcours">Lire le parcours →</a></p>
     </div>
   </section>
@@ -168,15 +167,11 @@ const statut = STATUTS_REALISATION[realisation.data.statut];
     <h2>Disponibilité</h2>
     <p class="lead">
       Je termine mon alternance chez Capgemini et je serai disponible en CDI à
-      partir du <mark class="mark-time mark-ponct">28&nbsp;septembre&nbsp;2026</mark>, à
-      Bordeaux&nbsp;/&nbsp;Mérignac.
-    </p>
-    <p class="muted">
-      Le reste du site ne dépend pas de cette ligne&nbsp;: il vit aussi bien une fois
-      le poste signé.
+      partir du <mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark>, à
+      &nbsp;{DISPONIBILITE.lieu}.
     </p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/contact">Me contacter</a>
+      <a class="btn btn-primary" href="/contact">Parler d’un poste ou d’un besoin</a>
       <a class="btn btn-ghost" href="/cv">Voir le CV</a>
     </div>
   </section>

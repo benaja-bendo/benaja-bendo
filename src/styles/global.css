@@ -551,6 +551,12 @@ main > section:last-child {
 .hero-art {
   min-width: 0;
 }
+.hero-value {
+  max-width: 40rem;
+  margin: 1.1rem 0 0;
+  font-size: clamp(1.05rem, 1rem + 0.45vw, 1.25rem);
+  color: var(--fg);
+}
 
 /* L'encart de preuve : le bloc le plus « épais » de la page, c'est voulu —
    c'est la seule chose qu'un recruteur doit lire s'il ne lit qu'une chose. */
@@ -566,6 +572,55 @@ main > section:last-child {
 .hero-proof p {
   margin: 0;
   padding: 1.1rem 1.35rem 1.25rem;
+}
+.hero-proof-split p {
+  padding: 0;
+}
+.hero-proof-item {
+  padding: 1rem 1.25rem 1.1rem;
+}
+.hero-proof-item + .hero-proof-item {
+  border-top: 1px solid var(--rule);
+}
+.hero-proof-split .hero-proof-label {
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Trois faits denses pour le scan en dix secondes. Le `<dl>` garde le sens :
+   la donnée d'abord, ce qu'elle signifie ensuite. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  max-width: 46rem;
+  margin: 1.25rem 0 0;
+  border-block: 1px solid var(--rule);
+}
+.hero-facts > div {
+  padding: 0.8rem 1rem;
+  border-left: 1px solid var(--rule);
+}
+.hero-facts > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.hero-facts dt {
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.hero-facts dd {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 /* Illustration éditoriale unique de l'accueil. Le dessin vient de Koboyo mais
@@ -677,6 +732,19 @@ main > section:last-child {
   }
   .source-illustration-stage {
     min-height: 17rem;
+  }
+}
+@media (max-width: 36rem) {
+  .hero-facts {
+    grid-template-columns: 1fr;
+  }
+  .hero-facts > div,
+  .hero-facts > div:first-child {
+    padding: 0.7rem 0;
+    border-left: 0;
+  }
+  .hero-facts > div + div {
+    border-top: 1px solid var(--rule);
   }
 }
 
@@ -851,6 +919,84 @@ main > section:last-child {
 }
 .card-statut {
   margin: 0.7rem 0 0;
+}
+.cards-selection {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.section-link {
+  margin: 1.5rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.section-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+/* Contact : les cartes organisent les intentions du lecteur, pas les canaux.
+   L'email devient l'action ; le CV et les réalisations restent les preuves. */
+.intent-card .card-resume {
+  color: var(--muted);
+}
+.intent-card ul {
+  margin-top: 0.75rem;
+  padding-right: 1.25rem;
+}
+.intent-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.card .intent-actions a {
+  margin-top: 0;
+}
+.card .intent-actions .btn {
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+}
+.card .intent-actions .intent-proof {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+.contact-briefs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+.contact-briefs article {
+  padding: 1.25rem;
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+}
+.contact-briefs h3 {
+  margin: 0.35rem 0 0.65rem;
+  font-size: 1.08rem;
+}
+.contact-briefs p:last-child {
+  margin: 0;
+  color: var(--muted);
+}
+.contact-secondary {
+  margin-top: 1.75rem;
+}
+@media (max-width: 42rem) {
+  .cards-selection,
+  .contact-briefs {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =============================================================================
@@ -1519,6 +1665,35 @@ main > section:last-child {
   box-shadow: var(--pop-sm);
   overflow: hidden;
 }
+.impact-visual {
+  margin-block: clamp(3rem, 7vw, 5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--rule);
+}
+.impact-visual-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.7fr);
+  gap: 1.5rem 3rem;
+  align-items: end;
+}
+.impact-visual-heading h2 {
+  margin-bottom: 0;
+}
+.impact-visual-heading > p {
+  margin: 0;
+  color: var(--muted);
+}
+.impact-flow {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.impact-phase {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .trust-flow li {
   position: relative;
   display: grid;
@@ -1560,6 +1735,7 @@ main > section:last-child {
 }
 @media (max-width: 48rem) {
   .proof-gallery-heading,
+  .impact-visual-heading,
   .trust-flow {
     grid-template-columns: 1fr;
   }

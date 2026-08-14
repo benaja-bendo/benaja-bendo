@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Taxo from '../../components/Taxo.astro';
 import MibekoProof from '../../components/MibekoProof.astro';
+import FranceTravailImpact from '../../components/FranceTravailImpact.astro';
 import Preuves from '../../components/Preuves.astro';
 import {
   dateISO,
@@ -89,6 +90,7 @@ const realisation = data.realisation
     }
 
     {etude.id === 'mibeko' && <MibekoProof />}
+    {etude.id === 'france-travail' && <FranceTravailImpact />}
 
     <div class="prose">
       <Content />
