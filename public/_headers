@@ -11,12 +11,29 @@
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: no-cache
 
-# Chemins non empreintés (pas de hash dans le nom) : une semaine, jamais
-# `immutable`. Les fichiers de /_astro/ portent un hash et sont gérés par
-# l'hébergeur ou par firebase.json.
+# `no-cache` ci-dessus ne veut pas dire « ne garde rien » : le navigateur garde
+# la réponse mais redemande à chaque fois si elle a changé, et reçoit un 304 vide
+# quand ce n'est pas le cas. C'est le réglage qu'exige un site dont la règle est
+# que rien de périmé ne reste en ligne — sans lui, Firebase applique son défaut
+# d'une heure sur le HTML, et une correction déployée reste invisible pendant
+# tout ce temps pour qui est déjà venu. Constaté le 14/08/2026 : le bouton
+# d'impression du CV était en ligne et introuvable dans le navigateur de Bénaja.
+
+# Fichiers empreintés (hash dans le nom) : les mettre en cache pour toujours est
+# sans risque, puisque tout changement produit une URL différente.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Chemins NON empreintés. Les polices ne changent jamais en pratique et pèsent
+# 92 Ko : une semaine reste le bon compromis.
 /fonts/*
   Cache-Control: public, max-age=604800
 
+# Le JS n'est pas empreinté non plus, mais lui change — et il pèse moins de 3 Ko.
+# À une semaine de cache, corriger un bug dans theme.js ou cv.js n'aurait atteint
+# les visiteurs déjà venus qu'au bout de sept jours, sans moyen de forcer la mise
+# à jour. La revalidation coûte moins cher que ce risque.
 /js/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: no-cache

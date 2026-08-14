@@ -55,6 +55,10 @@
           {
             "key": "Cross-Origin-Resource-Policy",
             "value": "same-origin"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
           }
         ]
       },
@@ -81,7 +85,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=604800"
+            "value": "no-cache"
           }
         ]
       }
