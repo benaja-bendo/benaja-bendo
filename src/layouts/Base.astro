@@ -16,11 +16,11 @@ interface Props {
   /**
    * Script propre à une page, servi depuis notre domaine et chargé en `defer`.
    *
-   * Volontairement une exception, pas une facilité : l'invariant n°3 demande
-   * qu'un fichier JS se justifie avant d'exister. Une page qui en a besoin le
-   * déclare ici pour que les autres ne le paient pas — aujourd'hui seule /cv
-   * s'en sert, pour son bouton d'impression. Le `defer` marque la différence
-   * avec theme.js : un script qui ne décide pas du rendu ne le bloque pas.
+   * Le but n'est pas de limiter le JavaScript mais de le localiser : une page
+   * qui a besoin d'un script le déclare ici, et les autres ne le téléchargent
+   * pas. Aujourd'hui seule /cv s'en sert, pour son bouton d'impression. Le
+   * `defer` marque la différence avec theme.js : un script qui ne décide pas du
+   * rendu n'a aucune raison de le bloquer.
    */
   script?: string;
 }
@@ -59,10 +59,10 @@ const csp = [
     <meta name="theme-color" content="#fcfaf3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#12161a" media="(prefers-color-scheme: dark)" />
 
-    {/* Le seul script du site. Volontairement SANS `defer` : il pose
-        `data-theme` sur <html> avant le premier rendu, sinon la page clignote
-        dans le thème du système avant de basculer. Fichier local, 1,5 Ko
-        compressé, `script-src 'self'` respectée — voir l'en-tête de
+    {/* Le seul script chargé sur toutes les pages, et le seul SANS `defer` :
+        il pose `data-theme` sur <html> avant le premier rendu, sinon la page
+        clignote dans le thème du système avant de basculer. Fichier local,
+        1,5 Ko compressé, `script-src 'self'` respectée — voir l'en-tête de
         public/js/theme.js. */}
     <script src="/js/theme.js" is:inline></script>
 

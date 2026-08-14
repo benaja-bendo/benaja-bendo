@@ -64,9 +64,9 @@ const sortie = `/**
  * fichiers d'icônes sont libres ; les marques restent la propriété de leurs
  * détenteurs et ne sont utilisées ici que pour désigner la technologie.
  *
- * Pourquoi vendoriser plutôt que dépendre du paquet : le site n'embarque qu'un
- * seul fichier JS et refuse toute requête tierce ; garder 3 000 icônes en
- * node_modules pour en utiliser vingt contredit cette économie.
+ * Pourquoi vendoriser plutôt que dépendre du paquet : garder 3 000 icônes en
+ * node_modules pour en utiliser vingt est un coût d'installation et de mise à
+ * jour permanent, pour un contenu qui ne bouge quasiment jamais.
  *
  * ⚠️ Fichier GÉNÉRÉ — ne pas modifier à la main. Pour le régénérer :
  *   npm i -D simple-icons && node scripts/generer-icones.mjs && npm rm simple-icons

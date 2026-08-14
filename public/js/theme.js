@@ -1,14 +1,15 @@
 /**
  * Choix du thème — le seul JavaScript envoyé sur TOUTES les pages.
  *
- * (Le site en compte un second depuis le 14/08/2026, `cv.js`, chargé par la
- * seule page /cv pour son bouton d'impression. Voir l'invariant n°3.)
+ * (Les scripts propres à une page passent par la prop `script` de Base.astro et
+ * sont chargés en `defer` ; voir `cv.js`. Celui-ci est le seul qui soit global,
+ * et le seul à bloquer le rendu.)
  *
  * Pourquoi il existe : une préférence de thème doit survivre à la navigation.
  * Sur un site multi-pages, une bascule en CSS pur (`:has()` + case à cocher) se
  * réinitialise à chaque lien suivi. La persistance impose `localStorage`, donc
- * du script. L'invariant n°3 du projet prévoit ce cas : vanilla, dans un
- * fichier externe, jamais en ligne — `script-src 'self'` reste respectée.
+ * du script. Vanilla, dans un fichier externe, jamais en ligne — la CSP
+ * `script-src 'self'` l'exige.
  *
  * Pourquoi il est chargé SANS `defer` dans le <head> : il doit poser
  * l'attribut avant que le body soit peint, sinon la page s'affiche une

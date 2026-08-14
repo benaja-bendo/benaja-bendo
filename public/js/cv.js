@@ -1,5 +1,5 @@
 /**
- * Bouton d'impression du CV — le SECOND et dernier JavaScript de ce site.
+ * Bouton d'impression du CV — script propre à cette page.
  *
  * Pourquoi il existe : la page /cv est écrite pour être imprimée ou enregistrée
  * en PDF, et la seule façon de le faire était une indication clavier
@@ -7,14 +7,11 @@
  * est souvent un recruteur ou un RH, pas un développeur : lui demander un
  * raccourci clavier pour récupérer un CV, c'est lui demander de renoncer.
  *
- * L'invariant n°3 impose de justifier chaque fichier JS avant de l'ajouter.
- * Le calcul, ici :
- *   - il n'est chargé QUE sur /cv, pas sur les 27 autres pages ;
- *   - il est chargé avec `defer` — contrairement à theme.js, il ne touche pas
- *     au rendu, donc il n'a aucune raison de le bloquer ;
- *   - il pèse quelques centaines d'octets et vient du même domaine ;
- *   - `window.print()` n'a pas d'équivalent en CSS ni en HTML. Il n'existe
- *     aucune façon de déclencher l'impression sans script.
+ * Deux choix de chargement, et leurs raisons :
+ *   - il n'est servi QUE sur /cv, via la prop `script` de Base.astro : les 27
+ *     autres pages n'ont rien à en faire ;
+ *   - il est chargé avec `defer`, contrairement à theme.js — il ne décide rien
+ *     du rendu, donc il n'a aucune raison de le bloquer.
  *
  * Ce qu'il ne fait PAS : générer un PDF. La mise en page d'impression vit
  * entièrement dans global.css (@page + @media print) ; ce fichier ne fait

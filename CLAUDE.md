@@ -1,6 +1,6 @@
 # benaja-bendo.fr — instructions projet
 
-Site personnel de Bénaja Bendo-Matondo. **Astro 7, 100 % statique, un seul fichier JS.**
+Site personnel de Bénaja Bendo-Matondo. **Astro 7, 100 % statique, JavaScript vanilla et externe.**
 Le site est une **mémoire professionnelle publique** : il documente ce que Bénaja
 construit, les décisions prises et les apprentissages à retrouver. Il doit aussi permettre
 à un pair, un recruteur ou un client de comprendre rapidement son travail, sans réduire
@@ -55,24 +55,26 @@ un document de `docs/`, c'est `docs/` qui gagne.
      blocs de code sont mis en forme par `.prose pre` dans `global.css`.
 2. **Zéro requête tierce.** Pas de CDN, pas de Google Fonts, pas d'image externe, pas
    d'analytics à cookies. Tout est servi depuis le domaine.
-3. **Chaque fichier JS se justifie, et il n'y en a que deux.** Aucun framework UI
-   (pas de React ici). Une interaction indispensable se code en vanilla dans un
-   fichier `.js` externe — jamais inline, sinon la CSP la bloque.
-   - `public/js/theme.js` (1,5 Ko compressés) mémorise le choix clair/sombre :
-     une préférence qui survit à la navigation exige `localStorage`, et une
-     bascule en CSS pur se réinitialise à chaque lien suivi. Chargé sur **toutes**
+3. **Le JavaScript est externe, et il dégrade proprement.** Il n'y a PAS de
+   quota : si une fonctionnalité a besoin de script, elle en prend. La règle
+   « le moins de JS possible » a été retirée le 14/08/2026 — elle avait servi à
+   écarter le bouton d'impression du CV, c'est-à-dire à préférer une élégance
+   technique au lecteur non technique qui vient chercher un CV. Restent trois
+   contraintes, qui sont des faits et non des préférences :
+   - **Jamais en ligne.** Pas de `<script>` avec du code, pas de `onclick=` :
+     `script-src 'self'` les bloque. Le code va dans un fichier de `public/js/`.
+   - **Chargé au bon endroit.** Un script propre à une page se déclare avec la
+     prop `script` de `Base.astro` (chargée en `defer`), pour que les autres
+     pages ne le paient pas. `public/js/theme.js` est l'exception : sur toutes
      les pages et **sans `defer`**, pour poser `data-theme` avant le premier
-     rendu ; avec `defer`, la page clignote.
-   - `public/js/cv.js` déclenche l'impression de `/cv`. Chargé **avec `defer`**
-     et **sur cette seule page**, via la prop `script` de `Base.astro`.
-     `window.print()` n'a aucun équivalent CSS, et l'indication clavier seule
-     excluait de fait les lecteurs non techniques — qui sont le public de cette
-     page.
-   Avant d'en ajouter un troisième : la fonctionnalité vaut-elle une requête, et
-   peut-elle être limitée aux pages concernées ? Toute interaction ainsi ajoutée
-   doit rester **masquée tant que son script n'a pas signalé qu'il est prêt**
-   (`data-theme-pret`, `data-cv-pret`) — jamais de bouton mort. Et mettre à jour
-   le colophon, qui énumère ce qui est envoyé.
+     rendu — avec `defer`, la page clignote.
+   - **Jamais de commande morte.** Une interaction qui ne marche que par script
+     reste masquée par le CSS tant que ce script n'a pas signalé qu'il est prêt
+     (`data-theme-pret`, `data-cv-pret`), et un chemin de repli reste écrit quand
+     il en existe un. Un bouton qui ne fait rien est pire que pas de bouton.
+
+   Le colophon énumère ce qui est envoyé : le mettre à jour en ajoutant ou en
+   retirant un fichier.
 4. **Le design est un système, pas des styles à l'unité.** Toute couleur, tout rayon,
    toute ombre vient d'un token de `src/styles/global.css`. Pas de valeur en dur dans
    une page. Les ombres sont **dures** (0 flou) — c'est la signature, voir docs/05.

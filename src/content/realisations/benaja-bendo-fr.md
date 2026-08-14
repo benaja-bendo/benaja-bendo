@@ -1,6 +1,6 @@
 ---
 nom: "benaja-bendo.fr"
-resume: "Ce site : statique, zéro requête tierce, un seul fichier JavaScript de 1,5 Ko, sous une politique de sécurité de contenu stricte assumée jusqu’au bout."
+resume: "Ce site : statique, zéro requête tierce, moins de 3 Ko de JavaScript, sous une politique de sécurité de contenu stricte assumée jusqu’au bout."
 statut: "production"
 periode: "Version 2022 remplacée en août 2026"
 role: "Conception, design system, développement, déploiement"
@@ -23,12 +23,18 @@ Un site personnel est le seul endroit où je peux tenir mes propres contraintes 
 bout en bout. Celui-ci est entièrement statique : aucune ressource tierce, aucun
 cookie, aucune bannière de consentement — il n’y a rien à consentir.
 
-Il n'a envoyé aucun JavaScript pendant ses six premiers mois. Il en envoie un
-depuis le 14 août 2026 : 1,5 Ko qui mémorisent le choix clair/sombre. C'est le
-genre de renoncement qui mérite d'être écrit plutôt que caché — une préférence
-qui survit à la navigation exige un stockage local, et une bascule en CSS pur se
-réinitialise à chaque lien suivi. La contrainte tenue reste celle qui compte :
-rien en ligne, rien chez un tiers.
+Il n'a envoyé aucun JavaScript pendant ses six premiers mois. Il en envoie
+depuis le 14 août 2026 : 1,5 Ko sur toutes les pages pour mémoriser le choix
+clair/sombre, et 1,3 Ko sur la seule page CV pour son bouton d'impression. C'est
+le genre de renoncement qui mérite d'être écrit plutôt que caché — une préférence
+qui survit à la navigation exige un stockage local, et `window.print()` n'a aucun
+équivalent en CSS.
+
+J'ai d'abord refusé ce second fichier au nom de la sobriété, en me contentant
+d'indiquer le raccourci clavier. C'était une erreur de destinataire : cette page
+s'adresse à des recruteurs, pas à des développeurs. La contrainte qui compte
+n'était pas « le moins de code possible » mais celle-ci, et elle tient toujours :
+rien en ligne, rien chez un tiers, et aucune commande qui ne fonctionne pas.
 
 La politique de sécurité de contenu est stricte au point d’interdire tout `<style>`
 inline, ce qui a des conséquences concrètes : l’API Fonts du framework devient

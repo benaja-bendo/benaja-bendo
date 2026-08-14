@@ -112,11 +112,19 @@ part est exactement le genre d'artefact qui se périme sans prévenir — c'est
 l'invariant n°5, et le site de 2022 resté quatre ans en ligne. Une page se
 corrige en une ligne et se redéploie.
 
-**Revirement du 14/08/2026, assumé :** la première version ne donnait que
-l'indication clavier `Cmd/Ctrl + P`, au motif qu'un second fichier JS ne se
-justifiait pas. C'était un raisonnement de développeur. Le lecteur visé par
-cette page est un recruteur ou un RH : lui demander un raccourci clavier pour
-récupérer un CV revient à lui demander de renoncer. `/cv` porte donc deux
+**Revirement du 14/08/2026, assumé — et la règle qui l'avait causé a été
+supprimée.** La première version ne donnait que l'indication clavier
+`Cmd/Ctrl + P`, au motif qu'un second fichier JS ne se justifiait pas. C'était un
+raisonnement de développeur. Le lecteur visé par cette page est un recruteur ou
+un RH : lui demander un raccourci clavier pour récupérer un CV revient à lui
+demander de renoncer.
+
+L'invariant n°3 disait « un seul fichier JS, et il se justifie ». Il a servi une
+fois à améliorer le site — en écartant les frameworks — et une fois à le
+dégrader, en écartant ce bouton. Il ne dit plus qu'il faut économiser le
+JavaScript, seulement où le mettre (fichier externe, la CSP l'exige), quand le
+charger (par page, en `defer`) et comment le faire dégrader (rien de visible tant
+que le script n'a pas répondu présent). `/cv` porte donc deux
 boutons — un dans l'en-tête, un en pied de page — servis par `public/js/cv.js`,
 chargé **en `defer` et sur cette seule page** via la prop `script` de
 `Base.astro`. `onclick=` reste exclu : la CSP bloque tout script en ligne.
