@@ -4,7 +4,9 @@
 
 > **Document de planification historique.** La recommandation VPS des sections
 > déploiement a été remplacée le 13/08/2026 par **Firebase Hosting statique (Spark)**.
-> La décision et la procédure actuelles sont dans [docs/07](07-deploiement-firebase.md).
+> La stratégie éditoriale « site candidat » a été remplacée le 14/08/2026 par celle de
+> **mémoire professionnelle publique** dans [docs/08](08-plan-contenu.md). La décision et
+> la procédure d'hébergement actuelles sont dans [docs/07](07-deploiement-firebase.md).
 
 ## Objectifs, dans l'ordre
 
