@@ -249,9 +249,13 @@ Les transitions de survol restent à **140 ms**, sur `transform` et `box-shadow`
       reste : bordure d'encre 2px, ombre dure, coins vifs, servie depuis le domaine.
 - [ ] **Deux ou trois captures produit de plus.** Le cadre « fenêtre de navigateur »
       dessiné en CSS existe déjà sur `/etudes/mibeko` et ne demande qu'à resservir.
-- [ ] **Un schéma par étude de cas.** `MibekoProof` et `FranceTravailImpact` montrent
-      que la grammaire `.trust-flow` sait raconter une architecture sans image. Un
-      schéma vaut dix icônes achetées : il est unique et n'a pas de licence.
+- [ ] **Un schéma pour l'étude AIFE.** C'est la seule des trois qui n'en a pas :
+      Mibeko a sa chaîne de traçabilité en quatre temps (`MibekoProof`), France
+      Travail son avant / intervention / après (`FranceTravailImpact`). Un schéma
+      vaut dix icônes achetées — il est unique et n'a pas de licence — mais celui-ci
+      demande de décrire une architecture cliente **confidentielle** : il faudra
+      trouver l'altitude qui raconte le rôle sans livrer le système, comme l'a fait
+      `.impact-flow`. À ne pas bâcler, donc, et à ne surtout pas inventer.
 
 ## 7. Illustrations éditoriales
 
