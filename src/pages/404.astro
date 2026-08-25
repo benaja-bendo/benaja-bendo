@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Illustration from '../components/Illustration.astro';
 ---
 
 <Base
@@ -13,6 +14,18 @@ import Base from '../layouts/Base.astro';
       Le lien est cassé, ou la page a été retirée — ici, un contenu périmé est
       supprimé, pas laissé à l’abandon. Les trois espaces du site&nbsp;:
     </p>
+    {/* Le seul visage du site, et il n'apparaît qu'ici. docs/05 §4 réserve à
+        la 404 « la seule vraie fantaisie » ; un personnage perplexe y est à sa
+        place, alors qu'il transformerait n'importe quelle autre page en
+        illustration de catalogue. Sans cadre : c'est un dessin, pas une pièce. */}
+    <Illustration
+      nom="bald-person-looking-confused"
+      legende="Moi aussi je cherche."
+      cadre="nu"
+      taille="petit"
+      class="illustration-404"
+    />
+
     <div class="cta-row cta-center">
       <a class="btn btn-primary" href="/realisations">Réalisations</a>
       <a class="btn btn-ghost" href="/etudes">Études de cas</a>

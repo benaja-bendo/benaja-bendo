@@ -3,14 +3,31 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Statut from '../../components/Statut.astro';
 import Taxo from '../../components/Taxo.astro';
+import Suite from '../../components/Suite.astro';
+import Illustration from '../../components/Illustration.astro';
 import {
   STATUTS_NOTE,
   dateISO,
   formatDate,
   getNotes,
   sujetsNotes,
+  voisinage,
   type Note,
 } from '../../lib/contenu';
+
+/**
+ * Une illustration ne se pose que si elle explique une idée précise (docs/05
+ * §2). Ici : la CSP est la seule chose du site qui parle de menace, elle mérite
+ * d'avoir un visage. Les autres notes n'en ont pas, et c'est très bien.
+ */
+const ILLUSTRATIONS: Record<string, { nom: string; legende: string; aide: string; meta: string }> = {
+  'api-fonts-astro-csp': {
+    nom: 'attacker-hood',
+    legende: 'Une CSP stricte se paie en confort de build.',
+    aide: 'C’est le prix à payer pour qu’un style injecté n’ait aucune chance.',
+    meta: 'csp',
+  },
+};
 
 export async function getStaticPaths() {
   const notes = await getNotes();
@@ -29,6 +46,13 @@ const { aUnePage } = await sujetsNotes();
 
 // Une note obsolète doit pointer sa remplaçante, sinon elle induit en erreur.
 const notes = await getNotes();
+
+// A2 — une mémoire de travail se parcourt : on doit pouvoir passer à la note
+// suivante sans repasser par l'index. L'ordre est celui de la collection, donc
+// du plus récent au plus ancien.
+const voisins = voisinage(notes, note.id, '/notes', (n) => n.data.titre);
+
+const illustration = ILLUSTRATIONS[note.id];
 const remplacante = data.remplaceePar
   ? notes.find((n) => n.id === data.remplaceePar)
   : undefined;
@@ -54,6 +78,19 @@ const remplacante = data.remplaceePar
     }
 
     <p class="lead">{data.resume}</p>
+
+    {
+      illustration && (
+        <Illustration
+          nom={illustration.nom}
+          legende={illustration.legende}
+          aide={illustration.aide}
+          meta={illustration.meta}
+          taille="petit"
+          class="illustration-cote"
+        />
+      )
+    }
 
     <div class="prose">
       <Content />
@@ -96,7 +133,11 @@ const remplacante = data.remplaceePar
         )
       }.
     </p>
-
-    <p class="retour"><a href="/notes">← Toutes les notes</a></p>
   </section>
+
+  <Suite
+    voisinage={voisins}
+    indexHref="/notes"
+    indexLabel="Toutes les notes"
+  />
 </Base>

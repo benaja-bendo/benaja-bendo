@@ -24,8 +24,8 @@ import { version as astroVersion } from 'astro/package.json';
         d’interface, pas de dépendance superflue.
       </p>
       <p>
-        Deux fichiers JavaScript existent, et un seul est envoyé partout&nbsp;:
-        <code>theme.js</code>, 1,5&nbsp;Ko compressés, qui mémorise le choix
+        Deux fichiers JavaScript existent, et un seul est envoyé partout&nbsp;: <code
+        >theme.js</code>, 1,5&nbsp;Ko compressés, qui mémorise le choix
         clair/sombre. Le site s’en est passé jusqu’au 14&nbsp;août 2026 — une
         préférence qui survit à la navigation exige un stockage local, et une
         bascule en CSS pur se réinitialise à chaque lien suivi. Le second,
@@ -39,6 +39,20 @@ import { version as astroVersion } from 'astro/package.json';
         signalé qu’il fonctionnait. Un bouton qui ne fait rien est pire que pas de
         bouton — le raccourci clavier reste écrit sur la page du CV, et donne
         exactement le même résultat.
+      </p>
+
+      <h2>Mouvement</h2>
+      <p>
+        Les transitions de page, les apparitions au défilement et les quelques
+        animations du site sont du <strong>CSS natif</strong>&nbsp;:
+        <code>@view-transition</code> pour la navigation,
+        <code>animation-timeline: view()</code> pour ce qui se pose en arrivant
+        dans l’écran. Aucune bibliothèque d’animation, aucun observateur en
+        JavaScript, donc rien de plus à autoriser dans la politique de sécurité.
+        Un navigateur qui ne connaît pas ces règles les ignore et affiche la
+        page entière, immédiatement&nbsp;: <strong>rien de ce qui bouge n’est
+        nécessaire à la lecture</strong>. Tout est coupé si le système signale <code
+        >prefers-reduced-motion</code>.
       </p>
 
       <h2>Sécurité &amp; vie privée</h2>
@@ -61,9 +75,17 @@ import { version as astroVersion } from 'astro/package.json';
         généré par code. L’unique illustration éditoriale de l’accueil adapte
         l’icône <a href="https://koboyo.com/icons/citation-footnote" rel="noopener">Citation footnote de Koboyo</a>,
         stockée dans le code du site et recolorée par le thème&nbsp;: aucune ressource
-        n’est chargée depuis un tiers. Thème clair et sombre&nbsp;: le système
-        décide par défaut, et un sélecteur en pied de page permet de forcer l’un
-        ou l’autre.
+        n’est chargée depuis un tiers. Cinq autres dessins de la même
+        bibliothèque accompagnent les études de cas, le parcours, une note, la
+        page contact et la 404&nbsp;: <code>balance-sheet</code>,
+        <code>add-for-reporting</code>, <code>attacker-hood</code>,
+        <code>academic-year-planner</code>, <code>answer</code> et <code
+        >bald-person-looking-confused</code>. Ils sont copiés dans <code
+        >src/assets/illustrations/</code>, rendus en ligne dans le HTML et
+        recolorés par <code>currentColor</code> — aucun n’est chargé depuis un
+        tiers, aucun ne porte de couleur en dur. Thème clair et sombre&nbsp;: le
+        système décide par défaut, et deux commandes permettent de forcer l’un ou
+        l’autre — un bouton dans l’en-tête, le sélecteur détaillé en pied de page.
       </p>
       <p>
         Les logos de technologies de la page <a href="/cv">CV</a> et de l’accueil

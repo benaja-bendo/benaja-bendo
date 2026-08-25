@@ -19,12 +19,42 @@ const legende = Object.values(STATUTS_NOTE);
       Des diagnostics et décisions techniques datés, écrits pour être retrouvés,
       vérifiés et réutilisés.
     </p>
+
+    {/* A6 — même déplacement que sur /realisations : les sujets ouvrent la
+        rubrique au lieu de la clore. On cherche une note par son sujet
+        (« CSP », « HTTP »), pas en descendant une liste chronologique. */}
+    {
+      sujets.length > 0 && (
+        <div class="filtres">
+          <p class="etiq">Par sujet</p>
+          <ul class="chips chips-compte" aria-label="Sujets">
+            {sujets.map((groupe) => (
+              <li>
+                <a href={`/notes/sujet/${groupe.slug}`}>
+                  {groupe.label}
+                  <span class="compte">{groupe.entrees.length}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
   </section>
 
   <section class="container">
     <div class="lignes">
       {notes.map((note) => <LigneNote note={note} />)}
     </div>
+
+    {
+      notes.length === 0 && (
+        <p class="etat-vide">
+          Aucune note publiée pour l’instant. Une note paraît quand elle aide à
+          retrouver ou comprendre quelque chose, pas à date fixe.
+        </p>
+      )
+    }
   </section>
 
   <section class="container">
@@ -44,27 +74,20 @@ const legende = Object.values(STATUTS_NOTE);
         ))
       }
     </dl>
+  </section>
 
-    {
-      sujets.length > 0 && (
-        <>
-          <h3 class="section-gap">Par sujet</h3>
-          <ul class="chips chips-compte" aria-label="Sujets">
-            {sujets.map((groupe) => (
-              <li>
-                <a href={`/notes/sujet/${groupe.slug}`}>
-                  {groupe.label}
-                  <span class="compte">{groupe.entrees.length}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      )
-    }
-
+  {/* A8 — une sortie qui avance, en plus du flux RSS. */}
+  <section class="container">
+    <p class="eyebrow">Et ensuite</p>
+    <h2>Suivre, ou voir d’où viennent ces notes</h2>
+    <p class="lead muted">
+      Ces diagnostics sortent de travaux réels&nbsp;: les études de cas montrent
+      les décisions dans leur contexte.
+    </p>
     <div class="cta-row">
+      <a class="btn btn-primary" href="/etudes">Lire les études de cas</a>
       <a class="btn btn-ghost" href="/rss.xml">Suivre en RSS</a>
     </div>
+    <p class="haut-de-page"><a href="#contenu">↑ Haut de page</a></p>
   </section>
 </Base>

@@ -1,0 +1,83 @@
+---
+import type { Voisinage } from '../lib/contenu';
+
+/**
+ * « Et ensuite » — la fin d'un contenu doit ouvrir, pas fermer.
+ *
+ * Jusqu'au 25/08/2026, une étude de cas, une fiche ou une note se terminaient
+ * toutes sur un unique « ← Tout voir ». Or c'est le moment de plus forte
+ * intention du site : le lecteur vient de passer plusieurs minutes sur un
+ * travail précis. Lui proposer un retour en arrière, c'est lui demander de
+ * recommencer sa recherche.
+ *
+ * Trois sorties, dans l'ordre où elles servent :
+ *   1. le contenu voisin — continuer la lecture ;
+ *   2. l'action — écrire, quand le lecteur est convaincu ;
+ *   3. l'index — revenir, pour celui qui cherchait autre chose.
+ *
+ * L'ordre des voisins vient de la collection (`voisinage()` dans lib/contenu),
+ * jamais d'un ordre inventé ici : « suivant » signifie donc la même chose sur
+ * cette page et dans l'index.
+ */
+interface Props {
+  voisinage: Voisinage;
+  /** Où « tout voir » renvoie. */
+  indexHref: string;
+  indexLabel: string;
+  /** L'invitation de fin. Omise sur les pages où elle serait redondante. */
+  action?: { href: string; label: string; aide: string };
+}
+
+const { voisinage, indexHref, indexLabel, action } = Astro.props;
+const { precedent, suivant } = voisinage;
+const aDesVoisins = Boolean(precedent || suivant);
+---
+
+<section class="container suite" aria-labelledby="suite-titre">
+  <p class="eyebrow">Et ensuite</p>
+  <h2 id="suite-titre" class="suite-titre">Continuer</h2>
+
+  {
+    aDesVoisins && (
+      <nav class="suite-voisins" aria-label="Contenu précédent et suivant">
+        {/* Rien n'est rendu à la place d'un voisin absent : un cadre vide se lit
+            comme un trou. C'est la GRILLE qui garde les places — le « suivant »
+            est posé en colonne 2 quoi qu'il arrive, donc la commande ne saute
+            pas d'un bord à l'autre d'une page à la suivante. */}
+        {precedent && (
+          <a class="suite-porte suite-porte-avant" href={precedent.href} rel="prev">
+            <span class="suite-sens">← Précédent</span>
+            <span class="suite-nom">{precedent.titre}</span>
+          </a>
+        )}
+
+        {suivant && (
+          <a class="suite-porte suite-porte-apres" href={suivant.href} rel="next">
+            <span class="suite-sens">Suivant →</span>
+            <span class="suite-nom">{suivant.titre}</span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+
+  {
+    action && (
+      <div class="suite-action">
+        <p class="suite-aide">{action.aide}</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={action.href}>
+            {action.label}
+          </a>
+          <a class="btn btn-ghost" href={indexHref}>
+            {indexLabel}
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  {!action && <p class="retour"><a href={indexHref}>← {indexLabel}</a></p>}
+
+  <p class="haut-de-page"><a href="#contenu">↑ Haut de page</a></p>
+</section>

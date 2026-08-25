@@ -1,0 +1,95 @@
+---
+/**
+ * Illustration éditoriale — le dispositif appartient au système, pas le dessin.
+ *
+ * Généralise ce que `SourceIllustration.astro` faisait pour un seul fichier.
+ * Trois règles, dans l'ordre où elles comptent :
+ *
+ * 1. **Inline, jamais une requête.** Les SVG vivent dans `src/assets/`, pas dans
+ *    `public/` : importés en `?raw` et rendus par `set:html`, ils ne coûtent
+ *    aucun aller-retour réseau et suivent le thème. Aucun `style=` n'est produit
+ *    — vérifié fichier par fichier, la CSP `style-src 'self'` reste intacte.
+ * 2. **Rare et justifiée.** docs/05 §2 n'admet une illustration que si elle
+ *    explique une idée précise. La prop `legende` est donc obligatoire : si on
+ *    ne sait pas écrire ce que le dessin apporte, c'est qu'il ne l'est pas.
+ * 3. **Recolorée par les tokens.** `currentColor` partout, jamais une couleur
+ *    de la bibliothèque d'origine.
+ *
+ * Les dessins viennent de Koboyo Icons, comme la `citation-footnote` de
+ * l'accueil ; le colophon les énumère (invariant n°3).
+ */
+const fichiers = import.meta.glob<string>('../assets/illustrations/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+
+interface Props {
+  /** Nom du fichier sans extension, dans `src/assets/illustrations/`. */
+  nom: string;
+  /** Ce que le dessin explique. Obligatoire — voir la règle 2 ci-dessus. */
+  legende: string;
+  /** Seconde ligne de légende, en gris. */
+  aide?: string;
+  /** Rend l'ensemble cliquable. Le libellé du lien vient de `legende`. */
+  href?: string;
+  /** Petite étiquette en mono, en haut à gauche du cadre. */
+  meta?: string;
+  /** Étiquette posée sur le cadre, en bas à gauche, sur fond de surligneur. */
+  tag?: string;
+  /** `papier` = lignes de cahier · `uni` = surface pleine · `nu` = sans cadre. */
+  cadre?: 'papier' | 'uni' | 'nu';
+  /** Classe de mise en page. Astro ne transmet pas `class` tout seul. */
+  class?: string;
+  /** Taille du dessin dans le cadre. Défaut : moyen. */
+  taille?: 'petit' | 'moyen' | 'grand';
+}
+
+const {
+  nom,
+  legende,
+  aide,
+  href,
+  meta,
+  tag,
+  cadre = 'papier',
+  taille = 'moyen',
+  class: classe,
+} = Astro.props;
+
+const brut = fichiers[`../assets/illustrations/${nom}.svg`];
+if (!brut) {
+  // Échouer au build plutôt qu'afficher un trou : une illustration absente est
+  // un fichier oublié, pas un cas nominal.
+  throw new Error(
+    `Illustration « ${nom} » introuvable dans src/assets/illustrations/.`,
+  );
+}
+
+// L'`aria-label` d'origine décrit le dessin en anglais et doublerait la
+// légende écrite juste en dessous. Le dessin est décoratif : c'est le texte
+// qui porte l'information (même raison que dans IconeTech.astro).
+const svg = brut
+  .replace(/\saria-label="[^"]*"/, '')
+  .replace('<svg ', '<svg aria-hidden="true" focusable="false" ');
+
+const Enveloppe = href ? 'a' : 'div';
+---
+
+<figure class:list={['illustration', `illustration-${taille}`, classe]}>
+  <Enveloppe
+    class="illustration-lien"
+    href={href}
+    aria-label={href ? legende : undefined}
+  >
+    <span class:list={['illustration-scene', `illustration-scene-${cadre}`]}>
+      {meta && <span class="illustration-meta">{meta}</span>}
+      <span class="illustration-dessin" set:html={svg} />
+      {tag && <span class="illustration-tag">{tag}</span>}
+    </span>
+  </Enveloppe>
+  <figcaption>
+    <strong>{legende}</strong>
+    {aide && <span>{aide}</span>}
+  </figcaption>
+</figure>

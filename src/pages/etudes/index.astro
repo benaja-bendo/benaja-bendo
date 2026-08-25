@@ -1,8 +1,19 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getEtudes } from '../../lib/contenu';
+import { getEtudes, getRealisations } from '../../lib/contenu';
 
 const etudes = await getEtudes();
+
+// F5 — le coin d'accent d'une carte dit « ça tourne aujourd'hui ». L'information
+// vit sur la réalisation, pas sur l'étude : on va la chercher là où elle est
+// plutôt que de la recopier dans un second frontmatter qui se périmerait.
+const realisations = await getRealisations();
+const enProduction = new Set(
+  realisations
+    .filter((r) => r.data.statut === 'production')
+    .map((r) => r.data.etude)
+    .filter((etude): etude is string => Boolean(etude)),
+);
 ---
 
 <Base
@@ -19,10 +30,19 @@ const etudes = await getEtudes();
   </section>
 
   <section class="container">
+    {
+      etudes.length === 0 && (
+        <p class="etat-vide">
+          Aucune étude publiée pour l’instant.
+          <a href="/realisations">L’inventaire des réalisations</a> reste lisible.
+        </p>
+      )
+    }
+
     <div class="cards">
       {
         etudes.map((etude) => (
-          <article class="card">
+          <article class:list={['card', enProduction.has(etude.id) && 'card-live']}>
             {/* h2 : ces cartes suivent directement le h1 de la page. */}
             <h2 class="card-titre">
               <a href={`/etudes/${etude.id}`}>{etude.data.titre}</a>
@@ -52,7 +72,8 @@ const etudes = await getEtudes();
     </p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/realisations">Voir les réalisations</a>
-      <a class="btn btn-ghost" href="/notes">Lire les notes</a>
+      <a class="btn btn-ghost" href="/contact">Parler d’un poste ou d’un besoin</a>
     </div>
+    <p class="haut-de-page"><a href="#contenu">↑ Haut de page</a></p>
   </section>
 </Base>

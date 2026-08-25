@@ -1,0 +1,43 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+/**
+ * Sommaire d'ancres d'un contenu long.
+ *
+ * Une étude de cas se parcourt avant d'être lue, et se cite après : sans
+ * ancres, on ne peut ni sauter à la section utile, ni envoyer un lien vers un
+ * passage précis dans un message de candidature. Les identifiants sont ceux
+ * qu'Astro pose déjà sur les titres du Markdown — on ne les fabrique pas ici,
+ * sinon ils divergeraient du HTML rendu.
+ *
+ * Seuls les `h2` sont repris : descendre au `h3` produit une liste aussi longue
+ * que le texte, ce qui n'est plus un sommaire mais un doublon.
+ *
+ * Aucun script : c'est une liste de liens. Elle est collante sur grand écran
+ * parce que la colonne de droite est libre, et redevient un simple bloc en
+ * tête de contenu en dessous.
+ */
+interface Props {
+  titres: MarkdownHeading[];
+  /** Nombre minimum de sections en dessous duquel le sommaire n'aide plus. */
+  seuil?: number;
+}
+
+const { titres, seuil = 3 } = Astro.props;
+const sections = titres.filter((titre) => titre.depth === 2);
+---
+
+{
+  sections.length >= seuil && (
+    <nav class="sommaire" aria-labelledby="sommaire-titre">
+      <p class="etiq" id="sommaire-titre">Dans cette page</p>
+      <ol>
+        {sections.map((section) => (
+          <li>
+            <a href={`#${section.slug}`}>{section.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}

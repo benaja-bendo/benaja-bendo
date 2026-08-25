@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Statut from '../components/Statut.astro';
 import SourceIllustration from '../components/SourceIllustration.astro';
 import StackVisuelle from '../components/StackVisuelle.astro';
-import { DISPONIBILITE } from '../lib/parcours';
+import { CONTACT, DISPONIBILITE } from '../lib/parcours';
 import {
   STATUTS_REALISATION,
   getRealisations,
@@ -64,6 +64,21 @@ const travaux = ['mibeko', 'france-travail-collecte']
           </div>
         </div>
 
+        {/* A4 — jusqu'au 25/08/2026, mibeko.fr, GitHub et LinkedIn n'existaient
+            que dans le pied de page. Pour un profil de développeur, un produit
+            qu'on peut ouvrir et un dépôt qu'on peut lire sont des preuves de
+            premier rang, pas des mentions légales : elles arrivent donc dans le
+            premier écran. Trois liens, pas six — au-delà, plus rien ne ressort. */}
+        <ul class="hero-liens" aria-label="Preuves ouvrables">
+          <li><a href="https://mibeko.fr" rel="noopener">mibeko.fr ↗</a></li>
+          <li><a href={`https://${CONTACT.github}`} rel="me noopener">GitHub ↗</a></li>
+          {/* Forme `www.` comme le pied de page et /contact : `CONTACT.linkedin`
+              sert à AFFICHER l'adresse (sur le CV), pas à la lier. Deux formes
+              d'URL pour le même profil, c'est deux entrées dans les stats et un
+              détail qui se voit à la relecture. */}
+          <li><a href="https://www.linkedin.com/in/benaja-bendo" rel="me noopener">LinkedIn ↗</a></li>
+        </ul>
+
         <dl class="hero-facts" aria-label="Repères rapides">
           <div>
             <dt>Depuis 2023</dt>
@@ -74,7 +89,9 @@ const travaux = ['mibeko', 'france-travail-collecte']
             <dd>Mibeko en production</dd>
           </div>
           <div>
-            <dt><time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time></dt>
+            {/* A7 — le fait le plus décisif du site ne menait nulle part. Chaque
+                mention de la disponibilité ouvre désormais /contact. */}
+            <dt><a href="/contact"><time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time></a></dt>
             <dd>Disponible en CDI</dd>
           </div>
         </dl>
@@ -106,7 +123,15 @@ const travaux = ['mibeko', 'france-travail-collecte']
           ? `/etudes/${travail.data.etude}`
           : `/realisations/${travail.id}`;
         return (
-          <article class="card door-card">
+          <article
+            class:list={[
+              'card',
+              'door-card',
+              // F5 — « en production » n'est plus seulement une puce à lire :
+              // un coin d'accent le rend lisible sans être lu.
+              travail.data.statut === 'production' && 'card-live',
+            ]}
+          >
             <div class="door-card-head">
               <span class="period">{travail.data.periode}</span>
               <span class="door-index" aria-hidden="true">
@@ -170,7 +195,7 @@ const travaux = ['mibeko', 'france-travail-collecte']
     <h2>Disponibilité</h2>
     <p class="lead">
       Je termine mon alternance chez Capgemini et je serai disponible en CDI à
-      partir du <mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark>, à
+      partir du <a href="/contact"><mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark></a>, à
       &nbsp;{DISPONIBILITE.lieu}.
     </p>
     <div class="cta-row">

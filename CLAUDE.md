@@ -80,6 +80,23 @@ un document de `docs/`, c'est `docs/` qui gagne.
    une page. Les ombres sont **dures** (0 flou) — c'est la signature, voir docs/05.
 5. **Rien de public ne reste agonisant.** Un artefact est vivant ou supprimé, jamais
    périmé. C'est le point faible historique de ce projet (site 2022 laissé en ligne 4 ans).
+6. **Le mouvement est du CSS, et il ne porte jamais d'information.** Ajouté le
+   25/08/2026. *(Numéro 6 et non 3 : une quinzaine de commentaires du code et des
+   docs citent les invariants par leur numéro — insérer au milieu les ferait tous
+   mentir.)* `@view-transition` pour la navigation, `animation-timeline: view()`
+   pour les apparitions au défilement : aucune bibliothèque, donc rien de neuf à
+   autoriser dans la CSP. Trois règles à ne pas casser :
+   - **L'état par défaut est l'état final.** Un navigateur qui ignore la règle
+     affiche la page entière, tout de suite. Jamais d'`opacity: 0` en dur.
+   - **`translate`, jamais `transform`,** pour les apparitions. Une animation en
+     cours l'emporte sur les déclarations ordinaires : animer `transform`
+     écraserait le soulèvement au survol des cartes.
+   - **La plage s'arrête à `entry 100%`.** Une plage en `cover` laisse un élément
+     visible mais non défilé — bas d'une page courte — figé à mi-animation, donc à
+     moitié transparent.
+
+   Tout est coupé sous `prefers-reduced-motion`, transitions de page comprises.
+   Détail complet : [docs/05](docs/05-design-system-papier-pixels.md) §5.
 
 ## Contenu : les règles qui priment sur tout
 
@@ -107,9 +124,10 @@ src/
                          # + realisations/, etudes/, notes/ (index, [slug], taxonomies)
                          # /mibeko et /a-propos ne sont que des redirections (astro.config.mjs)
   content/{realisations,etudes,notes}/   # collections, schéma Zod dans content.config.ts
-  lib/                   # contenu.ts (accès + navigation), stack.ts, parcours.ts,
+  assets/illustrations/  # SVG éditoriaux, inlinés par <Illustration/> (jamais dans public/)
+  lib/                   # contenu.ts (accès + navigation + voisinage), stack.ts, parcours.ts,
                          # icones-tech.ts (GÉNÉRÉ — voir scripts/generer-icones.mjs)
-  styles/global.css      # LE design system — @font-face, tokens, composants, impression
+  styles/global.css      # LE design system — @font-face, tokens, composants, mouvement, impression
 scripts/generer-icones.mjs # régénère les tracés de logos depuis simple-icons (CC0)
 public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)
 firebase.json            # déploiement Firebase Hosting, en-têtes et cache
@@ -146,6 +164,26 @@ Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
   frontmatter portent l'URL *et* ce qu'elle démontre. Un lien mort transforme un
   argument en négligence visible — la commande de contrôle est dans docs/10.
 
+## Décisions actées (25/08/2026) — chantier « mouvement & accès »
+
+- **La fin d'un contenu ouvre, elle ne ferme pas.** Étude, fiche et note se
+  terminaient toutes sur un unique « ← Tout voir ». Le composant `Suite.astro` et
+  `voisinage()` (lib/contenu.ts) donnent voisin précédent, voisin suivant et
+  l'invitation. L'ordre des voisins est **celui de la collection**, jamais un
+  ordre inventé dans le gabarit : « suivant » doit dire la même chose ici et
+  dans l'index.
+- **Les taxonomies sont une entrée, pas une sortie.** Le rail de filtres passe en
+  tête de `/realisations` et `/notes`. On cherche par « Spring Boot », pas en
+  descendant une liste.
+- **Une seule dépendance ajoutée : `@astrojs/markdown-remark`.** Uniquement pour
+  importer `rehypeHeadingIds` et le faire tourner AVANT le plugin d'ancres — sans
+  cela le plugin ne voit aucun `id`. Sa version doit **suivre celle d'Astro** :
+  les faire diverger ferait diverger les identifiants, donc les liens déjà envoyés
+  vers une section précise.
+- **Un seul visage sur tout le site, et il est sur la 404.** Voir
+  [docs/05](docs/05-design-system-papier-pixels.md) §7 pour la règle et le
+  tableau des six illustrations en place.
+
 ## Vérification avant de rendre la main
 
 - [ ] `npm run build` passe
@@ -154,6 +192,12 @@ Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
       couper la ligne entre un mot et le `<a>`, `<mark>`, `<strong>` ou `<code>` qui
       le suit — vérifier dans `dist/` en cas de doute
 - [ ] `grep -c '<style\|style="' dist/index.html` renvoie 0
+- [ ] **aucune espace avalée** sur TOUT le build, pas seulement la page touchée —
+      la commande de contrôle, qui exclut les ancres de titres (elles collent au
+      titre volontairement) :
+      ```bash
+      grep -rhoE '.{40}[a-zA-ZÀ-ÿ](&nbsp;[:;!?])?<(a|mark|strong|code|em|time)[ >].{35}' dist --include='*.html' | grep -v 'ancre-titre'
+      ```
 - [ ] `npm run preview` puis rendu contrôlé en **clair ET sombre**, **mobile ET desktop**
 - [ ] zéro erreur console
 - [ ] cibles tactiles ≥ 44px, navigation clavier, contrastes AA

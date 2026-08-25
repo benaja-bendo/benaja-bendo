@@ -51,6 +51,11 @@
   const appliquer = (choix) => {
     if (choix === 'auto') racine.removeAttribute('data-theme');
     else racine.setAttribute('data-theme', choix);
+    // `data-theme` ne peut pas porter « auto » : son absence EST l'état auto,
+    // c'est ce qui rend la main à prefers-color-scheme. Mais la bascule de
+    // l'en-tête doit afficher un glyphe pour les trois états, y compris auto —
+    // d'où un second attribut, purement descriptif, que le CSS peut lire.
+    racine.setAttribute('data-theme-actuel', choix);
   };
 
   /**
@@ -76,14 +81,19 @@
   // Avant le premier rendu.
   appliquer(lire());
 
+  /** Libellé du bouton compact : l'état courant, puis ce que le clic fera. */
+  const ETAT_LU = { clair: 'clair', sombre: 'sombre', auto: 'système' };
+
   const cabler = () => {
     accorderCouleurUI(lire());
 
-    const groupe = document.querySelector('[data-theme-commande]');
-    if (!groupe) return;
-
-    const boutons = Array.from(groupe.querySelectorAll('[data-theme-choix]'));
-    if (boutons.length === 0) return;
+    // Deux commandes, une seule source de vérité. Le groupe de trois boutons du
+    // pied de page nomme les états ; la bascule de l'en-tête les fait défiler
+    // là où on la cherche. Les deux doivent refléter le même choix, sinon le
+    // site se contredit à deux endroits de la même page.
+    const boutons = Array.from(document.querySelectorAll('[data-theme-choix]'));
+    const bascules = Array.from(document.querySelectorAll('[data-theme-cycle]'));
+    if (boutons.length === 0 && bascules.length === 0) return;
 
     const refleter = (choix) => {
       for (const bouton of boutons) {
@@ -92,22 +102,40 @@
           String(bouton.dataset.themeChoix === choix),
         );
       }
+      const apres = CHOIX_VALIDES[(CHOIX_VALIDES.indexOf(choix) + 1) % CHOIX_VALIDES.length];
+      for (const bascule of bascules) {
+        // Le bouton ne porte pas de texte : son libellé accessible doit donc
+        // dire l'état ET l'effet du clic, sinon il annonce une action sans
+        // jamais dire où l'on en est.
+        bascule.setAttribute(
+          'aria-label',
+          `Thème : ${ETAT_LU[choix]}. Changer pour le thème ${ETAT_LU[apres]}.`,
+        );
+      }
+    };
+
+    const choisir = (choix) => {
+      appliquer(choix);
+      ecrire(choix);
+      accorderCouleurUI(choix);
+      refleter(choix);
     };
 
     for (const bouton of boutons) {
-      bouton.addEventListener('click', () => {
-        const choix = bouton.dataset.themeChoix;
-        appliquer(choix);
-        ecrire(choix);
-        accorderCouleurUI(choix);
-        refleter(choix);
+      bouton.addEventListener('click', () => choisir(bouton.dataset.themeChoix));
+    }
+
+    for (const bascule of bascules) {
+      bascule.addEventListener('click', () => {
+        const rang = CHOIX_VALIDES.indexOf(lire());
+        choisir(CHOIX_VALIDES[(rang + 1) % CHOIX_VALIDES.length]);
       });
     }
 
     refleter(lire());
 
-    // La commande ne sert à rien sans script : elle reste masquée par le CSS
-    // tant que cet attribut n'est pas posé. Pas de bouton mort.
+    // Les commandes ne servent à rien sans script : elles restent masquées par
+    // le CSS tant que cet attribut n'est pas posé. Pas de bouton mort.
     racine.setAttribute('data-theme-pret', '');
   };
 

@@ -5,14 +5,42 @@ import Taxo from '../../components/Taxo.astro';
 import MibekoProof from '../../components/MibekoProof.astro';
 import FranceTravailImpact from '../../components/FranceTravailImpact.astro';
 import Preuves from '../../components/Preuves.astro';
+import Sommaire from '../../components/Sommaire.astro';
+import Suite from '../../components/Suite.astro';
+import Illustration from '../../components/Illustration.astro';
 import {
   dateISO,
   formatDate,
   getEtudes,
   getRealisations,
   taxonomiesRealisations,
+  voisinage,
   type Etude,
 } from '../../lib/contenu';
+import { DISPONIBILITE } from '../../lib/parcours';
+
+/**
+ * Une illustration éditoriale par étude, quand elle explique quelque chose de
+ * précis (docs/05 §2). Déclarée ici plutôt que dans le frontmatter : c'est une
+ * décision de mise en page, pas un fait sur le travail — et le schéma de la
+ * collection n'a pas à porter du décor.
+ */
+const ILLUSTRATIONS: Record<string, { nom: string; legende: string; aide: string; meta: string; tag: string }> = {
+  mibeko: {
+    nom: 'balance-sheet',
+    legende: 'Le droit d’un côté, la source de l’autre.',
+    aide: 'Une réponse de Mibeko ne vaut que par l’article qu’elle cite.',
+    meta: 'principe',
+    tag: 'article cité',
+  },
+  'france-travail': {
+    nom: 'add-for-reporting',
+    legende: 'Des tableaux de bord qu’on assemble, pas qu’on empile.',
+    aide: 'Deux applications fragiles refondues en un seul service.',
+    meta: 'principe',
+    tag: 'décisionnel',
+  },
+};
 
 export async function getStaticPaths() {
   const etudes = await getEtudes();
@@ -28,8 +56,15 @@ interface Props {
 
 const { etude } = Astro.props;
 const { data } = etude;
-const { Content } = await render(etude);
+const { Content, headings } = await render(etude);
 const { aUnePage } = await taxonomiesRealisations();
+
+// A1 — l'étude voisine, dans l'ordre de la collection : « suivante » veut dire
+// la même chose ici et dans l'index.
+const etudes = await getEtudes();
+const voisins = voisinage(etudes, etude.id, '/etudes', (e) => e.data.titre);
+
+const illustration = ILLUSTRATIONS[etude.id];
 
 // La fiche d'inventaire correspondante, si elle est publiée : l'étude raconte,
 // la fiche situe. On ne lie que ce qui existe vraiment.
@@ -89,11 +124,31 @@ const realisation = data.realisation
       )
     }
 
+    {
+      illustration && (
+        <Illustration
+          nom={illustration.nom}
+          legende={illustration.legende}
+          aide={illustration.aide}
+          meta={illustration.meta}
+          tag={illustration.tag}
+          taille="petit"
+          class="illustration-cote"
+        />
+      )
+    }
+
     {etude.id === 'mibeko' && <MibekoProof />}
     {etude.id === 'france-travail' && <FranceTravailImpact />}
 
-    <div class="prose">
-      <Content />
+    {/* A5 — sans ancres, on ne peut ni sauter à la section utile, ni envoyer un
+        lien vers un passage précis dans un message de candidature. Le sommaire
+        s'installe dans la colonne de droite, libre sur grand écran. */}
+    <div class="etude-corps">
+      <Sommaire titres={headings} />
+      <div class="prose">
+        <Content />
+      </div>
     </div>
 
     <Preuves preuves={data.preuves} />
@@ -112,7 +167,16 @@ const realisation = data.realisation
     <p class="relecture">
       Étude relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>.
     </p>
-
-    <p class="retour"><a href="/etudes">← Toutes les études de cas</a></p>
   </section>
+
+  <Suite
+    voisinage={voisins}
+    indexHref="/etudes"
+    indexLabel="Toutes les études de cas"
+    action={{
+      href: '/contact',
+      label: 'Parler d’un poste ou d’un besoin',
+      aide: `Vous venez de lire comment je décide. Si le contexte vous parle, écrivez-moi : disponible en CDI à partir du ${DISPONIBILITE.texte}.`,
+    }}
+  />
 </Base>

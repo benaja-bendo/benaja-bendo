@@ -1,0 +1,45 @@
+---
+/**
+ * Bascule de thème compacte, pour l'en-tête.
+ *
+ * Le sélecteur complet vit en pied de page, avec ses trois libellés écrits.
+ * Le problème : sur l'accueil, il faut faire défiler 3 758 px pour l'atteindre —
+ * c'est-à-dire que le lecteur qui en a besoin est précisément celui qui ne le
+ * trouvera pas. Un bouton unique remonte donc l'action là où on la cherche, et
+ * cycle clair → sombre → système.
+ *
+ * Le glyphe est un carré de pixels, pas une icône empruntée : évidé pour le
+ * jour, plein-mais-entamé pour la nuit, coupé en deux pour « le système
+ * décide ». Même grammaire que le monogramme et les puces (docs/05 §2). Tout
+ * est en `currentColor` et en formes pleines — pas de `style=`, pas de couleur
+ * hors token.
+ *
+ * Comme le sélecteur du pied de page, le bouton reste masqué par le CSS tant
+ * que `public/js/theme.js` n'a pas posé `data-theme-pret` sur <html> : sans
+ * script il ne ferait rien, et un bouton mort est pire que pas de bouton.
+ */
+---
+
+<button
+  class="theme-bascule"
+  type="button"
+  data-theme-cycle
+  aria-label="Thème : système. Changer pour le thème clair."
+>
+  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+    {/* clair — carré évidé, un noyau au centre : le jour */}
+    <g data-glyphe="clair">
+      <rect x="2" y="2" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" />
+      <rect x="6" y="6" width="4" height="4" fill="currentColor" />
+    </g>
+    {/* sombre — carré plein dont un coin manque : la nuit */}
+    <g data-glyphe="sombre">
+      <path d="M7 2h7v12H2V7h5z" fill="currentColor" />
+    </g>
+    {/* auto — moitié évidée, moitié pleine : le système décide */}
+    <g data-glyphe="auto">
+      <rect x="2" y="2" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" />
+      <rect x="8" y="2" width="6" height="12" fill="currentColor" />
+    </g>
+  </svg>
+</button>

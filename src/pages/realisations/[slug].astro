@@ -4,12 +4,14 @@ import Base from '../../layouts/Base.astro';
 import Statut from '../../components/Statut.astro';
 import Taxo from '../../components/Taxo.astro';
 import Preuves from '../../components/Preuves.astro';
+import Suite from '../../components/Suite.astro';
 import {
   STATUTS_REALISATION,
   formatDate,
   dateISO,
   getRealisations,
   taxonomiesRealisations,
+  voisinage,
   type Realisation,
 } from '../../lib/contenu';
 
@@ -30,6 +32,16 @@ const { data } = realisation;
 const { Content } = await render(realisation);
 const statut = STATUTS_REALISATION[data.statut];
 const { aUnePage } = await taxonomiesRealisations();
+
+// A1 — même raison que sur les études : une fiche se terminait sur un unique
+// retour en arrière.
+const realisations = await getRealisations();
+const voisins = voisinage(
+  realisations,
+  realisation.id,
+  '/realisations',
+  (r) => r.data.nom,
+);
 ---
 
 <Base
@@ -119,7 +131,11 @@ const { aUnePage } = await taxonomiesRealisations();
     <p class="relecture">
       Fiche relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>.
     </p>
-
-    <p class="retour"><a href="/realisations">← Toutes les réalisations</a></p>
   </section>
+
+  <Suite
+    voisinage={voisins}
+    indexHref="/realisations"
+    indexLabel="Toutes les réalisations"
+  />
 </Base>

@@ -1,5 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+// Le plugin qui pose les `id` sur les titres du Markdown. Astro l'applique déjà
+// tout seul, mais APRÈS les plugins rehype de cette configuration : sans cet
+// import explicite, `rehypeAncresDeTitres` ne verrait aucun `id` et n'écrirait
+// aucune ancre. C'est le motif documenté par Astro pour cet exact besoin.
+// `@astrojs/markdown-remark` est déclaré en dépendance directe et sa version
+// SUIT CELLE D'ASTRO (7.2.2 aujourd'hui) : les faire diverger ferait diverger
+// les identifiants, donc les liens déjà envoyés vers une section.
+import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
@@ -30,6 +38,44 @@ function remarkPonctuationFrancaise() {
   };
 }
 
+/**
+ * Ancre de section sur chaque titre du Markdown.
+ *
+ * Astro pose déjà un `id` sur les titres ; ce qui manquait, c'était de quoi
+ * cliquer dessus. Sans ancre, on ne peut pas envoyer un lien vers un passage
+ * précis d'une étude de cas — or c'est exactement ce qu'on fait dans un message
+ * de candidature ou pour citer une note.
+ *
+ * Écrit à la main comme `remarkPonctuationFrancaise` ci-dessus : vingt lignes
+ * ne justifient pas d'installer `rehype-autolink-headings` et ses dépendances.
+ * L'ancre est ajoutée APRÈS le texte du titre pour que la navigation par titres
+ * d'un lecteur d'écran annonce le titre, pas le dièse.
+ */
+function rehypeAncresDeTitres() {
+  /** @param {any} tree */
+  return (tree) => {
+    /** @param {any} node */
+    const parcourir = (node) => {
+      const id = node.properties?.id;
+      if (node.type === 'element' && /^h[23]$/.test(node.tagName) && id) {
+        node.children.push({
+          type: 'element',
+          tagName: 'a',
+          properties: {
+            className: ['ancre-titre'],
+            href: `#${id}`,
+            'aria-label': 'Lien direct vers cette section',
+          },
+          children: [{ type: 'text', value: '#' }],
+        });
+        return; // ne pas redescendre : l'ancre qu'on vient d'ajouter est un enfant
+      }
+      node.children?.forEach(parcourir);
+    };
+    parcourir(tree);
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   // Domaine cible : le site est servi à la racine de benaja-bendo.fr par
@@ -53,8 +99,26 @@ export default defineConfig({
     // pour une CSP stricte `style-src 'self'` sans hash ni 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
+  vite: {
+    build: {
+      // ⚠️ esbuild et NON lightningcss (le défaut). Constaté le 25/08/2026 :
+      // lightningcss replie `animation` + `animation-timeline: view()` en un
+      // seul raccourci — `animation: .42s ease-out both entree-pose view()` —
+      // que les navigateurs REJETTENT : le timeline a été retiré du raccourci
+      // dans la spécification. Résultat : `animation-name: none`, toutes les
+      // apparitions au défilement mortes dans le build de production alors
+      // qu'elles fonctionnaient en dev. Il tronque en prime
+      // `animation-range: entry 10% entry 100%` en `entry 10%`, ce qui change
+      // la fin de plage et ramène le défaut qu'on cherchait justement à éviter
+      // (un élément visible mais non défilé, figé à moitié transparent).
+      // esbuild ne réécrit pas les raccourcis ; le CSS est un peu plus gros.
+      cssMinify: 'esbuild',
+    },
+  },
   markdown: {
     remarkPlugins: [remarkPonctuationFrancaise],
+    // L'ordre compte : les `id` d'abord, les ancres qui les utilisent ensuite.
+    rehypePlugins: [rehypeHeadingIds, rehypeAncresDeTitres],
     // ⚠️ Coloration syntaxique désactivée pour la même raison que l'API Fonts :
     // Shiki écrit ses couleurs en `style="..."` sur le <pre> et sur chaque
     // <span>, donc du style INLINE, bloqué par `style-src 'self'`. Les blocs de

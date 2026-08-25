@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Illustration from '../components/Illustration.astro';
 import { CONTACT, DISPONIBILITE } from '../lib/parcours';
 
 const intentions = [
@@ -46,9 +47,12 @@ const intentions = [
 
     <div class="hero-proof">
       <p>
-        Une offre, une mission ciblée ou une question technique&nbsp;:
-        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>. Pas de formulaire
-        ni de suivi&nbsp;: votre message arrive directement chez moi.
+        {/* ⚠️ Ne pas couper la ligne entre les deux-points et le <a> : Astro
+            mange le saut de ligne et rend « technique :contact@… ». */}
+        Une offre, une mission ciblée ou une question technique&nbsp;: <a
+          href={`mailto:${CONTACT.email}`}
+        >{CONTACT.email}</a>. Pas de formulaire ni de suivi&nbsp;: votre message
+        arrive directement chez moi.
       </p>
     </div>
 
@@ -124,9 +128,11 @@ const intentions = [
 
     <div class="prose contact-secondary">
       <p>
-        Pour juger avant d’écrire&nbsp;: le <a href="/cv">CV</a> synthétise, les
-        <a href="/realisations">réalisations</a> situent mon rôle, et
-        <a href="/etudes/mibeko#preuves-titre">l’étude Mibeko</a> relie le produit,
+        {/* ⚠️ Aucun saut de ligne entre un mot et le <a> qui le suit : Astro
+            mange l'espace et colle les deux (checklist de CLAUDE.md). */}
+        Pour juger avant d’écrire&nbsp;: le <a href="/cv">CV</a> synthétise, les <a
+          href="/realisations">réalisations</a> situent mon rôle, et <a
+          href="/etudes/mibeko#preuves-titre">l’étude Mibeko</a> relie le produit,
         les stores et six dépôts publics.
       </p>
       <p>
@@ -134,6 +140,15 @@ const intentions = [
         indésirables&nbsp;: relancez-moi via <a href="https://www.linkedin.com/in/benaja-bendo" rel="me noopener">LinkedIn</a>.
       </p>
     </div>
+
+    <Illustration
+      nom="answer"
+      legende="Une réponse, pas un accusé de réception."
+      aide="Pas de formulaire, pas d’outil de suivi : le message arrive directement."
+      meta="contact"
+      taille="petit"
+      class="illustration-cote"
+    />
 
     <div class="cta-row">
       <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>Écrire un email</a>

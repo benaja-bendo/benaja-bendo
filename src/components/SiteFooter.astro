@@ -6,6 +6,19 @@ import { estActif, navigationPrincipale } from '../lib/contenu';
 // seule — c'est le mode de panne que l'invariant n°5 interdit, en miniature.
 const year = new Date().getFullYear();
 
+// Date de génération, affichée en clair. Sur un site dont l'invariant n°5 est
+// « rien de public ne reste agonisant », c'est la preuve la moins chère à
+// tenir : elle se met à jour toute seule à chaque déploiement, et un visiteur
+// peut vérifier d'un coup d'œil que la page qu'il lit n'a pas trois ans.
+const genere = new Date();
+const genereTexte = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(genere);
+const genereISO = genere.toISOString().slice(0, 10);
+
 // Mêmes entrées que l'en-tête, même source. Sur mobile elles complètent le
 // menu compact de l'en-tête ; le pied n'est plus l'unique moyen de changer de
 // section au bout d'une page longue.
@@ -60,5 +73,8 @@ const path = Astro.url.pathname;
     </div>
 
     <p>© {year} Bénaja Bendo-Matondo</p>
+    <p class="footer-build">
+      Page générée le <time datetime={genereISO}>{genereTexte}</time>
+    </p>
   </div>
 </footer>

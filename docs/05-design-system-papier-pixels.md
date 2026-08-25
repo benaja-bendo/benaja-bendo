@@ -164,16 +164,72 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
   variante `.impact-flow` raconte un avant / intervention / après sans prétendre
   reconstituer l'architecture d'un client confidentiel.
 - **Footer** — fond `--surface-2`, pastille de disponibilité **carrée** (un pixel, pas une
-  LED), liens en mono.
-- **404** — le code en mono géant avec ombre dure. La seule vraie fantaisie de la v1.
+  LED), liens en mono, et la date de génération de la page.
+- **404** — le code en mono géant avec ombre dure, qui **décroche** une fraction de
+  seconde toutes les quatre secondes et demie. La seule vraie fantaisie de la v1 —
+  et le seul endroit où un visage est admis (voir §7).
+- **Bascule de thème (en-tête)** — un bouton unique qui cycle clair → sombre →
+  système. Le sélecteur nommé reste en pied de page ; ce bouton-ci ne fait que
+  remonter l'action là où on la cherche. Glyphe dessiné en carrés — évidé pour le
+  jour, entamé pour la nuit, coupé en deux pour « le système décide ». Masqué tant
+  que `data-theme-pret` n'est pas posé, comme le sélecteur.
+- **Sommaire (`.sommaire`)** — liste d'ancres numérotées, collante dans la colonne
+  de droite au-dessus de 68rem, bloc en tête de contenu en dessous. Ne s'affiche
+  qu'à partir de trois sections : en deçà, ce n'est plus un sommaire.
+- **« Et ensuite » (`.suite`)** — deux portes (précédent / suivant) puis
+  l'invitation. Ce que ce bloc remplace : un unique « ← Tout voir » en fin de
+  contenu, c'est-à-dire un retour en arrière au moment de plus forte intention.
+  La grille garde les deux places même quand un seul voisin existe — mais ne
+  dessine rien à la place manquante, un cadre vide se lisant comme un trou.
+- **Rail de filtres (`.filtres`)** — les taxonomies en TÊTE d'index, pas en pied.
+  Elles étaient une sortie, elles deviennent l'entrée.
+- **Illustration (`<Illustration/>`)** — voir §7.
 
 ## 5. Accessibilité & mouvement
 
 - Contrastes vérifiés AA (tableau §1) ; l'ambre est cantonné aux aplats.
 - `:focus-visible` teal 3px partout, cibles ≥ 44px, `lang="fr"`, skip-link.
-- Transitions 140 ms, **uniquement** transform + box-shadow. Tout est désactivé sous
-  `prefers-reduced-motion: reduce` (y compris les transformations de survol).
 - Rien de ce qui bouge n'est nécessaire à la lecture.
+
+### Le mouvement est un système — révisé le 25/08/2026
+
+**L'état avant.** Trois règles `transition` dans 2 462 lignes, toutes sur `:hover`,
+et zéro `@keyframes`. Rien ne se produisait à l'arrivée sur une page, au défilement,
+ni entre deux pages. Le site paraissait figé — pas faute d'effets, faute de
+**déclencheurs**.
+
+**Les quatre règles.**
+
+1. **L'état par défaut est l'état FINAL.** Un navigateur qui ignore une de ces
+   règles affiche la page entière, immédiatement. Jamais d'`opacity: 0` en dur,
+   jamais un contenu qui dépend d'un script pour apparaître.
+2. **Un déclencheur par écran.** « Deux marques maximum par bloc » (§4) vaut aussi
+   pour le mouvement.
+3. **Zéro JavaScript.** `@view-transition` pour la navigation,
+   `animation-timeline: view()` pour le défilement. Aucune bibliothèque, aucun
+   `IntersectionObserver` — donc rien de neuf à autoriser dans la CSP.
+4. **Tout est coupé sous `prefers-reduced-motion: reduce`**, y compris les
+   transitions de page (`::view-transition-*`) et les trois boucles infinies.
+
+**Deux pièges, tous deux rencontrés.**
+
+- **`translate`, jamais `transform`, pour les apparitions au défilement.** Une
+  animation en cours l'emporte sur les déclarations ordinaires : animer `transform`
+  écrase le soulèvement au survol des cartes. `translate` est une propriété
+  distincte qui se compose avec `transform`.
+- **La plage s'arrête à `entry 100%`.** Une plage en `cover` laisse un élément
+  visible mais non défilé — bas d'une page courte — figé à mi-animation, donc à
+  moitié transparent. Ce serait rendre un contenu illisible par décoration.
+
+**Le catalogue.** Transitions de page (`@view-transition`, noms sur l'en-tête, le
+pied et le `h1`) · apparition au défilement des cartes, lignes, tuiles et
+illustrations · liseré pixel qui défile au survol d'une carte · surligneur qui se
+pose de gauche à droite · curseur qui bat après la ligne de rôle · monogramme et
+bascule qui s'enfoncent en `steps(2)` · pastille de disponibilité qui **commute**
+en `steps(1)` sur 2,4 s (elle ne respire pas : ce serait la LED que §4 refuse) ·
+filet d'accent qui pousse au survol d'une ligne d'inventaire · 404 qui décroche.
+
+Les transitions de survol restent à **140 ms**, sur `transform` et `box-shadow`.
 
 ## 6. Ce qui reste à faire sur le design
 
@@ -182,6 +238,48 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
 - [x] Image Open Graph dédiée 1200×630 pour les aperçus sociaux.
 - [ ] Décliner le système sur `/mibeko`, `/experiences`, `/a-propos`, `/colophon` : les
       classes existent déjà, mais ces pages n'ont pas été relues une par une.
-- [ ] Scène pixel de la 404 (aujourd'hui : seulement le code en gros).
+- [x] ~~Scène pixel de la 404~~ — faite le 25/08/2026, mais pas comme prévu : plutôt
+      qu'une scène à dessiner, l'ombre du code décroche d'un pixel et vire à l'ambre
+      un dixième de seconde. Un défaut d'affichage, pas une animation.
 - [x] Sélecteur clair/sombre manuel — trois états explicites, script externe et
-      commande masquée tant que le script n’est pas prêt.
+      commande masquée tant que le script n’est pas prêt. Doublé le 25/08/2026 d'une
+      bascule compacte dans l'en-tête (§4).
+- [ ] **Une photo.** Le site n'en contient aucune. C'est la vraie réponse au manque
+      d'« humain » — pas un visage dessiné qui n'est pas le sien. Traitée comme le
+      reste : bordure d'encre 2px, ombre dure, coins vifs, servie depuis le domaine.
+- [ ] **Deux ou trois captures produit de plus.** Le cadre « fenêtre de navigateur »
+      dessiné en CSS existe déjà sur `/etudes/mibeko` et ne demande qu'à resservir.
+- [ ] **Un schéma par étude de cas.** `MibekoProof` et `FranceTravailImpact` montrent
+      que la grammaire `.trust-flow` sait raconter une architecture sans image. Un
+      schéma vaut dix icônes achetées : il est unique et n'a pas de licence.
+
+## 7. Illustrations éditoriales
+
+Admises seulement si elles expliquent une idée précise (§2, règle 2), stockées
+localement, recolorées par les tokens. Le composant `<Illustration/>` porte la règle :
+la prop `legende` est **obligatoire** — si on ne sait pas écrire ce que le dessin
+apporte, c'est qu'il n'apporte rien.
+
+**Ce qui est en place** (six dessins, Koboyo Icons, `currentColor`, aucun `style=`) :
+
+| Fichier | Où | Ce qu'il explique |
+| --- | --- | --- |
+| `citation-footnote` | accueil | la réponse garde le chemin vers sa source |
+| `balance-sheet` | `/etudes/mibeko` | le droit d'un côté, l'article cité de l'autre |
+| `add-for-reporting` | `/etudes/france-travail` | des tableaux de bord qu'on assemble |
+| `attacker-hood` | note sur la CSP | la seule page qui parle de menace |
+| `academic-year-planner` | `/parcours` | une chronologie |
+| `answer` | `/contact` | une réponse, pas un accusé de réception |
+| `bald-person-looking-confused` | `/404` | la fantaisie autorisée, une seule fois |
+
+**La règle sur les personnages.** Un **objet** rendu grand, en teal, tenu par un
+cadre (papier ligné, étiquettes mono, ombre dure) reste dans le système : le
+dispositif appartient au site, le dessin n'est qu'un contenu. Un **visage** de
+dessin animé ne survit pas à ce traitement — il devient du clip-art, et le clip-art
+fait basculer un site sérieux dans le registre « modèle gratuit ». D'où : **un seul
+visage sur tout le site, et il est sur la 404.**
+
+Corollaire pratique : ne pas chercher à « caser » un lot d'icônes téléchargé. Le
+dossier `selection-assets/` (hors dépôt) en contient 36 dont 22 portraits — c'est
+une tranche alphabétique de bibliothèque, pas une sélection. On y retourne chercher
+un fichier quand un besoin précis apparaît, jamais l'inverse.

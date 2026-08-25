@@ -266,7 +266,14 @@ p {
 /* Surligneur au marqueur : le mot qui porte la preuve.
    Deux maximum par bloc de texte — au-delà, plus rien ne ressort. */
 mark {
-  background: var(--mark-1);
+  /* L'aplat passe par une variable et un dégradé à deux arrêts identiques —
+     donc un aplat — pour que `background-size` soit animable (M4). Les variantes
+     ne changent plus que `--marque`, pas la mécanique. */
+  --marque: var(--mark-1);
+  background-color: transparent;
+  background-image: linear-gradient(var(--marque), var(--marque));
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* état FINAL : sans animation, le mot est surligné */
   color: inherit;
   padding: 0.06em 0.22em;
   border-radius: 3px;
@@ -274,7 +281,7 @@ mark {
   -webkit-box-decoration-break: clone;
 }
 mark.mark-time {
-  background: var(--mark-2);
+  --marque: var(--mark-2);
 }
 /* Quand une ponctuation suit immédiatement le surligneur, la gouttière droite
    de l'aplat la détache du mot : « … 2026 , à Bordeaux ». On rend cette
@@ -284,7 +291,7 @@ mark.mark-ponct {
   padding-right: 0.06em;
 }
 mark.mark-human {
-  background: var(--mark-3);
+  --marque: var(--mark-3);
 }
 
 a {
@@ -411,6 +418,14 @@ a:hover {
   font-weight: 700;
   font-family: var(--mono);
   letter-spacing: -0.03em;
+  /* M6 — `steps(2)` et non `ease` : le bloc change de case, il ne dérive pas. */
+  transition:
+    transform 120ms steps(2, end),
+    box-shadow 120ms steps(2, end);
+}
+.brand:hover .brand-mark {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--shadow);
 }
 .site-header nav ul {
   display: flex;
@@ -901,6 +916,14 @@ main > section:last-child {
 }
 .card::before {
   margin-bottom: 1.15rem;
+  /* M3 — la bande perforée avance au survol. En `steps()`, pas en `ease` : un
+     pixel saute d'une case à l'autre, il ne glisse pas. La position de départ
+     doit être écrite, sinon il n'y a rien à interpoler. */
+  background-position: 0 0;
+  transition: background-position 420ms steps(6, end);
+}
+.card:hover::before {
+  background-position: 72px 0;
 }
 .card:hover {
   transform: translate(-2px, -2px);
@@ -1398,6 +1421,38 @@ main > section:last-child {
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid var(--rule);
+}
+
+/* M9 — une liste plate ne dit pas où l'on pointe. Un filet d'accent pousse
+   depuis le haut au survol : `scaleY` et non `height`, pour que rien ne soit
+   remis en page. Le survol porte sur la ligne entière, mais le bord se déclenche
+   aussi quand un lien de la ligne prend le focus clavier — sinon la souris
+   verrait une affordance que le clavier n'a pas. */
+.ligne {
+  position: relative;
+}
+.ligne::before {
+  content: "";
+  position: absolute;
+  /* Dans la marge, pas dans le flux : une réserve à gauche décalerait toute la
+     liste de 0,9 rem par rapport au h1 et au chapô, et l'alignement du texte
+     compte plus que le filet. 0,9 rem tient dans la gouttière de `.container`
+     (1,25 rem), y compris sur mobile. */
+  left: -0.9rem;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 160ms ease-out;
+}
+.ligne:hover::before,
+.ligne:focus-within::before {
+  transform: scaleY(1);
+}
+.ligne + .ligne::before {
+  top: 2rem; /* le filet commence sous la règle de séparation, pas dessus */
 }
 .ligne-tete {
   display: flex;
@@ -1994,7 +2049,10 @@ main > section:last-child {
   color: var(--fg);
   font-weight: 600;
 }
-/* Pastille de disponibilité : un carré. Un pixel, pas une LED. */
+/* Pastille de disponibilité : un carré. Un pixel, pas une LED.
+   M7 — et il COMMUTE, il ne respire pas : `steps(1)` sur un cycle de 2,4 s pose
+   puis retire un halo d'un seul coup. Une pulsation lissée aurait fait la LED
+   que docs/05 §4 refuse ; une commutation nette reste dans la grammaire pixel. */
 .footer-status .dot {
   display: inline-block;
   width: 0.6rem;
@@ -2002,6 +2060,17 @@ main > section:last-child {
   background: var(--ok);
   border-radius: 0;
   margin-right: 0.5rem;
+  animation: pastille-commute 2.4s steps(1, end) infinite;
+}
+@keyframes pastille-commute {
+  0%,
+  46% {
+    box-shadow: 0 0 0 0 var(--ok);
+  }
+  47%,
+  100% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 28%, transparent);
+  }
 }
 .footer-loc {
   margin: 0.3rem 0 0;
@@ -2092,6 +2161,713 @@ main > section:last-child {
   color: var(--accent);
   letter-spacing: 0.12em;
   text-shadow: var(--pop-lg);
+  /* M10 — un défaut d'affichage, pas une animation : 88 % du cycle sans rien,
+     puis deux images où l'ombre saute et vire à l'ambre. C'est la « scène
+     pixel » que docs/05 §6 attendait, obtenue sans rien dessiner. */
+  animation: code-decroche 4.5s steps(1, end) infinite;
+}
+@keyframes code-decroche {
+  0%,
+  88% {
+    text-shadow: 6px 6px 0 var(--shadow);
+    transform: none;
+  }
+  89% {
+    text-shadow: 6px 6px 0 var(--signal);
+    transform: translate(2px, -1px);
+  }
+  90% {
+    text-shadow: 4px 8px 0 var(--shadow);
+    transform: translate(-2px, 1px);
+  }
+  91%,
+  100% {
+    text-shadow: 6px 6px 0 var(--shadow);
+    transform: none;
+  }
+}
+
+/* =============================================================================
+ * Mouvement — un système, pas des effets à l'unité
+ *
+ * État au 25/08/2026 avant ce chantier : TROIS règles `transition` dans tout le
+ * fichier, toutes déclenchées par `:hover`, et zéro `@keyframes`. Rien ne se
+ * produisait à l'arrivée sur une page, au défilement, ni entre deux pages —
+ * d'où une impression de site figé qui ne venait pas d'un manque d'effets mais
+ * d'un manque de DÉCLENCHEURS.
+ *
+ * Quatre règles encadrent tout ce qui suit :
+ *
+ *   1. **Aucun mouvement n'est nécessaire à la lecture.** L'état par défaut de
+ *      chaque élément est son état FINAL. Un navigateur qui ignore une règle
+ *      d'ici affiche la page complète, immédiatement — jamais `opacity: 0` en
+ *      dur, jamais un contenu qui dépend d'un script pour apparaître.
+ *   2. **Un déclencheur par écran.** La règle « deux marques maximum par bloc »
+ *      de docs/05 §4 vaut aussi pour le mouvement. Six animations simultanées
+ *      sur l'accueil produiraient l'inverse de l'effet recherché.
+ *   3. **Zéro JavaScript.** Transitions de page et animations au défilement sont
+ *      du CSS natif. Aucune bibliothèque, aucun IntersectionObserver, et donc
+ *      rien de neuf à faire passer par la CSP.
+ *   4. **Tout est coupé sous `prefers-reduced-motion`** — voir la fin de cette
+ *      section.
+ * ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+ * M1 — Transitions de page natives
+ *
+ * `@view-transition` en CSS pur : le passage d'une page à l'autre devient un
+ * fondu au lieu d'un clignotement blanc. Ce n'est PAS le <ClientRouter /> d'Astro,
+ * qui embarque un routeur en JavaScript : ici le navigateur fait tout, et celui
+ * qui ne connaît pas la règle navigue exactement comme avant.
+ *
+ * Les noms de transition sont posés sur trois éléments STABLES, présents et
+ * uniques sur chaque page. Nommer les titres de cartes demanderait un nom par
+ * contenu — donc du CSS généré, ou `attr()` avec type, trop récent pour être
+ * une fondation. Trois ancres suffisent : l'en-tête et le pied cessent de
+ * clignoter, et le h1 fait le lien d'une page à l'autre.
+ * -------------------------------------------------------------------------- */
+
+@view-transition {
+  navigation: auto;
+}
+
+.site-header {
+  view-transition-name: entete;
+}
+.site-footer {
+  view-transition-name: pied;
+}
+main h1 {
+  view-transition-name: titre-page;
+}
+
+/* -----------------------------------------------------------------------------
+ * M2 & M8 — Apparition au défilement, sans JavaScript
+ *
+ * `animation-timeline: view()` lie la progression de l'animation à la position
+ * de l'élément dans la fenêtre. Deux précautions qui ne sont pas décoratives :
+ *
+ *   • Le décalage passe par `translate`, JAMAIS par `transform`. Une animation
+ *     en cours l'emporte sur les déclarations ordinaires : animer `transform`
+ *     écraserait le soulèvement au survol des cartes et le `scaleY` des filets.
+ *     `translate` est une propriété distincte, qui se compose avec `transform`.
+ *   • La plage s'arrête à `entry 100%`, c'est-à-dire au moment où l'élément est
+ *     entièrement visible. Une plage en `cover` laisserait un élément visible
+ *     mais non défilé — bas d'une page courte — figé à mi-animation, donc à
+ *     moitié transparent. Ce serait un contenu illisible par décoration.
+ * -------------------------------------------------------------------------- */
+
+@keyframes entree-pose {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .card,
+    .ligne,
+    .stats li,
+    .illustration,
+    .suite-porte,
+    .preuves-groupe {
+      animation: entree-pose 420ms ease-out both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+
+    /* M8 — les tuiles de chiffres entrent ensemble : c'est la plage, et non un
+       `animation-delay`, qui les décale. Sur une timeline de défilement, le
+       délai n'a pas de sens ; c'est l'offset de départ qui joue son rôle. */
+    .stats li:nth-child(2) {
+      animation-range: entry 18% entry 100%;
+    }
+    .stats li:nth-child(3) {
+      animation-range: entry 26% entry 100%;
+    }
+    .stats li:nth-child(4) {
+      animation-range: entry 34% entry 100%;
+    }
+
+    /* M4 — le surligneur se pose de gauche à droite, comme un marqueur sur du
+       papier. `box-decoration-break: clone` fait que chaque fragment de ligne a
+       son propre aplat : le geste se rejoue à chaque retour à la ligne, ce qui
+       est exactement ce que fait un vrai marqueur. */
+    mark {
+      animation: marque-se-pose 500ms ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+@keyframes marque-se-pose {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * M5 — Un curseur qui bat après la ligne de rôle
+ *
+ * Le premier écran ne bougeait pas d'un pixel. Un bloc d'accent qui clignote en
+ * fin de ligne de rôle donne un signe de vie sans rien ajouter à lire, et le
+ * registre terminal est déjà celui du site (le mono porte toute la donnée).
+ * `steps(1)` : il commute, il ne s'estompe pas.
+ * -------------------------------------------------------------------------- */
+
+.hero h1 span.role::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.18em;
+  background: var(--accent);
+  vertical-align: -0.16em;
+  animation: curseur-bat 1.05s steps(1, end) infinite;
+}
+@keyframes curseur-bat {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =============================================================================
+ * Formes maison — le motif papier, la trame, le coin vivant
+ *
+ * docs/05 §2 : « la signature reste dessinée en CSS ». Ces trois motifs ne
+ * coûtent pas un octet de plus qu'une couleur de fond et n'existent que sur ce
+ * site — contrairement à n'importe quelle icône achetée.
+ * ========================================================================== */
+
+/* F1 — Lignes de cahier. Le motif existait, enfermé dans l'illustration de
+   l'accueil ; il sert désormais partout où un bloc doit se lire comme du papier. */
+.papier {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 23px,
+    var(--rule) 23px 24px
+  );
+}
+
+/* F6 — Trame de points, très discrète, pour casser le vide d'une grande page
+   sans rien ajouter à lire. C'est du pixel : c'est dans le sujet. */
+.trame {
+  background-image: radial-gradient(var(--rule) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* F5 — Coin vivant. Le statut « en production » était une puce parmi d'autres ;
+   il devient une forme, lisible sans être lue. Un pseudo-élément et non un
+   `clip-path` sur la carte : un `clip-path` rognerait aussi l'ombre dure, qui
+   est la signature du système. */
+.card-live::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--accent);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  pointer-events: none;
+}
+.card-live {
+  position: relative;
+}
+
+/* =============================================================================
+ * Détails — aucun n'est important seul
+ * ========================================================================== */
+
+/* La sélection prend l'encre du site plutôt que le bleu du système. */
+::selection {
+  background: var(--mark-1);
+  color: var(--fg);
+}
+
+/* Le curseur de saisie et l'ascenseur cessent d'être les deux seules choses
+   que le thème ne touchait pas. */
+:root {
+  caret-color: var(--accent);
+  scrollbar-color: var(--muted) var(--surface-2);
+}
+
+/* Puces carrées dans le corps de texte, comme sur les cartes. */
+.prose ul li::marker {
+  color: var(--accent);
+  content: "▪ ";
+}
+
+/* Le soulignement contourne les jambages, et s'épaissit au survol : le lien
+   devient un objet, pas seulement une couleur. */
+a {
+  text-decoration-skip-ink: auto;
+}
+a:hover {
+  text-decoration-thickness: 3px;
+}
+
+/* Ancre de section — posée par `rehypeAncresDeTitres` dans astro.config.mjs.
+   Elle reste discrète au repos et lisible au survol ou au focus clavier ; sans
+   elle, on ne peut pas envoyer un lien vers un passage précis d'une étude. */
+.prose h2,
+.prose h3 {
+  position: relative;
+}
+.ancre-titre {
+  margin-left: 0.4rem;
+  font-family: var(--mono);
+  font-weight: 400;
+  color: var(--rule);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 140ms ease-out;
+}
+.prose h2:hover .ancre-titre,
+.prose h3:hover .ancre-titre,
+.ancre-titre:focus-visible {
+  opacity: 1;
+  color: var(--accent);
+}
+/* Au doigt, il n'y a pas de survol : l'ancre reste visible en permanence. */
+@media (hover: none) {
+  .ancre-titre {
+    opacity: 1;
+  }
+}
+
+/* Un lien externe dans le corps d'un texte annonce qu'il sort du site. Les
+   gabarits `.astro` écrivent déjà leur flèche à la main ; le Markdown, non. */
+.prose a[href^="https://"]::after,
+.prose a[href^="http://"]::after {
+  content: " ↗";
+  font-size: 0.9em;
+}
+
+/* Le focus clavier doit se voir sur la carte entière, pas seulement sur le lien
+   du titre : sans cela, on ne sait pas toujours où l'on est en tabulant. */
+.card:focus-within {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Un liseré pixel comme séparateur de sections, pour les pages longues. */
+.separateur {
+  height: 6px;
+  margin-block: 3rem;
+  border: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+/* Date de génération, en pied de page. Sur un site dont l'invariant n°5 est
+   « rien ne reste périmé », c'est une preuve qui se met à jour toute seule. */
+.footer-build {
+  margin: 0.4rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* Un index vide n'est pas une page cassée : il le dit. */
+.etat-vide {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--surface-2);
+  border: var(--edge) dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+
+/* =============================================================================
+ * Bascule de thème de l'en-tête
+ *
+ * Le sélecteur complet reste en pied de page, avec ses trois libellés écrits.
+ * Ce bouton-ci ne fait que remonter l'action là où on la cherche : sur
+ * l'accueil, le pied de page est à 3 758 px du premier écran.
+ * ========================================================================== */
+
+.header-outils {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.theme-bascule {
+  display: none; /* révélée par public/js/theme.js — pas de bouton mort */
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem; /* cible tactile */
+  height: 2.75rem;
+  padding: 0;
+  color: var(--fg);
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  cursor: pointer;
+  transition:
+    transform 120ms steps(2, end),
+    box-shadow 120ms steps(2, end);
+}
+:root[data-theme-pret] .theme-bascule {
+  display: inline-flex;
+}
+.theme-bascule:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.theme-bascule:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--shadow);
+}
+
+/* Un glyphe par état, et un seul affiché : `data-theme-actuel` est posé par
+   theme.js et vaut « clair », « sombre » ou « auto ». Avant que le script ne
+   passe, le bouton est de toute façon masqué. */
+.theme-bascule [data-glyphe] {
+  display: none;
+}
+:root[data-theme-actuel="clair"] .theme-bascule [data-glyphe="clair"],
+:root[data-theme-actuel="sombre"] .theme-bascule [data-glyphe="sombre"],
+:root[data-theme-actuel="auto"] .theme-bascule [data-glyphe="auto"] {
+  display: block;
+}
+
+/* =============================================================================
+ * Sommaire d'un contenu long
+ * ========================================================================== */
+
+.etude-corps {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1.75rem;
+}
+.sommaire {
+  padding: 1rem 1.15rem 1.15rem;
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+}
+.sommaire ol {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.1rem;
+  counter-reset: sommaire;
+}
+.sommaire li {
+  counter-increment: sommaire;
+}
+.sommaire a {
+  display: block;
+  padding: 0.35rem 0.4rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.sommaire a::before {
+  content: counter(sommaire, decimal-leading-zero) " ";
+  color: var(--accent);
+  font-weight: 600;
+}
+.sommaire a:hover {
+  background: var(--mark-1);
+}
+
+/* Sur grand écran, la colonne de droite est libre : le sommaire s'y installe et
+   reste collant pendant la lecture. En dessous, il redevient un bloc en tête de
+   contenu — un sommaire replié qu'il faut ouvrir n'est jamais consulté. */
+@media (min-width: 68rem) {
+  .etude-corps {
+    grid-template-columns: minmax(0, 44rem) minmax(0, 1fr);
+    align-items: start;
+  }
+  .sommaire {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 5.5rem;
+  }
+  .etude-corps > .prose {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+/* =============================================================================
+ * « Et ensuite » — la fin d'un contenu ouvre, elle ne ferme pas
+ * ========================================================================== */
+
+.suite-titre {
+  margin-bottom: 1.25rem;
+}
+.suite-voisins {
+  display: grid;
+  gap: 1rem;
+}
+/* Deux colonnes fixes, et le « suivant » ancré en colonne 2 : quand un seul
+   voisin existe, la place de l'autre reste vide sans rien dessiner. La commande
+   garde donc le même bord de page en page. */
+@media (min-width: 40rem) {
+  .suite-voisins {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .suite-porte-apres {
+    grid-column: 2;
+  }
+}
+.suite-porte {
+  display: grid;
+  gap: 0.25rem;
+  align-content: start;
+  padding: 1rem 1.15rem;
+  background: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop);
+  text-decoration: none;
+  color: var(--fg);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 140ms ease-out;
+}
+.suite-porte:hover {
+  color: var(--fg);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--pop-lg);
+}
+.suite-porte-apres {
+  text-align: right;
+}
+.suite-sens {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.suite-nom {
+  font-weight: 700;
+  line-height: 1.25;
+}
+.suite-action {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+.suite-aide {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--muted);
+}
+.haut-de-page {
+  margin: 2rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.haut-de-page a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.haut-de-page a:hover {
+  color: var(--accent);
+}
+
+/* =============================================================================
+ * Rail de filtres — les taxonomies ont enfin une entrée
+ *
+ * Les pages /realisations/tech/… et /notes/sujet/… étaient construites, indexées
+ * et accessibles seulement DEPUIS un contenu. Or c'est ainsi qu'on cherche :
+ * « Spring Boot », « Kotlin ». Le rail les met en tête de l'index.
+ * ========================================================================== */
+
+.filtres {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.filtres + .filtres {
+  margin-top: 1rem;
+}
+.filtres .etiq {
+  margin-bottom: 0.5rem;
+}
+
+/* =============================================================================
+ * Illustration éditoriale — le cadre appartient au système, pas le dessin
+ *
+ * Généralise ce que `.source-illustration` faisait pour un seul fichier. Les
+ * dessins viennent de Koboyo, recolorés par `currentColor` ; le dispositif
+ * — papier, étiquettes en mono, ombre dure — est celui du site.
+ * ========================================================================== */
+
+.illustration {
+  margin: 2rem 0 0;
+}
+.illustration-lien {
+  display: block;
+  color: var(--fg);
+  text-decoration: none;
+}
+.illustration-scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 13rem;
+  padding: 2.5rem 1.5rem 2rem;
+  overflow: hidden;
+  color: var(--accent);
+  background-color: var(--surface);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 140ms ease-out;
+}
+.illustration-scene-papier {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 23px,
+    var(--rule) 23px 24px
+  );
+}
+.illustration-scene-nu {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+  min-height: 0;
+}
+a.illustration-lien:hover .illustration-scene {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--pop-lg);
+}
+.illustration-dessin {
+  display: block;
+  width: 100%;
+}
+.illustration-dessin svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+  filter: drop-shadow(4px 4px 0 var(--shadow));
+}
+/* L'ombre portée doit rester proportionnée au trait. Un décalage de 4 px sous
+   un dessin fin et réduit double les lignes au lieu de les épaissir : on la
+   resserre au petit format, et on la retire quand il n'y a pas de cadre —
+   une ombre projetée sur du vide n'appuie sur rien. */
+.illustration-petit .illustration-dessin {
+  max-width: 5.5rem;
+}
+.illustration-petit .illustration-dessin svg {
+  filter: drop-shadow(2px 2px 0 var(--shadow));
+}
+.illustration-scene-nu .illustration-dessin svg {
+  filter: none;
+}
+.illustration-moyen .illustration-dessin {
+  max-width: 8rem;
+}
+.illustration-grand .illustration-dessin {
+  max-width: 11rem;
+}
+.illustration-meta,
+.illustration-tag {
+  position: absolute;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.illustration-meta {
+  top: 0.9rem;
+  left: 0.9rem;
+  color: var(--muted);
+}
+.illustration-tag {
+  bottom: 1rem;
+  left: 0.9rem;
+  padding: 0.22rem 0.5rem;
+  color: var(--fg);
+  background: var(--mark-1);
+  border: var(--edge) solid var(--border);
+  box-shadow: var(--pop-sm);
+  transform: rotate(-2deg);
+}
+.illustration figcaption {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+}
+.illustration figcaption strong {
+  color: var(--fg);
+}
+.illustration figcaption span {
+  color: var(--muted);
+}
+
+/* Une illustration posée dans la marge d'une page de contenu : elle accompagne,
+   elle n'interrompt pas. */
+.illustration-cote {
+  max-width: 20rem;
+}
+
+/* La 404 est centrée : son illustration l'est aussi, et sans cadre. */
+.illustration-404 {
+  margin-inline: auto;
+  max-width: 9rem;
+}
+.illustration-404 figcaption {
+  text-align: center;
+}
+
+/* =============================================================================
+ * Liens de preuve du hero — le produit qu'on peut ouvrir
+ *
+ * GitHub, LinkedIn et mibeko.fr n'existaient que dans le pied de page. Pour un
+ * profil de développeur, un dépôt public est une preuve de premier rang, pas
+ * une mention légale.
+ * ========================================================================== */
+
+.hero-liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+.hero-liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem; /* cible tactile */
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+.hero-liens a:hover {
+  color: var(--accent-strong);
 }
 
 /* =============================================================================
@@ -2109,10 +2885,39 @@ main > section:last-child {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+
+  /* Les soulèvements au survol : l'état reste lisible, seul le déplacement
+     disparaît. L'ombre, elle, continue de changer — c'est un indicateur, pas
+     du mouvement. */
   .btn:hover,
   .card:hover,
-  .nav-cta:hover {
+  .nav-cta:hover,
+  .brand:hover .brand-mark,
+  .theme-bascule:hover,
+  .theme-bascule:active,
+  .suite-porte:hover,
+  a.illustration-lien:hover .illustration-scene,
+  .source-illustration-link:hover .source-illustration-stage {
     transform: none;
+  }
+
+  /* Les trois boucles infinies s'arrêtent net, chacune sur l'état qui garde le
+     sens : le curseur disparaît (il ne dit rien de plus qu'une ligne finie), la
+     pastille garde son halo, le 404 garde son ombre en place. Avec
+     `animation-duration: 0.01ms`, les deux dernières s'immobilisent d'elles-
+     mêmes sur leur dernière image ; seul le curseur demande une règle, parce
+     que sa dernière image est justement l'état invisible. */
+  .hero h1 span.role::after {
+    display: none;
+  }
+
+  /* M1 — les transitions de page. Le fondu par défaut d'une navigation reste
+     du mouvement non sollicité : on le coupe des deux côtés. La navigation
+     redevient un changement de page immédiat, ce qu'elle était avant. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
 

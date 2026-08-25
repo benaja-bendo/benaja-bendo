@@ -1,9 +1,14 @@
 ---
+import BasculeTheme from './BasculeTheme.astro';
 import { estActif, navigationPrincipale } from '../lib/contenu';
 
 // Liste partagée avec le pied de page (src/lib/contenu.ts). Sur mobile, elle
 // reste disponible dans un <details> natif : pas de script, pas de commande
 // morte, et aucune section à plusieurs milliers de pixels dans le pied de page.
+//
+// `.header-outils` est rendue à toutes les tailles : elle porte la bascule de
+// thème, qui doit rester atteignable sans faire défiler jusqu'au pied de page.
+// Seul le menu <details> qu'elle contient disparaît au-dessus de 48rem.
 const nav = await navigationPrincipale();
 
 const path = Astro.url.pathname;
@@ -40,30 +45,33 @@ const isActive = (href: string) => estActif(path, href);
       </ul>
     </nav>
 
-    <details class="navigation-mobile">
-      <summary>Menu</summary>
-      <nav aria-label="Navigation mobile">
-        <ul>
-          {nav.map((item) => (
+    <div class="header-outils">
+      <BasculeTheme />
+      <details class="navigation-mobile">
+        <summary>Menu</summary>
+        <nav aria-label="Navigation mobile">
+          <ul>
+            {nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
             <li>
               <a
-                href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
+                href="/contact"
+                aria-current={isActive('/contact') ? 'page' : undefined}
               >
-                {item.label}
+                Contact
               </a>
             </li>
-          ))}
-          <li>
-            <a
-              href="/contact"
-              aria-current={isActive('/contact') ? 'page' : undefined}
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </details>
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>

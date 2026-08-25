@@ -238,3 +238,50 @@ export function estActif(chemin: string, href: string): boolean {
     ? chemin === '/'
     : chemin === href || chemin.startsWith(`${href}/`);
 }
+
+/* -----------------------------------------------------------------------------
+ * Voisinage — la fin d'un contenu doit ouvrir, pas fermer
+ *
+ * Jusqu'au 25/08/2026, une étude de cas se terminait sur « ← Toutes les études
+ * de cas ». C'est le moment de plus forte intention de tout le site — quelqu'un
+ * vient d'y passer plusieurs minutes — et la seule sortie proposée était un
+ * retour en arrière.
+ *
+ * L'ordre des voisins est celui de la collection, jamais un ordre inventé ici :
+ * les réalisations suivent `epingle` puis `ordre`, les études `ordre`, les notes
+ * la date décroissante. « Suivant » veut donc dire « l'entrée d'après dans la
+ * lecture », ce qui est aussi ce que montre l'index.
+ * -------------------------------------------------------------------------- */
+
+export interface Voisin {
+  href: string;
+  titre: string;
+}
+
+export interface Voisinage {
+  precedent?: Voisin;
+  suivant?: Voisin;
+}
+
+/**
+ * Les deux entrées qui encadrent `id` dans `entrees`, déjà mises en forme de
+ * liens. `titre` extrait le libellé parce que les trois collections ne nomment
+ * pas leur titre pareil (`nom` pour une réalisation, `titre` ailleurs).
+ */
+export function voisinage<T extends { id: string }>(
+  entrees: T[],
+  id: string,
+  base: string,
+  titre: (entree: T) => string,
+): Voisinage {
+  const rang = entrees.findIndex((entree) => entree.id === id);
+  if (rang === -1) return {};
+
+  const lien = (entree: T | undefined): Voisin | undefined =>
+    entree ? { href: `${base}/${entree.id}`, titre: titre(entree) } : undefined;
+
+  return {
+    precedent: lien(entrees[rang - 1]),
+    suivant: lien(entrees[rang + 1]),
+  };
+}

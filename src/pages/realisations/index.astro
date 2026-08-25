@@ -5,6 +5,7 @@ import { getRealisations, taxonomiesRealisations } from '../../lib/contenu';
 
 const realisations = await getRealisations();
 const { domaines, techs } = await taxonomiesRealisations();
+const aDesFiltres = domaines.length > 0 || techs.length > 0;
 ---
 
 <Base
@@ -18,6 +19,49 @@ const { domaines, techs } = await taxonomiesRealisations();
       Produits personnels et missions en équipe, avec pour chacun le contexte,
       mon rôle réel et son état aujourd’hui.
     </p>
+
+    {/* A6 — le rail de filtres est passé du bas vers le haut le 25/08/2026. Les
+        pages /realisations/tech/… et /domaine/… étaient construites et indexées,
+        mais accessibles seulement DEPUIS une fiche : personne n'entrait par
+        elles, alors que « Java » ou « Spring Boot » est justement la façon dont
+        un recruteur cherche. Elles ne sont plus une sortie, elles sont l'entrée. */}
+    {
+      aDesFiltres && (
+        <>
+          {domaines.length > 0 && (
+            <div class="filtres">
+              <p class="etiq">Par domaine</p>
+              <ul class="chips chips-compte" aria-label="Domaines">
+                {domaines.map((groupe) => (
+                  <li>
+                    <a href={`/realisations/domaine/${groupe.slug}`}>
+                      {groupe.label}
+                      <span class="compte">{groupe.entrees.length}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {techs.length > 0 && (
+            <div class="filtres">
+              <p class="etiq">Par technologie</p>
+              <ul class="chips chips-compte" aria-label="Technologies">
+                {techs.map((groupe) => (
+                  <li>
+                    <a href={`/realisations/tech/${groupe.slug}`}>
+                      {groupe.label}
+                      <span class="compte">{groupe.entrees.length}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
+      )
+    }
   </section>
 
   <section class="container">
@@ -28,41 +72,33 @@ const { domaines, techs } = await taxonomiesRealisations();
         ))
       }
     </div>
+
+    {/* Un index vide est un état possible, pas une page cassée : il le dit
+        plutôt que d'afficher une bande blanche (invariant n°5, en miniature). */}
+    {
+      realisations.length === 0 && (
+        <p class="etat-vide">
+          Rien de publié pour l’instant dans cet inventaire. Les études de cas
+          restent lisibles&nbsp;: <a href="/etudes">voir les études de cas</a>.
+        </p>
+      )
+    }
   </section>
 
+  {/* A8 — l'index se terminait sur le dernier élément de la liste, puis le pied
+      de page. Le lecteur qui avait tout lu, donc le plus convaincu, n'avait
+      rien à faire. */}
   <section class="container">
-    <p class="eyebrow">Parcourir</p>
-    <h2>Par domaine, par technologie</h2>
+    <p class="eyebrow">Et ensuite</p>
+    <h2>Voir le raisonnement, ou en parler</h2>
     <p class="lead muted">
-      Retrouver les réalisations qui partagent un domaine ou une technologie.
+      Les études de cas racontent les décisions que l’inventaire ne montre
+      pas&nbsp;: le problème, les compromis, ce que je ferais autrement.
     </p>
-
-    <h3 class="section-gap">Domaines</h3>
-    <ul class="chips chips-compte" aria-label="Domaines">
-      {
-        domaines.map((groupe) => (
-          <li>
-            <a href={`/realisations/domaine/${groupe.slug}`}>
-              {groupe.label}
-              <span class="compte">{groupe.entrees.length}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
-    <h3 class="section-gap">Technologies</h3>
-    <ul class="chips chips-compte" aria-label="Technologies">
-      {
-        techs.map((groupe) => (
-          <li>
-            <a href={`/realisations/tech/${groupe.slug}`}>
-              {groupe.label}
-              <span class="compte">{groupe.entrees.length}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/etudes">Lire les études de cas</a>
+      <a class="btn btn-ghost" href="/contact">Parler d’un poste ou d’un besoin</a>
+    </div>
+    <p class="haut-de-page"><a href="#contenu">↑ Haut de page</a></p>
   </section>
 </Base>
