@@ -1,8 +1,9 @@
 ---
 import { estActif, navigationPrincipale } from '../lib/contenu';
 
-// Liste partagée avec le pied de page (src/lib/contenu.ts) : sur mobile,
-// l'en-tête masque ces entrées et c'est le pied qui les porte.
+// Liste partagée avec le pied de page (src/lib/contenu.ts). Sur mobile, elle
+// reste disponible dans un <details> natif : pas de script, pas de commande
+// morte, et aucune section à plusieurs milliers de pixels dans le pied de page.
 const nav = await navigationPrincipale();
 
 const path = Astro.url.pathname;
@@ -15,7 +16,7 @@ const isActive = (href: string) => estActif(path, href);
       <span class="brand-mark" aria-hidden="true">BB</span>
       <span class="brand-name">Bénaja&nbsp;Bendo</span>
     </a>
-    <nav aria-label="Navigation principale">
+    <nav class="navigation-desktop" aria-label="Navigation principale">
       <ul>
         {nav.map((item) => (
           <li class="nav-section">
@@ -38,5 +39,31 @@ const isActive = (href: string) => estActif(path, href);
         </li>
       </ul>
     </nav>
+
+    <details class="navigation-mobile">
+      <summary>Menu</summary>
+      <nav aria-label="Navigation mobile">
+        <ul>
+          {nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href="/contact"
+              aria-current={isActive('/contact') ? 'page' : undefined}
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </details>
   </div>
 </header>

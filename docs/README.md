@@ -38,6 +38,11 @@ autorité non plus. En cas de contradiction, `docs/` gagne.
    site vu comme instrument de recherche d'emploi** : ce qui a été mesuré, ce
    qui a été corrigé le 14/08/2026 (preuves publiques, stack visible, page CV
    imprimable), les captures à prendre et ce qui reste ouvert.
+8. **[11-linkedin-publications-certifications.md](11-linkedin-publications-certifications.md)**
+   — 💼 **Les surfaces que le site ne couvre pas** : quoi publier sur LinkedIn
+   (sujets tirés du travail réel, rythme tenable, ce qu'on ne publie pas),
+   quelles certifications valent le coup et pourquoi, et la trace des
+   corrections faites sur le profil le 18/08/2026.
 
 > **Pour une session Claude qui démarre** : lire [../CLAUDE.md](../CLAUDE.md)
 > d'abord — commandes, invariants à ne pas casser (CSP stricte, zéro requête

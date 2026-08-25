@@ -132,17 +132,20 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
 
 ## 4. Composants (tous dans `global.css`, classes inchangées)
 
-- **Header** — collant, filet d'encre 2px. Monogramme `BB` : bloc teal à **coins vifs**,
+- **Header** — collant, filet d’encre 2px. Monogramme `BB` : bloc teal à **coins vifs**,
   bordure encre, ombre 2px. Nav en mono ; la page courante est marquée par un **trait
-  d'encre sous le lien**, pas par une couleur. Pastille « CV (PDF) » en relief.
-  Media query dédiée < 48rem : sans elle l'ombre de la pastille déborde sous le filet.
+  d’encre sous le lien**, pas par une couleur. Contact reste l’action distincte sur
+  grand écran. Sous 48rem, un `<details>` natif donne accès à toutes les sections
+  dans une seule barre collante, sans JavaScript.
 - **Hero** — eyebrow (glyphe 4 pixels : 3 teal + 1 ambre), nom en h1, intitulé de
   poste en mono puis proposition de valeur courte. **`.hero-proof` reste le bloc
   le plus épais de la page**, mais sa variante `.hero-proof-split` sépare la preuve
   produit de la preuve entreprise. `.hero-facts` porte les trois repères lus en
   diagonale. Sur l'accueil, une illustration éditoriale « citation footnote » de
   Koboyo matérialise la traçabilité de Mibeko. Elle est intégrée dans un composant
-  Astro, recolorée par les tokens et ne déclenche aucune requête tierce.
+  Astro, recolorée par les tokens et ne déclenche aucune requête tierce. Sous 52rem,
+  elle passe après les deux travaux sélectionnés pour que le contenu utile arrive
+  avant le décor éditorial.
 - **Surligneur `<mark>`** — `.mark-1` (défaut) = la preuve · `.mark-time` = le temps, la
   disponibilité · `.mark-human` = le parcours. **Deux marques maximum par bloc** :
   au-delà, plus rien ne ressort.
@@ -154,7 +157,9 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
 - **Cartes de contact** — même grammaire, mais organisées par intention
   (« recruter » / « besoin technique ») plutôt que par canal. L'email est
   l'action ; CV, études et réalisations sont les preuves secondaires.
-- **Tuiles de chiffres** — grand nombre en mono teal, `tabular-nums`, liseré pixel.
+- **Tuiles de chiffres** — grand nombre en mono teal, `tabular-nums`, bordure sans
+  ombre ni liseré répété. Elles passent en grille 2×2 sur petit écran : les chiffres
+  restent scannables sans repousser l’action principale sous plusieurs écrans.
 - **Flux d'impact** — `.trust-flow` sert aussi aux schémas code-native. La
   variante `.impact-flow` raconte un avant / intervention / après sans prétendre
   reconstituer l'architecture d'un client confidentiel.
@@ -178,5 +183,5 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
 - [ ] Décliner le système sur `/mibeko`, `/experiences`, `/a-propos`, `/colophon` : les
       classes existent déjà, mais ces pages n'ont pas été relues une par une.
 - [ ] Scène pixel de la 404 (aujourd'hui : seulement le code en gros).
-- [ ] Sélecteur clair/sombre manuel — **seulement** si une solution sans style inline est
-      trouvée (voir invariant CSP).
+- [x] Sélecteur clair/sombre manuel — trois états explicites, script externe et
+      commande masquée tant que le script n’est pas prêt.

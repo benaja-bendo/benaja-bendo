@@ -138,6 +138,10 @@ abandonnés qui ont laissé un apprentissage. Une fiche courte répond à :
 Une réalisation n'a pas besoin d'être prestigieuse. Elle a besoin d'être située et
 honnête. Les archives restent accessibles si leur statut et leur date sont visibles.
 
+L’index reste scannable : titre, statut, période, résumé, rôle et liens. La stack
+complète et l’enseignement obligatoire vivent sur la fiche détaillée ; les répéter
+dans chaque ligne doublait la hauteur de l’inventaire sans ajouter d’information.
+
 #### `/etudes` — les décisions derrière quelques réalisations
 
 Les études de cas ne sont pas un duplicata de l'inventaire. Elles approfondissent une

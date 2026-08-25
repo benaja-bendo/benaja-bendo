@@ -1,13 +1,14 @@
 ---
 import Statut from './Statut.astro';
-import Taxo from './Taxo.astro';
 import {
   STATUTS_REALISATION,
-  taxonomiesRealisations,
   type Realisation,
 } from '../lib/contenu';
 
-/** Une entrée de l'inventaire. Répond aux six questions de docs/08 §2. */
+/**
+ * Une entrée scannable de l'inventaire. L'enseignement et la stack complète
+ * restent sur la fiche : les répéter ici transformait chaque ligne en page.
+ */
 interface Props {
   realisation: Realisation;
 }
@@ -15,7 +16,6 @@ interface Props {
 const { realisation } = Astro.props;
 const { id, data } = realisation;
 const statut = STATUTS_REALISATION[data.statut];
-const { aUnePage } = await taxonomiesRealisations();
 ---
 
 <article class="ligne">
@@ -37,18 +37,6 @@ const { aUnePage } = await taxonomiesRealisations();
     <span class="etiq">Mon rôle</span>
     {data.role}
   </p>
-
-  <p class="retenu">
-    <span class="etiq">Ce que j’en retiens</span>
-    {data.enseignement}
-  </p>
-
-  <Taxo
-    valeurs={data.stack}
-    base="/realisations/tech"
-    aUnePage={aUnePage}
-    etiquette={`Technologies — ${data.nom}`}
-  />
 
   <p class="ligne-liens">
     <a href={`/realisations/${id}`}>La fiche →</a>

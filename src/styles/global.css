@@ -325,7 +325,6 @@ a:hover {
 /* Liseré : une rangée de pixels à arrêts nets, jamais un dégradé lissé. */
 .pixel-rule,
 .card::before,
-.stats li::before,
 .hero-proof::before {
   content: "";
   display: block;
@@ -381,6 +380,7 @@ a:hover {
   border-bottom: var(--edge) solid var(--border);
 }
 .header-inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -460,17 +460,14 @@ a:hover {
   color: var(--accent-fg) !important;
 }
 
-/* Mobile : l'en-tête se réduit à la marque et à Contact.
-   Les cinq entrées s'empilaient sur trois rangs — 132 px collants, puis 158 px
-   une fois les cibles remises à 44 px, soit 19 % de l'écran avant le premier mot
-   de contenu. Or c'est exactement ce premier écran qui doit répondre à un
-   recruteur arrivé depuis un CV.
-   Les sections ne disparaissent pas : le pied de page les porte, avec le même
-   contenu et la même source (navigationPrincipale). L'en-tête peut redevenir
-   collant puisqu'il ne coûte plus qu'une barre — et Contact reste ainsi
-   accessible tout au long de la page. */
+.navigation-mobile {
+  display: none;
+}
+
+/* Mobile : une seule barre collante, mais aucune section ne disparaît. Le menu
+   natif s'ouvre sous l'en-tête et garde des cibles de 44 px sans charger de JS. */
 @media (max-width: 48rem) {
-  .site-header nav .nav-section {
+  .navigation-desktop {
     display: none;
   }
   .header-inner {
@@ -482,12 +479,67 @@ a:hover {
   .brand {
     min-height: 2.75rem;
   }
-  /* `min-height` seul restait sans effet : un `<a>` est en rendu inline, il
-     faut le passer en boîte pour que la hauteur s'applique. */
-  .nav-cta {
+  .navigation-mobile {
+    display: block;
+  }
+  .navigation-mobile summary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     min-height: 2.75rem;
+    padding: 0.3rem 0.9rem;
+    color: var(--fg);
+    background: var(--surface-2);
+    border: var(--edge) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--pop-sm);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .navigation-mobile summary::-webkit-details-marker {
+    display: none;
+  }
+  .navigation-mobile[open] summary {
+    color: var(--accent-fg);
+    background: var(--accent);
+  }
+  .navigation-mobile nav {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 1.25rem;
+    width: min(22rem, calc(100vw - 2.5rem));
+    padding: 0.5rem;
+    background: var(--surface);
+    border: var(--edge) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--pop-lg);
+  }
+  .navigation-mobile nav ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+  .navigation-mobile nav li {
+    min-width: 0;
+  }
+  .navigation-mobile nav a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.45rem 0.65rem;
+    border-bottom: 0;
+    border-radius: var(--radius-sm);
+  }
+  .navigation-mobile nav a[aria-current='page'] {
+    color: var(--fg);
+    background: var(--mark-1);
+  }
+  .navigation-mobile nav a:hover {
+    color: var(--fg);
+    background: var(--surface-2);
   }
 }
 
@@ -550,6 +602,9 @@ main > section:last-child {
 }
 .hero-art {
   min-width: 0;
+}
+.hero-art-mobile {
+  display: none;
 }
 .hero-value {
   max-width: 40rem;
@@ -727,8 +782,14 @@ main > section:last-child {
   .hero-layout {
     grid-template-columns: 1fr;
   }
-  .hero-art {
+  .hero-art-desktop {
+    display: none;
+  }
+  .hero-art-mobile {
+    display: block;
     max-width: 30rem;
+    margin-top: 2.5rem;
+    margin-inline: auto;
   }
   .source-illustration-stage {
     min-height: 17rem;
@@ -736,15 +797,34 @@ main > section:last-child {
 }
 @media (max-width: 36rem) {
   .hero-facts {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .hero-facts > div,
   .hero-facts > div:first-child {
-    padding: 0.7rem 0;
+    padding: 0.7rem 0.75rem;
+    border-left: 1px solid var(--rule);
+  }
+  .hero-facts > div:first-child {
+    padding-left: 0;
     border-left: 0;
   }
-  .hero-facts > div + div {
+  .hero-facts > div:last-child {
+    grid-column: 1 / -1;
+    padding-left: 0;
     border-top: 1px solid var(--rule);
+    border-left: 0;
+  }
+  .hero-proof {
+    margin-block: 1.25rem;
+  }
+  .hero-proof-item {
+    padding: 0.85rem 1rem 0.95rem;
+  }
+  .hero-proof-split .hero-proof-label {
+    font-size: 0.75rem;
+  }
+  .hero-art-mobile {
+    margin-top: 2rem;
   }
 }
 
@@ -979,7 +1059,7 @@ main > section:last-child {
   background: var(--surface-2);
   border: var(--edge) solid var(--border);
   border-radius: var(--radius-sm);
-  box-shadow: var(--pop-sm);
+  box-shadow: none;
 }
 .contact-briefs h3 {
   margin: 0.35rem 0 0.65rem;
@@ -1015,11 +1095,8 @@ main > section:last-child {
   background: var(--surface);
   border: var(--edge) solid var(--border);
   border-radius: var(--radius-sm);
-  box-shadow: var(--pop-sm);
+  box-shadow: none;
   overflow: hidden;
-}
-.stats li::before {
-  margin: -1px -1px 0.9rem;
 }
 .stats .value {
   display: block;
@@ -1080,6 +1157,16 @@ main > section:last-child {
    Sur desktop les pastilles restent compactes — grossir une pastille pointée à
    la souris ne sert personne et déséquilibre la rangée. */
 @media (max-width: 48rem) {
+  .eyebrow {
+    font-size: 0.8rem;
+  }
+  .ligne-titre a,
+  .card h3 a,
+  .card .card-titre a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
   .chips {
     gap: 0.6rem;
   }
@@ -1108,9 +1195,17 @@ main > section:last-child {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
+    min-width: 2.75rem;
   }
   .footer-links {
     gap: 0;
+  }
+}
+
+@media (max-width: 36rem) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
   }
 }
 
@@ -1297,11 +1392,11 @@ main > section:last-child {
  * ========================================================================== */
 
 .lignes {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 .ligne + .ligne {
-  margin-top: 2.75rem;
-  padding-top: 2.75rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--rule);
 }
 .ligne-tete {
@@ -1365,6 +1460,11 @@ main > section:last-child {
 .champ {
   margin: 1rem 0 0;
   max-width: var(--prose);
+}
+@media (max-width: 48rem) {
+  .etiq {
+    font-size: 0.75rem;
+  }
 }
 
 /* L'enseignement — le champ obligatoire de l'inventaire. Même idiome visuel
