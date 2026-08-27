@@ -1,4 +1,6 @@
 ---
+import DemoMibeko from './DemoMibeko.astro';
+
 /**
  * La preuve visuelle de Mibeko.
  *
@@ -9,12 +11,17 @@
  * de mibeko.fr : un lecteur qui clique « Voir Mibeko en ligne » ne peut donc pas
  * vérifier la seule chose qui distingue le produit d'un chatbot.
  *
- * D'où la galerie ci-dessous, prête mais vide. Chaque entrée passe à l'écran
- * dès que `pret` vaut true ET que le fichier existe dans public/images/. Tant
- * qu'une capture n'est pas prise, elle ne laisse AUCUNE trace publique : pas de
- * cadre gris, pas de « bientôt disponible ». L'invariant n°5 du projet interdit
- * de laisser vivre du périmé ou de l'inachevé en ligne — une promesse de
- * capture en est une forme.
+ * DEPUIS LE 27/08/2026 : `<DemoMibeko/>` comble une partie de ce vide — l'écran
+ * réel de l'application, rejoué, avec deux sources vraies et vérifiées (liens
+ * cliquables, `curl` → 200). Ce n'est pas une capture, c'est une reconstitution
+ * clairement étiquetée comme telle : la galerie ci-dessous reste ouverte pour
+ * de vraies captures, qui restent la référence.
+ *
+ * Chaque entrée de la galerie passe à l'écran dès que `pret` vaut true ET que
+ * le fichier existe dans public/images/. Tant qu'une capture n'est pas prise,
+ * elle ne laisse AUCUNE trace publique : pas de cadre gris, pas de « bientôt
+ * disponible ». L'invariant n°5 du projet interdit de laisser vivre du périmé
+ * ou de l'inachevé en ligne — une promesse de capture en est une forme.
  *
  * Format attendu, pour que la grille reste stable :
  *   - vues larges   : 1280 × 720 (16/9), JPEG ou WebP, < 150 Ko
@@ -89,6 +96,10 @@ const visibles = captures.filter((capture) => capture.pret);
       L’interface publique montre le produit. La chaîne ci-dessous montre la
       contrainte qui organise sa construction&nbsp;: ne jamais perdre l’origine.
     </p>
+  </div>
+
+  <div class="proof-gallery-demo">
+    <DemoMibeko />
   </div>
 
   <figure class="product-window">

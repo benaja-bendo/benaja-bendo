@@ -24,21 +24,25 @@ import { version as astroVersion } from 'astro/package.json';
         d’interface, pas de dépendance superflue.
       </p>
       <p>
-        Deux fichiers JavaScript existent, et un seul est envoyé partout&nbsp;: <code
+        Trois fichiers JavaScript existent, et un seul est envoyé partout&nbsp;: <code
         >theme.js</code>, 1,5&nbsp;Ko compressés, qui mémorise le choix
         clair/sombre. Le site s’en est passé jusqu’au 14&nbsp;août 2026 — une
         préférence qui survit à la navigation exige un stockage local, et une
-        bascule en CSS pur se réinitialise à chaque lien suivi. Le second,
-        <code>cv.js</code>, n’est chargé que par la page <a href="/cv">CV</a>&nbsp;:
+        bascule en CSS pur se réinitialise à chaque lien suivi. <code
+        >cv.js</code>, n’est chargé que par la page <a href="/cv">CV</a>&nbsp;:
         il ouvre la fenêtre d’impression, une action qui n’a aucun équivalent en
-        CSS.
+        CSS. <code>demo-mibeko.js</code>, chargé uniquement par <a
+        href="/etudes/mibeko">l’étude Mibeko</a>, rejoue l’écran réel de
+        l’assistant — question tapée, sources qui se posent — depuis un HTML déjà
+        complet&nbsp;: il vide la conversation puis la reconstitue, il ne
+        l’invente pas.
       </p>
       <p>
         Sans JavaScript, tout reste lisible et rien ne ment&nbsp;: le sélecteur de
-        thème et le bouton d’impression sont masqués tant que leur script n’a pas
-        signalé qu’il fonctionnait. Un bouton qui ne fait rien est pire que pas de
-        bouton — le raccourci clavier reste écrit sur la page du CV, et donne
-        exactement le même résultat.
+        thème, le bouton d’impression et la démonstration Mibeko sont masqués ou
+        figés tant que leur script n’a pas signalé qu’il fonctionnait. Un bouton
+        qui ne fait rien est pire que pas de bouton — le raccourci clavier reste
+        écrit sur la page du CV, et donne exactement le même résultat.
       </p>
 
       <h2>Mouvement</h2>

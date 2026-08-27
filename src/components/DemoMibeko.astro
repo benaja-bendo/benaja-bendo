@@ -1,0 +1,151 @@
+---
+/**
+ * L'écran Assistant de Mibeko, rejoué — pour la galerie de preuves de l'étude
+ * de cas.
+ *
+ * ── D'où ça vient ────────────────────────────────────────────────────────────
+ *
+ * Ce composant porte le même dessein que `MibekoProof.astro` documente déjà :
+ * « le site affirme partout que l'assistant cite l'article exact d'où vient
+ * chaque réponse, mais rien ne le MONTRE ». La première version de cette
+ * démonstration inventait un mockup de téléphone générique avec un texte de
+ * réponse imaginé. Celle-ci reprend à la place la mécanique ET le contenu du
+ * vrai composant `AssistantConversation.astro` du dépôt `mibeko-site` —
+ * l'écran réel `ChatScreen.kt` de l'application, avec la même politique de
+ * contenu que le produit s'impose à lui-même.
+ *
+ * ── Ce qui est vrai, et ce qui ne l'est pas ─────────────────────────────────
+ *
+ * La question est un scénario plausible, pas une question réellement posée.
+ * Les DEUX sources qui suivent, en revanche, sont réelles et vérifiées :
+ * extraits verbatim du corpus publié sur mibeko.fr, liens contrôlés le
+ * 27/08/2026 (`curl` → 200 sur les deux). Aucune réponse de l'assistant n'est
+ * inventée — c'est la même règle que `mibeko-site/src/data/assistant-demos.ts` :
+ * tant qu'aucune réponse réelle n'est capturée, la chorégraphie enchaîne les
+ * trois points d'attente puis les sources, jamais un texte de réponse imaginé.
+ *
+ * L'écran animé reste décoratif (`role="img"`, un seul `aria-label`) — les
+ * liens qu'il contient ne sont donc PAS exposés aux lecteurs d'écran comme des
+ * liens individuels (un `role="img"` rend ses descendants présentatifs). Les
+ * deux sources sont donc répétées, en liens réels et accessibles, dans la
+ * légende : c'est elle, pas l'écran animé, qui porte la preuve vérifiable.
+ *
+ * ── Le reste ─────────────────────────────────────────────────────────────────
+ *
+ * Rendu dans la grammaire du site (bordure d'encre, ombre dure, IBM Plex),
+ * jamais dans celle d'un système d'exploitation. Le HTML sert la conversation
+ * COMPLÈTE et immobile ; `public/js/demo-mibeko.js` la vide puis la rejoue —
+ * sans lui, ou sous mouvement réduit, l'écran affiché reste juste.
+ */
+
+const QUESTION = 'Mon bailleur peut-il refuser de renouveler mon bail commercial ?';
+
+const SOURCES = [
+  {
+    document: 'Acte uniforme droit commercial général',
+    article: 'Article 123',
+    extrait:
+      "Le droit au renouvellement du bail à durée déterminée ou indéterminée est acquis au preneur qui justifie avoir exploité, conformément aux stipulations du bail, l'activité prévue à celui-ci, pendant une durée minimale de deux ans.",
+    href: 'https://mibeko.fr/textes/acte-uniforme-portant-droit-commercial-general/article-123',
+  },
+  {
+    document: 'Acte uniforme droit commercial général',
+    article: 'Article 127',
+    extrait:
+      "Le bailleur peut s'opposer au droit au renouvellement du bail à durée déterminée ou indéterminée, sans avoir à régler d'indemnité d'éviction, dans les cas suivants […]",
+    href: 'https://mibeko.fr/textes/acte-uniforme-portant-droit-commercial-general/article-127',
+  },
+];
+---
+
+<figure class="assistant-demo" data-demo>
+  <div class="assistant-appareil">
+    <div
+      class="assistant-ecran"
+      role="img"
+      aria-label={`Démonstration animée : l'assistant Mibeko répond à « ${QUESTION} » en citant ${SOURCES.length} articles du corpus publié.`}
+    >
+      <div class="assistant-barre" aria-hidden="true">
+        <span data-demo-heure>9:41</span>
+        <span class="assistant-jauges"><i></i><i></i><i></i></span>
+      </div>
+
+      <div class="assistant-topbar" aria-hidden="true">Assistant Mibeko</div>
+
+      <ol class="assistant-fil" data-demo-fil aria-hidden="true">
+        <li class="assistant-tour assistant-tour-utilisateur">
+          <span class="assistant-tour-tete">
+            <span class="assistant-avatar assistant-avatar-utilisateur"></span>
+            <span>Vous</span>
+          </span>
+          <span class="assistant-bulle assistant-bulle-utilisateur">{QUESTION}</span>
+        </li>
+
+        <li class="assistant-tour assistant-tour-ia">
+          <span class="assistant-tour-tete">
+            <span class="assistant-avatar assistant-avatar-ia">M</span>
+            <span>Mibeko IA</span>
+          </span>
+          <span class="assistant-bulle assistant-bulle-ia" data-demo-bulle-ia>
+            <span class="assistant-points" data-demo-points><i></i><i></i><i></i></span>
+          </span>
+
+          <div class="assistant-sources" data-demo-sources>
+            <p class="assistant-sources-intro">
+              Voici les sources juridiques pertinentes pour votre situation&nbsp;:
+            </p>
+            <div class="assistant-sources-rangee">
+              {
+                SOURCES.map((source) => (
+                  <div class="assistant-carte">
+                    <span class="assistant-carte-etiquette">{source.document}</span>
+                    <p class="assistant-carte-titre">{source.article}</p>
+                    <p class="assistant-carte-extrait">{source.extrait}</p>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <div class="assistant-modes" aria-hidden="true">
+        <span class="assistant-modes-groupe">
+          <span class="assistant-modes-item assistant-modes-item-actif">Concis</span>
+          <span class="assistant-modes-item">Analyse</span>
+        </span>
+      </div>
+
+      <div class="assistant-saisie" aria-hidden="true">
+        <span class="assistant-champ">
+          <span data-demo-frappe></span><i class="assistant-curseur" data-demo-curseur></i
+          ><span class="assistant-placeholder" data-demo-placeholder>Posez une question sur le droit…</span>
+        </span>
+        <span class="assistant-envoi" data-demo-envoi>
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square">
+            <path d="M12 19V6M6 12l6-6 6 6" />
+          </svg>
+        </span>
+      </div>
+
+      <p class="assistant-avertissement" aria-hidden="true">
+        Mibeko IA peut faire des erreurs. Vérifiez les sources citées.
+      </p>
+    </div>
+  </div>
+
+  <figcaption>
+    <strong>L’écran Assistant, rejoué — pas une capture.</strong>
+    <span>
+      La question est un scénario ; les deux sources ci-dessous sont réelles et
+      vérifiées&nbsp;:{' '}
+      {SOURCES.map((source, index) => (
+        <>
+          {index > 0 && ' · '}
+          <a href={source.href} rel="noopener">{source.article} ↗</a>
+        </>
+      ))}
+      .
+    </span>
+  </figcaption>
+</figure>

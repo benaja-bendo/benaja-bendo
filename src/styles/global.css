@@ -693,106 +693,6 @@ main > section:last-child {
   line-height: 1.4;
 }
 
-/* Illustration éditoriale unique de l'accueil. Le dessin vient de Koboyo mais
-   son dispositif — papier, pixels, méta et relief — appartient au système. */
-.source-illustration {
-  margin: 0;
-}
-.source-illustration-link {
-  display: block;
-  color: var(--fg);
-  text-decoration: none;
-}
-.source-illustration-stage {
-  position: relative;
-  display: grid;
-  place-items: center;
-  min-height: 21rem;
-  padding: 3.5rem 2rem 2.75rem;
-  overflow: hidden;
-  color: var(--accent);
-  background-color: var(--surface);
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0 23px,
-    var(--rule) 23px 24px
-  );
-  border: var(--edge) solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--pop-lg);
-  transition:
-    transform 140ms ease-out,
-    box-shadow 140ms ease-out;
-}
-.source-illustration-link:hover .source-illustration-stage {
-  transform: translate(-2px, -2px) rotate(-0.5deg);
-  box-shadow: 8px 8px 0 var(--shadow);
-}
-.source-illustration-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 10px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--accent) 0 10px,
-    var(--signal) 10px 20px,
-    transparent 20px 30px
-  );
-}
-.source-illustration-icon {
-  width: min(9rem, 55%);
-  height: auto;
-  fill: currentColor;
-  filter: drop-shadow(5px 5px 0 var(--shadow));
-}
-.source-illustration-meta,
-.source-illustration-tag {
-  position: absolute;
-  z-index: 1;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.source-illustration-meta {
-  top: 1.15rem;
-  left: 1rem;
-  color: var(--muted);
-}
-.source-illustration-tag {
-  padding: 0.25rem 0.55rem;
-  color: var(--fg);
-  background: var(--surface-2);
-  border: var(--edge) solid var(--border);
-  box-shadow: var(--pop-sm);
-}
-.source-illustration-tag-in {
-  top: 3.2rem;
-  right: 1rem;
-  transform: rotate(2deg);
-}
-.source-illustration-tag-out {
-  bottom: 1.4rem;
-  left: 1rem;
-  background: var(--mark-1);
-  transform: rotate(-2deg);
-}
-.source-illustration figcaption {
-  display: grid;
-  gap: 0.1rem;
-  margin-top: 1.25rem;
-  padding-left: 0.2rem;
-  font-size: 0.88rem;
-}
-.source-illustration figcaption strong {
-  color: var(--fg);
-}
-.source-illustration figcaption span {
-  color: var(--muted);
-}
-
 @media (max-width: 52rem) {
   .hero-layout {
     grid-template-columns: 1fr;
@@ -805,9 +705,6 @@ main > section:last-child {
     max-width: 30rem;
     margin-top: 2.5rem;
     margin-inline: auto;
-  }
-  .source-illustration-stage {
-    min-height: 17rem;
   }
 }
 @media (max-width: 36rem) {
@@ -1698,6 +1595,19 @@ main > section:last-child {
   margin: 0;
   color: var(--muted);
 }
+
+/* La démo prend place avant les captures réelles (encore vides). Centrée et
+   plus étroite que la grille : c'est un aperçu vivant, pas une pièce du même
+   gabarit que les screenshots à venir. */
+.proof-gallery-demo {
+  display: grid;
+  place-items: center;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+.proof-gallery-demo .assistant-demo {
+  width: min(20rem, 100%);
+}
+
 .product-window {
   margin: 0;
   overflow: hidden;
@@ -2187,6 +2097,515 @@ main > section:last-child {
   }
 }
 
+/* Illustration éditoriale unique de l'accueil. Le dessin vient de Koboyo mais
+   son dispositif — papier, pixels, méta et relief — appartient au système. */
+.source-illustration {
+  margin: 0;
+}
+.source-illustration-link {
+  display: block;
+  color: var(--fg);
+  text-decoration: none;
+}
+.source-illustration-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 21rem;
+  padding: 3.5rem 2rem 2.75rem;
+  overflow: hidden;
+  color: var(--accent);
+  background-color: var(--surface);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 23px,
+    var(--rule) 23px 24px
+  );
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop-lg);
+  transition:
+    transform 140ms ease-out,
+    box-shadow 140ms ease-out;
+}
+.source-illustration-link:hover .source-illustration-stage {
+  transform: translate(-2px, -2px) rotate(-0.5deg);
+  box-shadow: 8px 8px 0 var(--shadow);
+}
+.source-illustration-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 10px,
+    var(--signal) 10px 20px,
+    transparent 20px 30px
+  );
+}
+.source-illustration-icon {
+  width: min(9rem, 55%);
+  height: auto;
+  fill: currentColor;
+  filter: drop-shadow(5px 5px 0 var(--shadow));
+}
+.source-illustration-meta,
+.source-illustration-tag {
+  position: absolute;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.source-illustration-meta {
+  top: 1.15rem;
+  left: 1rem;
+  color: var(--muted);
+}
+.source-illustration-tag {
+  padding: 0.25rem 0.55rem;
+  color: var(--fg);
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  box-shadow: var(--pop-sm);
+}
+.source-illustration-tag-in {
+  top: 3.2rem;
+  right: 1rem;
+  transform: rotate(2deg);
+}
+.source-illustration-tag-out {
+  bottom: 1.4rem;
+  left: 1rem;
+  background: var(--mark-1);
+  transform: rotate(-2deg);
+}
+.source-illustration figcaption {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 1.25rem;
+  padding-left: 0.2rem;
+  font-size: 0.88rem;
+}
+.source-illustration figcaption strong {
+  color: var(--fg);
+}
+.source-illustration figcaption span {
+  color: var(--muted);
+}
+
+
+
+/* =============================================================================
+ * Démonstration Assistant Mibeko — l'écran réel, rejoué
+ *
+ * Reprend la mécanique et le CONTENU du composant `AssistantConversation.astro`
+ * du dépôt `mibeko-site` (même auteur, même produit) — l'écran réel de
+ * l'application, jamais un mockup de chat générique. Rendu ici dans la
+ * grammaire du site : bordure d'encre pleine, ombre DURE, coins à `--radius`,
+ * jamais un dégradé métal ni un reflet.
+ *
+ * Le fil est servi complet par `DemoMibeko.astro`. Tant que
+ * `public/js/demo-mibeko.js` n'a pas posé `data-demo-pret`, il s'affiche tel
+ * quel — immobile et lisible. Le script ne fait que le rejouer.
+ * ========================================================================== */
+
+.assistant-demo {
+  margin: 0;
+}
+
+.assistant-appareil {
+  position: relative;
+  padding: 0.5rem;
+  background: var(--surface-2);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--pop-lg);
+  overflow: hidden;
+}
+/* Le liseré pixel des cartes, sur la tranche haute de l'appareil : la
+   signature du site passe devant celle du fabricant. */
+.assistant-appareil::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+.assistant-ecran {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 9 / 18;
+  margin-top: 0.35rem;
+  overflow: hidden;
+  background: var(--bg);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+/* --- barre d'état : des carrés, pas les icônes d'un OS --------------------- */
+.assistant-barre {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.6rem 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.assistant-jauges {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+.assistant-jauges i {
+  width: 3px;
+  background: var(--muted);
+}
+.assistant-jauges i:nth-child(1) { height: 3px; }
+.assistant-jauges i:nth-child(2) { height: 6px; }
+.assistant-jauges i:nth-child(3) { height: 9px; }
+
+/* --- barre de titre de l'écran (« Assistant Mibeko ») ---------------------- */
+.assistant-topbar {
+  flex: none;
+  padding: 0.3rem 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* --- le fil ----------------------------------------------------------------- */
+.assistant-fil {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0.5rem 0.5rem 0.25rem;
+  list-style: none;
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  transition:
+    opacity 420ms ease-out,
+    translate 420ms ease-out;
+}
+.assistant-fil::-webkit-scrollbar {
+  display: none;
+}
+/* La conversation se remplit par le bas : une marge automatique sur le
+   premier tour, pas `justify-content: flex-end` qui rogne le haut du contenu
+   dès qu'il déborde d'un conteneur défilant. */
+.assistant-fil > :first-child {
+  margin-top: auto;
+}
+.assistant-fil-sortante {
+  opacity: 0;
+  translate: 0 -8px;
+}
+
+.assistant-tour {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.4rem;
+}
+.assistant-tour-utilisateur {
+  align-items: flex-end;
+}
+.assistant-tour-ia {
+  align-items: flex-start;
+}
+.assistant-tour-tete {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.15rem;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  color: var(--muted);
+}
+
+/* États de la reprise. Rien n'est masqué tant que `data-demo-pret` n'est pas
+   posé : sans script, l'écran rendu par le serveur montre la conversation
+   COMPLÈTE — les deux tours et les sources, immobiles et lisibles. */
+[data-demo-pret] .assistant-tour,
+[data-demo-pret] .assistant-sources {
+  opacity: 0;
+  translate: 0 6px;
+}
+[data-demo-pret] .assistant-tour.is-in,
+[data-demo-pret] .assistant-sources.is-in {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 340ms cubic-bezier(0.18, 0.9, 0.32, 1),
+    translate 340ms cubic-bezier(0.18, 0.9, 0.32, 1);
+}
+
+/* Avatars carrés — la grammaire du monogramme (`.brand-mark`), jamais une
+   pastille ronde en dégradé. */
+.assistant-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+}
+.assistant-avatar-ia {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: 1px solid var(--border);
+}
+.assistant-avatar-utilisateur {
+  background: transparent;
+  border: 1px solid var(--rule);
+}
+
+.assistant-bulle {
+  display: inline-block;
+  max-width: 84%;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.66rem;
+  line-height: 1.4;
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--pop-sm);
+  animation: assistant-pose 260ms ease-out both;
+}
+.assistant-bulle-utilisateur {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.assistant-bulle-ia {
+  background: var(--surface);
+  color: var(--fg);
+}
+/* La bulle d'attente disparaît quand les sources arrivent, plutôt que de
+   laisser trois points tourner sur un tour de parole terminé — le produit
+   n'invente pas de réponse tant qu'aucune n'a été capturée. */
+.assistant-bulle-ia[data-demo-vide] {
+  display: none;
+}
+@keyframes assistant-pose {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Trois carrés qui sautent, pas des ronds : la grammaire pixel du site. */
+.assistant-points {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 1.3em;
+}
+.assistant-points i {
+  width: 4px;
+  height: 4px;
+  background: var(--muted);
+  animation: assistant-saute 1.15s steps(2, end) infinite;
+}
+.assistant-points i:nth-child(2) { animation-delay: 0.14s; }
+.assistant-points i:nth-child(3) { animation-delay: 0.28s; }
+@keyframes assistant-saute {
+  0%, 70%, 100% { transform: none; }
+  35% { transform: translateY(-4px); }
+}
+
+/* --- l'étagère de sources ---------------------------------------------------
+   C'est le point d'arrivée de toute la démonstration : la seule chose posée
+   sur un fond distinct, pour qu'elle se remarque même en survol rapide. */
+.assistant-sources {
+  width: 100%;
+  margin-top: 0.5rem;
+  transition: opacity 400ms ease;
+}
+.assistant-sources-intro {
+  margin: 0 0 0.4rem;
+  padding: 0 0.15rem;
+  font-size: 0.6rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.assistant-sources-rangee {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  padding: 0.1rem 0.15rem 0.2rem;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+.assistant-sources-rangee::-webkit-scrollbar {
+  display: none;
+}
+.assistant-carte {
+  width: 8.2rem;
+  flex: none;
+  padding: 0.4rem 0.5rem;
+  background: var(--mark-1);
+  border: var(--edge) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: 2px 2px 0 var(--shadow);
+  scroll-snap-align: start;
+}
+/* Sans script, une carte reste pleinement visible : ce n'est QUE sous
+   `data-demo-pret` que l'état initial devient « masquée », et seulement le
+   temps que `.is-in` la révèle. */
+[data-demo-pret] .assistant-carte {
+  opacity: 0;
+  translate: 10px 0;
+}
+[data-demo-pret] .assistant-sources.is-in .assistant-carte {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 360ms ease,
+    translate 360ms cubic-bezier(0.18, 0.9, 0.32, 1);
+  transition-delay: calc(160ms * var(--i, 0));
+}
+.assistant-carte-etiquette {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--mono);
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.assistant-carte-titre {
+  margin: 0 0 0.2rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+.assistant-carte-extrait {
+  margin: 0;
+  font-size: 0.5rem;
+  line-height: 1.35;
+  color: var(--fg);
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- sélecteur de mode (décor inerte) --------------------------------------- */
+.assistant-modes {
+  flex: none;
+  padding: 0.3rem 0.6rem 0;
+}
+.assistant-modes-groupe {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.assistant-modes-item {
+  padding: 0.1rem 0.35rem;
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.assistant-modes-item-actif {
+  background: var(--surface-2);
+  color: var(--fg);
+}
+
+/* --- barre de saisie --------------------------------------------------------- */
+.assistant-saisie {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.5rem 0.35rem;
+  border-top: 1px solid var(--rule);
+}
+.assistant-champ {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding: 0.26rem 0.42rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-size: 0.58rem;
+  color: var(--fg);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.assistant-placeholder {
+  color: var(--muted);
+}
+.assistant-curseur {
+  display: none;
+  width: 1.5px;
+  height: 0.95em;
+  flex: none;
+  margin-left: 1px;
+  background: var(--accent);
+  animation: curseur-bat 1.05s steps(1, end) infinite;
+}
+.assistant-envoi {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.3rem;
+  height: 1.3rem;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: var(--edge) solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+  transition: transform 120ms steps(2, end);
+}
+.assistant-envoi[data-demo-presse] {
+  transform: translate(1px, 1px);
+}
+
+.assistant-avertissement {
+  flex: none;
+  margin: 0;
+  padding: 0.2rem 0.5rem 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.44rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.assistant-demo figcaption {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 1rem;
+  padding-left: 0.2rem;
+  font-size: 0.85rem;
+}
+.assistant-demo figcaption strong {
+  color: var(--fg);
+}
+.assistant-demo figcaption span {
+  color: var(--muted);
+}
+
 /* =============================================================================
  * Mouvement — un système, pas des effets à l'unité
  *
@@ -2380,6 +2799,38 @@ main h1 {
 }
 .card-live {
   position: relative;
+}
+
+
+/* -----------------------------------------------------------------------------
+ * Micro-détails sur deux illustrations — un sous-tracé isolé, jamais tout le
+ * dessin
+ *
+ * Sur les six SVG retenus (docs/05 §7), la plupart sont un seul tracé fermé :
+ * rien à animer à l'intérieur. Deux exceptions ont un détail isolable, mesuré
+ * par bbox réelle (pas deviné) : ~20×24 px pour l'accent du visage
+ * d'`attacker-hood`, ~20×13 px pour le repère d'`academic-year-planner`. Ciblé
+ * par position (`nth-of-type`) puisque le SVG source n'a pas de classe interne
+ * — `<Illustration/>` pose `data-nom` sur le `<figure>` exactement pour ça.
+ * ----------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-nom="attacker-hood"] .illustration-dessin svg path:nth-of-type(3) {
+    transform-origin: 112px 88px;
+    animation: hood-cligne 4.4s ease-in-out infinite;
+  }
+  [data-nom="academic-year-planner"] .illustration-dessin svg path:nth-of-type(3) {
+    transform-origin: 88px 117px;
+    animation: planner-tique 2.6s steps(2, end) infinite;
+  }
+}
+@keyframes hood-cligne {
+  0%, 92%, 100% { transform: scaleY(1); opacity: 0.55; }
+  95% { transform: scaleY(0.15); opacity: 1; color: var(--signal); }
+}
+@keyframes planner-tique {
+  0%, 60% { transform: rotate(0deg); }
+  80% { transform: rotate(-14deg); }
+  100% { transform: rotate(0deg); }
 }
 
 /* =============================================================================
@@ -2711,7 +3162,7 @@ a:hover {
 /* =============================================================================
  * Illustration éditoriale — le cadre appartient au système, pas le dessin
  *
- * Généralise ce que `.source-illustration` faisait pour un seul fichier. Les
+ * Généralise le cadre que l'accueil réservait à une seule illustration. Les
  * dessins viennent de Koboyo, recolorés par `currentColor` ; le dispositif
  * — papier, étiquettes en mono, ombre dure — est celui du site.
  * ========================================================================== */
@@ -2907,8 +3358,27 @@ a.illustration-lien:hover .illustration-scene {
      `animation-duration: 0.01ms`, les deux dernières s'immobilisent d'elles-
      mêmes sur leur dernière image ; seul le curseur demande une règle, parce
      que sa dernière image est justement l'état invisible. */
-  .hero h1 span.role::after {
+  .hero h1 span.role::after,
+  .assistant-curseur {
     display: none;
+  }
+
+  /* La démonstration n'est jamais rejouée sous mouvement réduit — le script
+     s'arrête avant de poser `data-demo-pret` (voir public/js/demo-mibeko.js).
+     Ces règles couvrent le HTML servi par DemoMibeko.astro, qui lui est bien
+     rendu : la conversation complète, immobile. */
+  .assistant-bulle,
+  .assistant-points i,
+  .assistant-carte {
+    animation: none;
+    opacity: 1;
+    translate: none;
+  }
+  .assistant-fil {
+    transition: none;
+  }
+  .assistant-envoi {
+    transition: none;
   }
 
   /* M1 — les transitions de page. Le fondu par défaut d'une navigation reste
