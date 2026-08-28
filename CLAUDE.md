@@ -175,11 +175,12 @@ Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
 - **Les taxonomies sont une entrée, pas une sortie.** Le rail de filtres passe en
   tête de `/realisations` et `/notes`. On cherche par « Spring Boot », pas en
   descendant une liste.
-- **Une seule dépendance ajoutée : `@astrojs/markdown-remark`.** Uniquement pour
-  importer `rehypeHeadingIds` et le faire tourner AVANT le plugin d'ancres — sans
-  cela le plugin ne voit aucun `id`. Sa version doit **suivre celle d'Astro** :
-  les faire diverger ferait diverger les identifiants, donc les liens déjà envoyés
-  vers une section précise.
+- **Une seule dépendance ajoutée : `@astrojs/markdown-remark`.** Elle fournit
+  `rehypeHeadingIds`, exécuté AVANT le plugin d'ancres — sans cela le plugin ne
+  voit aucun `id`. Depuis le 28/08/2026, elle fournit aussi le processeur
+  `unified()` explicite, sans passer par les options Markdown dépréciées.
+  Mettre ce paquet à jour **avec Astro** et vérifier les ancres du build : les
+  versions correctives des deux paquets ne portent pas forcément le même numéro.
 - **Un seul visage sur tout le site, et il est sur la 404.** Voir
   [docs/05](docs/05-design-system-papier-pixels.md) §7 pour la règle et le
   tableau des six illustrations en place.

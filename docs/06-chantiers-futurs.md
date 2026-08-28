@@ -82,6 +82,15 @@ Puis, dans le même passage :
       npm view @astrojs/check@latest peerDependencies   # attendre que ^7 apparaisse
       ```
 
+**Contrôle du 28/08/2026.** Astro 7.2.9, MDX 7.0.8 et
+`@astrojs/markdown-remark` 7.2.4 installés ; audit npm sans vulnérabilité.
+Le processeur `unified()` est désormais explicite et les schémas importent
+`astro/zod` : `check` ne signale plus de dépréciation. Build vérifié sous
+Node 22.23.2, ancres des 30 pages HTML inchangées et CSP préservée.
+TypeScript reste en 6.0.3 : le peer de `@astrojs/check` exclut toujours la 7.
+La seule PR ouverte lors de ce contrôle est la mise à jour npm Astro (#33) ;
+aucune PR d'Actions GitHub n'est en attente. Aucune action distante effectuée.
+
 ### Ce qui est encore périmé aujourd'hui, hors du site
 
 Le site est propre ; son écosystème ne l'est pas encore.

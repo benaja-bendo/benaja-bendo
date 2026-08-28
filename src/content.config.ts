@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { z } from 'astro:schema';
+import { z } from 'astro/zod';
 
 /**
  * Modèle de contenu — voir docs/08-plan-contenu.md §4.
@@ -14,7 +14,7 @@ import { z } from 'astro:schema';
  * dans src/lib/contenu.ts) : c'est le seul mécanisme de non-publication.
  */
 
-const lien = z.object({ label: z.string(), url: z.string().url() });
+const lien = z.object({ label: z.string(), url: z.url() });
 
 /**
  * Une preuve publique : un lien qu'un lecteur peut ouvrir pour vérifier une
@@ -31,7 +31,7 @@ const lien = z.object({ label: z.string(), url: z.string().url() });
  */
 const preuve = z.object({
   label: z.string(),
-  url: z.string().url(),
+  url: z.url(),
   /** Ce que ce lien démontre, en une ligne. Pas un slogan : une justification. */
   quoi: z.string(),
   famille: z.enum(['produit', 'application', 'code']).default('code'),

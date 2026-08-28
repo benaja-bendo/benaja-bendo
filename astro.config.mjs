@@ -4,10 +4,10 @@ import { defineConfig } from 'astro/config';
 // tout seul, mais APRÈS les plugins rehype de cette configuration : sans cet
 // import explicite, `rehypeAncresDeTitres` ne verrait aucun `id` et n'écrirait
 // aucune ancre. C'est le motif documenté par Astro pour cet exact besoin.
-// `@astrojs/markdown-remark` est déclaré en dépendance directe et sa version
-// SUIT CELLE D'ASTRO (7.2.2 aujourd'hui) : les faire diverger ferait diverger
-// les identifiants, donc les liens déjà envoyés vers une section.
-import { rehypeHeadingIds } from '@astrojs/markdown-remark';
+// `@astrojs/markdown-remark` porte aussi le processeur Unified explicite :
+// les plugins et les identifiants de titres utilisent ainsi le même moteur.
+// Mettre ce paquet à jour avec Astro, puis vérifier les ancres du build.
+import { rehypeHeadingIds, unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
@@ -116,9 +116,11 @@ export default defineConfig({
     },
   },
   markdown: {
-    remarkPlugins: [remarkPonctuationFrancaise],
-    // L'ordre compte : les `id` d'abord, les ancres qui les utilisent ensuite.
-    rehypePlugins: [rehypeHeadingIds, rehypeAncresDeTitres],
+    processor: unified({
+      remarkPlugins: [remarkPonctuationFrancaise],
+      // L'ordre compte : les `id` d'abord, les ancres qui les utilisent ensuite.
+      rehypePlugins: [rehypeHeadingIds, rehypeAncresDeTitres],
+    }),
     // ⚠️ Coloration syntaxique désactivée pour la même raison que l'API Fonts :
     // Shiki écrit ses couleurs en `style="..."` sur le <pre> et sur chaque
     // <span>, donc du style INLINE, bloqué par `style-src 'self'`. Les blocs de
