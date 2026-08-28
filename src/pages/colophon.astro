@@ -25,11 +25,11 @@ import { version as astroVersion } from 'astro/package.json';
       </p>
       <p>
         Trois fichiers JavaScript existent, et un seul est envoyé partout&nbsp;: <code
-        >theme.js</code>, 1,5&nbsp;Ko compressés, qui mémorise le choix
+        >theme.js</code>, qui mémorise le choix
         clair/sombre. Le site s’en est passé jusqu’au 14&nbsp;août 2026 — une
         préférence qui survit à la navigation exige un stockage local, et une
         bascule en CSS pur se réinitialise à chaque lien suivi. <code
-        >cv.js</code>, n’est chargé que par la page <a href="/cv">CV</a>&nbsp;:
+        >cv.js</code> n’est chargé que par la page <a href="/cv">CV</a>&nbsp;:
         il ouvre la fenêtre d’impression, une action qui n’a aucun équivalent en
         CSS. <code>demo-mibeko.js</code>, chargé uniquement par <a
         href="/etudes/mibeko">l’étude Mibeko</a>, rejoue l’écran réel de
@@ -47,12 +47,15 @@ import { version as astroVersion } from 'astro/package.json';
 
       <h2>Mouvement</h2>
       <p>
-        Les transitions de page, les apparitions au défilement et les quelques
-        animations du site sont du <strong>CSS natif</strong>&nbsp;:
+        Les transitions de page et les apparitions au défilement sont du <strong>CSS natif</strong>&nbsp;:
         <code>@view-transition</code> pour la navigation,
         <code>animation-timeline: view()</code> pour ce qui se pose en arrivant
-        dans l’écran. Aucune bibliothèque d’animation, aucun observateur en
-        JavaScript, donc rien de plus à autoriser dans la politique de sécurité.
+        dans l’écran. La démo Mibeko utilise un script local pour rejouer
+        l’échange et un observateur de visibilité pour le suspendre hors écran.
+        Son bouton d’arrêt restitue immédiatement l’échange complet, comme
+        lorsque le système demande de réduire les animations, même en cours de
+        lecture. La reprise se fait avec le bouton «&nbsp;Rejouer l’animation&nbsp;».
+        Aucune bibliothèque d’animation ni ressource tierce.
         Un navigateur qui ne connaît pas ces règles les ignore et affiche la
         page entière, immédiatement&nbsp;: <strong>rien de ce qui bouge n’est
         nécessaire à la lecture</strong>. Tout est coupé si le système signale <code
@@ -79,7 +82,7 @@ import { version as astroVersion } from 'astro/package.json';
         généré par code. L’unique illustration éditoriale de l’accueil adapte
         l’icône <a href="https://koboyo.com/icons/citation-footnote" rel="noopener">Citation footnote de Koboyo</a>,
         stockée dans le code du site et recolorée par le thème&nbsp;: aucune ressource
-        n’est chargée depuis un tiers. Cinq autres dessins de la même
+        n’est chargée depuis un tiers. Six autres dessins de la même
         bibliothèque accompagnent les études de cas, le parcours, une note, la
         page contact et la 404&nbsp;: <code>balance-sheet</code>,
         <code>add-for-reporting</code>, <code>attacker-hood</code>,

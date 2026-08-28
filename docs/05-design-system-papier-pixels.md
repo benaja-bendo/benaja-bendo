@@ -172,10 +172,12 @@ déposer dans `public/fonts/`, ajouter un bloc `@font-face` avec son `unicode-ra
   système. Le sélecteur nommé reste en pied de page ; ce bouton-ci ne fait que
   remonter l'action là où on la cherche. Glyphe dessiné en carrés — évidé pour le
   jour, entamé pour la nuit, coupé en deux pour « le système décide ». Masqué tant
-  que `data-theme-pret` n'est pas posé, comme le sélecteur.
+  que `data-theme-pret` n'est pas posé, comme le sélecteur. L'état courant reste
+  en mémoire si le stockage local est refusé ; seule la persistance est perdue.
 - **Sommaire (`.sommaire`)** — liste d'ancres numérotées, collante dans la colonne
   de droite au-dessus de 68rem, bloc en tête de contenu en dessous. Ne s'affiche
-  qu'à partir de trois sections : en deçà, ce n'est plus un sommaire.
+  qu'à partir de trois sections : en deçà, ce n'est plus un sommaire. Chaque lien
+  garde une hauteur minimale de 44 px, comme le retour en haut de page.
 - **« Et ensuite » (`.suite`)** — deux portes (précédent / suivant) puis
   l'invitation. Ce que ce bloc remplace : un unique « ← Tout voir » en fin de
   contenu, c'est-à-dire un retour en arrière au moment de plus forte intention.
@@ -205,11 +207,21 @@ ni entre deux pages. Le site paraissait figé — pas faute d'effets, faute de
    jamais un contenu qui dépend d'un script pour apparaître.
 2. **Un déclencheur par écran.** « Deux marques maximum par bloc » (§4) vaut aussi
    pour le mouvement.
-3. **Zéro JavaScript.** `@view-transition` pour la navigation,
-   `animation-timeline: view()` pour le défilement. Aucune bibliothèque, aucun
-   `IntersectionObserver` — donc rien de neuf à autoriser dans la CSP.
+3. **Navigation et défilement en CSS.** `@view-transition` pour la navigation,
+   `animation-timeline: view()` pour le défilement. La démo de l'assistant
+   Mibeko orchestre ses états avec un script externe et un `IntersectionObserver`
+   pour suspendre l'horloge hors écran. Aucune bibliothèque d'animation.
 4. **Tout est coupé sous `prefers-reduced-motion: reduce`**, y compris les
-   transitions de page (`::view-transition-*`) et les trois boucles infinies.
+   transitions de page (`::view-transition-*`) et les boucles infinies.
+
+**Démo Mibeko — contrôles du 28/08/2026.** Le HTML sert l'échange complet, sans
+bulle de chargement. `data-demo-commandes` révèle le bouton seulement après son
+câblage ; `data-demo-pret` indique une lecture active. « Arrêter l'animation »
+supprime cet état et restitue immédiatement les sources. Le même arrêt se produit
+si `prefers-reduced-motion` change pendant la lecture. Désactiver ensuite cette
+préférence ne relance rien : « Rejouer l'animation » reste une action explicite.
+Sans JavaScript ou sous mouvement réduit, la commande est masquée. Aucun attribut
+`style` n'est écrit, y compris pour le curseur et le décalage des deux sources.
 
 **Deux pièges, tous deux rencontrés.**
 
@@ -264,7 +276,7 @@ localement, recolorées par les tokens. Le composant `<Illustration/>` porte la 
 la prop `legende` est **obligatoire** — si on ne sait pas écrire ce que le dessin
 apporte, c'est qu'il n'apporte rien.
 
-**Ce qui est en place** (six dessins, Koboyo Icons, `currentColor`, aucun `style=`) :
+**Ce qui est en place** (sept dessins, Koboyo Icons, `currentColor`, aucun `style=`) :
 
 | Fichier | Où | Ce qu'il explique |
 | --- | --- | --- |

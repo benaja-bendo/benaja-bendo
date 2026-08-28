@@ -14,6 +14,7 @@ npm run dev      # serveur de dev (port 4321)
 npm run build    # build statique -> dist/
 npm run preview  # sert dist/ (à privilégier pour vérifier : le dev inline des styles)
 npm run check    # astro check (types)
+npm test         # régressions des scripts + invariants de dist/ (après build)
 ```
 
 ## Avant de coder : lire le bon document
@@ -96,6 +97,10 @@ un document de `docs/`, c'est `docs/` qui gagne.
      moitié transparent.
 
    Tout est coupé sous `prefers-reduced-motion`, transitions de page comprises.
+   La reconstitution de l'assistant Mibeko utilise un script local pour sa
+   chorégraphie : exception limitée à cette démonstration, servie complète en
+   HTML. Elle doit pouvoir être arrêtée, redevenir statique sans JavaScript et
+   réagir aux changements de préférence système pendant la lecture.
    Détail complet : [docs/05](docs/05-design-system-papier-pixels.md) §5.
 
 ## Contenu : les règles qui priment sur tout
@@ -154,7 +159,8 @@ Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
 - **Le CV est une page, pas un PDF.** `/cv` est la seule surface ; l'export passe
   par `@media print` + `@page` (A4, thème clair forcé, décor retiré) et
   `Cmd/Ctrl + P`. Un PDF déposé quelque part se périme sans prévenir — c'est
-  l'invariant n°5. Pas de bouton « Imprimer » : ce serait du script en ligne.
+  l'invariant n°5. Le bouton « Imprimer » utilise depuis le 14/08/2026 un script
+  externe propre au CV ; le raccourci reste disponible sans JavaScript.
 - **Les logos de technos sont vendorisés et monochromes.** Tracés générés depuis
   `simple-icons` (CC0) puis le paquet retiré ; rendus en `currentColor`, jamais
   en couleur de marque — sinon il faudrait un `style=` par puce (CSP) et vingt
@@ -183,11 +189,12 @@ Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
   versions correctives des deux paquets ne portent pas forcément le même numéro.
 - **Un seul visage sur tout le site, et il est sur la 404.** Voir
   [docs/05](docs/05-design-system-papier-pixels.md) §7 pour la règle et le
-  tableau des six illustrations en place.
+  tableau des illustrations en place.
 
 ## Vérification avant de rendre la main
 
 - [ ] `npm run build` passe
+- [ ] `npm test` passe après le build (scripts, CSP, liens et ancres)
 - [ ] **aucune espace avalée** : Astro supprime le saut de ligne entre un texte et une
       balise en ligne adjacente (`… il est\n<a>lien</a>` rend `il estlien`). Ne jamais
       couper la ligne entre un mot et le `<a>`, `<mark>`, `<strong>` ou `<code>` qui

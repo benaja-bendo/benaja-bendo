@@ -2216,6 +2216,18 @@ main > section:last-child {
 .assistant-demo {
   margin: 0;
 }
+.assistant-commande {
+  display: none; /* aucune commande morte sans le script */
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+[data-demo-commandes] .assistant-commande {
+  display: inline-flex;
+}
 
 .assistant-appareil {
   position: relative;
@@ -2298,6 +2310,8 @@ main > section:last-child {
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
+}
+[data-demo-pret] .assistant-fil {
   transition:
     opacity 420ms ease-out,
     translate 420ms ease-out;
@@ -2385,27 +2399,21 @@ main > section:last-child {
   border: var(--edge) solid var(--border);
   border-radius: var(--radius-sm);
   box-shadow: var(--pop-sm);
-  animation: assistant-pose 260ms ease-out both;
 }
 .assistant-bulle-utilisateur {
   background: var(--accent);
   color: var(--accent-fg);
 }
 .assistant-bulle-ia {
+  display: none; /* le rendu statique est terminé, jamais en attente */
   background: var(--surface);
   color: var(--fg);
 }
 /* La bulle d'attente disparaît quand les sources arrivent, plutôt que de
    laisser trois points tourner sur un tour de parole terminé — le produit
    n'invente pas de réponse tant qu'aucune n'a été capturée. */
-.assistant-bulle-ia[data-demo-vide] {
-  display: none;
-}
-@keyframes assistant-pose {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
+[data-demo-pret] .assistant-bulle-ia:not([data-demo-vide]) {
+  display: inline-block;
 }
 
 /* Trois carrés qui sautent, pas des ronds : la grammaire pixel du site. */
@@ -2419,10 +2427,12 @@ main > section:last-child {
   width: 4px;
   height: 4px;
   background: var(--muted);
+}
+[data-demo-pret] .assistant-points i {
   animation: assistant-saute 1.15s steps(2, end) infinite;
 }
-.assistant-points i:nth-child(2) { animation-delay: 0.14s; }
-.assistant-points i:nth-child(3) { animation-delay: 0.28s; }
+[data-demo-pret] .assistant-points i:nth-child(2) { animation-delay: 0.14s; }
+[data-demo-pret] .assistant-points i:nth-child(3) { animation-delay: 0.28s; }
 @keyframes assistant-saute {
   0%, 70%, 100% { transform: none; }
   35% { transform: translateY(-4px); }
@@ -2434,7 +2444,6 @@ main > section:last-child {
 .assistant-sources {
   width: 100%;
   margin-top: 0.5rem;
-  transition: opacity 400ms ease;
 }
 .assistant-sources-intro {
   margin: 0 0 0.4rem;
@@ -2479,6 +2488,10 @@ main > section:last-child {
     translate 360ms cubic-bezier(0.18, 0.9, 0.32, 1);
   transition-delay: calc(160ms * var(--i, 0));
 }
+/* Les deux sources se décalent en CSS, sans propriété style écrite par JS. */
+.assistant-carte:nth-child(2) {
+  --i: 1;
+}
 .assistant-carte-etiquette {
   display: block;
   margin-bottom: 0.3rem;
@@ -2514,7 +2527,7 @@ main > section:last-child {
 .assistant-modes-groupe {
   display: inline-flex;
   border: 1px solid var(--rule);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 .assistant-modes-item {
@@ -2561,7 +2574,13 @@ main > section:last-child {
   flex: none;
   margin-left: 1px;
   background: var(--accent);
+}
+[data-demo-pret][data-demo-frappe-active] .assistant-curseur {
+  display: inline-block;
   animation: curseur-bat 1.05s steps(1, end) infinite;
+}
+[data-demo-pret][data-demo-frappe-active] .assistant-placeholder {
+  display: none;
 }
 .assistant-envoi {
   display: grid;
@@ -2604,6 +2623,11 @@ main > section:last-child {
 }
 .assistant-demo figcaption span {
   color: var(--muted);
+}
+.assistant-demo figcaption a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
 }
 
 /* =============================================================================
@@ -3022,7 +3046,10 @@ a:hover {
   counter-increment: sommaire;
 }
 .sommaire a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
   padding: 0.35rem 0.4rem;
   border-radius: var(--radius-sm);
   font-family: var(--mono);
@@ -3132,6 +3159,9 @@ a:hover {
   font-size: 0.8rem;
 }
 .haut-de-page a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   color: var(--muted);
   text-decoration: none;
 }
@@ -3363,10 +3393,12 @@ a.illustration-lien:hover .illustration-scene {
     display: none;
   }
 
-  /* La démonstration n'est jamais rejouée sous mouvement réduit — le script
-     s'arrête avant de poser `data-demo-pret` (voir public/js/demo-mibeko.js).
-     Ces règles couvrent le HTML servi par DemoMibeko.astro, qui lui est bien
-     rendu : la conversation complète, immobile. */
+  /* Le script rend l'échange complet, même si la préférence change pendant
+     une lecture. La commande reste cachée tant que le système refuse le
+     mouvement ; elle revient en mode « Rejouer » si cette préférence change. */
+  [data-demo-commandes] .assistant-commande {
+    display: none;
+  }
   .assistant-bulle,
   .assistant-points i,
   .assistant-carte {

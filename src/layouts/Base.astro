@@ -18,7 +18,7 @@ interface Props {
    *
    * Le but n'est pas de limiter le JavaScript mais de le localiser : une page
    * qui a besoin d'un script le déclare ici, et les autres ne le téléchargent
-   * pas. Aujourd'hui seule /cv s'en sert, pour son bouton d'impression. Le
+   * pas. /cv l'utilise pour l'impression, /etudes/mibeko pour la démo. Le
    * `defer` marque la différence avec theme.js : un script qui ne décide pas du
    * rendu n'a aucune raison de le bloquer.
    */
@@ -62,7 +62,7 @@ const csp = [
     {/* Le seul script chargé sur toutes les pages, et le seul SANS `defer` :
         il pose `data-theme` sur <html> avant le premier rendu, sinon la page
         clignote dans le thème du système avant de basculer. Fichier local,
-        1,5 Ko compressé, `script-src 'self'` respectée — voir l'en-tête de
+        `script-src 'self'` respectée — voir l'en-tête de
         public/js/theme.js. */}
     <script src="/js/theme.js" is:inline></script>
 

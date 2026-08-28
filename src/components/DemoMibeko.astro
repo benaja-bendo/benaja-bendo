@@ -24,11 +24,10 @@
  * tant qu'aucune réponse réelle n'est capturée, la chorégraphie enchaîne les
  * trois points d'attente puis les sources, jamais un texte de réponse imaginé.
  *
- * L'écran animé reste décoratif (`role="img"`, un seul `aria-label`) — les
- * liens qu'il contient ne sont donc PAS exposés aux lecteurs d'écran comme des
- * liens individuels (un `role="img"` rend ses descendants présentatifs). Les
- * deux sources sont donc répétées, en liens réels et accessibles, dans la
- * légende : c'est elle, pas l'écran animé, qui porte la preuve vérifiable.
+ * L'écran reste décoratif (`role="img"`, un seul `aria-label`). Les liens de
+ * sources et la commande d'arrêt sont placés EN DEHORS de cette image, pour
+ * rester utilisables au clavier et avec un lecteur d'écran. La légende porte
+ * la preuve vérifiable, l'écran ne fait que l'illustrer.
  *
  * ── Le reste ─────────────────────────────────────────────────────────────────
  *
@@ -59,11 +58,18 @@ const SOURCES = [
 ---
 
 <figure class="assistant-demo" data-demo>
+  <button
+    class="btn btn-ghost assistant-commande"
+    type="button"
+    data-demo-commande
+    aria-controls="assistant-mibeko-ecran"
+  >Rejouer l’animation</button>
   <div class="assistant-appareil">
     <div
       class="assistant-ecran"
+      id="assistant-mibeko-ecran"
       role="img"
-      aria-label={`Démonstration animée : l'assistant Mibeko répond à « ${QUESTION} » en citant ${SOURCES.length} articles du corpus publié.`}
+      aria-label={`Reconstitution de l’écran Assistant Mibeko : la question « ${QUESTION} » et ${SOURCES.length} articles du corpus publié.`}
     >
       <div class="assistant-barre" aria-hidden="true">
         <span data-demo-heure>9:41</span>

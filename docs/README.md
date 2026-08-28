@@ -46,7 +46,7 @@ autorité non plus. En cas de contradiction, `docs/` gagne.
 
 > **Pour une session Claude qui démarre** : lire [../CLAUDE.md](../CLAUDE.md)
 > d'abord — commandes, invariants à ne pas casser (CSP stricte, zéro requête
-> tierce, un seul JS) et checklist de vérification.
+> tierce, scripts externes) et checklist de vérification.
 
 **Contexte de méthode** : analyses produites par workflows multi-agents (audit
 repo + site live + recherche Astro/sécurité ; panel de 3 concepts jugé par 3

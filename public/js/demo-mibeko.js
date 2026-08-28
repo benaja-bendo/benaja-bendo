@@ -16,7 +16,8 @@
  * 1. Il ne prend la main qu'après avoir posé `data-demo-pret` sur la racine.
  *    Tant que cet attribut manque, le CSS affiche l'échange complet.
  * 2. Aucun `style=` — uniquement des classes et du `textContent`.
- * 3. Sous `prefers-reduced-motion: reduce`, il ne fait rien.
+ * 3. Sous `prefers-reduced-motion: reduce`, même activé pendant la lecture,
+ *    il arrête l'horloge et restitue l'échange complet. La reprise est manuelle.
  * 4. Il n'invente aucun texte : le HTML qu'il rejoue est celui qu'Astro a
  *    rendu, jamais un contenu généré par le script.
  */
@@ -98,16 +99,16 @@
    * La démonstration
    * ------------------------------------------------------------------------ */
   class Demo {
-    constructor(racine) {
+    constructor(racine, mouvement) {
       this.racine = racine;
+      this.mouvement = mouvement;
+      this.execution = null;
+      this.commande = racine.querySelector('[data-demo-commande]');
       this.fil = racine.querySelector('[data-demo-fil]');
       this.heure = racine.querySelector('[data-demo-heure]');
       this.frappeNoeud = racine.querySelector('[data-demo-frappe]');
-      this.curseur = racine.querySelector('[data-demo-curseur]');
-      this.placeholder = racine.querySelector('[data-demo-placeholder]');
       this.envoi = racine.querySelector('[data-demo-envoi]');
       this.bulleIA = racine.querySelector('[data-demo-bulle-ia]');
-      this.points = racine.querySelector('[data-demo-points]');
       this.sources = racine.querySelector('[data-demo-sources]');
       this.horloge = new Horloge();
 
@@ -115,7 +116,6 @@
       this.tourIA = racine.querySelector('.assistant-tour-ia');
       this.rangeeCartes = racine.querySelector('.assistant-sources-rangee');
       this.cartes = [...racine.querySelectorAll('.assistant-carte')];
-      this.cartes.forEach((carte, i) => carte.style.setProperty('--i', String(i)));
 
       // La question servie par Astro, relevée une fois : c'est elle qu'on tape,
       // jamais une autre.
@@ -123,49 +123,79 @@
     }
 
     lancer() {
-      if (!this.question || this.tours() === 0) return;
-      this._mettreAJourHeure();
-      this._surveillerVisibilite();
+      if (!this.question || ![
+        this.commande, this.fil, this.frappeNoeud, this.bulleIA,
+        this.sources, this.tourUtilisateur, this.tourIA,
+      ].every(Boolean)) return;
 
+      this.commande.addEventListener('click', () => {
+        if (this.execution) this.arreter();
+        else this.demarrer();
+      });
+      this.mouvement?.addEventListener('change', () => {
+        if (this.mouvement.matches) this.arreter();
+      });
+      this._surveillerVisibilite();
+      this.racine.setAttribute('data-demo-commandes', '');
+      this.demarrer();
+    }
+
+    demarrer() {
+      if (this.execution || this.mouvement?.matches) return;
+      const execution = Symbol('lecture');
+      this.execution = execution;
+      this.commande.textContent = 'Arrêter l’animation';
       this.racine.setAttribute('data-demo-pret', '');
       this.horloge.demarrer();
-      this._boucle().catch((err) => {
-        if (err !== INTERRUPTION) throw err;
+      this._boucle(execution).catch((err) => {
+        if (err === INTERRUPTION) return;
+        // Même en cas de panne, la preuve servie en HTML doit rester lisible.
+        if (this.execution === execution) this.arreter();
+        console.error(err);
       });
     }
 
-    tours() {
-      return this.tourUtilisateur && this.tourIA ? 1 : 0;
+    arreter() {
+      this.execution = null;
+      this.horloge.arreter();
+      this.racine.removeAttribute('data-demo-pret');
+      this._reinitialiser();
+      this.commande.textContent = 'Rejouer l’animation';
     }
 
     /* ---------- chorégraphie ---------- */
 
-    async _boucle() {
+    async _boucle(execution) {
+      // Une attente déjà résolue peut reprendre après un arrêt suivi d'un
+      // redémarrage. Chaque reprise vérifie donc aussi l'identité de sa lecture.
+      const patienter = async (ms) => {
+        await this.horloge.patienter(ms);
+        if (this.execution !== execution) throw INTERRUPTION;
+      };
       for (;;) {
         this._reinitialiser();
         this._mettreAJourHeure();
-        await this.horloge.patienter(REGLAGES.attente.debut);
+        await patienter(REGLAGES.attente.debut);
 
-        await this._frapperQuestion();
+        await this._frapperQuestion(patienter);
 
         // « Envoi » : le champ se vide, la bulle rejoint le fil.
         this.envoi?.setAttribute('data-demo-presse', '');
         this.frappeNoeud.textContent = '';
-        this.curseur.style.display = 'none';
-        this.placeholder.style.display = '';
-        await this.horloge.patienter(REGLAGES.attente.apresEnvoi);
+        this.racine.removeAttribute('data-demo-frappe-active');
+        await patienter(REGLAGES.attente.apresEnvoi);
         this.envoi?.removeAttribute('data-demo-presse');
 
         this.tourUtilisateur.classList.add('is-in');
         this._suivreLeBas();
-        await this.horloge.patienter(REGLAGES.attente.apresUtilisateur);
+        await patienter(REGLAGES.attente.apresUtilisateur);
 
         this.tourIA.classList.add('is-in');
         this._suivreLeBas();
 
         // Les trois points d'attente — le comportement réel de l'application
         // le temps qu'une réponse arrive.
-        await this.horloge.patienter(REGLAGES.attente.reflexion);
+        await patienter(REGLAGES.attente.reflexion);
 
         // Aucune réponse n'est capturée pour cette démonstration : la bulle
         // d'attente s'efface au moment où les sources arrivent, plutôt que de
@@ -174,7 +204,7 @@
 
         this.sources.classList.add('is-in');
         this._suivreLeBas();
-        await this.horloge.patienter(
+        await patienter(
           REGLAGES.attente.sourcesVersCarrousel + this.cartes.length * 160,
         );
 
@@ -185,12 +215,12 @@
             left: Math.round(this.rangeeCartes.clientWidth * 0.42),
             behavior: 'smooth',
           });
-          await this.horloge.patienter(REGLAGES.attente.carrousel);
+          await patienter(REGLAGES.attente.carrousel);
         }
 
-        await this.horloge.patienter(REGLAGES.attente.lecture);
+        await patienter(REGLAGES.attente.lecture);
         this.fil.classList.add('assistant-fil-sortante');
-        await this.horloge.patienter(REGLAGES.attente.sortie);
+        await patienter(REGLAGES.attente.sortie);
       }
     }
 
@@ -203,21 +233,20 @@
       this.bulleIA.removeAttribute('data-demo-vide');
       this.fil.classList.remove('assistant-fil-sortante');
       this.frappeNoeud.textContent = '';
-      this.curseur.style.display = 'none';
-      this.placeholder.style.display = '';
+      this.racine.removeAttribute('data-demo-frappe-active');
+      this.envoi?.removeAttribute('data-demo-presse');
       if (this.rangeeCartes) this.rangeeCartes.scrollLeft = 0;
       this.fil.scrollTop = 0;
     }
 
-    async _frapperQuestion() {
-      this.placeholder.style.display = 'none';
-      this.curseur.style.display = '';
+    async _frapperQuestion(patienter) {
+      this.racine.setAttribute('data-demo-frappe-active', '');
       const { base, variation, tous } = REGLAGES.frappe;
       for (let i = 1; i <= this.question.length; i += 1) {
         this.frappeNoeud.textContent = this.question.slice(0, i);
-        await this.horloge.patienter(i % tous === 0 ? variation : base);
+        await patienter(i % tous === 0 ? variation : base);
       }
-      await this.horloge.patienter(REGLAGES.attente.apresFrappe);
+      await patienter(REGLAGES.attente.apresFrappe);
     }
 
     _suivreLeBas() {
@@ -235,6 +264,7 @@
         this.horloge.enPause = document.hidden || this.horsEcran === true;
       };
       document.addEventListener('visibilitychange', actualiser);
+      actualiser();
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(
           ([entree]) => {
@@ -247,12 +277,11 @@
     }
   }
 
-  const mouvementRefuse =
+  const mouvement =
     typeof window.matchMedia === 'function' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (mouvementRefuse) return;
+    window.matchMedia('(prefers-reduced-motion: reduce)');
 
   for (const racine of document.querySelectorAll('[data-demo]')) {
-    new Demo(racine).lancer();
+    new Demo(racine, mouvement || null).lancer();
   }
 })();

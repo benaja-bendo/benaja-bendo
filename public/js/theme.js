@@ -14,8 +14,8 @@
  * Pourquoi il est chargé SANS `defer` dans le <head> : il doit poser
  * l'attribut avant que le body soit peint, sinon la page s'affiche une
  * fraction de seconde dans le thème du système avant de basculer. C'est le
- * seul endroit du site où l'on accepte de bloquer le rendu — 1,5 Ko une fois
- * compressé, servi depuis le même domaine, mis en cache une semaine.
+ * seul endroit du site où l'on accepte de bloquer le rendu. Fichier servi
+ * depuis le même domaine et revalidé à chaque chargement.
  *
  * Trois états : « clair », « sombre », et « auto » (défaut), qui retire
  * l'attribut et rend la main à `prefers-color-scheme`.
@@ -78,14 +78,16 @@
     }
   };
 
-  // Avant le premier rendu.
-  appliquer(lire());
+  // Le stockage n'est qu'une persistance : refusé ou plein, il ne doit pas
+  // empêcher les commandes de changer le thème de la page courante.
+  let choixCourant = lire();
+  appliquer(choixCourant);
 
   /** Libellé du bouton compact : l'état courant, puis ce que le clic fera. */
   const ETAT_LU = { clair: 'clair', sombre: 'sombre', auto: 'système' };
 
   const cabler = () => {
-    accorderCouleurUI(lire());
+    accorderCouleurUI(choixCourant);
 
     // Deux commandes, une seule source de vérité. Le groupe de trois boutons du
     // pied de page nomme les états ; la bascule de l'en-tête les fait défiler
@@ -115,6 +117,7 @@
     };
 
     const choisir = (choix) => {
+      choixCourant = choix;
       appliquer(choix);
       ecrire(choix);
       accorderCouleurUI(choix);
@@ -127,12 +130,12 @@
 
     for (const bascule of bascules) {
       bascule.addEventListener('click', () => {
-        const rang = CHOIX_VALIDES.indexOf(lire());
+        const rang = CHOIX_VALIDES.indexOf(choixCourant);
         choisir(CHOIX_VALIDES[(rang + 1) % CHOIX_VALIDES.length]);
       });
     }
 
-    refleter(lire());
+    refleter(choixCourant);
 
     // Les commandes ne servent à rien sans script : elles restent masquées par
     // le CSS tant que cet attribut n'est pas posé. Pas de bouton mort.
