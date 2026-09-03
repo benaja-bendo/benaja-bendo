@@ -1,5 +1,6 @@
 ---
 import { estActif, navigationPrincipale } from '../lib/contenu';
+import { DISPONIBILITE } from '../lib/parcours';
 
 // Calculée au build, pas écrite en dur : un site statique fige l'année au
 // moment de la génération, mais une constante en dur ne se corrige jamais toute
@@ -31,9 +32,9 @@ const path = Astro.url.pathname;
     <div class="footer-block">
       <p class="footer-status">
         <span class="dot" aria-hidden="true"></span>
-        Disponible en CDI à partir du <strong>28 septembre 2026</strong>
+        Disponible en CDI à partir du <strong>{DISPONIBILITE.texte}</strong>
       </p>
-      <p class="footer-loc">Bordeaux / Mérignac (33), France</p>
+      <p class="footer-loc">{DISPONIBILITE.lieu}, France</p>
     </div>
 
     <nav class="footer-links footer-sections" aria-label="Sections du site">

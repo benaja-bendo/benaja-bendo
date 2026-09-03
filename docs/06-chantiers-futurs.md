@@ -91,6 +91,12 @@ TypeScript reste en 6.0.3 : le peer de `@astrojs/check` exclut toujours la 7.
 La seule PR ouverte lors de ce contrôle est la mise à jour npm Astro (#33) ;
 aucune PR d'Actions GitHub n'est en attente. Aucune action distante effectuée.
 
+**Contrôle du 03/09/2026.** Lockfile actualisé : Astro 7.3.1,
+`@astrojs/markdown-remark` 7.3.0 et sitemap 3.7.4 ; MDX reste en 7.0.8 et
+TypeScript en 6.0.3, les deux majeures suivantes restant volontairement hors
+périmètre. Audit npm sans vulnérabilité, `check` et build validés. Aucune action
+distante effectuée.
+
 ### Ce qui est encore périmé aujourd'hui, hors du site
 
 Le site est propre ; son écosystème ne l'est pas encore.

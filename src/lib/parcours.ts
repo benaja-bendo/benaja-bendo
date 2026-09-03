@@ -9,8 +9,8 @@
  *
  * Les `points` sont la seule nouveauté : la page Parcours n'en avait pas besoin
  * — elle raconte — mais un CV sans détail de mission ne sert à personne. Chaque
- * point est repris des études de cas déjà publiées (src/content/etudes), jamais
- * inventé pour meubler. Si un fait n'est pas dans une étude, il n'entre pas ici.
+ * point est repris du CV de septembre 2026 ou des études de cas publiées
+ * (src/content/etudes), jamais inventé pour meubler.
  */
 
 export interface Etape {
@@ -32,19 +32,22 @@ export const EXPERIENCES: Etape[] = [
     quoi: 'Développeur fullstack — Capgemini',
     ou: 'Bordeaux · stage puis alternance · AIFE, puis compte France Travail',
     points: [
-      'Compte France Travail (2024–2026) : refonte de deux applications fragiles en un service Java / Spring Boot unique, déployé sur OpenShift et Docker — la collecte des prévisions de plus de 400 collaborateurs passe de plusieurs semaines de relances manuelles à un cycle automatisé.',
+      'Compte France Travail (2024–2026) : refonte de deux applications fragiles en un service Java / Spring Boot unique, déployé sur OpenShift et Docker. Cycle de collecte des prévisions ramené d’environ 10 jours à 48 heures pour plus de 400 collaborateurs, avec relances automatisées et imputations consultables en continu.',
+      'Livrable unique architecturé pour être piloté en ligne de commande : relances, envoi de mails et exposition d’API REST appelables indépendamment, suppression des traitements manuels du cycle.',
       'Conception de A à Z des tableaux de bord Power BI (Power Query / M, Power Automate) utilisés au quotidien par les engagement managers : prévisions consolidées, relances, suivi d’activité et de facturation.',
-      'AIFE, finances publiques (2023–2024) : microservices Java / Spring Boot dans une équipe backend de 10 personnes, en agilité à l’échelle — PI planning, estimations, revues de code, démonstrations client.',
-      'Contribution à un projet cloud AWS (Python, Lambda, S3, PostgreSQL) au sein d’une équipe de 8.',
+      'AIFE, finances publiques (2023–2024) : développement de microservices Java / Spring Boot (API REST, SQL, tests unitaires JUnit) dans une équipe backend de 10 personnes, en SAFe — PI planning, estimations, revues de code, démonstrations client.',
+      'Aviation, projet agile en équipe de 8 : conception d’un outil de traitement de gros volumes de documents PDF avec recherche assistée par IA, sur AWS (Python, Lambda, S3, PostgreSQL).',
     ],
     etude: 'france-travail',
   },
   {
     quand: '2021–2023',
-    quoi: 'Développeur web & mobile, en freelance',
-    ou: 'Pointe-Noire, Congo · clients directs',
+    quoi: 'Développeur web & mobile — KabimGroup (startup)',
+    ou: 'Pointe-Noire, Congo · salarié',
     points: [
-      'Applications mobiles Flutter et API Laravel / Node.js livrées à des clients réels, du recueil du besoin à la mise en production.',
+      'Applications Laravel et applications mobiles Flutter livrées en production, avec API REST Laravel / Node.js.',
+      'Parseurs documentaires avec OCR : extraction et structuration de données issues de documents clients.',
+      'Relation client directe : recueil du besoin, rédaction des cahiers des charges, animation des réunions.',
     ],
   },
   {
@@ -52,7 +55,15 @@ export const EXPERIENCES: Etape[] = [
     quoi: 'Développeur fullstack — InfraOne System',
     ou: 'Pointe-Noire, Congo · salarié',
     points: [
-      'Développement de logiciels métier en équipe, première expérience salariée après une reconversion depuis la maintenance industrielle.',
+      'Développement de logiciels métier en équipe, sur l’ensemble du cycle : recueil du besoin, développement, livraison et corrections en production.',
+    ],
+  },
+  {
+    quand: '2019–2020',
+    quoi: 'Yekolab — incubateur & promotion des TIC',
+    ou: 'Pointe-Noire, Congo',
+    points: [
+      'Montée en compétences en développement logiciel au sein de l’écosystème startups local : projets encadrés et mentorat.',
     ],
   },
 ];
@@ -87,7 +98,13 @@ export const DISPONIBILITE = {
   texte: '28 septembre 2026',
   iso: '2026-09-28',
   lieu: 'Bordeaux / Mérignac (33)',
+  mobilite: 'Bordeaux / Mérignac (33) · mobile Paris et France entière · hybride · déplacements ponctuels',
 } as const;
+
+export const LANGUES = [
+  'Français — langue maternelle',
+  'Anglais — professionnel (réunions, échanges clients, documentation technique)',
+] as const;
 
 export const CONTACT = {
   email: 'contact@benaja-bendo.fr',

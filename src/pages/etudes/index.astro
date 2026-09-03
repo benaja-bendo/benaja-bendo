@@ -48,8 +48,8 @@ const enProduction = new Set(
               <a href={`/etudes/${etude.id}`}>{etude.data.titre}</a>
             </h2>
             {/* Le cadre d'exercice, affiché ici et pas seulement sur la fiche :
-                sans lui, la page se lit comme une liste de clients — donc comme
-                du freelance. La donnée existait déjà dans le frontmatter et
+                sans lui, la page se lit comme une liste de clients plutôt que
+                comme des missions situées. La donnée existait déjà dans le frontmatter et
                 n'était rendue nulle part. */}
             {etude.data.sousTitre && (
               <p class="card-cadre">{etude.data.sousTitre}</p>

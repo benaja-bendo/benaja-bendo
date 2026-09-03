@@ -268,6 +268,12 @@ Trace des modifications, pour ne pas les refaire ni les défaire par accident.
 | Services | **Dépubliée.** La rubrique référençait Bénaja comme prestataire freelance et listait « Design d'expérience utilisateur (UX) » et « Développement Android », que le site ne revendique nulle part. Réversible depuis LinkedIn. |
 | Projets | **Section ouverte**, deux entrées : Mibeko (déc. 2025 →, avec le lien mibeko.fr) et benaja-bendo.fr (août 2026 →). |
 
+> **Mise à jour du 03/09/2026.** Le CV de septembre établit que la période
+> 2021–2023 correspond à un poste salarié chez **KabimGroup**, et non à du
+> freelance. La ligne LinkedIn ajoutée le 18/08 est donc périmée : elle doit être
+> remplacée par KabimGroup, et le titre doit être aligné sur « Développeur
+> fullstack confirmé — Java / Spring Boot · React / TypeScript ».
+
 > ⚠️ **Piège rencontré, à connaître.** Ajouter une expérience propose par défaut
 > de remplacer le titre du profil par « *poste* chez *entreprise* », case
 > **pré-cochée**. Le titre a été écrasé une fois de cette façon. Décocher, ou
@@ -277,20 +283,22 @@ Trace des modifications, pour ne pas les refaire ni les défaire par accident.
 
 ## Ce qui reste ouvert
 
-1. **Écrire et publier le premier post.** Le sujet 1 ou le sujet 7 : ce sont les
+1. **Aligner le titre et l’expérience KabimGroup sur LinkedIn.** Le site et le CV
+   sont corrigés ; LinkedIn reste à modifier sur le profil public.
+2. **Écrire et publier le premier post.** Le sujet 1 ou le sujet 7 : ce sont les
    deux qui ne ressemblent à rien d'autre dans un fil LinkedIn.
-2. **La capture Mibeko** — question → réponse → article cité. Elle sert le site
+3. **La capture Mibeko** — question → réponse → article cité. Elle sert le site
    (docs/10) *et* le meilleur post de la liste. C'est le seul chantier qui rend
    deux fois.
-3. **Trancher la certification n°1** et poser une date. Une certification
+4. **Trancher la certification n°1** et poser une date. Une certification
    « envisagée » depuis six mois ne pèse rien ; une date d'examen réservée se
    tient.
-4. **Le lien média du projet benaja-bendo.fr.** L'ajout a échoué le 18/08 —
+5. **Le lien média du projet benaja-bendo.fr.** L'ajout a échoué le 18/08 —
    LinkedIn a renvoyé « Saisissez un lien valide » y compris sur une URL GitHub,
    ce qui désigne un incident de leur côté et non le site. À réessayer.
-5. **Deux quasi-doublons subsistent dans les compétences** (« tailwind css »
+6. **Deux quasi-doublons subsistent dans les compétences** (« tailwind css »
    après la suppression de « tailwindcss », « Déploiement de systèmes » et
    « Déploiement logiciel », « CSS » et « css3 »). Sans gravité, à nettoyer si
    l'occasion se présente.
-6. **« Microsoft Power Automate »** figure dans les compétences sans que le site
+7. **« Microsoft Power Automate »** figure dans les compétences sans que le site
    ni le CV ne le mentionnent. À confirmer ou à retirer — règle de contenu n°1.

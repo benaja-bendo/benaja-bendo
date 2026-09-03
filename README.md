@@ -1,11 +1,11 @@
 # Bénaja Bendo-Matondo
 
-**Développeur fullstack** — Java / Spring Boot · TypeScript / React · Bordeaux / Mérignac (33)
+**Développeur fullstack confirmé — 6 ans d’expérience** · Java / Spring Boot · React / TypeScript
 
 [benaja-bendo.fr](https://www.benaja-bendo.fr) · [LinkedIn](https://www.linkedin.com/in/benaja-bendo) · [contact@benaja-bendo.fr](mailto:contact@benaja-bendo.fr)
 
-Je conçois, je livre et j'**opère** des produits complets : API, interfaces web, apps
-mobiles et l'infrastructure qui les porte. En alternance chez **Capgemini** depuis 2023
+Je conçois, je fiabilise et j'**opère** des produits complets : API, interfaces web,
+apps mobiles et l'infrastructure qui les porte. Chez **Capgemini** depuis 2023
 (AIFE puis France Travail) et, en parallèle, seul aux commandes de
 **[Mibeko](https://mibeko.fr)** — un SaaS LegalTech en production depuis décembre 2025.
 
@@ -19,7 +19,9 @@ mobiles et l'infrastructure qui les porte. En alternance chez **Capgemini** depu
 | **Front-end** | TypeScript · React · Astro · Vue |
 | **Mobile** | Kotlin Multiplatform · Flutter |
 | **Données & IA** | PostgreSQL · pgvector · recherche plein texte et trigrammes · RAG sourcé · OCR · Power BI |
-| **Ops** | Docker · Ansible · Traefik · GitHub Actions · OpenShift · AWS · Linux (VPS) |
+| **Qualité** | JUnit · TDD · tests d’intégration · revues de code |
+| **Ops** | Git · Maven · Docker · Ansible · Traefik · GitHub Actions · OpenShift · Kubernetes / Helm · Kafka · AWS · Linux (VPS) |
+| **Méthodes** | SAFe · Scrum · PI planning · RGPD et sécurité applicative |
 
 Ni niveaux ni étoiles : une barre de progression sur une techno est une opinion déguisée
 en mesure. Chaque ligne ci-dessus est adossée à un projet livré ou à une mission — et la
@@ -44,13 +46,15 @@ qui **cite l'article exact d'où vient chaque réponse**.
 
 - **Capgemini**, Bordeaux — *2023 → 2026, stage puis alternance*
   **France Travail** : refonte de deux applications fragiles en un service Spring Boot
-  unique sur OpenShift, qui automatise la collecte des prévisions de **400+ collaborateurs**
-  — plus les tableaux de bord Power BI utilisés au quotidien.
+  unique sur OpenShift, avec un cycle de collecte de **400+ collaborateurs ramené
+  d’environ 10 jours à 48 heures** — plus les tableaux de bord Power BI utilisés au quotidien.
   **AIFE** (finances publiques) : microservices Java / Spring Boot, équipe backend de 10,
   agilité à l'échelle.
-- **Pointe-Noire, Congo** — *2020 → 2023*
-  Développeur web & mobile, salarié puis en freelance : apps Flutter et API Laravel /
-  Node.js livrées à des clients réels, du besoin à la mise en production.
+- **KabimGroup**, Pointe-Noire — *2021 → 2023, salarié*
+  Applications Laravel et Flutter, API REST Laravel / Node.js, parseurs OCR et relation
+  client directe, du besoin à la mise en production.
+- **InfraOne System**, Pointe-Noire — *2020 → 2021, salarié*
+  Logiciels métier développés en équipe, du recueil du besoin aux corrections en production.
 - **EPSI Bordeaux** — titre RNCP niveau 7 (Bac+5), en attente de soutenance ; Bachelor
   Concepteur Développeur d'Applications obtenu en 2023. Avant le code : une licence en
   maintenance industrielle, et des machines à réparer.
@@ -58,6 +62,6 @@ qui **cite l'article exact d'où vient chaque réponse**.
 À côté, j'écris des jeux navigateur en Phaser 3 dont **l'art pixel est intégralement
 généré par code** — pas une image importée.
 
-<sub>🇬🇧 Fullstack developer (Java / Spring Boot · TypeScript / React) based in Bordeaux, France.
+<sub>🇬🇧 Fullstack developer with six years of experience (Java / Spring Boot · React / TypeScript), based in Bordeaux, France.
 I design, ship and operate <a href="https://mibeko.fr">Mibeko</a>, a LegalTech SaaS in
 production since December 2025. Available for a permanent role from 28 September 2026.</sub>

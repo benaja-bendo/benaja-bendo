@@ -1,9 +1,9 @@
 ---
 nom: "Collecte des prévisions & décisionnel — France Travail"
-resume: "Deux applications fragiles refondues en un seul service Java / Spring Boot, et les tableaux de bord Power BI utilisés au quotidien par les managers."
+resume: "Deux applications fragiles refondues en un service Java / Spring Boot : un cycle concernant 400+ collaborateurs ramené d’environ 10 jours à 48 heures."
 statut: "en-cours"
 periode: "2024 – 2026"
-role: "Développeur — refonte du service de collecte, conception des tableaux de bord, support utilisateur"
+role: "Développeur fullstack — refonte du service de collecte, conception des tableaux de bord, support utilisateur"
 stack:
   [
     "Java",
@@ -18,15 +18,17 @@ enseignement: "Un outil interne n’est adopté que s’il supprime le geste man
 etude: "france-travail"
 confidentiel: true
 ordre: 2
-maj: 2026-08-14
+maj: 2026-09-03
 ---
 
 Sur le compte France Travail, la collecte des prévisions d’activité reposait sur
-deux applications fragiles et beaucoup de relances manuelles — plusieurs semaines
-de travail répétitif à chaque cycle. J’ai refondu ces deux applications en un
-service unique déployé sur OpenShift, et conçu de A à Z les tableaux de bord qui
-donnent aux engagement managers la vue consolidée dont ils se servent tous les
-jours.
+deux applications fragiles et beaucoup de relances manuelles. J’ai refondu ces
+deux applications en un service unique déployé sur OpenShift et Docker : le cycle
+concernant plus de 400 collaborateurs est passé d’environ 10 jours à 48 heures,
+avec relances automatisées et imputations consultables en continu. Le livrable
+peut piloter séparément les relances, l’envoi de mails et les API REST. J’ai aussi
+conçu de A à Z les tableaux de bord utilisés au quotidien par les engagement
+managers.
 
 Mission client : je décris mon rôle et mes décisions, pas les données ni le
 système d’information du client.

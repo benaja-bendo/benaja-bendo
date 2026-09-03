@@ -24,10 +24,10 @@
   <rect x="1030" y="58" width="92" height="48" fill="#0e7c66" stroke="#16212b" stroke-width="4"/>
   <text x="1076" y="90" text-anchor="middle" fill="#fcfaf3" font-size="23" font-weight="700" font-family="ui-monospace, monospace">BB</text>
 
-  <text x="100" y="205" fill="#5a6673" font-size="23" font-weight="700" letter-spacing="3" font-family="ui-monospace, monospace">BORDEAUX · DÉVELOPPEUR FULLSTACK</text>
+  <text x="100" y="205" fill="#5a6673" font-size="22" font-weight="700" letter-spacing="2" font-family="ui-monospace, monospace" textLength="700" lengthAdjust="spacing">6 ANS · DÉVELOPPEUR FULLSTACK CONFIRMÉ</text>
   <text x="100" y="298" fill="#16212b" font-size="64" font-weight="700" font-family="Arial, sans-serif">Bénaja Bendo-Matondo</text>
-  <text x="100" y="360" fill="#16212b" font-size="34" font-family="Arial, sans-serif">Je construis des systèmes logiciels,</text>
-  <text x="100" y="406" fill="#16212b" font-size="34" font-family="Arial, sans-serif">et je les fais tenir en production.</text>
+  <text x="100" y="360" fill="#16212b" font-size="34" font-family="Arial, sans-serif">Java / Spring Boot · React / TypeScript</text>
+  <text x="100" y="406" fill="#16212b" font-size="34" font-family="Arial, sans-serif">Du besoin métier à la production.</text>
 
   <!-- Le surligneur mesurait 604 px pour un texte qui en fait ~626 : « apprentissages »
        sortait de l'aplat sur le PNG servi. La largeur du texte est maintenant

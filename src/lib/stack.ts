@@ -43,6 +43,8 @@ export const STACK: GroupeStack[] = [
     technos: [
       { nom: 'Java', icone: 'java', cle: true },
       { nom: 'Spring Boot', icone: 'spring-boot', cle: true },
+      { nom: 'Hibernate / JPA', mono: 'JPA' },
+      { nom: 'API REST', mono: 'API' },
       { nom: 'Laravel / PHP', icone: 'laravel', cle: true },
       { nom: 'Python', icone: 'python', cle: true },
       { nom: 'FastAPI', icone: 'fastapi' },
@@ -57,6 +59,7 @@ export const STACK: GroupeStack[] = [
       { nom: 'React', icone: 'react', cle: true },
       { nom: 'Astro', icone: 'astro' },
       { nom: 'Vue', icone: 'vue' },
+      { nom: 'HTML / CSS', mono: 'WEB' },
     ],
   },
   {
@@ -75,6 +78,7 @@ export const STACK: GroupeStack[] = [
     precision: 'Recherche hybride et traçabilité de la source, sur Mibeko.',
     technos: [
       { nom: 'PostgreSQL', icone: 'postgresql', cle: true },
+      { nom: 'SQL', mono: 'SQL' },
       { nom: 'pgvector', mono: 'pgv', cle: true },
       { nom: 'Power BI', mono: 'BI', cle: true },
       { nom: 'RAG sourcé', mono: 'RAG' },
@@ -82,16 +86,40 @@ export const STACK: GroupeStack[] = [
     ],
   },
   {
+    titre: 'Qualité & tests',
+    precision: 'Tests automatisés et revues de code sur les missions comme sur mes produits.',
+    technos: [
+      { nom: 'JUnit', mono: 'JUT' },
+      { nom: 'TDD', mono: 'TDD' },
+      { nom: 'Tests d’intégration', mono: 'INT' },
+      { nom: 'Revues de code', mono: 'PR' },
+    ],
+  },
+  {
     titre: 'Ops & production',
     precision: 'Ce que je déploie, je l’exploite — mises en production comprises.',
     technos: [
       { nom: 'Docker', icone: 'docker', cle: true },
+      { nom: 'Git', mono: 'GIT' },
+      { nom: 'Maven', mono: 'MVN' },
       { nom: 'Ansible', icone: 'ansible', cle: true },
       { nom: 'GitHub Actions', icone: 'github-actions', cle: true },
       { nom: 'OpenShift', icone: 'openshift' },
+      { nom: 'Kubernetes / Helm', mono: 'K8S' },
+      { nom: 'Kafka', mono: 'KFK' },
       { nom: 'Traefik', icone: 'traefik' },
       { nom: 'Linux (VPS)', icone: 'linux' },
       { nom: 'AWS', mono: 'AWS' },
+    ],
+  },
+  {
+    titre: 'Méthodes',
+    precision: 'Travail collectif, livraison incrémentale et contraintes applicatives.',
+    technos: [
+      { nom: 'SAFe', mono: 'SAF' },
+      { nom: 'Scrum', mono: 'SCR' },
+      { nom: 'PI planning', mono: 'PI' },
+      { nom: 'RGPD & sécurité applicative', mono: 'SEC' },
     ],
   },
 ];

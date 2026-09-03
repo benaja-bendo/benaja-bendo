@@ -8,10 +8,11 @@ const intentions = [
     titre: 'Vous recrutez',
     index: '01',
     resume:
-      'Vous cherchez un développeur fullstack capable de prendre un sujet métier, de le construire et de l’accompagner en production.',
+      'Vous cherchez un développeur fullstack confirmé capable de prendre un sujet métier, de le construire et de l’accompagner en production.',
     points: [
       `Disponible en CDI à partir du ${DISPONIBILITE.texte}`,
-      `Bordeaux / Mérignac · Java / Spring Boot · fullstack`,
+      `Bordeaux / Mérignac · mobile Paris et France entière · hybride`,
+      `Java / Spring Boot · React / TypeScript`,
       'CV web imprimable et parcours détaillé',
     ],
     href: `mailto:${CONTACT.email}?subject=Opportunité%20CDI`,
@@ -38,8 +39,8 @@ const intentions = [
 ---
 
 <Base
-  title="Contact — Bénaja Bendo-Matondo"
-  description={`Écrivez-moi à ${CONTACT.email}. Développeur fullstack Java / Spring Boot · React, disponible en CDI à partir du ${DISPONIBILITE.texte}, à Bordeaux.`}
+  title="Contact — Bénaja Bendo-Matondo, développeur fullstack confirmé"
+  description={`Écrivez-moi à ${CONTACT.email}. Développeur fullstack confirmé, Java / Spring Boot · React / TypeScript, disponible en CDI à partir du ${DISPONIBILITE.texte}.`}
 >
   <section class="hero container">
     <p class="eyebrow">Contact</p>
@@ -58,8 +59,8 @@ const intentions = [
 
     <p class="lead">
       Côté emploi&nbsp;: disponible en CDI à partir
-      du <mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark>, à
-      &nbsp;{DISPONIBILITE.lieu}.
+      du <mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark>.
+      Mobilité&nbsp;: {DISPONIBILITE.mobilite}.
     </p>
 
     <div class="cta-row">

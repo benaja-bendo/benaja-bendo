@@ -6,6 +6,7 @@ import {
   DISPONIBILITE,
   EXPERIENCES,
   FORMATION,
+  LANGUES,
 } from '../lib/parcours';
 
 /**
@@ -43,8 +44,8 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
 ---
 
 <Base
-  title="CV — Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot"
-  description={`CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot · React à Bordeaux. Disponible en CDI à partir du ${DISPONIBILITE.texte}. Page imprimable, toujours à jour.`}
+  title="CV — Bénaja Bendo-Matondo, développeur fullstack confirmé"
+  description={`CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience. Java / Spring Boot · React / TypeScript. Disponible en CDI à partir du ${DISPONIBILITE.texte}.`}
   script="/js/cv.js"
 >
   <article class="cv container">
@@ -53,10 +54,10 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
         <p class="eyebrow">Curriculum vitæ</p>
         <h1>Bénaja Bendo‑Matondo</h1>
         <p class="cv-role">
-          Développeur fullstack — Java&nbsp;/&nbsp;Spring Boot · React
+          Développeur fullstack confirmé — Java&nbsp;/&nbsp;Spring Boot · React&nbsp;/&nbsp;TypeScript
         </p>
         <p class="cv-situation">
-          {DISPONIBILITE.lieu} · {anneesExperience} ans d’expérience · disponible en
+          {DISPONIBILITE.mobilite} · {anneesExperience} ans d’expérience · disponible en
           CDI à partir du <time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time>
         </p>
       </div>
@@ -94,12 +95,12 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
 
     <section class="cv-section cv-accroche">
       <p>
-        Je conçois, je livre et j’<strong>opère</strong> des produits complets en
-        production. Le plus parlant est <strong>Mibeko</strong>, un SaaS LegalTech
-        que j’ai porté seul de l’idée à la production — API, ingestion documentaire,
-        applications mobiles publiées et infrastructure comprises. En entreprise,
-        je développe des services Java&nbsp;/&nbsp;Spring Boot sur des systèmes
-        exigeants, chez Capgemini depuis 2023.
+        Développeur fullstack confirmé avec 6 ans d’expérience, je conçois,
+        fiabilise et <strong>opère</strong> des applications métier, du besoin à la
+        production. Chez Capgemini, j’ai automatisé un processus concernant plus
+        de 400 collaborateurs. En parallèle, je porte seul <strong>Mibeko</strong>,
+        un SaaS LegalTech publié sur iOS et Android — API, ingestion documentaire,
+        CI/CD et infrastructure comprises.
       </p>
     </section>
 
@@ -181,6 +182,11 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
           ))
         }
       </ol>
+    </section>
+
+    <section class="cv-section">
+      <h2>Langues</h2>
+      <p>{LANGUES.join(' · ')}</p>
     </section>
 
     {/* Bloc écran uniquement : à l'impression, il n'aurait aucun sens sur le

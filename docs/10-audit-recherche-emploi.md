@@ -201,13 +201,16 @@ Repris de l'audit archivé 09 quand c'est toujours vrai, et daté quand ça ne
 l'est plus.
 
 1. **La capture question → réponse → article.** Le premier gain du site.
-2. **Publier ou déclasser la réalisation Congo** (§6 ci-dessus).
+2. **Publier ou déclasser la réalisation Congo** (§6 ci-dessus). Le brouillon est
+   désormais aligné sur le CV de septembre 2026 — InfraOne System puis KabimGroup,
+   deux expériences salariées — mais il lui manque encore des projets nommables et
+   un enseignement avant publication.
 3. **Décider du sort de l'étude AIFE.** La phrase de stratégie en a été retirée
-   le 14/08/2026, mais le fond n'a pas changé : la page dit une équipe de 10, du
-   SAFe, du Java/Spring et une contribution AWS — pas de problème précis, pas de
-   décision, pas de résultat observable. Soit elle gagne une vraie décision
-   racontable, soit elle redevient une simple réalisation. Une étude courte est
-   acceptable ; une étude sans objet d'étude ne l'est pas.
+   le 14/08/2026. La mise à jour du 03/09/2026 précise désormais les API REST,
+   les tests JUnit et le projet aviation de traitement de PDF sur AWS, mais la page
+   ne raconte toujours pas une décision ou un résultat observable. Soit elle gagne
+   une vraie décision racontable, soit elle redevient une simple réalisation. Une
+   étude courte est acceptable ; une étude sans objet d'étude ne l'est pas.
 4. **Une note issue du cœur du travail.** Les deux notes publiées parlent de la
    construction de ce site. Une note sur la provenance des documents, la
    recherche hybride, l'évaluation d'un RAG sourcé ou la publication Kotlin
