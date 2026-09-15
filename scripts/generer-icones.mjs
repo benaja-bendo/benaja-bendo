@@ -31,11 +31,15 @@ const map = {
   nodejs: 'nodedotjs',
   typescript: 'typescript',
   react: 'react',
+  angular: 'angular',
   astro: 'astro',
   vue: 'vuedotjs',
   kotlin: 'kotlin',
   flutter: 'flutter',
   postgresql: 'postgresql',
+  mysql: 'mysql',
+  mongodb: 'mongodb',
+  firebase: 'firebase',
   docker: 'docker',
   ansible: 'ansible',
   traefik: 'traefikproxy',
@@ -44,6 +48,8 @@ const map = {
   linux: 'linux',
   minio: 'minio',
   git: 'git',
+  maven: 'apachemaven',
+  gradle: 'gradle',
 };
 
 const key = (s) => 'si' + s.charAt(0).toUpperCase() + s.slice(1);

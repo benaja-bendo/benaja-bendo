@@ -2,21 +2,26 @@
 titre: "Mibeko"
 sousTitre: "SaaS LegalTech — accès au droit congolais et OHADA"
 periode: "En production depuis décembre 2025"
-resume: "Conçu, développé et opéré seul en six mois : un assistant qui répond aux questions de droit en citant l’article exact d’où vient chaque réponse."
+resume: "Un fonds de plus de 1 000 textes et 17 000 articles de droit, interrogeable en langage naturel — chaque réponse citant l’article exact d’où elle vient. Conçu, développé et opéré seul en six mois."
 tags: ["IA générative", "RAG", "Fullstack", "Mobile", "DevOps"]
 stack:
   ["Laravel", "Python / FastAPI", "React", "Astro", "Kotlin Multiplatform", "PostgreSQL · pgvector", "Docker", "Ansible", "Traefik", "GitHub Actions"]
 chiffres:
+  - { valeur: "17 000+", label: "articles de droit indexés et sourcés" }
   - { valeur: "6 mois", label: "de l’idée à la production, seul" }
-  - { valeur: "~730", label: "tests automatisés" }
   - { valeur: "2 stores", label: "App Store + Play Store" }
-  - { valeur: "déc. 2025", label: "en production depuis" }
+  - { valeur: "~730", label: "tests automatisés" }
 liens:
   - { label: "Voir Mibeko en ligne", url: "https://mibeko.fr" }
+  - { label: "Essayer l’assistant", url: "https://mibeko.fr/assistant" }
 preuves:
   - label: "mibeko.fr"
     url: "https://mibeko.fr"
     quoi: "Le produit public : recherche, textes officiels, démarches et guides."
+    famille: "produit"
+  - label: "mibeko.fr/assistant"
+    url: "https://mibeko.fr/assistant"
+    quoi: "Trois questions réelles et les articles du fonds qui fondent la réponse, ouvrables et vérifiables sans compte."
     famille: "produit"
   - label: "App Store"
     url: "https://apps.apple.com/app/id6768865781"
@@ -52,7 +57,7 @@ preuves:
     famille: "code"
 realisation: "mibeko"
 ordre: 1
-maj: 2026-08-14
+maj: 2026-09-15
 ---
 
 ## Le problème
@@ -62,19 +67,34 @@ PDF scannés, difficiles à trouver et impossibles à interroger. Un juriste, un
 entrepreneur ou un citoyen qui cherche une règle précise doit fouiller des
 documents épars, sans garantie d’être à jour ni de citer la bonne source.
 
+## Le fonds, et ce qu’il change
+
+Mibeko a publié plus de 1 000 textes officiels — codes, lois, décrets, actes
+uniformes — soit plus de 17 000 articles, chacun adressable individuellement et
+sourcé auprès du Secrétariat général du Gouvernement (sgg.cg) ou de l’OHADA
+(ohada.org). Poser une question ne renvoie plus vers un document entier à
+relire, mais vers l’article exact qui y répond.
+
+La contrainte qui organise tout : une réponse ne vaut que par l’article qu’elle
+cite. L’assistant ne consulte pas une mémoire générale du droit — il cherche
+dans ce fonds, retient les articles pertinents, et **retire toute citation qui
+ne correspond à aucun article réellement retrouvé avant affichage**. Ce n’est
+pas une consigne donnée au modèle : c’est un contrôle appliqué à sa sortie.
+[Trois questions réelles et leurs sources sont consultables sans
+compte](https://mibeko.fr/assistant).
+
 ## La construction
 
-J’ai construit une chaîne de traitement **traçable** de bout en bout. Chaque
-document est lu (OCR), puis structuré par un modèle de langage dont la sortie est
-**validée par un schéma strict** : le modèle propose, le schéma dispose — rien
-n’entre en base sans respecter la forme attendue. Chaque fragment garde la preuve
-de son origine jusqu’à l’empreinte du fichier source (provenance SHA-256).
+Cette rigueur tient à une chaîne de traitement **traçable** de bout en bout.
+Chaque document est lu (OCR), puis structuré par un modèle de langage dont la
+sortie est **validée par un schéma strict** : le modèle propose, le schéma
+dispose — rien n’entre en base sans respecter la forme attendue. Chaque
+fragment garde la preuve de son origine jusqu’à l’empreinte du fichier source
+(provenance SHA-256).
 
 Par-dessus, une recherche **hybride** combine trois angles (texte intégral,
 proximité orthographique, similarité sémantique via pgvector) pour retrouver le
-bon article même quand la question est formulée autrement que la loi. Enfin, un
-assistant répond en langage naturel **en citant l’article exact d’où vient chaque
-réponse** — c’est ce qui sépare un outil juridique fiable d’un chatbot qui invente.
+bon article même quand la question est formulée autrement que la loi.
 
 Côté livraison : une API Laravel, un service d’ingestion Python / FastAPI, un
 tableau de bord React, un site Astro, et des applications mobiles Kotlin
@@ -87,5 +107,6 @@ Mibeko tourne en production depuis décembre 2025. La qualité est tenue par
 se fait sur un VPS que j’administre (Docker, Ansible, Traefik). Je le conçois, le
 développe et **je l’opère** — mises en production, surveillance, corrections.
 
-C’est le projet qui prouve le reste : la capacité à porter un produit complet,
-du backend aux stores, et à le faire tenir dans la durée.
+C’est le projet qui prouve le reste : la capacité à porter un fonds de données
+et un produit complets, du texte de loi aux stores, et à les faire tenir dans
+la durée.

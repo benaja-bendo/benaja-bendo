@@ -1,6 +1,6 @@
 ---
 nom: "Mibeko"
-resume: "Un assistant qui rend le droit congolais et OHADA consultable en langage naturel, en citant l’article exact d’où vient chaque réponse."
+resume: "Un assistant qui rend plus de 1 000 textes de droit congolais et OHADA consultables en langage naturel, en citant l’article exact d’où vient chaque réponse."
 statut: "production"
 periode: "Depuis décembre 2025"
 role: "Conception, développement et exploitation — seul, du backend aux stores"
@@ -26,6 +26,10 @@ preuves:
   - label: "mibeko.fr"
     url: "https://mibeko.fr"
     quoi: "Le produit public : recherche, textes officiels, démarches et guides."
+    famille: "produit"
+  - label: "mibeko.fr/assistant"
+    url: "https://mibeko.fr/assistant"
+    quoi: "Trois questions réelles et les articles du fonds qui fondent la réponse, ouvrables et vérifiables sans compte."
     famille: "produit"
   - label: "App Store"
     url: "https://apps.apple.com/app/id6768865781"
@@ -63,13 +67,14 @@ enseignement: "Sur un outil juridique, la traçabilité passe avant la qualité 
 etude: "mibeko"
 epingle: true
 ordre: 1
-maj: 2026-08-14
+maj: 2026-09-15
 ---
 
 Le droit congolais et le droit OHADA existent, mais éparpillés dans des PDF
 scannés : introuvables, impossibles à interroger, sans garantie de citer la bonne
-source. Mibeko transforme ces documents en une base interrogeable et répond aux
-questions en langage naturel, chaque réponse pointant vers son article.
+source. Mibeko en a fait un fonds interrogeable — plus de 1 000 textes officiels,
+plus de 17 000 articles — et répond aux questions en langage naturel, chaque
+réponse pointant vers l’article exact dont elle vient.
 
 Je l’ai porté seul de l’idée à la production : chaîne d’ingestion, API, recherche
 hybride, tableau de bord, applications mobiles publiées sur les deux stores, et

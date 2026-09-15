@@ -57,6 +57,7 @@ export const STACK: GroupeStack[] = [
     technos: [
       { nom: 'TypeScript', icone: 'typescript', cle: true },
       { nom: 'React', icone: 'react', cle: true },
+      { nom: 'Angular', icone: 'angular' },
       { nom: 'Astro', icone: 'astro' },
       { nom: 'Vue', icone: 'vue' },
       { nom: 'HTML / CSS', mono: 'WEB' },
@@ -71,6 +72,8 @@ export const STACK: GroupeStack[] = [
       // que de fond : seul, « Mobile » laissait une colonne à une puce à côté
       // d'une colonne à quatre, et la grille se lisait comme un oubli.
       { nom: 'Flutter', icone: 'flutter', cle: true },
+      // Même icône que React : Meta réutilise le même logo pour les deux.
+      { nom: 'React Native', icone: 'react' },
     ],
   },
   {
@@ -80,6 +83,9 @@ export const STACK: GroupeStack[] = [
       { nom: 'PostgreSQL', icone: 'postgresql', cle: true },
       { nom: 'SQL', mono: 'SQL' },
       { nom: 'pgvector', mono: 'pgv', cle: true },
+      { nom: 'MySQL', icone: 'mysql' },
+      { nom: 'MongoDB', icone: 'mongodb' },
+      { nom: 'Firebase', icone: 'firebase' },
       { nom: 'Power BI', mono: 'BI', cle: true },
       { nom: 'RAG sourcé', mono: 'RAG' },
       { nom: 'OCR', mono: 'OCR' },
@@ -101,14 +107,15 @@ export const STACK: GroupeStack[] = [
     technos: [
       { nom: 'Docker', icone: 'docker', cle: true },
       { nom: 'Git', mono: 'GIT' },
-      { nom: 'Maven', mono: 'MVN' },
+      { nom: 'Maven', icone: 'maven' },
+      { nom: 'Gradle', icone: 'gradle' },
       { nom: 'Ansible', icone: 'ansible', cle: true },
       { nom: 'GitHub Actions', icone: 'github-actions', cle: true },
       { nom: 'OpenShift', icone: 'openshift' },
       { nom: 'Kubernetes / Helm', mono: 'K8S' },
       { nom: 'Kafka', mono: 'KFK' },
       { nom: 'Traefik', icone: 'traefik' },
-      { nom: 'Linux (VPS)', icone: 'linux' },
+      { nom: 'Linux', icone: 'linux' },
       { nom: 'AWS', mono: 'AWS' },
     ],
   },
