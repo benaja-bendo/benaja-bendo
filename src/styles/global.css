@@ -3665,7 +3665,7 @@ a.illustration-lien:hover .illustration-scene {
   html,
   body {
     background: #ffffff;
-    font-size: 10.5pt;
+    font-size: 9.1pt;
   }
 
   /* `.cv-imprimer` est listé explicitement : celui de l'en-tête vit dans
@@ -3702,41 +3702,76 @@ a.illustration-lien:hover .illustration-scene {
   }
 
   h1 {
-    font-size: 21pt;
+    font-size: 18pt;
   }
   .cv-role {
-    font-size: 11pt;
+    font-size: 10.5pt;
   }
   .cv-section > h2 {
-    font-size: 12pt;
+    margin-bottom: 0.45rem;
+    padding-bottom: 0.25rem;
+    font-size: 11.5pt;
     /* Un titre de section ne reste jamais seul en bas de page. */
     break-after: avoid;
   }
   .cv-detail h3 {
-    font-size: 11pt;
+    font-size: 10.5pt;
     break-after: avoid;
   }
 
   .cv-section {
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
     break-inside: auto;
   }
   .cv-entete {
-    padding-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    gap: 0.6rem;
+  }
+  /* Quatre lignes empilées (une par coordonnée) pour un en-tête qu'on
+     scanne à l'écran ; sur une page qui a déjà toutes ses coordonnées dans
+     le texte qui suit, ça n'a plus de raison de coûter quatre lignes. Une
+     seule ligne, façon `.cv-situation`. */
+  .cv-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.1rem;
+    row-gap: 0.2rem;
+  }
+  .cv-contacts li {
+    flex: 0 0 auto;
   }
   .cv-entree + .cv-entree {
-    margin-top: 1rem;
-    padding-top: 1rem;
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
   }
   .cv-points {
-    margin-top: 0.45rem;
+    margin-top: 0.35rem;
   }
   .cv-points li {
-    line-height: 1.45;
+    line-height: 1.3;
+  }
+  .cv-points li + li {
+    margin-top: 0.15rem;
   }
 
-  /* La stack tient en une bande compacte plutôt qu'en colonnes qui se
-     répartiraient à cheval sur deux pages. */
+  /* La stack passe en deux colonnes façon presse : à plat, sept groupes
+     empilés valaient à eux seuls une page et demie (relu le 16/09/2026 sur
+     un export réel). `columns` répartit les groupes dans la colonne la
+     moins remplie sans changer leur contenu — rien n'est retiré, seul le
+     blanc entre les groupes disparaît. `break-inside: avoid` (déjà posé sur
+     `.stack-groupe`) empêche un groupe de se couper au changement de
+     colonne, exactement comme il empêchait déjà un saut de page. */
+  /* Deux colonnes ont été essayées ici (`columns`, puis `display: grid`) pour
+     gagner de la hauteur. Mesuré sur un export réel (16/09/2026) : les deux
+     approches PERDENT du terrain, pas en gagnent — Ops & production (12
+     entrées) et Données & IA (9) passent de deux lignes à quatre une fois
+     la largeur divisée par deux, ce qu'aucune des lignes courtes voisines ne
+     compense. Les deux approches laissaient aussi une esquille de bordure
+     d'environ un pixel juste sous la coupure de page (bug connu de Chromium
+     à la limite d'un fragment) : invisible à l'impression réelle, mais un
+     risque à ne pas prendre sur un document envoyé à un recruteur. Une seule
+     colonne reste donc la bonne réponse ici.
+     */
   .stack {
     display: block;
   }
@@ -3744,17 +3779,26 @@ a.illustration-lien:hover .illustration-scene {
     break-inside: avoid;
   }
   .stack-groupe + .stack-groupe {
-    margin-top: 0.75rem;
+    margin-top: 0.4rem;
   }
   .stack-puce {
     border-width: 1px;
     padding: 0.1rem 0.35rem;
-    font-size: 8.5pt;
+    font-size: 8pt;
   }
   .icone-tech {
     width: 0.85rem;
     height: 0.85rem;
     color: #000000;
+  }
+  /* Le monogramme de repli (« SAF », « JUT »…) est un `<span>` texte, lui,
+     pas un SVG `aria-hidden`. Devant le libellé complet, il double chaque
+     nom dans la couche texte du PDF — « SAF SAFe », « AWS AWS » — ce qui
+     pollue tout ce qui lit la page en texte : ATS, copier-coller. Aucune
+     information n'est perdue en l'imprimant : le nom complet reste juste à
+     côté sur l'écran. */
+  .icone-tech-mono {
+    display: none;
   }
 
   /* Aucune surface teintée : les aplats de fond sont souvent désactivés à

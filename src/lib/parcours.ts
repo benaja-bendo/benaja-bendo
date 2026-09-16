@@ -60,8 +60,8 @@ export const EXPERIENCES: Etape[] = [
   },
   {
     quand: '2019–2020',
-    quoi: 'Yekolab — incubateur & promotion des TIC',
-    ou: 'Pointe-Noire, Congo',
+    quoi: 'Reconversion vers le développement — Yekolab',
+    ou: 'Pointe-Noire, Congo · incubateur & promotion des TIC',
     points: [
       'Montée en compétences en développement logiciel au sein de l’écosystème startups local : projets encadrés et mentorat.',
     ],

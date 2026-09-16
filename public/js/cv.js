@@ -18,9 +18,28 @@
  * qu'ouvrir la boîte de dialogue du navigateur. Si le script échoue ou n'est
  * jamais exécuté, l'indication clavier reste affichée et le résultat est
  * identique — c'est pour ça qu'elle n'est pas retirée de la page.
+ *
+ * Deuxième rôle, ajouté le 16/09/2026 : le nom de fichier suggéré par
+ * « Enregistrer au format PDF » vient du <title> de la page. Celui-ci porte
+ * un tiret cadratin, une virgule et des accents — utiles à l'écran et au
+ * référencement, mais Chrome remplace chaque caractère hors de l'ASCII de
+ * base par un tiret bas lors de l'export : le fichier sort avec des
+ * triples underscores et des accents tronqués. `beforeprint`/`afterprint`
+ * substituent un titre sans diacritique le temps de l'impression, puis
+ * restaurent le vrai titre — sans toucher à ce que voient l'onglet ou un
+ * moteur de recherche le reste du temps.
  */
 (() => {
   const racine = document.documentElement;
+  const titrePourImpression = 'CV-Benaja-Bendo-Matondo-Developpeur-Java-Spring-Boot';
+  const titreEcran = document.title;
+
+  window.addEventListener('beforeprint', () => {
+    document.title = titrePourImpression;
+  });
+  window.addEventListener('afterprint', () => {
+    document.title = titreEcran;
+  });
 
   const cabler = () => {
     const boutons = document.querySelectorAll('[data-imprimer]');

@@ -56,8 +56,8 @@ export const STACK: GroupeStack[] = [
     precision: 'Des interfaces livrées, pas des maquettes.',
     technos: [
       { nom: 'TypeScript', icone: 'typescript', cle: true },
-      { nom: 'React', icone: 'react', cle: true },
       { nom: 'Angular', icone: 'angular' },
+      { nom: 'React', icone: 'react', cle: true },
       { nom: 'Astro', icone: 'astro' },
       { nom: 'Vue', icone: 'vue' },
       { nom: 'HTML / CSS', mono: 'WEB' },

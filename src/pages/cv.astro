@@ -127,7 +127,7 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
     </section>
 
     <section class="cv-section">
-      <h2>Projet personnel en production</h2>
+      <h2>Projets en production</h2>
       <ol class="cv-liste">
         <li class="cv-entree">
           <p class="cv-quand">Depuis déc. 2025</p>
@@ -153,6 +153,22 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
                 Mise en production et exploitation&nbsp;: ~730 tests automatisés,
                 CI/CD GitHub Actions, déploiement continu sur un VPS administré
                 avec Docker, Ansible et Traefik.
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="cv-entree">
+          <p class="cv-quand">Depuis 2026</p>
+          <div class="cv-detail">
+            <h3>Trouve Ton Profil — plateforme Angular de mise en relation professionnelle</h3>
+            <p class="cv-ou">trouve-ton-profil.com · collaborateur technique · fondateur &amp; lead dev&nbsp;: Styve Lioumba</p>
+            <ul class="cv-points">
+              <li>
+                Plateforme congolaise de mise en relation entre particuliers et
+                professionnels locaux (authentification, gestion de profils,
+                navigation par secteur d’activité) — contribution technique en
+                Angular&nbsp;/&nbsp;TypeScript aux côtés du fondateur, qui porte la
+                conception produit et l’architecture.
               </li>
             </ul>
           </div>
@@ -209,6 +225,15 @@ const anneesExperience = 6; // 2020 → 2026, première expérience salariée en
       <p class="cv-export-clavier">
         Au clavier, si vous préférez&nbsp;: <kbd>Cmd</kbd>&nbsp;+&nbsp;<kbd>P</kbd> sur
         Mac, <kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>P</kbd> ailleurs.
+      </p>
+      {/* Un réglage que ni CSS ni JavaScript ne peuvent poser à sa place : la
+          case à cocher vit dans la boîte de dialogue du navigateur, hors de
+          portée de la page. Sans ce rappel, la date, l'URL et la pagination
+          du navigateur s'impriment sur chaque feuille. */}
+      <p class="cv-export-clavier">
+        Pensez à décocher «&nbsp;En-têtes et pieds de page&nbsp;» dans les
+        options d’impression&nbsp;: sans cette case, le navigateur ajoute la
+        date, l’URL et un numéro de page sur chaque feuille.
       </p>
     </aside>
   </article>
