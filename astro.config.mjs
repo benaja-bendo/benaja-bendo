@@ -146,7 +146,10 @@ export default defineConfig({
       // le site en concurrence avec lui-même sur ses propres missions. Elle
       // reste servie (des candidatures pointent dessus) mais porte un
       // `noindex, follow` et sort du plan de site.
-      filter: (page) => !page.includes('/experiences'),
+      // Même traitement pour les variantes du CV (/cv/<profil>) : elles
+      // existent pour le lien envoyé avec une candidature, pas pour Google,
+      // qui y verrait trois fois le même CV. /cv lui-même reste indexé.
+      filter: (page) => !page.includes('/experiences') && !/\/cv\/[^/]+/.test(page),
     }),
   ],
 });

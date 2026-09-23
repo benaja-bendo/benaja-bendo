@@ -43,6 +43,10 @@ autorité non plus. En cas de contradiction, `docs/` gagne.
    (sujets tirés du travail réel, rythme tenable, ce qu'on ne publie pas),
    quelles certifications valent le coup et pourquoi, et la trace des
    corrections faites sur le profil le 18/08/2026.
+9. **[12-cv-par-profil.md](12-cv-par-profil.md)** — 🧾 **Les versions du
+   CV** : une page par profil technique générée depuis une seule source de
+   faits, les contrôles qui empêchent une version d'inventer, l'export PDF
+   local et la marche à suivre pour ajouter ou retirer un profil.
 
 > **Pour une session Claude qui démarre** : lire [../CLAUDE.md](../CLAUDE.md)
 > d'abord — commandes, invariants à ne pas casser (CSP stricte, zéro requête

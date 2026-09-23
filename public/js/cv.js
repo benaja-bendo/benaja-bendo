@@ -8,8 +8,8 @@
  * raccourci clavier pour récupérer un CV, c'est lui demander de renoncer.
  *
  * Deux choix de chargement, et leurs raisons :
- *   - il n'est servi QUE sur /cv, via la prop `script` de Base.astro : les 27
- *     autres pages n'ont rien à en faire ;
+ *   - il n'est servi QUE sur les pages CV (/cv et ses variantes), via la prop
+ *     `script` de Base.astro : les autres pages n'ont rien à en faire ;
  *   - il est chargé avec `defer`, contrairement à theme.js — il ne décide rien
  *     du rendu, donc il n'a aucune raison de le bloquer.
  *
@@ -28,14 +28,21 @@
  * substituent un titre sans diacritique le temps de l'impression, puis
  * restaurent le vrai titre — sans toucher à ce que voient l'onglet ou un
  * moteur de recherche le reste du temps.
+ *
+ * Depuis le 23/09/2026, ce nom n'est plus écrit ici : chaque version du CV
+ * porte le sien dans `data-nom-impression` (src/lib/cv-profils.ts). L'ancien
+ * nom en dur faisait sortir le CV général sous « …-Java-Spring-Boot ». Le
+ * script est chargé en `defer`, donc après l'analyse du HTML : l'attribut
+ * est lisible dès son exécution.
  */
 (() => {
   const racine = document.documentElement;
-  const titrePourImpression = 'CV-Benaja-Bendo-Matondo-Developpeur-Java-Spring-Boot';
+  const nomDeRepli = 'CV-Benaja-Bendo-Matondo';
   const titreEcran = document.title;
 
   window.addEventListener('beforeprint', () => {
-    document.title = titrePourImpression;
+    const porteur = document.querySelector('[data-nom-impression]');
+    document.title = porteur?.getAttribute('data-nom-impression') || nomDeRepli;
   });
   window.addEventListener('afterprint', () => {
     document.title = titreEcran;

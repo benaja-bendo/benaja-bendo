@@ -141,6 +141,13 @@ voit un bouton mort et le résultat reste atteignable.
 > print` reprend donc le même sélecteur, en fin de fichier, et gagne par ordre
 > d'apparition.
 
+> **Suite, 23/09/2026 :** la page existe désormais en plusieurs versions —
+> une par profil technique (`/cv/java-spring`, `/cv/devops`), générées depuis
+> la même source et non indexées. Les projets portent enfin leurs liens de
+> preuve (stores, `trouve-ton-profil.com`), et `npm run cv:pdf` produit les
+> fichiers que les sites d'emploi exigent, sans rien déployer. Voir
+> [docs/12](12-cv-par-profil.md).
+
 ### 6. La promesse d'inventaire n'est pas tenue — ⏳ ouvert, décision à prendre
 
 `/realisations` annonce « un inventaire, pas une sélection » et « y compris

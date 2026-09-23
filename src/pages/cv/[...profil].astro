@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import CV from '../../components/CV.astro';
+import { PROFILS, resoudreProfil, type ProfilCV } from '../../lib/cv-profils';
+
+/**
+ * Toutes les versions du CV, depuis un seul fichier.
+ *
+ * Le paramètre « rest » accepte `undefined` : le profil sans slug est servi
+ * sur /cv, les autres sur /cv/<slug>. Les liens déjà envoyés vers /cv ne
+ * bougent donc pas.
+ *
+ * Les variantes portent `noindex` et sortent du sitemap (astro.config.mjs) :
+ * indexées, elles mettraient Google en concurrence avec le CV général sur le
+ * même contenu. Leur URL canonique reste la leur, sans renvoyer vers /cv :
+ * combiner `noindex` et une canonique vers une autre page envoie deux signaux
+ * contradictoires, et `og:url` — qui suit la canonique dans Base.astro —
+ * ferait afficher l'aperçu du CV général dans un lien partagé.
+ */
+export function getStaticPaths() {
+  return PROFILS.map((profil) => ({
+    params: { profil: profil.slug },
+    props: { profil },
+  }));
+}
+
+interface Props {
+  profil: ProfilCV;
+}
+
+const { profil } = Astro.props;
+// Lève une erreur explicite — et arrête le build — si le profil cite un
+// point, un projet ou une techno qui n'existe pas. Voir cv-profils.ts.
+const cv = resoudreProfil(profil);
+---
+
+<Base
+  title={profil.titre}
+  description={profil.description}
+  script="/js/cv.js"
+  noindex={profil.slug !== undefined}
+>
+  <CV cv={cv} />
+</Base>

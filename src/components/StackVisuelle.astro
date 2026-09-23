@@ -18,16 +18,25 @@ import { STACK, stackCompacte, type GroupeStack } from '../lib/stack';
  *  - `compacte` (accueil) — seulement les entrées `cle`, pour ne pas transformer
  *    la page d'accueil en album de vignettes ;
  *  - `complete` (CV) — tout, puisque c'est précisément ce qu'on vient y chercher.
+ *
+ * `groupes` et `cibles` servent aux profils de CV (src/lib/cv-profils.ts) :
+ * la stack arrive déjà réordonnée, et les technos annoncées dans l'en-tête
+ * du CV sont mises en évidence. Une mise en évidence, pas une note : la puce
+ * dit « c'est ce que ce CV met en avant », jamais « je suis meilleur ici ».
  */
 interface Props {
   variante?: 'compacte' | 'complete';
   /** Rendu à plat, sans les légendes de groupe : utilisé par la page CV. */
   dense?: boolean;
+  /** Groupes déjà ordonnés (profil de CV). Prioritaire sur `variante`. */
+  groupes?: GroupeStack[];
+  /** Noms de technos à mettre en évidence. */
+  cibles?: string[];
 }
 
-const { variante = 'complete', dense = false } = Astro.props;
+const { variante = 'complete', dense = false, groupes: fournis, cibles = [] } = Astro.props;
 const groupes: GroupeStack[] =
-  variante === 'compacte' ? stackCompacte() : STACK;
+  fournis ?? (variante === 'compacte' ? stackCompacte() : STACK);
 ---
 
 <div class:list={['stack', dense && 'stack-dense']}>
@@ -38,7 +47,7 @@ const groupes: GroupeStack[] =
         {!dense && <p class="stack-precision">{groupe.precision}</p>}
         <ul class="stack-puces">
           {groupe.technos.map((techno) => (
-            <li class="stack-puce">
+            <li class:list={['stack-puce', cibles.includes(techno.nom) && 'stack-puce-cible']}>
               <IconeTech icone={techno.icone} mono={techno.mono} nom={techno.nom} />
               <span>{techno.nom}</span>
             </li>

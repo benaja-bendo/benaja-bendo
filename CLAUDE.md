@@ -15,6 +15,7 @@ npm run build    # build statique -> dist/
 npm run preview  # sert dist/ (à privilégier pour vérifier : le dev inline des styles)
 npm run check    # astro check (types)
 npm test         # régressions des scripts + invariants de dist/ (après build)
+npm run cv:pdf   # build + un PDF par version du CV dans output/pdf/ (Chrome local, 2 pages max)
 ```
 
 ## Avant de coder : lire le bon document
@@ -24,6 +25,7 @@ npm test         # régressions des scripts + invariants de dist/ (après build)
 | Pourquoi ce site existe, ce qu'il doit prouver | `docs/02` *(local, hors dépôt)* |
 | Comment on écrit (ton, mots bannis) | `docs/02` *(local)* §4 |
 | **Le site comme outil de recherche d'emploi** (preuves, CV, stack) | [docs/10-audit-recherche-emploi.md](docs/10-audit-recherche-emploi.md) |
+| **Les versions du CV** (profils, contrôles, export PDF, ajouter un profil) | [docs/12-cv-par-profil.md](docs/12-cv-par-profil.md) |
 | **Design : tokens, composants, règles** | [docs/05-design-system-papier-pixels.md](docs/05-design-system-papier-pixels.md) |
 | Ce qui reste à faire / à mettre à jour | [docs/06-chantiers-futurs.md](docs/06-chantiers-futurs.md) |
 | **Contenu : quoi écrire, dans quel ordre, quand ouvrir une rubrique** | [docs/08-plan-contenu.md](docs/08-plan-contenu.md) |
@@ -125,15 +127,18 @@ un document de `docs/`, c'est `docs/` qui gagne.
 src/
   layouts/Base.astro     # <head>, CSP en <meta>, SEO/OG, skip-link
   components/            # SiteHeader, SiteFooter, Preuves, StackVisuelle, IconeTech…
-  pages/                 # index, cv, contact, parcours, colophon, 404, rss.xml.ts
+  pages/                 # index, contact, parcours, colophon, 404, rss.xml.ts
+                         # + cv/[...profil].astro (/cv et ses variantes, gabarit components/CV.astro)
                          # + realisations/, etudes/, notes/ (index, [slug], taxonomies)
                          # /mibeko et /a-propos ne sont que des redirections (astro.config.mjs)
   content/{realisations,etudes,notes}/   # collections, schéma Zod dans content.config.ts
   assets/illustrations/  # SVG éditoriaux, inlinés par <Illustration/> (jamais dans public/)
   lib/                   # contenu.ts (accès + navigation + voisinage), stack.ts, parcours.ts,
+                         # cv-profils.ts (versions du CV : sélection et ordre, jamais de fait),
                          # icones-tech.ts (GÉNÉRÉ — voir scripts/generer-icones.mjs)
   styles/global.css      # LE design system — @font-face, tokens, composants, mouvement, impression
 scripts/generer-icones.mjs # régénère les tracés de logos depuis simple-icons (CC0)
+scripts/exporter-cv.mjs  # `npm run cv:pdf` — PDF de chaque version, jamais déployés
 public/fonts/            # IBM Plex auto-hébergée (OFL 1.1, licence incluse)
 firebase.json            # déploiement Firebase Hosting, en-têtes et cache
 .firebaserc               # alias local du projet Firebase benaja-bendo
@@ -190,6 +195,23 @@ Audit et raisonnement complets : [docs/10](docs/10-audit-recherche-emploi.md).
 - **Un seul visage sur tout le site, et il est sur la 404.** Voir
   [docs/05](docs/05-design-system-papier-pixels.md) §7 pour la règle et le
   tableau des illustrations en place.
+
+## Décisions actées (23/09/2026) — le CV par profil
+
+Mécanisme complet : [docs/12](docs/12-cv-par-profil.md).
+
+- **Une version par profil technique, jamais par entreprise.** `/cv` (général,
+  indexé, dans la navigation), `/cv/java-spring`, `/cv/devops` : `noindex`,
+  hors sitemap, liées de nulle part. Quatre profils au plus.
+- **Un profil choisit et ordonne, il n'écrit jamais un fait.** Les faits vivent
+  dans `src/lib/parcours.ts` (points à `id` stable) ; `src/lib/cv-profils.ts`
+  n'a aucun champ pour une date, un intitulé ou un chiffre. Le build s'arrête
+  si une techno de l'en-tête n'apparaît dans aucun point affiché.
+- **C# / .NET est une expérience réelle, pas une spécialité mise en avant** :
+  cité dans les expériences Congo et dans la stack, jamais dans un en-tête ni
+  en `cle`. À rouvrir seulement si Bénaja le demande.
+- **Les PDF sortent de `npm run cv:pdf`**, dans `output/pdf/`, jamais déployés :
+  la décision « le CV est une page » tient.
 
 ## Vérification avant de rendre la main
 

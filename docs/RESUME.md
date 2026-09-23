@@ -15,7 +15,7 @@ apps mobiles et l'infrastructure qui les porte. Chez **Capgemini** depuis 2023
 
 | | |
 | --- | --- |
-| **Back-end** | Java · Spring Boot · Laravel / PHP · Python · FastAPI · Node.js |
+| **Back-end** | Java · Spring Boot · Laravel / PHP · Python · FastAPI · Node.js · C# / .NET |
 | **Front-end** | TypeScript · React · Astro · Vue |
 | **Mobile** | Kotlin Multiplatform · Flutter |
 | **Données & IA** | PostgreSQL · pgvector · recherche plein texte et trigrammes · RAG sourcé · OCR · Power BI |
@@ -51,10 +51,11 @@ qui **cite l'article exact d'où vient chaque réponse**.
   **AIFE** (finances publiques) : microservices Java / Spring Boot, équipe backend de 10,
   agilité à l'échelle.
 - **KabimGroup**, Pointe-Noire — *2021 → 2023, salarié*
-  Applications Laravel et Flutter, API REST Laravel / Node.js, parseurs OCR et relation
-  client directe, du besoin à la mise en production.
+  Applications web et mobiles (Laravel, Flutter, Node.js et C# / .NET), API REST,
+  parseurs OCR et relation client directe, du besoin à la mise en production.
 - **InfraOne System**, Pointe-Noire — *2020 → 2021, salarié*
-  Logiciels métier développés en équipe, du recueil du besoin aux corrections en production.
+  Logiciels métier développés en équipe, et sites d’entreprise en C# / ASP.NET Core
+  pour des entreprises sous-traitantes de Total E&P Congo.
 - **EPSI Bordeaux** — titre RNCP niveau 7 (Bac+5), en attente de soutenance ; Bachelor
   Concepteur Développeur d'Applications obtenu en 2023. Avant le code : une licence en
   maintenance industrielle, et des machines à réparer.

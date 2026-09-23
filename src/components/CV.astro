@@ -1,0 +1,227 @@
+---
+import StackVisuelle from './StackVisuelle.astro';
+import { CONTACT, DISPONIBILITE, FORMATION, LANGUES, type Etape } from '../lib/parcours';
+import type { CVResolu } from '../lib/cv-profils';
+
+/**
+ * Le CV — un seul gabarit pour toutes ses versions.
+ *
+ * L'audit du 14/08/2026 a relevé qu'un site de recherche d'emploi ne proposait
+ * aucun CV : rien à transmettre en interne pour un recruteur convaincu. Les
+ * deux sorties possibles étaient un PDF maintenu à part, ou une page qui assume
+ * de remplacer le PDF. La seconde est retenue, pour la raison qui gouverne tout
+ * ce projet : un PDF déposé quelque part est exactement le genre d'artefact qui
+ * se périme sans prévenir (invariant n°5, et le site de 2022 resté quatre ans
+ * en ligne). Une page se corrige en une ligne et se redéploie.
+ *
+ * Depuis le 23/09/2026, cette page existe en plusieurs versions — une par
+ * profil de src/lib/cv-profils.ts, générées par src/pages/cv/[...profil].astro.
+ * Ce composant ne connaît pas les profils : il reçoit un CV déjà résolu (faits
+ * filtrés et ordonnés, contrôles passés) et le rend. Aucune version n'écrit
+ * « version DevOps » sur la page : chacune est simplement le CV.
+ *
+ * L'export tient dans la feuille de style : `@page` en A4, en-tête, pied,
+ * navigation et bascule de thème retirés à l'impression, thème clair forcé,
+ * ombres supprimées, coupures de page contrôlées.
+ *
+ * Le déclencheur, lui, est un bouton — et c'est un revirement assumé. La
+ * première version ne donnait que l'indication clavier Cmd/Ctrl + P, au motif
+ * qu'un second fichier JS ne se justifiait pas. C'était un raisonnement de
+ * développeur : le lecteur visé par cette page est un recruteur ou un RH, et
+ * lui demander un raccourci clavier pour récupérer un CV revient à lui demander
+ * de renoncer. Le script vit dans public/js/cv.js, chargé en `defer` sur les
+ * pages CV seulement ; `onclick=` reste exclu, la CSP bloquant tout script en
+ * ligne. L'indication clavier reste affichée : c'est le chemin de repli quand
+ * le bouton est masqué faute de JavaScript.
+ *
+ * Tous les liens sont ABSOLUS, y compris celui du site : un PDF exporté depuis
+ * `npm run preview` ou `npm run cv:pdf` garderait sinon des liens vers
+ * localhost, cliquables et morts chez le recruteur.
+ *
+ * Règle de contenu : cette page ne contient AUCUN fait qui ne soit pas déjà
+ * dans src/lib/parcours.ts, partagé avec /parcours — deux pages qui récitent
+ * un CV de mémoire finissent toujours par diverger d'une date.
+ */
+interface Props {
+  cv: CVResolu;
+}
+
+const { cv } = Astro.props;
+const { profil } = cv;
+const site = new URL('/', Astro.site).href;
+---
+
+<article class="cv container" data-nom-impression={profil.nomImpression}>
+  <header class="cv-entete">
+    <div class="cv-identite">
+      <p class="eyebrow">Curriculum vitæ</p>
+      <h1>Bénaja Bendo‑Matondo</h1>
+      <p class="cv-role">{profil.role}</p>
+      <p class="cv-stack-cle">{cv.ligneEnTete}</p>
+      <p class="cv-situation">
+        {DISPONIBILITE.mobilite} · 6 ans d’expérience · disponible en CDI à
+        partir du <time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time>
+      </p>
+    </div>
+
+    {/* Coordonnées et bouton dans un même bloc : l'en-tête est une grille à
+        deux colonnes, un troisième enfant retomberait sous le nom. */}
+    <div class="cv-actions">
+      <ul class="cv-contacts">
+        <li>
+          <span class="etiq">Email</span>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        </li>
+        <li>
+          <span class="etiq">Site</span>
+          <a href={site}>{CONTACT.site}</a>
+        </li>
+        <li>
+          <span class="etiq">GitHub</span>
+          <a href={`https://${CONTACT.github}`} rel="me noopener">{CONTACT.github}</a>
+        </li>
+        <li>
+          <span class="etiq">LinkedIn</span>
+          <a href={`https://${CONTACT.linkedin}`} rel="me noopener">{CONTACT.linkedin}</a>
+        </li>
+      </ul>
+
+      {/* Masqué par le CSS tant que /js/cv.js n'a pas posé `data-cv-pret` sur
+          <html> : sans script, ce bouton ne ferait rien. L'indication clavier
+          du bas de page reste, elle, toujours affichée. */}
+      <button class="btn btn-primary cv-imprimer" type="button" data-imprimer>
+        Imprimer ou enregistrer en PDF
+      </button>
+    </div>
+  </header>
+
+  <section class="cv-section cv-accroche">
+    <p set:html={profil.accroche} />
+  </section>
+
+  {/* Deux sections dont l'ordre dépend du profil : un profil peut faire passer
+      ses projets avant l'expérience salariée quand ce sont eux qui prouvent
+      ce qu'il met en avant. `order` CSS aurait menti aux lecteurs d'écran et
+      à l'impression : c'est le HTML qui change d'ordre. */}
+  {
+    (profil.projetsEnPremier ? ['projets', 'experience'] : ['experience', 'projets']).map((bloc) =>
+      bloc === 'experience' ? (
+        <section class="cv-section">
+          <h2>Expérience</h2>
+          <ol class="cv-liste">
+            {cv.experiences.map((etape: Etape) => (
+              <li class="cv-entree">
+                <p class="cv-quand">{etape.quand}</p>
+                <div class="cv-detail">
+                  <h3>{etape.quoi}</h3>
+                  <p class="cv-ou">{etape.ou}</p>
+                  {etape.points && etape.points.length > 0 && (
+                    <ul class="cv-points">
+                      {etape.points.map((point) => (
+                        <li>{point.texte}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ) : (
+        <section class="cv-section">
+          <h2>Projets en production</h2>
+          <ol class="cv-liste">
+            {cv.projets.map((projet) => (
+              <li class="cv-entree">
+                <p class="cv-quand">{projet.quand}</p>
+                <div class="cv-detail">
+                  <h3>{projet.quoi}</h3>
+                  <p class="cv-ou">{projet.ou}</p>
+                  {/* Les preuves d'abord : produit en ligne, fiches des
+                      stores. Relevé à la relecture du 23/09/2026 — un CV qui
+                      parle d'applications publiées sans lien vers les stores
+                      demande au lecteur de le croire sur parole. */}
+                  <ul class="cv-liens">
+                    {projet.liens.map((lien) => (
+                      <li>
+                        <a href={lien.url} rel="noopener">{lien.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                  {projet.points.length > 0 && (
+                    <ul class="cv-points">
+                      {projet.points.map((point) => (
+                        <li>{point.texte}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ),
+    )
+  }
+
+  <section class="cv-section cv-section-stack">
+    <h2>Compétences techniques</h2>
+    <StackVisuelle groupes={cv.stack} cibles={cv.cibles} dense />
+  </section>
+
+  <section class="cv-section">
+    <h2>Formation</h2>
+    <ol class="cv-liste">
+      {
+        FORMATION.map((etape) => (
+          <li class="cv-entree">
+            <p class="cv-quand">{etape.quand}</p>
+            <div class="cv-detail">
+              <h3>{etape.quoi}</h3>
+              <p class="cv-ou">{etape.ou}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="cv-section">
+    <h2>Langues</h2>
+    <p>{LANGUES.join(' · ')}</p>
+  </section>
+
+  {/* Bloc écran uniquement : à l'impression, il n'aurait aucun sens sur le
+      papier qu'il vient de produire. */}
+  <aside class="cv-export">
+    <p class="etiq">Emporter ce CV</p>
+    <p>
+      Il n’y a pas de fichier à télécharger, et c’est volontaire&nbsp;: un PDF
+      déposé quelque part se périme sans prévenir, cette page non. Le bouton
+      ci-dessous ouvre la fenêtre d’impression, où «&nbsp;Enregistrer au format
+      PDF&nbsp;» donne un fichier propre — format A4, sans menu ni décor.
+    </p>
+    <div class="cta-row">
+      <button class="btn btn-primary cv-imprimer" type="button" data-imprimer>
+        Imprimer ou enregistrer en PDF
+      </button>
+      <a class="btn btn-ghost" href={`mailto:${CONTACT.email}`}>Me contacter</a>
+    </div>
+    {/* Toujours visible, y compris sans JavaScript : c'est le chemin de
+        repli quand le bouton est masqué, et il donne exactement le même
+        résultat. */}
+    <p class="cv-export-clavier">
+      Au clavier, si vous préférez&nbsp;: <kbd>Cmd</kbd>&nbsp;+&nbsp;<kbd>P</kbd> sur
+      Mac, <kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>P</kbd> ailleurs.
+    </p>
+    {/* Un réglage que ni CSS ni JavaScript ne peuvent poser à sa place : la
+        case à cocher vit dans la boîte de dialogue du navigateur, hors de
+        portée de la page. Sans ce rappel, la date, l'URL et la pagination
+        du navigateur s'impriment sur chaque feuille. */}
+    <p class="cv-export-clavier">
+      Pensez à décocher «&nbsp;En-têtes et pieds de page&nbsp;» dans les
+      options d’impression&nbsp;: sans cette case, le navigateur ajoute la
+      date, l’URL et un numéro de page sur chaque feuille.
+    </p>
+  </aside>
+</article>

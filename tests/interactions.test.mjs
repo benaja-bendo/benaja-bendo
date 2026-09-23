@@ -203,3 +203,39 @@ test('sans les éléments requis, la démo ne masque pas le HTML et ne révèle 
     verifierStatique(d);
   }
 });
+
+function cv({ nom = 'CV-Test-Profil' } = {}) {
+  const racine = new Element();
+  const bouton = new Element();
+  const porteur = new Element();
+  if (nom !== null) porteur.setAttribute('data-nom-impression', nom);
+  const document = {
+    documentElement: racine,
+    readyState: 'complete',
+    title: 'CV — Titre écran, avec accents',
+    querySelector: (s) => (s === '[data-nom-impression]' && nom !== null ? porteur : null),
+    querySelectorAll: (s) => (s === '[data-imprimer]' ? [bouton] : []),
+  };
+  const window = new EventTarget();
+  let impressions = 0;
+  window.print = () => { impressions += 1; };
+  runInNewContext(source('cv'), { document, window });
+  return { racine, bouton, document, window, impressions: () => impressions };
+}
+
+test('le CV prend le nom de PDF de sa version le temps de l’impression, puis rend le titre', () => {
+  const c = cv({ nom: 'CV-Benaja-Bendo-Matondo-Developpeur-Fullstack-DevOps' });
+  assert.equal(c.racine.hasAttribute('data-cv-pret'), true);
+  c.window.dispatchEvent(new Event('beforeprint'));
+  assert.equal(c.document.title, 'CV-Benaja-Bendo-Matondo-Developpeur-Fullstack-DevOps');
+  c.window.dispatchEvent(new Event('afterprint'));
+  assert.equal(c.document.title, 'CV — Titre écran, avec accents');
+  c.bouton.click();
+  assert.equal(c.impressions(), 1);
+});
+
+test('sans nom déclaré par la page, le CV retombe sur un nom ASCII neutre', () => {
+  const c = cv({ nom: null });
+  c.window.dispatchEvent(new Event('beforeprint'));
+  assert.equal(c.document.title, 'CV-Benaja-Bendo-Matondo');
+});

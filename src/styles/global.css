@@ -1234,6 +1234,10 @@ main > section:last-child {
  * 3. Les puces ne sont pas cliquables. Seules quelques technos ont une page de
  *    taxonomie (seuil de deux réalisations) : une rangée où un tiers des puces
  *    répond au clic et deux tiers non est plus frustrante qu'utile.
+ * 4. Sur un CV ciblé, les technos annoncées dans l'en-tête sont mises en
+ *    évidence (`.stack-puce-cible`) : bordure d'accent et fond `--mark-1`,
+ *    le surligneur « preuve » du système. Le nom reste le même, la puce
+ *    reste à sa place dans son groupe — seule l'emphase change.
  * ========================================================================== */
 
 .stack {
@@ -1283,6 +1287,11 @@ main > section:last-child {
   font-family: var(--mono);
   font-size: 0.8rem;
   color: var(--fg);
+}
+.stack-puce-cible {
+  border-color: var(--accent);
+  background: var(--mark-1);
+  font-weight: 600;
 }
 .icone-tech {
   flex: none;
@@ -3457,6 +3466,12 @@ a.illustration-lien:hover .illustration-scene {
   font-size: 1.02rem;
   color: var(--accent);
 }
+.cv-stack-cle {
+  margin: 0.35rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
 .cv-situation {
   margin: 0.4rem 0 0;
   color: var(--muted);
@@ -3546,6 +3561,39 @@ a.illustration-lien:hover .illustration-scene {
   margin: 0.2rem 0 0;
   font-size: 0.92rem;
   color: var(--muted);
+}
+/* Les preuves d'un projet — produit en ligne, fiches des stores — en une ligne
+   de liens séparés par un point médian. Le séparateur est du CSS : il ne
+   s'annonce pas dans un lecteur d'écran, qui lit une vraie liste. */
+.cv-liens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.84rem;
+}
+.cv-liens li + li::before {
+  content: '·';
+  margin: 0 0.55rem;
+  color: var(--muted);
+}
+@media (max-width: 48rem) {
+  /* Au doigt : 44 px par lien, et un simple espacement au lieu du point
+     médian, qui se retrouvait en début de ligne quand la liste se replie. */
+  .cv-liens {
+    column-gap: 1.1rem;
+  }
+  .cv-liens li + li::before {
+    content: none;
+  }
+  .cv-liens a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
 }
 .cv-points {
   margin: 0.75rem 0 0;
@@ -3723,6 +3771,9 @@ a.illustration-lien:hover .illustration-scene {
     margin-top: 0.5rem;
     break-inside: auto;
   }
+  .cv-accroche p {
+    line-height: 1.35;
+  }
   .cv-entete {
     padding-bottom: 0.4rem;
     gap: 0.6rem;
@@ -3745,13 +3796,48 @@ a.illustration-lien:hover .illustration-scene {
     padding-top: 0.4rem;
   }
   .cv-points {
-    margin-top: 0.35rem;
+    gap: 0.1rem;
+    margin-top: 0.25rem;
   }
   .cv-points li {
-    line-height: 1.3;
+    line-height: 1.25;
   }
   .cv-points li + li {
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
+  }
+  /* Les liens de preuve restent cliquables dans le PDF ; sur papier, leur
+     libellé (« App Store », « mibeko.fr ») suffit à les retrouver. */
+  .cv-liens {
+    column-gap: 0;
+    margin-top: 0.1rem;
+    font-size: 8pt;
+  }
+  .cv-liens li + li::before {
+    content: '·';
+  }
+  /* ⚠️ Une feuille A4 fait environ 680 px CSS de large : sous le seuil de
+     48rem, les règles « mobile » s'appliquent AUSSI à l'impression. La zone
+     tactile de 44 px des contacts et des liens de preuve triplait donc la
+     hauteur de leurs lignes sur papier (constaté le 23/09/2026 sur un export
+     réel). Au doigt, elle compte ; sur une feuille, elle coûte des lignes. */
+  .cv-contacts a,
+  .cv-liens a {
+    display: inline;
+    min-height: 0;
+  }
+  /* Une entrée courte ne se coupe jamais. Une entrée longue (quatre points
+     et plus : Mibeko, Capgemini) repoussée d'un bloc à la page suivante
+     laissait un quart de page blanc : elle peut se couper, mais entre deux
+     points seulement, et jamais avant son premier point. */
+  .cv-entree:has(.cv-points > li:nth-child(4)) {
+    break-inside: auto;
+  }
+  .cv-points > li {
+    break-inside: avoid;
+  }
+  .cv-ou,
+  .cv-liens {
+    break-after: avoid;
   }
 
   /* La stack passe en deux colonnes façon presse : à plat, sept groupes
@@ -3779,12 +3865,24 @@ a.illustration-lien:hover .illustration-scene {
     break-inside: avoid;
   }
   .stack-groupe + .stack-groupe {
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
+  }
+  .stack-puces {
+    gap: 0.2rem 0.3rem;
+    margin-top: 0.25rem;
   }
   .stack-puce {
     border-width: 1px;
-    padding: 0.1rem 0.35rem;
+    padding: 0.05rem 0.3rem;
     font-size: 8pt;
+  }
+  /* Les aplats de fond sautent souvent à l'impression : la mise en évidence
+     passe par le trait et la graisse, qui survivent au noir et blanc. */
+  .stack-puce-cible {
+    border-width: 1.5px;
+    border-color: #000000;
+    background: #ffffff;
+    font-weight: 700;
   }
   .icone-tech {
     width: 0.85rem;

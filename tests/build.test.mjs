@@ -49,7 +49,7 @@ test('les scripts de page restent locaux au CV et à l’étude Mibeko', () => {
     const chemin = relative(racine, f);
     const scripts = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/gi)].map((m) => m[1]);
     if (scripts.includes('/js/demo-mibeko.js')) assert.equal(chemin, 'etudes/mibeko/index.html');
-    if (scripts.includes('/js/cv.js')) assert.equal(chemin, 'cv/index.html');
+    if (scripts.includes('/js/cv.js')) assert.match(chemin, /^cv\/(?:[a-z0-9-]+\/)?index\.html$/);
     for (const script of scripts) assert.ok(existsSync(join(racine, script)), `${f} → ${script}`);
   }
   assert.match(pages.get(join(racine, 'etudes/mibeko/index.html')), /src="\/js\/demo-mibeko.js"/);
@@ -74,4 +74,50 @@ test('sans script, la CSS masque la commande et l’attente, et les liens du som
   const sources = css.match(/\n\.assistant-sources\s*\{([^}]+)\}/)[1];
   assert.doesNotMatch(sources, /transition:/, 'Le retour au rendu statique doit être immédiat.');
   assert.match(css, /\n\.sommaire a\s*\{[^}]*min-height:\s*2\.75rem/);
+});
+
+// Les versions du CV (src/lib/cv-profils.ts) : /cv est le CV général, public et
+// indexé ; /cv/<profil> sont des variantes à envoyer, jamais à découvrir.
+const pagesCV = [...pages].filter(([f]) => /^cv\/(?:[a-z0-9-]+\/)?index\.html$/.test(relative(racine, f)));
+const variantes = pagesCV.filter(([f]) => relative(racine, f) !== 'cv/index.html');
+
+test('le CV général est indexé ; ses variantes sont en noindex, hors sitemap et liées de nulle part', () => {
+  const general = pages.get(join(racine, 'cv/index.html'));
+  assert.ok(general, 'dist/cv/index.html manquant');
+  assert.doesNotMatch(general, /<meta name="robots"/);
+  assert.ok(variantes.length > 0, 'aucune variante de CV générée');
+  const sitemap = readdirSync(racine)
+    .filter((f) => /^sitemap-\d+\.xml$/.test(f))
+    .map((f) => readFileSync(join(racine, f), 'utf8'))
+    .join('\n');
+  assert.match(sitemap, /\/cv\/<\/loc>/);
+  for (const [f, html] of variantes) {
+    const chemin = `/${relative(racine, f).replace(/index\.html$/, '')}`;
+    assert.match(html, /<meta name="robots" content="noindex, follow">/, chemin);
+    assert.ok(!sitemap.includes(chemin), `${chemin} ne doit pas figurer dans le sitemap`);
+    // Un lien <a>, pas la canonique que la variante porte sur elle-même.
+    const motif = new RegExp(`<a\\b[^>]*\\bhref="(?:https://benaja-bendo\\.fr)?${chemin.replace(/\/$/, '')}/?"`);
+    for (const [autre, contenu] of pages) {
+      assert.doesNotMatch(contenu, motif, `${relative(racine, autre)} renvoie vers la variante ${chemin}`);
+    }
+  }
+});
+
+test('chaque version du CV nomme son PDF, montre ses preuves et ne lie qu’en absolu', () => {
+  const noms = new Set();
+  for (const [f, html] of pagesCV) {
+    const chemin = relative(racine, f);
+    const nom = html.match(/data-nom-impression="([^"]+)"/)?.[1];
+    assert.match(nom ?? '', /^[A-Za-z0-9-]+$/, chemin);
+    noms.add(nom);
+    assert.match(html, /href="https:\/\/apps\.apple\.com\/app\/id6768865781"/, chemin);
+    assert.match(html, /href="https:\/\/play\.google\.com\/store\/apps\/details\?id=cg\.mibeko\.app"/, chemin);
+    assert.match(html, /href="https:\/\/trouve-ton-profil\.com"/, chemin);
+    // Un lien relatif deviendrait « localhost » dans un PDF exporté en local.
+    const article = html.slice(html.indexOf('<article class="cv'), html.indexOf('</article>'));
+    for (const [, href] of article.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
+      assert.match(href, /^(?:https:|mailto:)/, `${chemin} : lien non absolu ${href}`);
+    }
+  }
+  assert.equal(noms.size, pagesCV.length, 'deux versions du CV proposent le même nom de PDF');
 });
