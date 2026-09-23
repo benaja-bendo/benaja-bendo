@@ -56,7 +56,7 @@ export const EXPERIENCES: Etape[] = [
   {
     id: 'capgemini',
     quand: '2023–2026',
-    quoi: 'Développeur fullstack — Capgemini',
+    quoi: 'Développeur fullstack chez Capgemini',
     ou: 'Bordeaux · stage puis alternance · AIFE, puis compte France Travail',
     points: [
       {
@@ -67,7 +67,7 @@ export const EXPERIENCES: Etape[] = [
       {
         id: 'ft-pilotage',
         texte:
-          'Livrable unique architecturé pour être piloté en ligne de commande : relances, envoi de mails et exposition d’API REST appelables indépendamment, suppression des traitements manuels du cycle.',
+          'Un seul outil, pilotable en ligne de commande : relances, envoi de mails et API REST se lancent séparément, ce qui a supprimé les traitements manuels du cycle.',
       },
       {
         id: 'ft-decisionnel',
@@ -77,7 +77,7 @@ export const EXPERIENCES: Etape[] = [
       {
         id: 'aife-microservices',
         texte:
-          'AIFE, finances publiques (2023–2024) : développement de microservices Java / Spring Boot (API REST, SQL, tests unitaires JUnit) dans une équipe backend de 10 personnes, en SAFe — PI planning, estimations, revues de code, démonstrations client.',
+          'AIFE, finances publiques (2023–2024) : développement de microservices Java / Spring Boot (API REST, SQL, tests unitaires JUnit) dans une équipe backend de 10 personnes, avec la méthode agile SAFe : PI planning, estimations, revues de code, démonstrations client.',
       },
       {
         id: 'aviation-ia-aws',
@@ -90,7 +90,7 @@ export const EXPERIENCES: Etape[] = [
   {
     id: 'kabimgroup',
     quand: '2021–2023',
-    quoi: 'Développeur web & mobile — KabimGroup (startup)',
+    quoi: 'Développeur web et mobile chez KabimGroup (startup)',
     ou: 'Pointe-Noire, Congo · salarié',
     points: [
       // C# / .NET est cité ici, et en dernier : c'est une expérience réelle,
@@ -98,12 +98,12 @@ export const EXPERIENCES: Etape[] = [
       {
         id: 'kabim-livraisons',
         texte:
-          'Applications web et mobiles livrées en production — Laravel, Flutter, Node.js et C# / .NET — avec conception et intégration d’API REST.',
+          'Applications web et mobiles livrées en production (Laravel, Flutter, Node.js et C# / .NET), avec conception et intégration d’API REST.',
       },
       {
         id: 'kabim-ocr',
         texte:
-          'Parseurs documentaires avec OCR : extraction et structuration de données issues de documents clients.',
+          'Lecture automatique de documents clients (OCR) : extraction et mise en forme des informations qu’ils contiennent.',
       },
       {
         id: 'kabim-relation-client',
@@ -115,7 +115,7 @@ export const EXPERIENCES: Etape[] = [
   {
     id: 'infraone',
     quand: '2020–2021',
-    quoi: 'Développeur fullstack — InfraOne System',
+    quoi: 'Développeur fullstack chez InfraOne System',
     ou: 'Pointe-Noire, Congo · salarié',
     points: [
       {
@@ -147,7 +147,7 @@ export const PROJETS: Projet[] = [
   {
     id: 'mibeko',
     quand: 'Depuis déc. 2025',
-    quoi: 'Mibeko — SaaS LegalTech, conçu et opéré seul',
+    quoi: 'Mibeko : un SaaS juridique (LegalTech), conçu et opéré seul',
     ou: 'Applications iOS et Android publiées · six dépôts publics',
     liens: [
       { label: 'mibeko.fr', url: 'https://mibeko.fr' },
@@ -162,71 +162,79 @@ export const PROJETS: Projet[] = [
       {
         id: 'mibeko-assistant',
         texte:
-          'Un assistant qui rend le droit congolais et OHADA consultable en langage naturel, en citant l’article exact d’où vient chaque réponse — la traçabilité prime sur la formulation.',
+          'Un assistant qui répond aux questions de droit congolais et OHADA posées avec ses propres mots, en citant l’article exact d’où vient chaque réponse.',
       },
       {
         id: 'mibeko-stack',
         texte:
-          'Stack : API Laravel / PostgreSQL, ingestion Python / FastAPI, tableau de bord React / TypeScript, portail Astro, applications mobiles Kotlin Multiplatform.',
+          'Stack : API Laravel / PostgreSQL, traitement des documents en Python / FastAPI, tableau de bord React / TypeScript, site public Astro, applications mobiles Kotlin Multiplatform.',
       },
       {
         id: 'mibeko-ingestion',
         texte:
-          'Chaîne d’ingestion documentaire : OCR, structuration par modèle de langage validée par un schéma strict, provenance conservée jusqu’à l’empreinte SHA-256 du fichier source.',
+          'Traitement des documents : lecture des PDF scannés (OCR), mise en forme par un modèle de langage contrôlé par un schéma strict, origine de chaque texte gardée jusqu’au fichier source.',
       },
       {
         id: 'mibeko-recherche',
         texte:
-          'Recherche hybride PostgreSQL / pgvector combinant plein texte, proximité orthographique et similarité sémantique.',
+          'Recherche hybride PostgreSQL / pgvector : mots exacts, fautes de frappe proches et sens de la question, pour trouver le bon article sans connaître les termes de la loi.',
       },
       {
         id: 'mibeko-production',
         texte:
-          'Mise en production et exploitation : ~730 tests unitaires et d’intégration, CI/CD GitHub Actions, déploiement continu sur un VPS administré avec Docker, Ansible et Traefik.',
+          'Mise en production et exploitation : ~730 tests unitaires et d’intégration, CI/CD GitHub Actions (tests et mise en ligne automatiques), serveur administré avec Docker, Ansible et Traefik.',
       },
       {
         id: 'mibeko-livraison-web',
         texte:
-          'Livraison web : tests à chaque push et pull request, puis image Docker publiée sur GHCR et déployée par GitHub Actions sur un VPS décrit en Ansible (Traefik, PostgreSQL / pgvector, MinIO, sauvegardes du fonds).',
+          'Mise en ligne du web : à chaque modification, les tests tournent ; s’ils passent, GitHub Actions construit une image Docker et la déploie sur un serveur configuré en Ansible (Traefik, PostgreSQL / pgvector, MinIO, sauvegardes).',
       },
       {
         id: 'mibeko-livraison-mobile',
         texte:
-          'Livraison mobile : build et tests à chaque push, versions de test distribuées par Firebase App Distribution et TestFlight, publication sur Google Play déclenchée par un tag de version.',
+          'Mise en ligne mobile : compilation et tests à chaque modification, versions d’essai pour les testeurs (Firebase App Distribution, TestFlight), publication sur Google Play à chaque version validée.',
       },
       {
         id: 'mibeko-tests',
         texte:
-          'Tests unitaires et d’intégration : Pest contre une vraie base PostgreSQL / pgvector, Vitest et tests Kotlin exécutés en CI ; pytest sur la chaîne d’ingestion.',
+          'Tests unitaires (une fonction seule) et d’intégration (plusieurs briques ensemble, vraie base PostgreSQL) : Pest, Vitest et Kotlin lancés à chaque modification, plus pytest.',
       },
       {
         id: 'mibeko-ia-agentique',
         texte:
-          'IA agentique encadrée : un agent interroge le fonds par appels d’outils, et un serveur MCP expose recherche, lecture d’article et détection d’anomalies — des outils qui signalent sans jamais modifier le corpus : chaque correction est publiée par un humain.',
+          'IA agentique encadrée : un agent IA cherche lui-même les articles utiles, et un serveur MCP (accès standard pour assistants IA) permet de chercher, lire ou signaler une anomalie. L’IA signale ; un humain corrige et publie.',
       },
       {
         id: 'mibeko-organisation',
         texte:
-          'Organisation : plus de 250 tickets GitHub Issues reliés aux pull requests ; agents de code (Claude Code, OpenCode) cadrés par des consignes versionnées dans chaque dépôt.',
+          'Organisation : chaque tâche est un ticket GitHub (plus de 250), relié au code qui la traite. Assistants de code IA (Claude Code, OpenCode) encadrés par des règles écrites dans chaque dépôt.',
       },
       {
         id: 'mibeko-mesure',
         texte:
-          'Mesure d’audience Umami auto-hébergée et sans cookies ; journaux des conteneurs consultables avec Dozzle.',
+          'Mesure d’audience avec Umami, hébergé sur mon serveur et sans cookies. Journaux des services consultables avec Dozzle.',
       },
     ],
   },
   {
     id: 'trouve-ton-profil',
     quand: 'Depuis 2026',
-    quoi: 'Trouve Ton Profil — plateforme Angular de mise en relation professionnelle',
-    ou: 'Collaborateur technique · fondateur & lead dev : Styve Lioumba',
+    quoi: 'Trouve Ton Profil : trouver le bon professionnel près de chez soi, au Congo',
+    ou: 'Collaborateur technique, développeur fullstack · fondateur et lead dev : Styve Lioumba',
     liens: [{ label: 'trouve-ton-profil.com', url: 'https://trouve-ton-profil.com' }],
     points: [
+      // Décrit d'après le site lui-même (lu le 23/09/2026) : sa mission, son
+      // fonctionnement, et la page « L'équipe » qui me présente comme
+      // collaborateur technique, développeur fullstack.
+      {
+        id: 'ttp-solution',
+        texte:
+          'Une plateforme gratuite pour trouver un professionnel en République du Congo, du bâtiment à la formation. Chacun y crée son profil pour être trouvé, avec une idée simple : rendre visibles des savoir-faire qui ne passent pas forcément par un diplôme.',
+      },
       {
         id: 'ttp-contribution',
         texte:
-          'Plateforme congolaise de mise en relation entre particuliers et professionnels locaux (authentification, gestion de profils, navigation par secteur d’activité) — contribution technique en Angular / TypeScript aux côtés du fondateur, qui porte la conception produit et l’architecture.',
+          'Mon rôle : collaborateur technique. Je participe au développement en Angular / TypeScript aux côtés du fondateur, qui pilote le produit et l’architecture.',
       },
     ],
   },
@@ -239,8 +247,8 @@ export const FORMATION: Etape[] = [
     // L'intitulé humain d'abord, la référence administrative ensuite, le statut
     // daté en dernier : « Bac+5 » à côté d'une période « 2024–2026 » sans
     // mention se lisait comme inachevé.
-    quoi: 'Expert en informatique — Bac+5 (titre RNCP niveau 7)',
-    ou: 'EPSI Bordeaux · en attente de soutenance',
+    quoi: 'Expert en informatique, Bac+5 (titre RNCP niveau 7)',
+    ou: 'EPSI Bordeaux · obtenu en 2026',
   },
   {
     id: 'epsi-bachelor',
@@ -261,7 +269,7 @@ export const FORMATION: Etape[] = [
   {
     id: 'licence-gsi',
     quand: '2016–2019',
-    quoi: 'Licence Génie des systèmes industriels — spécialité maintenance',
+    quoi: 'Licence Génie des systèmes industriels, spécialité maintenance',
     ou: 'Institut International (2i), Pointe-Noire',
   },
 ];
@@ -279,8 +287,8 @@ export const DISPONIBILITE = {
 } as const;
 
 export const LANGUES = [
-  'Français — langue maternelle',
-  'Anglais — professionnel (réunions, échanges clients, documentation technique)',
+  'Français : langue maternelle',
+  'Anglais : professionnel (réunions, échanges clients, documentation technique)',
 ] as const;
 
 export const CONTACT = {

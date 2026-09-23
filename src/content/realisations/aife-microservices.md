@@ -1,5 +1,5 @@
 ---
-nom: "Microservices en agilité à l’échelle — AIFE"
+nom: "Microservices en agilité à l’échelle (AIFE)"
 resume: "Microservices Java / Spring Boot au sein d’une équipe backend de 10 personnes, puis outil de traitement de PDF et recherche assistée par IA sur AWS."
 statut: "termine"
 periode: "2023 – 2024"

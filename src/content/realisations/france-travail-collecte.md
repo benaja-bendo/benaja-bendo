@@ -1,9 +1,9 @@
 ---
-nom: "Collecte des prévisions & décisionnel — France Travail"
+nom: "Collecte des prévisions et décisionnel (France Travail)"
 resume: "Deux applications fragiles refondues en un service Java / Spring Boot : un cycle concernant 400+ collaborateurs ramené d’environ 10 jours à 48 heures."
 statut: "en-cours"
 periode: "2024 – 2026"
-role: "Développeur fullstack — refonte du service de collecte, conception des tableaux de bord, support utilisateur"
+role: "Développeur fullstack : refonte du service de collecte, conception des tableaux de bord, support utilisateur"
 stack:
   [
     "Java",

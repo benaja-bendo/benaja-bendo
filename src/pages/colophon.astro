@@ -4,7 +4,7 @@ import { version as astroVersion } from 'astro/package.json';
 ---
 
 <Base
-  title="Colophon — comment ce site est fait"
+  title="Colophon : comment ce site est fait"
   description="Ce site est un site statique Astro, sans traceur, avec une politique de sécurité stricte. Voici comment il est construit et déployé."
 >
   <section class="container">
@@ -26,14 +26,14 @@ import { version as astroVersion } from 'astro/package.json';
       <p>
         Trois fichiers JavaScript existent, et un seul est envoyé partout&nbsp;: <code
         >theme.js</code>, qui mémorise le choix
-        clair/sombre. Le site s’en est passé jusqu’au 14&nbsp;août 2026 — une
+        clair/sombre. Le site s’en est passé jusqu’au 14&nbsp;août 2026 : une
         préférence qui survit à la navigation exige un stockage local, et une
         bascule en CSS pur se réinitialise à chaque lien suivi. <code
         >cv.js</code> n’est chargé que par les pages du <a href="/cv">CV</a>&nbsp;:
         il ouvre la fenêtre d’impression, une action qui n’a aucun équivalent en
         CSS. <code>demo-mibeko.js</code>, chargé uniquement par <a
         href="/etudes/mibeko">l’étude Mibeko</a>, rejoue l’écran réel de
-        l’assistant — question tapée, sources qui se posent — depuis un HTML déjà
+        l’assistant (question tapée, sources qui se posent) depuis un HTML déjà
         complet&nbsp;: il vide la conversation puis la reconstitue, il ne
         l’invente pas.
       </p>
@@ -41,7 +41,7 @@ import { version as astroVersion } from 'astro/package.json';
         Sans JavaScript, tout reste lisible et rien ne ment&nbsp;: le sélecteur de
         thème, le bouton d’impression et la démonstration Mibeko sont masqués ou
         figés tant que leur script n’a pas signalé qu’il fonctionnait. Un bouton
-        qui ne fait rien est pire que pas de bouton — le raccourci clavier reste
+        qui ne fait rien est pire que pas de bouton. Le raccourci clavier reste
         écrit sur la page du CV, et donne exactement le même résultat.
       </p>
 
@@ -69,7 +69,7 @@ import { version as astroVersion } from 'astro/package.json';
         (HSTS, <code>X-Content-Type-Options</code>, <code>Referrer-Policy</code>, <code>Permissions-Policy</code>,
         protection anti-clickjacking) sont posés
         côté hébergeur. Aucun cookie, aucun traceur, aucune bannière de
-        consentement — parce qu’il n’y a rien à consentir.
+        consentement, parce qu’il n’y a rien à consentir.
       </p>
 
       <h2>Design</h2>
@@ -77,7 +77,7 @@ import { version as astroVersion } from 'astro/package.json';
         Composé en <a href="https://www.ibm.com/plex/" rel="noopener">IBM&nbsp;Plex</a>
         (Sans et Mono, licence SIL Open Font 1.1), auto-hébergé&nbsp;: les fichiers
         sont servis depuis ce domaine, aucune requête ne part vers un tiers. Les
-        motifs pixel — liserés, puces, glyphes — ne sont pas des images&nbsp;:
+        motifs pixel (liserés, puces, glyphes) ne sont pas des images&nbsp;:
         ils sont <strong>dessinés en CSS</strong>, comme l’art de mes jeux est
         généré par code. L’unique illustration éditoriale de l’accueil adapte
         l’icône <a href="https://koboyo.com/icons/citation-footnote" rel="noopener">Citation footnote de Koboyo</a>,
@@ -89,17 +89,17 @@ import { version as astroVersion } from 'astro/package.json';
         <code>academic-year-planner</code>, <code>answer</code> et <code
         >bald-person-looking-confused</code>. Ils sont copiés dans <code
         >src/assets/illustrations/</code>, rendus en ligne dans le HTML et
-        recolorés par <code>currentColor</code> — aucun n’est chargé depuis un
+        recolorés par <code>currentColor</code>&nbsp;: aucun n’est chargé depuis un
         tiers, aucun ne porte de couleur en dur. Thème clair et sombre&nbsp;: le
         système décide par défaut, et deux commandes permettent de forcer l’un ou
-        l’autre — un bouton dans l’en-tête, le sélecteur détaillé en pied de page.
+        l’autre&nbsp;: un bouton dans l’en-tête, le sélecteur détaillé en pied de page.
       </p>
       <p>
         Les logos de technologies de la page <a href="/cv">CV</a> et de l’accueil
         viennent de <a href="https://simple-icons.org" rel="noopener">Simple&nbsp;Icons</a>
         (licence CC0, domaine public). Le paquet n’est pas une dépendance du
         site&nbsp;: les tracés utilisés ont été copiés une fois dans le code, puis
-        le paquet retiré — vingt icônes ne justifient pas d’en installer trois
+        le paquet retiré&nbsp;: vingt icônes ne justifient pas d’en installer trois
         mille. Ils sont rendus dans l’encre du thème, jamais dans la couleur de
         la marque, et les marques citées restent la propriété de leurs
         détenteurs. Sans icône libre disponible, un monogramme prend la place

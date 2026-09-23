@@ -56,7 +56,7 @@ qui **cite l'article exact d'où vient chaque réponse**.
 - **InfraOne System**, Pointe-Noire — *2020 → 2021, salarié*
   Logiciels métier développés en équipe, et sites d’entreprise en C# / ASP.NET Core
   pour des entreprises sous-traitantes de Total E&P Congo.
-- **EPSI Bordeaux** — titre RNCP niveau 7 (Bac+5), en attente de soutenance ; Bachelor
+- **EPSI Bordeaux** — titre RNCP niveau 7 (Bac+5), obtenu en 2026 ; Bachelor
   Concepteur Développeur d'Applications obtenu en 2023. Avant le code : une licence en
   maintenance industrielle, et des machines à réparer.
 

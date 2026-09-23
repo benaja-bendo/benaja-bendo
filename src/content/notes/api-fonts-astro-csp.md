@@ -16,14 +16,14 @@ Plex proprement.
 
 ## Ce que j’ai constaté
 
-Le build passe et les fichiers de police sont bien émis en local — l’API fait son
+Le build passe et les fichiers de police sont bien émis en local : l’API fait son
 travail. Mais le composant `<Font/>` écrit sa déclaration `@font-face` dans un
 `<style set:html>`, donc un style **inline**. Résultat en production : **dix
 violations CSP** et aucune police chargée. Aucune option de l’intégration n’émet un
 fichier CSS externe à la place.
 
-La seconde sortie possible — activer `security.csp` d’Astro et reporter les hashes
-générés dans les en-têtes de l’hébergeur — a été écartée : elle crée deux sources de
+La seconde sortie possible (activer `security.csp` d’Astro et reporter les hashes
+générés dans les en-têtes de l’hébergeur) a été écartée : elle crée deux sources de
 vérité à resynchroniser à chaque changement de police.
 
 ## Ce que j’ai retenu
@@ -43,14 +43,14 @@ npm run build && grep -rlE '<style[ >]|<[a-zA-Z][^>]* style="' dist --include='*
 ```
 
 Elle ne doit **rien** afficher. Si un fichier sort, quelque chose a réintroduit un
-style inline — le plus souvent une intégration, pas mon code. C’est d’ailleurs ce
+style inline, le plus souvent une intégration et pas mon code. C’est d’ailleurs ce
 qui m’a fait couper la coloration syntaxique des blocs de code : Shiki écrit ses
 couleurs en attribut de style sur le bloc et sur chaque fragment coloré.
 
 Le motif a l’air compliqué pour une bonne raison. Sa version naïve signalait cette
 page même : la commande recherchée apparaît dans le bloc ci-dessus, échappée par le
 générateur, et se trouvait donc elle-même. Exiger un contexte de balise ouvrante
-règle le problème — une page qui parle d’un attribut n’en contient pas un.
+règle le problème : une page qui parle d’un attribut n’en contient pas un.
 
 ## Les limites
 

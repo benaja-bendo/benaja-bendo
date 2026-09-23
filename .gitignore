@@ -44,3 +44,9 @@ lerna-debug.log*
 docs/01-audit-existant.md
 docs/02-profil-et-strategie-image.md
 selection-assets
+
+# Exports locaux — jamais publiés (dépôt public).
+# output/ : PDF du CV produits par `npm run cv:pdf`, régénérables en une commande.
+# tmp/    : fichiers de travail, dont des captures de candidature.
+output/
+tmp/

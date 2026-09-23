@@ -3,7 +3,7 @@ nom: "Mibeko"
 resume: "Un assistant qui rend plus de 1 000 textes de droit congolais et OHADA consultables en langage naturel, en citant l’article exact d’où vient chaque réponse."
 statut: "production"
 periode: "Depuis décembre 2025"
-role: "Conception, développement et exploitation — seul, du backend aux stores"
+role: "Conception, développement et exploitation en solo, du serveur jusqu’aux stores"
 stack:
   [
     "Laravel",
@@ -63,7 +63,7 @@ preuves:
     url: "https://github.com/benaja-bendo/vps_infra"
     quoi: "L’infrastructure du VPS. Ansible, Docker, Traefik, MinIO."
     famille: "code"
-enseignement: "Sur un outil juridique, la traçabilité passe avant la qualité de la réponse. Tant qu’une phrase ne renvoie pas à l’article exact dont elle vient, elle n’est pas opposable — et l’outil redevient un chatbot qu’on ne peut montrer à personne."
+enseignement: "Sur un outil juridique, la traçabilité passe avant la qualité de la réponse. Tant qu’une phrase ne renvoie pas à l’article exact dont elle vient, elle n’est pas opposable, et l’outil redevient un chatbot qu’on ne peut montrer à personne."
 etude: "mibeko"
 epingle: true
 ordre: 1
@@ -72,11 +72,11 @@ maj: 2026-09-15
 
 Le droit congolais et le droit OHADA existent, mais éparpillés dans des PDF
 scannés : introuvables, impossibles à interroger, sans garantie de citer la bonne
-source. Mibeko en a fait un fonds interrogeable — plus de 1 000 textes officiels,
-plus de 17 000 articles — et répond aux questions en langage naturel, chaque
+source. Mibeko en a fait un fonds interrogeable (plus de 1 000 textes officiels,
+plus de 17 000 articles) et répond aux questions en langage naturel, chaque
 réponse pointant vers l’article exact dont elle vient.
 
 Je l’ai porté seul de l’idée à la production : chaîne d’ingestion, API, recherche
 hybride, tableau de bord, applications mobiles publiées sur les deux stores, et
 l’exploitation du VPS qui héberge le tout. C’est le projet qui me sert de
-référence pour tout le reste — parce qu’il est complet et parce qu’il tourne.
+référence pour tout le reste, parce qu’il est complet et parce qu’il tourne.

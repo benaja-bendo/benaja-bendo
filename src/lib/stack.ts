@@ -115,7 +115,7 @@ export const STACK: GroupeStack[] = [
   },
   {
     titre: 'Ops & production',
-    precision: 'Ce que je déploie, je l’exploite — mises en production comprises.',
+    precision: 'Ce que je mets en ligne, je le fais aussi tourner au quotidien.',
     technos: [
       { nom: 'Docker', icone: 'docker', cle: true },
       { nom: 'Git', mono: 'GIT' },

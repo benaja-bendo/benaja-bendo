@@ -99,7 +99,8 @@ contient que des liens absolus.
 Les sites d'emploi exigent un fichier. `npm run cv:pdf` construit le site, le
 sert localement et fait imprimer chaque version par le Chrome installé
 (`--no-pdf-header-footer`), vers `output/pdf/<nomImpression>.pdf`. Aucune
-dépendance, rien de déployé. Le script vérifie que **chaque version tient en
+dépendance, rien de déployé, rien de versionné : `output/` est dans le
+`.gitignore`. Le script vérifie que **chaque version tient en
 deux pages A4** et sort en erreur sinon. Chemin de Chrome surchargeable par
 `CHROME_PATH`.
 

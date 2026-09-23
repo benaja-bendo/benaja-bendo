@@ -15,7 +15,7 @@ nouvelles études de cas.
 
 ## Ce que ça bloque
 
-Le fragment — tout ce qui suit le `#` — est traité **par le navigateur** et n’est
+Le fragment (tout ce qui suit le `#`) est traité **par le navigateur** et n’est
 jamais envoyé dans la requête HTTP. L’hébergeur, Firebase Hosting ici comme
 n’importe quel autre, ne voit que `/experiences`. Il ne peut donc pas router deux
 ancres vers deux destinations différentes : côté serveur, les deux URL sont
@@ -29,7 +29,7 @@ par un ancien lien atterrit au bon endroit et repart en un clic.
 
 C’est moins élégant qu’une règle de redirection, mais ça ne casse aucun lien déjà
 envoyé. Une redirection ne sera posée que le jour où plus personne n’arrive par ces
-ancres — et une URL publique ne se casse pas pour rendre une arborescence plus
+ancres. Une URL publique ne se casse pas pour rendre une arborescence plus
 jolie.
 
 ## Les limites

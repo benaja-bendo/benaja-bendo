@@ -22,7 +22,7 @@ Chez InfraOne System, conception de sites d’entreprise en C# / ASP.NET Core po
 des entreprises sous-traitantes de Total E&P Congo. Chez KabimGroup,
 développement en C# / .NET et Xamarin, aux côtés de
 Laravel, Flutter et Node.js. API REST, parseurs documentaires avec OCR et
-relation client directe — du recueil du besoin à la mise en production.
+relation client directe, du recueil du besoin à la mise en production.
 
 À compléter : un ou deux projets nommables, ce qu’ils réglaient, ce qui a marché,
 ce qui a échoué.

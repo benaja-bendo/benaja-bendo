@@ -1,8 +1,8 @@
 ---
 titre: "Mibeko"
-sousTitre: "SaaS LegalTech — accès au droit congolais et OHADA"
+sousTitre: "SaaS LegalTech : accès au droit congolais et OHADA"
 periode: "En production depuis décembre 2025"
-resume: "Un fonds de plus de 1 000 textes et 17 000 articles de droit, interrogeable en langage naturel — chaque réponse citant l’article exact d’où elle vient. Conçu, développé et opéré seul en six mois."
+resume: "Un fonds de plus de 1 000 textes et 17 000 articles de droit, que l’on interroge avec ses propres mots. Chaque réponse cite l’article exact d’où elle vient. Conçu, développé et opéré seul en six mois."
 tags: ["IA générative", "RAG", "Fullstack", "Mobile", "DevOps"]
 stack:
   ["Laravel", "Python / FastAPI", "React", "Astro", "Kotlin Multiplatform", "PostgreSQL · pgvector", "Docker", "Ansible", "Traefik", "GitHub Actions"]
@@ -62,21 +62,21 @@ maj: 2026-09-15
 
 ## Le problème
 
-Le droit congolais et le droit OHADA existent — mais ils sont éparpillés dans des
+Le droit congolais et le droit OHADA existent, mais ils sont éparpillés dans des
 PDF scannés, difficiles à trouver et impossibles à interroger. Un juriste, un
 entrepreneur ou un citoyen qui cherche une règle précise doit fouiller des
 documents épars, sans garantie d’être à jour ni de citer la bonne source.
 
 ## Le fonds, et ce qu’il change
 
-Mibeko a publié plus de 1 000 textes officiels — codes, lois, décrets, actes
-uniformes — soit plus de 17 000 articles, chacun adressable individuellement et
+Mibeko a publié plus de 1 000 textes officiels (codes, lois, décrets, actes
+uniformes), soit plus de 17 000 articles, chacun adressable individuellement et
 sourcé auprès du Secrétariat général du Gouvernement (sgg.cg) ou de l’OHADA
 (ohada.org). Poser une question ne renvoie plus vers un document entier à
 relire, mais vers l’article exact qui y répond.
 
 La contrainte qui organise tout : une réponse ne vaut que par l’article qu’elle
-cite. L’assistant ne consulte pas une mémoire générale du droit — il cherche
+cite. L’assistant ne répond pas de mémoire : il cherche
 dans ce fonds, retient les articles pertinents, et **retire toute citation qui
 ne correspond à aucun article réellement retrouvé avant affichage**. Ce n’est
 pas une consigne donnée au modèle : c’est un contrôle appliqué à sa sortie.
@@ -88,7 +88,7 @@ compte](https://mibeko.fr/assistant).
 Cette rigueur tient à une chaîne de traitement **traçable** de bout en bout.
 Chaque document est lu (OCR), puis structuré par un modèle de langage dont la
 sortie est **validée par un schéma strict** : le modèle propose, le schéma
-dispose — rien n’entre en base sans respecter la forme attendue. Chaque
+dispose. Rien n’entre en base sans respecter la forme attendue. Chaque
 fragment garde la preuve de son origine jusqu’à l’empreinte du fichier source
 (provenance SHA-256).
 
@@ -105,7 +105,7 @@ Multiplatform publiées sur l’App Store et le Play Store.
 Mibeko tourne en production depuis décembre 2025. La qualité est tenue par
 **~730 tests automatisés** et une CI/CD GitHub Actions ; le déploiement continu
 se fait sur un VPS que j’administre (Docker, Ansible, Traefik). Je le conçois, le
-développe et **je l’opère** — mises en production, surveillance, corrections.
+développe et **je l’opère** : mises en production, surveillance, corrections.
 
 C’est le projet qui prouve le reste : la capacité à porter un fonds de données
 et un produit complets, du texte de loi aux stores, et à les faire tenir dans

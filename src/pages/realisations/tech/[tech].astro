@@ -23,14 +23,14 @@ const { groupe } = Astro.props;
 ---
 
 <Base
-  title={`${groupe.label} — réalisations | Bénaja Bendo-Matondo`}
+  title={`Réalisations : ${groupe.label} | Bénaja Bendo-Matondo`}
   description={`Où Bénaja Bendo-Matondo a utilisé ${groupe.label}, et dans quel rôle.`}
 >
   <section class="container">
     <p class="eyebrow">Technologie</p>
     <h1>{groupe.label}</h1>
     <p class="lead">
-      {groupe.entrees.length} réalisations où {groupe.label} est en jeu — avec le
+      {groupe.entrees.length} réalisations où {groupe.label} est en jeu, avec le
       rôle que j’y ai tenu, pas seulement la mention de l’outil.
     </p>
   </section>

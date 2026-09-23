@@ -120,6 +120,13 @@ un document de `docs/`, c'est `docs/` qui gagne.
    publication n'est promis.
 5. **Le confidentiel reste confidentiel.** Décrire son rôle, ses décisions et les
    enseignements ; ne publier ni données, ni code, ni architecture appartenant au client.
+6. **Un français simple, sans tiret cadratin.** Demandé par Bénaja le 23/09/2026 :
+   pas de « — » dans le texte publié (virgule, deux-points, parenthèses ou point à
+   la place), des phrases courtes, et le jargon expliqué en quelques mots là où un
+   lecteur non technique décroche (« tests d'intégration (plusieurs briques
+   ensemble) »). Les mots-clés techniques restent : ils servent aussi aux
+   recruteurs techniques et aux logiciels de tri. `npm test` refuse tout « — »
+   dans dist/ ; les commentaires du code ne sont pas concernés.
 
 ## Structure
 

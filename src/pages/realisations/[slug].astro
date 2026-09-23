@@ -45,7 +45,7 @@ const voisins = voisinage(
 ---
 
 <Base
-  title={`${data.nom} — réalisation | Bénaja Bendo-Matondo`}
+  title={`${data.nom} (réalisation) | Bénaja Bendo-Matondo`}
   description={data.resume}
 >
   <section class="container">
@@ -77,9 +77,9 @@ const voisins = voisinage(
                 </a>
               ))
             ) : data.confidentiel ? (
-              <span class="muted">Mission client — aucun lien public</span>
+              <span class="muted">Mission client : aucun lien public</span>
             ) : (
-              <span class="muted">—</span>
+              <span class="muted">Aucune</span>
             )
           }
         </dd>

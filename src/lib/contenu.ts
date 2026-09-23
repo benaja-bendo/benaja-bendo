@@ -173,7 +173,7 @@ export const STATUTS_NOTE: Record<
   obsolete: {
     label: 'Obsolète',
     ton: 'alerte',
-    aide: 'Conservée pour mémoire — ne plus s’y fier telle quelle.',
+    aide: 'Conservée pour mémoire : ne plus s’y fier telle quelle.',
   },
 };
 

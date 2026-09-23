@@ -1,5 +1,5 @@
 ---
-titre: "AIFE — microservices en agilité à l’échelle"
+titre: "AIFE : microservices en agilité à l’échelle"
 sousTitre: "Capgemini · finances publiques"
 periode: "2023 – 2024"
 resume: "Microservices Java / Spring Boot au sein d’une équipe backend de 10 personnes, puis outil de traitement de gros volumes de PDF avec recherche assistée par IA sur AWS."

@@ -3835,8 +3835,12 @@ a.illustration-lien:hover .illustration-scene {
   .cv-points > li {
     break-inside: avoid;
   }
-  .cv-ou,
-  .cv-liens {
+  /* `:not(:last-child)` compte : sur une entrée sans points (Formation),
+     `.cv-ou` est le dernier enfant, et « pas de saut après » soudait alors
+     chaque entrée à la suivante — toute la Formation et les Langues
+     partaient en bloc sur une troisième page (constaté le 23/09/2026). */
+  .cv-ou:not(:last-child),
+  .cv-liens:not(:last-child) {
     break-after: avoid;
   }
 

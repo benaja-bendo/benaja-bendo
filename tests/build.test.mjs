@@ -121,3 +121,15 @@ test('chaque version du CV nomme son PDF, montre ses preuves et ne lie qu’en a
   }
   assert.equal(noms.size, pagesCV.length, 'deux versions du CV proposent le même nom de PDF');
 });
+
+// Choix d'écriture du 23/09/2026 : pas de tiret cadratin dans le texte publié.
+// Le site vise aussi des lecteurs non techniques ; virgule, deux-points,
+// parenthèses ou point font le même travail plus simplement. Les commentaires
+// du code source ne sont pas publiés et ne sont donc pas concernés.
+test('aucun tiret cadratin dans les pages ni dans le flux RSS', () => {
+  const publies = fichiers(racine).filter((f) => /\.(html|xml)$/.test(f));
+  for (const f of publies) {
+    const contenu = readFileSync(f, 'utf8');
+    assert.doesNotMatch(contenu, /—|&mdash;|&#8212;|&#x2014;/i, relative(racine, f));
+  }
+});

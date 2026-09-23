@@ -77,7 +77,7 @@ export const PROFILS: ProfilCV[] = [
     role: 'Développeur fullstack confirmé',
     enTete: [['Java', 'Spring Boot'], ['React', 'TypeScript'], ['Python'], ['Docker']],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience, je conçois, fiabilise et <strong>opère</strong> des applications métier, du besoin à la production. Chez Capgemini, j’ai automatisé un processus concernant plus de 400 collaborateurs. En parallèle, je porte seul <strong>Mibeko</strong>, un SaaS LegalTech publié sur iOS et Android — API, ingestion documentaire, CI/CD et infrastructure comprises.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience, je conçois, fiabilise et <strong>opère</strong> des applications métier, du besoin à la production. Chez Capgemini, j’ai automatisé un processus concernant plus de 400 collaborateurs. En parallèle, je porte seul <strong>Mibeko</strong>, un SaaS juridique publié sur iOS et Android, dont je gère tout : l’API, le traitement des documents, la mise en ligne automatique et les serveurs.',
     masques: [
       'mibeko-livraison-web',
       'mibeko-livraison-mobile',
@@ -85,16 +85,16 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-organisation',
       'mibeko-mesure',
     ],
-    titre: 'CV — Bénaja Bendo-Matondo, développeur fullstack confirmé',
+    titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack confirmé',
     description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience. Java / Spring Boot · React / TypeScript · Python · Docker. ${dispo}`,
     nomImpression: 'CV-Benaja-Bendo-Matondo-Developpeur-Fullstack',
   },
   {
     slug: 'java-spring',
-    role: 'Développeur fullstack confirmé — Java / Spring Boot',
+    role: 'Développeur fullstack confirmé, spécialisé Java / Spring Boot',
     enTete: [['Java', 'Spring Boot'], ['API REST'], ['PostgreSQL'], ['JUnit'], ['OpenShift'], ['Docker']],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience, dont trois chez Capgemini, principalement en <strong>Java / Spring Boot</strong>&nbsp;: microservices pour les finances publiques (AIFE), puis refonte d’un service de collecte pour France Travail qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures. En parallèle, je conçois et <strong>opère</strong> seul Mibeko, un SaaS LegalTech en production — tests, CI/CD et infrastructure compris.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience, dont trois chez Capgemini, principalement en <strong>Java / Spring Boot</strong>&nbsp;: microservices pour les finances publiques (AIFE), puis refonte d’un service de collecte pour France Travail qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures. En parallèle, je conçois et <strong>opère</strong> seul Mibeko, un SaaS juridique en production, tests, mise en ligne automatique et serveurs compris.',
     prioritaires: ['ft-refonte', 'aife-microservices', 'ft-pilotage', 'mibeko-stack', 'mibeko-production'],
     masques: [
       'mibeko-livraison-web',
@@ -105,13 +105,13 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-mesure',
     ],
     groupesStack: ['Back-end', 'Qualité & tests', 'Ops & production', 'Données & IA'],
-    titre: 'CV — Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot',
+    titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot',
     description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience, dont trois en Java / Spring Boot chez Capgemini. API REST, PostgreSQL, JUnit, OpenShift, Docker. ${dispo}`,
     nomImpression: 'CV-Benaja-Bendo-Matondo-Developpeur-Java-Spring-Boot',
   },
   {
     slug: 'devops',
-    role: 'Développeur fullstack confirmé — orienté DevOps',
+    role: 'Développeur fullstack confirmé, orienté DevOps',
     enTete: [
       ['Docker'],
       ['GitHub Actions'],
@@ -122,7 +122,7 @@ export const PROFILS: ProfilCV[] = [
       ['React'],
     ],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience&nbsp;: je livre et j’<strong>opère</strong> ce que je construis. Sur <strong>Mibeko</strong>, SaaS LegalTech que je conçois et exploite seul, je tiens toute la chaîne — tests en CI, images Docker, déploiement continu sur une infrastructure décrite en Ansible, publication des applications sur les stores, mesure d’audience. Chez Capgemini, j’ai refondu en Java / Spring Boot, sur OpenShift, un service qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience&nbsp;: je livre et j’<strong>opère</strong> ce que je construis. Sur <strong>Mibeko</strong>, un SaaS juridique que je conçois et fais tourner seul, je gère toute la chaîne : tests automatiques, images Docker, mise en ligne continue sur des serveurs configurés en Ansible, publication des applications sur les stores, mesure d’audience. Chez Capgemini, j’ai refondu en Java / Spring Boot, sur OpenShift, un service qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures.',
     // Mibeko est la preuve de ce profil : c'est là que toute la chaîne de
     // livraison se lit, dépôts publics à l'appui.
     projetsEnPremier: true,
@@ -142,17 +142,18 @@ export const PROFILS: ProfilCV[] = [
     // Masqués pour tenir en deux pages, du moins pertinent pour ce profil au
     // plus : le détail d'ingestion et de recherche (couverts par « Stack »),
     // la ligne « production » (dépliée en livraison web / mobile / tests),
-    // le décisionnel Power BI, et le point C# d'InfraOne — .NET reste cité
-    // chez KabimGroup, sans être mis en avant.
+    // le décisionnel Power BI, la relation client de KabimGroup, et le point
+    // C# d'InfraOne — .NET reste cité chez KabimGroup, sans être mis en avant.
     masques: [
       'mibeko-ingestion',
       'mibeko-recherche',
       'mibeko-production',
       'ft-decisionnel',
+      'kabim-relation-client',
       'infraone-sites',
     ],
     groupesStack: ['Ops & production', 'Qualité & tests', 'Back-end', 'Front-end', 'Données & IA'],
-    titre: 'CV — Bénaja Bendo-Matondo, développeur fullstack orienté DevOps',
+    titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack orienté DevOps',
     description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience, orienté DevOps : CI/CD GitHub Actions, Docker, Ansible, OpenShift, tests automatisés. ${dispo}`,
     nomImpression: 'CV-Benaja-Bendo-Matondo-Developpeur-Fullstack-DevOps',
   },

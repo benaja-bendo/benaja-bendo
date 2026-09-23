@@ -19,7 +19,7 @@ export async function GET(context: APIContext) {
       categories: note.data.sujets,
     })),
     ...etudes.map((etude) => ({
-      title: `Étude de cas — ${etude.data.titre}`,
+      title: `Étude de cas : ${etude.data.titre}`,
       description: etude.data.resume,
       link: `/etudes/${etude.id}`,
       pubDate: etude.data.maj,
@@ -30,7 +30,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Bénaja Bendo-Matondo',
     description:
-      'Notes techniques et études de cas — ce que je construis, comment je décide, ce que j’apprends.',
+      'Notes techniques et études de cas : ce que je construis, comment je décide, ce que j’apprends.',
     site: context.site!,
     items,
     customData: '<language>fr-fr</language>',

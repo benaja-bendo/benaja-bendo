@@ -1,5 +1,5 @@
 ---
-titre: "France Travail — automatisation & décisionnel"
+titre: "France Travail : automatisation et décisionnel"
 sousTitre: "Capgemini · cellule transverse"
 periode: "2024 – 2026"
 resume: "Deux applications fragiles refondues en un service Java / Spring Boot : le cycle de collecte de 400+ collaborateurs est passé d’environ 10 jours à 48 heures."
