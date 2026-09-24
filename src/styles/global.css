@@ -1569,6 +1569,15 @@ main > section:last-child {
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 48rem) {
+  /* 44 px au doigt : les liens de la case « Preuve » mesuraient 28 px
+     (relevé le 24/09/2026 sur /realisations/mibeko et /realisations/bgrfacile). */
+  .fiche dd a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}
 
 /* Légende des statuts de notes */
 .legende {

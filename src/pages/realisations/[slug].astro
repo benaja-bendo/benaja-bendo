@@ -76,6 +76,10 @@ const voisins = voisinage(
                   {lien.label} ↗
                 </a>
               ))
+            ) : data.preuves.length > 0 ? (
+              // Produit hors ligne mais code public (bgrfacile) : « Aucune »
+              // contredisait la section « Juger sur pièces » juste en dessous.
+              <a href="#preuves-titre">Dépôts publics, plus bas</a>
             ) : data.confidentiel ? (
               <span class="muted">Mission client : aucun lien public</span>
             ) : (

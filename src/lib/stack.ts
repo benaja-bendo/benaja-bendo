@@ -26,11 +26,12 @@
  * taxonomie (/realisations/tech/…) quand plusieurs réalisations l'utilisent.
  *
  * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Angular, Vue,
- * React Native, MySQL, MongoDB, Firebase, TDD, Git, Maven, Gradle, Kafka,
- * Scrum, RGPD. Chacune attend une page qui la montre, ou son retrait de la
+ * React Native, MongoDB, Firebase, TDD, Git, Maven, Gradle, Kafka, Scrum,
+ * RGPD. Chacune attend une page qui la montre, ou son retrait de la
  * liste. (Sortis le même jour : RAG, MCP, Pest, Vitest, pytest, tests
  * d'intégration, Linux et Umami avec l'étude Mibeko ; C# / .NET, Node.js et
- * Flutter avec la réalisation Congo, publiée.)
+ * Flutter avec la réalisation Congo, publiée ; MySQL avec la réalisation
+ * bgrfacile, publiée le même jour.)
  */
 
 export interface Techno {
@@ -104,7 +105,7 @@ export const STACK: GroupeStack[] = [
       { nom: 'PostgreSQL', icone: 'postgresql', cle: true, preuve: '/realisations/tech/postgresql' },
       { nom: 'SQL', mono: 'SQL', preuve: '/etudes/aife#ce-que-jai-fait' },
       { nom: 'pgvector', mono: 'pgv', cle: true, preuve: '/etudes/mibeko#la-construction' },
-      { nom: 'MySQL', icone: 'mysql' },
+      { nom: 'MySQL', icone: 'mysql', preuve: '/realisations/bgrfacile' },
       { nom: 'MongoDB', icone: 'mongodb' },
       { nom: 'Firebase', icone: 'firebase' },
       { nom: 'Power BI', mono: 'BI', cle: true, preuve: '/etudes/france-travail#ce-que-jai-fait' },
