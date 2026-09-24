@@ -123,8 +123,11 @@ export const STACK: GroupeStack[] = [
       { nom: 'Gradle', icone: 'gradle' },
       { nom: 'Ansible', icone: 'ansible', cle: true },
       { nom: 'GitHub Actions', icone: 'github-actions', cle: true },
-      { nom: 'OpenShift', icone: 'openshift' },
-      { nom: 'Kubernetes / Helm', mono: 'K8S' },
+      // OpenShift est une distribution de Kubernetes : c'est là, chez France
+      // Travail, que se trouve l'usage réel. « Kubernetes / Helm » a été retiré
+      // le 24/09/2026 : aucune preuve sur le site, et Helm n'était pas manipulé
+      // personnellement. À rouvrir quand le cluster Raspberry Pi sera documenté.
+      { nom: 'OpenShift (Kubernetes)', icone: 'openshift' },
       { nom: 'Kafka', mono: 'KFK' },
       { nom: 'Traefik', icone: 'traefik' },
       { nom: 'Linux', icone: 'linux' },

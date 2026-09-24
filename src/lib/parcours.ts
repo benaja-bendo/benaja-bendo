@@ -62,7 +62,7 @@ export const EXPERIENCES: Etape[] = [
       {
         id: 'ft-refonte',
         texte:
-          'Compte France Travail (2024–2026) : refonte de deux applications fragiles en un service Java / Spring Boot unique, déployé sur OpenShift et Docker. Cycle de collecte des prévisions ramené d’environ 10 jours à 48 heures pour plus de 400 collaborateurs, avec relances automatisées et imputations consultables en continu.',
+          'Compte France Travail (2024–2026) : refonte de deux applications fragiles en un service Java / Spring Boot unique, déployé sur OpenShift (Kubernetes) et Docker. Cycle de collecte des prévisions ramené d’environ 10 jours à 48 heures pour plus de 400 collaborateurs, avec relances automatisées et imputations consultables en continu.',
       },
       {
         id: 'ft-pilotage',
@@ -147,7 +147,7 @@ export const PROJETS: Projet[] = [
   {
     id: 'mibeko',
     quand: 'Depuis déc. 2025',
-    quoi: 'Mibeko : un SaaS juridique (LegalTech), conçu et opéré seul',
+    quoi: 'Mibeko : un SaaS juridique (LegalTech) que j’ai créé, de l’idée à la production',
     ou: 'Applications iOS et Android publiées · six dépôts publics',
     liens: [
       { label: 'mibeko.fr', url: 'https://mibeko.fr' },
@@ -282,8 +282,12 @@ export const DISPONIBILITE = {
   /** Date de disponibilité CDI, en clair et en ISO. */
   texte: '28 septembre 2026',
   iso: '2026-09-28',
-  lieu: 'Bordeaux / Mérignac (33)',
-  mobilite: 'Bordeaux / Mérignac (33) · mobile Paris et France entière · hybride · déplacements ponctuels',
+  lieu: 'Bordeaux et ses alentours',
+  // Des villes nommées plutôt que « France entière » (24/09/2026) : une liste
+  // courte se lit comme un choix réel, et un recruteur qui cherche par ville
+  // la trouve. La raison de ces villes (des proches sur place) ne s'écrit pas.
+  mobilite:
+    'Bordeaux et ses alentours · ouvert à Toulouse, Nantes, l’Île-de-France et Strasbourg · télétravail complet ou partiel',
 } as const;
 
 export const LANGUES = [

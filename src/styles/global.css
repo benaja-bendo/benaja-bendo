@@ -1234,10 +1234,11 @@ main > section:last-child {
  * 3. Les puces ne sont pas cliquables. Seules quelques technos ont une page de
  *    taxonomie (seuil de deux réalisations) : une rangée où un tiers des puces
  *    répond au clic et deux tiers non est plus frustrante qu'utile.
- * 4. Sur un CV ciblé, les technos annoncées dans l'en-tête sont mises en
- *    évidence (`.stack-puce-cible`) : bordure d'accent et fond `--mark-1`,
- *    le surligneur « preuve » du système. Le nom reste le même, la puce
- *    reste à sa place dans son groupe — seule l'emphase change.
+ * 4. Aucune puce n'est mise en évidence, même sur un CV ciblé. Le
+ *    surlignage des technos de l'en-tête (`.stack-puce-cible`) a été retiré
+ *    le 24/09/2026 après relecture : il faisait lire une hiérarchie de
+ *    compétences là où le CV veut une liste à plat. Un profil ordonne encore
+ *    ses puces (les technos de l'en-tête en tête de groupe), sans emphase.
  * ========================================================================== */
 
 .stack {
@@ -1287,11 +1288,6 @@ main > section:last-child {
   font-family: var(--mono);
   font-size: 0.8rem;
   color: var(--fg);
-}
-.stack-puce-cible {
-  border-color: var(--accent);
-  background: var(--mark-1);
-  font-weight: 600;
 }
 .icone-tech {
   flex: none;
@@ -3879,14 +3875,6 @@ a.illustration-lien:hover .illustration-scene {
     border-width: 1px;
     padding: 0.05rem 0.3rem;
     font-size: 8pt;
-  }
-  /* Les aplats de fond sautent souvent à l'impression : la mise en évidence
-     passe par le trait et la graisse, qui survivent au noir et blanc. */
-  .stack-puce-cible {
-    border-width: 1.5px;
-    border-color: #000000;
-    background: #ffffff;
-    font-weight: 700;
   }
   .icone-tech {
     width: 0.85rem;

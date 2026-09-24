@@ -42,11 +42,15 @@ export interface ProfilCV {
   /**
    * La ligne de stack sous l'intitulé. Chaque sous-liste est jointe par « / »,
    * les sous-listes par « · ». Ces mêmes technos passent en tête de leur
-   * groupe et sont mises en évidence dans « Compétences techniques » : ce que
-   * l'en-tête annonce, la stack le montre en premier.
+   * groupe dans « Compétences techniques », sans autre mise en évidence : le
+   * surlignage a été retiré le 24/09/2026, il donnait à lire une hiérarchie
+   * de compétences plutôt qu'une liste à plat.
    */
   enTete: string[][];
-  /** L'accroche : seule prose propre au profil. Seule balise admise : <strong>. */
+  /**
+   * L'accroche : seule prose propre au profil. Seule balise admise : <strong>,
+   * inutilisée depuis le 24/09/2026 (même raison que le surlignage de la stack).
+   */
   accroche: string;
   /** Les projets passent avant l'expérience salariée. */
   projetsEnPremier?: boolean;
@@ -77,7 +81,7 @@ export const PROFILS: ProfilCV[] = [
     role: 'Développeur fullstack confirmé',
     enTete: [['Java', 'Spring Boot'], ['React', 'TypeScript'], ['Python'], ['Docker']],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience, je conçois, fiabilise et <strong>opère</strong> des applications métier, du besoin à la production. Chez Capgemini, j’ai automatisé un processus concernant plus de 400 collaborateurs. En parallèle, je porte seul <strong>Mibeko</strong>, un SaaS juridique publié sur iOS et Android, dont je gère tout : l’API, le traitement des documents, la mise en ligne automatique et les serveurs.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience, je conçois, fiabilise et fais vivre des applications métier, du besoin à la production. Chez Capgemini, j’ai automatisé un processus concernant plus de 400 collaborateurs. En parallèle, j’ai créé Mibeko, un SaaS juridique publié sur iOS et Android, dont je gère toute la technique : l’API, le traitement des documents, la mise en ligne automatique et les serveurs.',
     masques: [
       'mibeko-livraison-web',
       'mibeko-livraison-mobile',
@@ -92,9 +96,9 @@ export const PROFILS: ProfilCV[] = [
   {
     slug: 'java-spring',
     role: 'Développeur fullstack confirmé, spécialisé Java / Spring Boot',
-    enTete: [['Java', 'Spring Boot'], ['API REST'], ['PostgreSQL'], ['JUnit'], ['OpenShift'], ['Docker']],
+    enTete: [['Java', 'Spring Boot'], ['API REST'], ['PostgreSQL'], ['JUnit'], ['OpenShift (Kubernetes)'], ['Docker']],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience, dont trois chez Capgemini, principalement en <strong>Java / Spring Boot</strong>&nbsp;: microservices pour les finances publiques (AIFE), puis refonte d’un service de collecte pour France Travail qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures. En parallèle, je conçois et <strong>opère</strong> seul Mibeko, un SaaS juridique en production, tests, mise en ligne automatique et serveurs compris.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience, dont trois chez Capgemini, principalement en Java / Spring Boot&nbsp;: microservices pour les finances publiques (AIFE), puis refonte d’un service de collecte pour France Travail qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures. En parallèle, j’ai créé Mibeko, un SaaS juridique en production, dont je gère aussi les tests, la mise en ligne automatique et les serveurs.',
     prioritaires: ['ft-refonte', 'aife-microservices', 'ft-pilotage', 'mibeko-stack', 'mibeko-production'],
     masques: [
       'mibeko-livraison-web',
@@ -116,13 +120,13 @@ export const PROFILS: ProfilCV[] = [
       ['Docker'],
       ['GitHub Actions'],
       ['Ansible'],
-      ['OpenShift'],
+      ['OpenShift (Kubernetes)'],
       ['Java', 'Spring Boot'],
       ['Python', 'FastAPI'],
       ['React'],
     ],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience&nbsp;: je livre et j’<strong>opère</strong> ce que je construis. Sur <strong>Mibeko</strong>, un SaaS juridique que je conçois et fais tourner seul, je gère toute la chaîne : tests automatiques, images Docker, mise en ligne continue sur des serveurs configurés en Ansible, publication des applications sur les stores, mesure d’audience. Chez Capgemini, j’ai refondu en Java / Spring Boot, sur OpenShift, un service qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience&nbsp;: je livre ce que je construis et je le fais tourner en production. Sur Mibeko, un SaaS juridique que j’ai créé, je gère toute la chaîne : tests automatiques, images Docker, mise en ligne continue sur des serveurs configurés en Ansible, publication des applications sur les stores, mesure d’audience. Chez Capgemini, j’ai refondu en Java / Spring Boot, sur OpenShift, un service qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures.',
     // Mibeko est la preuve de ce profil : c'est là que toute la chaîne de
     // livraison se lit, dépôts publics à l'appui.
     projetsEnPremier: true,
@@ -132,7 +136,6 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-livraison-web',
       'mibeko-livraison-mobile',
       'mibeko-tests',
-      'mibeko-ia-agentique',
       'mibeko-organisation',
       'mibeko-mesure',
       'ft-refonte',
@@ -150,6 +153,11 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-production',
       'ft-decisionnel',
       'kabim-relation-client',
+      // Masqué le 24/09/2026 : l'en-tête s'est allongé (mobilité nommée ville
+      // par ville, « OpenShift (Kubernetes) ») et la version passait à trois
+      // pages. L'agent IA et le serveur MCP restent dans la stack et dans les
+      // autres versions : c'est le point le moins « DevOps » de Mibeko.
+      'mibeko-ia-agentique',
       'infraone-sites',
     ],
     groupesStack: ['Ops & production', 'Qualité & tests', 'Back-end', 'Front-end', 'Données & IA'],
@@ -168,8 +176,6 @@ export interface CVResolu {
   experiences: Etape[];
   projets: Projet[];
   stack: GroupeStack[];
-  /** Technos de l'en-tête, à plat : mises en évidence dans la stack. */
-  cibles: string[];
   /** La ligne d'en-tête, prête à afficher. */
   ligneEnTete: string;
 }
@@ -279,7 +285,6 @@ export function resoudreProfil(profil: ProfilCV): CVResolu {
     experiences,
     projets,
     stack: stackOrdonnee(profil.groupesStack ?? [], cibles),
-    cibles,
     ligneEnTete: profil.enTete.map((segment) => segment.join(' / ')).join(' · '),
   };
 }

@@ -2,13 +2,13 @@
 titre: "Mibeko"
 sousTitre: "SaaS LegalTech : accès au droit congolais et OHADA"
 periode: "En production depuis décembre 2025"
-resume: "Un fonds de plus de 1 000 textes et 17 000 articles de droit, que l’on interroge avec ses propres mots. Chaque réponse cite l’article exact d’où elle vient. Conçu, développé et opéré seul en six mois."
+resume: "Un fonds de plus de 1 000 textes et 17 000 articles de droit, que l’on interroge avec ses propres mots. Chaque réponse cite l’article exact d’où elle vient. Conçu, développé et mis en production en six mois."
 tags: ["IA générative", "RAG", "Fullstack", "Mobile", "DevOps"]
 stack:
   ["Laravel", "Python / FastAPI", "React", "Astro", "Kotlin Multiplatform", "PostgreSQL · pgvector", "Docker", "Ansible", "Traefik", "GitHub Actions"]
 chiffres:
   - { valeur: "17 000+", label: "articles de droit indexés et sourcés" }
-  - { valeur: "6 mois", label: "de l’idée à la production, seul" }
+  - { valeur: "6 mois", label: "de l’idée à la production" }
   - { valeur: "2 stores", label: "App Store + Play Store" }
   - { valeur: "~730", label: "tests automatisés" }
 liens:
@@ -105,7 +105,7 @@ Multiplatform publiées sur l’App Store et le Play Store.
 Mibeko tourne en production depuis décembre 2025. La qualité est tenue par
 **~730 tests automatisés** et une CI/CD GitHub Actions ; le déploiement continu
 se fait sur un VPS que j’administre (Docker, Ansible, Traefik). Je le conçois, le
-développe et **je l’opère** : mises en production, surveillance, corrections.
+développe et **je le fais tourner au quotidien** : mises en production, surveillance, corrections.
 
 C’est le projet qui prouve le reste : la capacité à porter un fonds de données
 et un produit complets, du texte de loi aux stores, et à les faire tenir dans

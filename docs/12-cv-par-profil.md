@@ -49,8 +49,8 @@ src/pages/cv/[...profil].astro + src/components/CV.astro   un seul gabarit
 | L'intitulé sous le nom, la ligne de stack, l'accroche | Les dates, intitulés, employeurs, chiffres |
 | L'ordre des points dans chaque expérience (`prioritaires`) | Le texte d'un point |
 | Le retrait d'un point (`masques`) | L'ordre chronologique des expériences |
-| Projets avant ou après l'expérience (`projetsEnPremier`) | La liste des technos (seulement leur ordre et leur mise en évidence) |
-| L'ordre des groupes de stack, les technos mises en évidence | La formation, les langues, les coordonnées |
+| Projets avant ou après l'expérience (`projetsEnPremier`) | La liste des technos (seulement leur ordre) |
+| L'ordre des groupes de stack et des technos dans chaque groupe | La formation, les langues, les coordonnées |
 | Le `<title>`, la description, le nom du PDF | |
 
 La colonne de droite n'est pas une consigne : **le type `ProfilCV` n'a aucun
@@ -65,8 +65,8 @@ erreur explicite, qui arrête le build.
 1. **Un identifiant cité n'existe pas** — point, projet, groupe de stack.
 2. **Une techno de l'en-tête n'apparaît dans aucun point affiché par ce
    profil.** C'est le contrôle central : pas de techno en vitrine sans preuve
-   sur la même page. Vérifié le 23/09/2026 : ajouter « Kubernetes / Helm » à
-   l'en-tête DevOps arrête le build, faute de point qui en parle.
+   sur la même page. Vérifié le 23/09/2026 : ajouter une techno à l'en-tête
+   DevOps sans point qui en parle arrête le build.
 3. L'accroche contient une autre balise que `<strong>`.
 4. Plus de **quatre profils**. Chaque variante est une page à tenir juste ;
    au-delà, elle devient une dette.
@@ -84,9 +84,12 @@ contient que des liens absolus.
   aurait affiché le CV général.
 - **Liens absolus sur tout le CV**, y compris le site : un PDF exporté depuis
   `npm run preview` gardait sinon des liens vers `localhost`.
-- **La mise en évidence** (`.stack-puce-cible`) reprend `--mark-1`, le
-  surligneur « preuve » du système ; à l'impression, trait et graisse, qui
-  survivent au noir et blanc.
+- **Aucune compétence n'est surlignée** (retiré le 24/09/2026, après
+  relecture par un pair). Les technos de l'en-tête étaient mises en évidence
+  dans « Compétences techniques » : cela faisait lire une hiérarchie de
+  compétences, là où le CV veut une liste à plat. Le gras de l'accroche est
+  parti pour la même raison. Un profil ordonne toujours ses puces, sans
+  emphase.
 - **Une feuille A4 fait ~680 px CSS** : les règles « mobile » (< 48rem)
   s'appliquent à l'impression. Les zones tactiles de 44 px triplaient la
   hauteur des lignes de contact sur papier ; `@media print` les neutralise.

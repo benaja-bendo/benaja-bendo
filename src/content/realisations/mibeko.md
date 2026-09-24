@@ -3,7 +3,7 @@ nom: "Mibeko"
 resume: "Un assistant qui rend plus de 1 000 textes de droit congolais et OHADA consultables en langage naturel, en citant l’article exact d’où vient chaque réponse."
 statut: "production"
 periode: "Depuis décembre 2025"
-role: "Conception, développement et exploitation en solo, du serveur jusqu’aux stores"
+role: "Créateur et responsable technique : conception, développement, mise en ligne et suivi, du serveur jusqu’aux stores"
 stack:
   [
     "Laravel",
@@ -76,7 +76,7 @@ source. Mibeko en a fait un fonds interrogeable (plus de 1 000 textes officiels,
 plus de 17 000 articles) et répond aux questions en langage naturel, chaque
 réponse pointant vers l’article exact dont elle vient.
 
-Je l’ai porté seul de l’idée à la production : chaîne d’ingestion, API, recherche
+Je l’ai mené de l’idée à la production : chaîne d’ingestion, API, recherche
 hybride, tableau de bord, applications mobiles publiées sur les deux stores, et
 l’exploitation du VPS qui héberge le tout. C’est le projet qui me sert de
 référence pour tout le reste, parce qu’il est complet et parce qu’il tourne.
