@@ -234,6 +234,38 @@ export const PROJETS: Projet[] = [
     ],
   },
   {
+    // Présenté avec l'accord du fondeur (24/09/2026). Aucun statut n'est
+    // écrit : la rubrique « Projets en production » dit déjà qu'il ne s'agit
+    // pas d'un contrat de travail. Faits vérifiés dans les dépôts le même
+    // jour : 189 tests Jest et 15 tests Vitest, déploiement GitHub Actions
+    // (tests, image Docker, VPS), premier déploiement en novembre 2025.
+    id: 'la-grenaille',
+    quand: 'Depuis nov. 2025',
+    quoi: 'La Grenaille : le site et l’espace pro d’une fonderie de bijoux',
+    ou: 'Réalisé en direct avec le fondeur · en production',
+    liens: [
+      { label: 'lagrenaille.fr', url: 'https://lagrenaille.fr' },
+      { label: 'Réalisation', url: 'https://benaja-bendo.fr/realisations/la-grenaille' },
+    ],
+    points: [
+      {
+        id: 'grenaille-solution',
+        texte:
+          'Site public et espace professionnel pour les bijoutiers : suivi du métal précieux confié à la fonderie (solde en grammes par métal), commandes, factures et modèles 3D affichés dans le navigateur.',
+      },
+      {
+        id: 'grenaille-stack',
+        texte:
+          'Front React / TypeScript, API NestJS (Node.js) avec Prisma et PostgreSQL ; environ 200 tests automatisés (Jest, Vitest) ; mise en ligne automatique par GitHub Actions et Docker.',
+      },
+      {
+        id: 'grenaille-client',
+        texte:
+          'Travail en direct avec le fondeur : recueil du besoin, retours testés puis traités par lots, évolutions livrées en continu.',
+      },
+    ],
+  },
+  {
     id: 'trouve-ton-profil',
     quand: 'Depuis 2026',
     quoi: 'Trouve Ton Profil : trouver le bon professionnel près de chez soi, au Congo',

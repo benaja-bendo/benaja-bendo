@@ -73,7 +73,7 @@ erreur explicite, qui arrête le build.
 
 Et `npm test`, après le build, vérifie que chaque variante porte
 `noindex, follow`, sort du sitemap, n'est liée par aucune page, nomme son PDF
-de façon unique, montre les liens des stores et de Trouve Ton Profil, et ne
+de façon unique, montre les liens des stores, de Trouve Ton Profil et de La Grenaille, et ne
 contient que des liens absolus.
 
 ## Détails qui ont compté

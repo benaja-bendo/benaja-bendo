@@ -29,9 +29,9 @@
  * React Native, MongoDB, Firebase, TDD, Git, Maven, Gradle, Kafka, Scrum,
  * RGPD. Chacune attend une page qui la montre, ou son retrait de la
  * liste. (Sortis le même jour : RAG, MCP, Pest, Vitest, pytest, tests
- * d'intégration, Linux et Umami avec l'étude Mibeko ; C# / .NET, Node.js et
- * Flutter avec la réalisation Congo, publiée ; MySQL avec la réalisation
- * bgrfacile, publiée le même jour.)
+ * d'intégration, Linux et Umami avec l'étude Mibeko ; C# / .NET et Flutter
+ * avec la réalisation Congo ; MySQL avec bgrfacile ; Node.js, NestJS et Jest
+ * avec La Grenaille, publiée le même jour avec l'accord du fondeur.)
  */
 
 export interface Techno {
@@ -65,7 +65,10 @@ export const STACK: GroupeStack[] = [
       { nom: 'Laravel / PHP', icone: 'laravel', cle: true, preuve: '/etudes/mibeko#la-construction' },
       { nom: 'Python', icone: 'python', cle: true, preuve: '/realisations/tech/python' },
       { nom: 'FastAPI', icone: 'fastapi', preuve: '/etudes/mibeko#la-construction' },
-      { nom: 'Node.js', icone: 'nodejs', preuve: '/realisations/congo-web-mobile' },
+      { nom: 'Node.js', icone: 'nodejs', preuve: '/realisations/la-grenaille' },
+      // L'API de La Grenaille (Le-creuset-backend, public), avec l'accord du
+      // fondeur. Pas d'icône libre dans le paquet vendorisé : monogramme.
+      { nom: 'NestJS', mono: 'NST', preuve: '/realisations/la-grenaille' },
       // Expérience réelle (InfraOne, KabimGroup, 2020–2023) mais pas une
       // spécialité mise en avant : ni `cle`, ni tête de liste, ni mention dans
       // les en-têtes de CV. Décision du 23/09/2026 — à rouvrir si les offres
@@ -121,6 +124,8 @@ export const STACK: GroupeStack[] = [
     precision: 'Tests automatisés et revues de code sur les missions comme sur mes produits.',
     technos: [
       { nom: 'JUnit', mono: 'JUT', preuve: '/etudes/aife#ce-que-jai-fait' },
+      // 189 tests sur l'API de La Grenaille, comptés le 24/09/2026.
+      { nom: 'Jest', mono: 'JST', preuve: '/realisations/la-grenaille' },
       // Les trois suites de Mibeko, lisibles dans ses dépôts publics.
       { nom: 'Pest', mono: 'PST', preuve: '/etudes/mibeko#la-production' },
       { nom: 'Vitest', mono: 'VIT', preuve: '/etudes/mibeko#la-production' },

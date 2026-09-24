@@ -134,6 +134,9 @@ test('chaque version du CV nomme son PDF, montre ses preuves et ne lie qu’en a
     assert.match(html, /href="https:\/\/apps\.apple\.com\/app\/id6768865781"/, chemin);
     assert.match(html, /href="https:\/\/play\.google\.com\/store\/apps\/details\?id=cg\.mibeko\.app"/, chemin);
     assert.match(html, /href="https:\/\/trouve-ton-profil\.com"/, chemin);
+    // Présenté avec l'accord du fondeur (24/09/2026) : le seul projet mené en
+    // direct pour un client, il figure sur chaque version.
+    assert.match(html, /href="https:\/\/lagrenaille\.fr"/, chemin);
     // Un lien relatif deviendrait « localhost » dans un PDF exporté en local.
     const article = html.slice(html.indexOf('<article class="cv'), html.indexOf('</article>'));
     for (const [, href] of article.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {

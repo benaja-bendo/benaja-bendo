@@ -91,6 +91,14 @@ export const PROFILS: ProfilCV[] = [
       // Masqué le 24/09/2026 pour tenir en deux pages après l'ajout des liens
       // de preuve : l'OCR se lit déjà dans le point « ingestion » de Mibeko.
       'kabim-ocr',
+      // Masqués le même jour pour faire place à La Grenaille : sa stack se lit
+      // sur la réalisation liée, Trouve Ton Profil garde la ligne qui dit mon
+      // rôle, la recherche hybride reste dans l'étude Mibeko.
+      'grenaille-stack',
+      'ttp-solution',
+      'mibeko-recherche',
+      'infraone-sites',
+      'ft-pilotage',
     ],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack confirmé',
     description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience. Java / Spring Boot · React / TypeScript · Python · Docker. ${dispo}`,
@@ -116,6 +124,15 @@ export const PROFILS: ProfilCV[] = [
       // point « livraisons » de KabimGroup.
       'kabim-ocr',
       'infraone-sites',
+      // Pour La Grenaille (24/09/2026) : sa stack Node.js est hors sujet pour
+      // ce profil, le détail d'ingestion Mibeko aussi.
+      'grenaille-stack',
+      'ttp-solution',
+      'mibeko-ingestion',
+      'mibeko-recherche',
+      'grenaille-solution',
+      'ttp-contribution',
+      'mibeko-assistant',
     ],
     groupesStack: ['Back-end', 'Qualité & tests', 'Ops & production', 'Données & IA'],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot',
@@ -145,7 +162,6 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-livraison-web',
       'mibeko-livraison-mobile',
       'mibeko-tests',
-      'mibeko-organisation',
       'mibeko-mesure',
       'ft-refonte',
       'ft-pilotage',
@@ -171,6 +187,17 @@ export const PROFILS: ProfilCV[] = [
       // KabimGroup, garde le détail.
       'kabim-ocr',
       'infraone-sites',
+      // Pour La Grenaille (24/09/2026) : on garde sa chaîne de livraison et le
+      // travail avec le client, pas la description du produit.
+      'grenaille-solution',
+      'ttp-solution',
+      'mibeko-organisation',
+      // Angular n'est pas le sujet de ce profil ; la ligne sous le titre de
+      // Trouve Ton Profil dit toujours mon rôle et avec qui je travaille.
+      'ttp-contribution',
+      // Capgemini garde quatre points : une entrée de quatre points peut se
+      // couper à l'impression (voir global.css), et c'est ce qui lui permet
+      // de commencer en bas de la première page au lieu d'y laisser un blanc.
     ],
     groupesStack: ['Ops & production', 'Qualité & tests', 'Back-end', 'Front-end', 'Données & IA'],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack orienté DevOps',
