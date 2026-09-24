@@ -57,7 +57,7 @@ preuves:
     famille: "code"
 realisation: "mibeko"
 ordre: 1
-maj: 2026-09-15
+maj: 2026-09-24
 ---
 
 ## Le problème
@@ -96,6 +96,16 @@ Par-dessus, une recherche **hybride** combine trois angles (texte intégral,
 proximité orthographique, similarité sémantique via pgvector) pour retrouver le
 bon article même quand la question est formulée autrement que la loi.
 
+L’assistant repose sur cette recherche : c’est un **RAG sourcé** (l’IA
+cherche d’abord dans le fonds, puis rédige à partir de ce qu’elle a trouvé).
+Un agent IA lance lui-même les recherches dont il a besoin, puis répond
+uniquement à partir des articles trouvés, en citant chacun d’eux. S’il ne
+trouve rien, il le dit et propose une autre piste, au lieu de répondre de
+mémoire. Un serveur **MCP** (le moyen standard de donner des outils à un
+assistant IA) ouvre aussi le fonds à d’autres assistants : chercher, lire un
+article, repérer les anomalies d’un texte. L’IA signale ; un humain corrige
+et publie.
+
 Côté livraison : une API Laravel, un service d’ingestion Python / FastAPI, un
 tableau de bord React, un site Astro, et des applications mobiles Kotlin
 Multiplatform publiées sur l’App Store et le Play Store.
@@ -104,8 +114,18 @@ Multiplatform publiées sur l’App Store et le Play Store.
 
 Mibeko tourne en production depuis décembre 2025. La qualité est tenue par
 **~730 tests automatisés** et une CI/CD GitHub Actions ; le déploiement continu
-se fait sur un VPS que j’administre (Docker, Ansible, Traefik). Je le conçois, le
-développe et **je le fais tourner au quotidien** : mises en production, surveillance, corrections.
+se fait sur un serveur Linux que j’administre (Docker, Ansible, Traefik). Je le
+conçois, le développe et **je le fais tourner au quotidien** : mises en
+production, surveillance, corrections.
+
+Ces tests sont de deux sortes. Les tests unitaires vérifient une fonction
+seule ; les tests d’intégration vérifient plusieurs briques ensemble, sur une
+vraie base PostgreSQL. Ils tournent à chaque modification, avec Pest pour
+l’API Laravel et Vitest pour le tableau de bord React, et la mise en ligne
+n’a lieu que s’ils passent. Le traitement des documents a ses propres tests,
+écrits avec pytest. Pour suivre ce qui se passe une fois en ligne : la mesure
+d’audience passe par Umami, installé sur mon serveur et sans cookies, et les
+journaux des services se lisent avec Dozzle.
 
 C’est le projet qui prouve le reste : la capacité à porter un fonds de données
 et un produit complets, du texte de loi aux stores, et à les faire tenir dans

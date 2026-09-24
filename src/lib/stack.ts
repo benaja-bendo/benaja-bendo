@@ -26,10 +26,11 @@
  * taxonomie (/realisations/tech/…) quand plusieurs réalisations l'utilisent.
  *
  * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Node.js, C# / .NET,
- * Angular, Vue, Flutter, React Native, MySQL, MongoDB, Firebase, RAG sourcé,
- * Agents IA & MCP, Pest, Vitest, pytest, TDD, tests d'intégration, Git,
- * Maven, Gradle, Kafka, Linux, Umami, Scrum, RGPD. Chacune attend une page
- * qui la montre, ou son retrait de la liste.
+ * Angular, Vue, Flutter, React Native, MySQL, MongoDB, Firebase, TDD, Git,
+ * Maven, Gradle, Kafka, Scrum, RGPD. Chacune attend une page qui la montre,
+ * ou son retrait de la liste. (RAG, MCP, Pest, Vitest, pytest, tests
+ * d'intégration, Linux et Umami en sont sortis le même jour, avec deux
+ * paragraphes de l'étude Mibeko vérifiés dans ses dépôts.)
  */
 
 export interface Techno {
@@ -107,10 +108,10 @@ export const STACK: GroupeStack[] = [
       { nom: 'MongoDB', icone: 'mongodb' },
       { nom: 'Firebase', icone: 'firebase' },
       { nom: 'Power BI', mono: 'BI', cle: true, preuve: '/etudes/france-travail#ce-que-jai-fait' },
-      { nom: 'RAG sourcé', mono: 'RAG' },
+      { nom: 'RAG sourcé', mono: 'RAG', preuve: '/etudes/mibeko#la-construction' },
       // Un agent à appels d'outils et un serveur MCP, dans mibeko-dashboard
       // (app/Ai, app/Mcp) — vérifié le 23/09/2026.
-      { nom: 'Agents IA & MCP', mono: 'MCP' },
+      { nom: 'Agents IA & MCP', mono: 'MCP', preuve: '/etudes/mibeko#la-construction' },
       { nom: 'OCR', mono: 'OCR', preuve: '/etudes/mibeko#la-construction' },
     ],
   },
@@ -120,11 +121,11 @@ export const STACK: GroupeStack[] = [
     technos: [
       { nom: 'JUnit', mono: 'JUT', preuve: '/etudes/aife#ce-que-jai-fait' },
       // Les trois suites de Mibeko, lisibles dans ses dépôts publics.
-      { nom: 'Pest', mono: 'PST' },
-      { nom: 'Vitest', mono: 'VIT' },
-      { nom: 'pytest', mono: 'PYT' },
+      { nom: 'Pest', mono: 'PST', preuve: '/etudes/mibeko#la-production' },
+      { nom: 'Vitest', mono: 'VIT', preuve: '/etudes/mibeko#la-production' },
+      { nom: 'pytest', mono: 'PYT', preuve: '/etudes/mibeko#la-production' },
       { nom: 'TDD', mono: 'TDD' },
-      { nom: 'Tests d’intégration', mono: 'INT' },
+      { nom: 'Tests d’intégration', mono: 'INT', preuve: '/etudes/mibeko#la-production' },
       { nom: 'Revues de code', mono: 'PR', preuve: '/etudes/aife#ce-que-jai-fait' },
     ],
   },
@@ -145,9 +146,9 @@ export const STACK: GroupeStack[] = [
       { nom: 'OpenShift (Kubernetes)', icone: 'openshift', preuve: '/etudes/france-travail#ce-que-jai-fait' },
       { nom: 'Kafka', mono: 'KFK' },
       { nom: 'Traefik', icone: 'traefik', preuve: '/etudes/mibeko#la-production' },
-      { nom: 'Linux', icone: 'linux' },
+      { nom: 'Linux', icone: 'linux', preuve: '/etudes/mibeko#la-production' },
       // Auto-hébergé par un rôle Ansible de vps_infra, actif sur mibeko.fr.
-      { nom: 'Umami', mono: 'UMI' },
+      { nom: 'Umami', mono: 'UMI', preuve: '/etudes/mibeko#la-production' },
       { nom: 'AWS', mono: 'AWS', preuve: '/etudes/aife#ce-que-jai-fait' },
     ],
   },

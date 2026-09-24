@@ -162,8 +162,9 @@ test('chaque version du CV nomme son PDF, montre ses preuves et ne lie qu’en a
 test('chaque compétence cliquable mène à une page qui la nomme', () => {
   let liens = 0;
   for (const [f, html] of pages) {
-    for (const [, href, techno] of html.matchAll(/<a href="([^"]+)" data-techno="([^"]+)"/g)) {
+    for (const [, href, attribut] of html.matchAll(/<a href="([^"]+)" data-techno="([^"]+)"/g)) {
       liens += 1;
+      const techno = texte(attribut).trim();
       const origine = `${relative(racine, f)} → ${techno}`;
       const { page, fragment } = destination(href, f);
       assert.ok(page, `${origine} : ${href} absent du build`);
@@ -177,10 +178,11 @@ test('chaque compétence cliquable mène à une page qui la nomme', () => {
         zone = zone.slice(debut, fin === -1 ? undefined : fin);
       }
       // « Laravel / PHP » est prouvé par « Laravel », « OpenShift (Kubernetes) »
-      // par « OpenShift » : une des parties du nom suffit.
+      // par « OpenShift », « Agents IA & MCP » par « MCP » : une des parties
+      // du nom suffit.
       const parties = techno
         .replace(/\([^)]*\)/g, '')
-        .split(' / ')
+        .split(/\s+[\/&]\s+/)
         .map((m) => m.trim().toLowerCase())
         .filter(Boolean);
       const lu = texte(zone).toLowerCase();
