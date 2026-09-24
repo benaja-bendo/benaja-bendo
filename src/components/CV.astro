@@ -115,6 +115,17 @@ const site = new URL('/', Astro.site).href;
                 <div class="cv-detail">
                   <h3>{etape.quoi}</h3>
                   <p class="cv-ou">{etape.ou}</p>
+                  {/* Même rangée que sous les projets : le lecteur passe de
+                      la ligne du CV à la page qui montre le travail. */}
+                  {etape.liens && etape.liens.length > 0 && (
+                    <ul class="cv-liens">
+                      {etape.liens.map((lien) => (
+                        <li>
+                          <a href={lien.url}>{lien.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   {etape.points && etape.points.length > 0 && (
                     <ul class="cv-points">
                       {etape.points.map((point) => (
@@ -166,7 +177,12 @@ const site = new URL('/', Astro.site).href;
 
   <section class="cv-section cv-section-stack">
     <h2>Compétences techniques</h2>
-    <StackVisuelle groupes={cv.stack} dense />
+    {/* Imprimée aussi : sur le PDF, c'est la seule indication que les
+        puces soulignées sont cliquables. */}
+    <p class="cv-stack-legende">
+      Les compétences soulignées mènent à leur preuve sur {CONTACT.site}.
+    </p>
+    <StackVisuelle groupes={cv.stack} dense liensAbsolus />
   </section>
 
   <section class="cv-section">

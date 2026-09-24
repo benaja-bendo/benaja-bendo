@@ -78,6 +78,27 @@ test('sans script, la CSS masque la commande et l’attente, et les liens du som
 
 // Les versions du CV (src/lib/cv-profils.ts) : /cv est le CV général, public et
 // indexé ; /cv/<profil> sont des variantes à envoyer, jamais à découvrir.
+const SITE = 'https://benaja-bendo.fr';
+
+/** Fichier du build et section visés par un lien, relatif ou absolu vers le site. */
+function destination(href, depuis) {
+  const url = new URL(href.startsWith(`${SITE}/`) ? href.slice(SITE.length) : href, `https://preview.invalid/${relative(racine, depuis)}`);
+  let cible = resolve(racine, `.${decodeURIComponent(url.pathname)}`);
+  if (existsSync(cible) && statSync(cible).isDirectory()) cible = join(cible, 'index.html');
+  return { page: pages.has(cible) ? cible : undefined, fragment: decodeURIComponent(url.hash.slice(1)) };
+}
+
+/** Texte lisible d'un morceau de HTML, espaces normalisées. */
+function texte(html) {
+  return html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;|&#160;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&#39;|&rsquo;/g, '’')
+    .replace(/\s+/g, ' ');
+}
+
 const pagesCV = [...pages].filter(([f]) => /^cv\/(?:[a-z0-9-]+\/)?index\.html$/.test(relative(racine, f)));
 const variantes = pagesCV.filter(([f]) => relative(racine, f) !== 'cv/index.html');
 
@@ -117,9 +138,56 @@ test('chaque version du CV nomme son PDF, montre ses preuves et ne lie qu’en a
     const article = html.slice(html.indexOf('<article class="cv'), html.indexOf('</article>'));
     for (const [, href] of article.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
       assert.match(href, /^(?:https:|mailto:)/, `${chemin} : lien non absolu ${href}`);
+      // Absolu vers le site : le test des liens internes ne le voit pas, on
+      // vérifie donc ici que la page (et la section) existent dans le build.
+      if (href.startsWith(`${SITE}/`)) {
+        const { page, fragment } = destination(href, f);
+        assert.ok(page, `${chemin} → ${href} : page absente du build`);
+        if (fragment) assert.ok(ids.get(page).includes(fragment), `${chemin} → ${href} : section absente`);
+      }
     }
+    // L'étape 2 du 24/09/2026 : sous l'expérience Capgemini, les études qui
+    // la prouvent ; dans la stack, des compétences cliquables et annoncées.
+    assert.match(article, /href="https:\/\/benaja-bendo\.fr\/etudes\/france-travail"/, chemin);
+    assert.match(article, /href="https:\/\/benaja-bendo\.fr\/etudes\/aife"/, chemin);
+    assert.match(article, /class="cv-stack-legende"/, chemin);
   }
   assert.equal(noms.size, pagesCV.length, 'deux versions du CV proposent le même nom de PDF');
+});
+
+// Une compétence cliquable promet une preuve : la page visée doit la nommer,
+// dans la section visée quand le lien porte un fragment. Sans ce contrôle, une
+// étude réécrite ou une section renommée laisserait un lien qui ne prouve plus
+// rien (docs/10 : « un lien de preuve est vérifié avant d'être publié »).
+test('chaque compétence cliquable mène à une page qui la nomme', () => {
+  let liens = 0;
+  for (const [f, html] of pages) {
+    for (const [, href, techno] of html.matchAll(/<a href="([^"]+)" data-techno="([^"]+)"/g)) {
+      liens += 1;
+      const origine = `${relative(racine, f)} → ${techno}`;
+      const { page, fragment } = destination(href, f);
+      assert.ok(page, `${origine} : ${href} absent du build`);
+      let zone = pages.get(page);
+      const main = zone.indexOf('<main');
+      zone = zone.slice(main === -1 ? 0 : main);
+      if (fragment) {
+        const debut = zone.indexOf(`id="${fragment}"`);
+        assert.ok(debut !== -1, `${origine} : section #${fragment} absente`);
+        const fin = zone.indexOf('<h2', debut + 1);
+        zone = zone.slice(debut, fin === -1 ? undefined : fin);
+      }
+      // « Laravel / PHP » est prouvé par « Laravel », « OpenShift (Kubernetes) »
+      // par « OpenShift » : une des parties du nom suffit.
+      const parties = techno
+        .replace(/\([^)]*\)/g, '')
+        .split(' / ')
+        .map((m) => m.trim().toLowerCase())
+        .filter(Boolean);
+      const lu = texte(zone).toLowerCase();
+      assert.ok(parties.some((m) => lu.includes(m)), `${origine} : ${href} ne nomme pas « ${techno} »`);
+    }
+  }
+  assert.ok(liens > 0, 'aucune compétence cliquable trouvée dans le build');
 });
 
 // Choix d'écriture du 23/09/2026 : pas de tiret cadratin dans le texte publié.

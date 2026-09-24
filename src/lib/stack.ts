@@ -17,6 +17,19 @@
  * une barre de progression sur une techno est une opinion déguisée en mesure.
  *
  * `cle: true` = affiché aussi dans la variante compacte de l'accueil.
+ *
+ * `preuve` (ajouté le 24/09/2026) : la page du site qui montre cette techno
+ * au travail. Sur l'accueil comme sur le CV, la puce devient un lien, et le
+ * PDF exporté le garde cliquable. Une techno sans page qui la NOMME n'a pas
+ * de `preuve` : `npm test` vérifie que la page visée (ou la section, si
+ * l'URL porte un fragment) contient bien son nom. Préférer une page de
+ * taxonomie (/realisations/tech/…) quand plusieurs réalisations l'utilisent.
+ *
+ * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Node.js, C# / .NET,
+ * Angular, Vue, Flutter, React Native, MySQL, MongoDB, Firebase, RAG sourcé,
+ * Agents IA & MCP, Pest, Vitest, pytest, TDD, tests d'intégration, Git,
+ * Maven, Gradle, Kafka, Linux, Umami, Scrum, RGPD. Chacune attend une page
+ * qui la montre, ou son retrait de la liste.
  */
 
 export interface Techno {
@@ -27,6 +40,8 @@ export interface Techno {
   mono?: string;
   /** Retenue dans la variante compacte (accueil). */
   cle?: boolean;
+  /** Chemin de la page qui la montre au travail, fragment possible. */
+  preuve?: string;
 }
 
 export interface GroupeStack {
@@ -41,13 +56,13 @@ export const STACK: GroupeStack[] = [
     titre: 'Back-end',
     precision: 'Le cœur du métier, en entreprise comme sur mes propres produits.',
     technos: [
-      { nom: 'Java', icone: 'java', cle: true },
-      { nom: 'Spring Boot', icone: 'spring-boot', cle: true },
+      { nom: 'Java', icone: 'java', cle: true, preuve: '/realisations/tech/java' },
+      { nom: 'Spring Boot', icone: 'spring-boot', cle: true, preuve: '/realisations/tech/spring-boot' },
       { nom: 'Hibernate / JPA', mono: 'JPA' },
-      { nom: 'API REST', mono: 'API' },
-      { nom: 'Laravel / PHP', icone: 'laravel', cle: true },
-      { nom: 'Python', icone: 'python', cle: true },
-      { nom: 'FastAPI', icone: 'fastapi' },
+      { nom: 'API REST', mono: 'API', preuve: '/etudes/aife#ce-que-jai-fait' },
+      { nom: 'Laravel / PHP', icone: 'laravel', cle: true, preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'Python', icone: 'python', cle: true, preuve: '/realisations/tech/python' },
+      { nom: 'FastAPI', icone: 'fastapi', preuve: '/etudes/mibeko#la-construction' },
       { nom: 'Node.js', icone: 'nodejs' },
       // Expérience réelle (InfraOne, KabimGroup, 2020–2023) mais pas une
       // spécialité mise en avant : ni `cle`, ni tête de liste, ni mention dans
@@ -60,19 +75,19 @@ export const STACK: GroupeStack[] = [
     titre: 'Front-end',
     precision: 'Des interfaces livrées, pas des maquettes.',
     technos: [
-      { nom: 'TypeScript', icone: 'typescript', cle: true },
+      { nom: 'TypeScript', icone: 'typescript', cle: true, preuve: '/etudes/mibeko' },
       { nom: 'Angular', icone: 'angular', cle: true },
-      { nom: 'React', icone: 'react', cle: true },
-      { nom: 'Astro', icone: 'astro' },
+      { nom: 'React', icone: 'react', cle: true, preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'Astro', icone: 'astro', preuve: '/realisations/tech/astro' },
       { nom: 'Vue', icone: 'vue' },
-      { nom: 'HTML / CSS', mono: 'WEB' },
+      { nom: 'HTML / CSS', mono: 'WEB', preuve: '/realisations/benaja-bendo-fr' },
     ],
   },
   {
     titre: 'Mobile',
     precision: 'Deux applications publiées sur l’App Store et le Play Store.',
     technos: [
-      { nom: 'Kotlin Multiplatform', icone: 'kotlin', cle: true },
+      { nom: 'Kotlin Multiplatform', icone: 'kotlin', cle: true, preuve: '/etudes/mibeko#la-construction' },
       // Retenu dans la variante compacte pour une raison de composition autant
       // que de fond : seul, « Mobile » laissait une colonne à une puce à côté
       // d'une colonne à quatre, et la grille se lisait comme un oubli.
@@ -85,64 +100,64 @@ export const STACK: GroupeStack[] = [
     titre: 'Données & IA',
     precision: 'Recherche hybride et traçabilité de la source, sur Mibeko.',
     technos: [
-      { nom: 'PostgreSQL', icone: 'postgresql', cle: true },
-      { nom: 'SQL', mono: 'SQL' },
-      { nom: 'pgvector', mono: 'pgv', cle: true },
+      { nom: 'PostgreSQL', icone: 'postgresql', cle: true, preuve: '/realisations/tech/postgresql' },
+      { nom: 'SQL', mono: 'SQL', preuve: '/etudes/aife#ce-que-jai-fait' },
+      { nom: 'pgvector', mono: 'pgv', cle: true, preuve: '/etudes/mibeko#la-construction' },
       { nom: 'MySQL', icone: 'mysql' },
       { nom: 'MongoDB', icone: 'mongodb' },
       { nom: 'Firebase', icone: 'firebase' },
-      { nom: 'Power BI', mono: 'BI', cle: true },
+      { nom: 'Power BI', mono: 'BI', cle: true, preuve: '/etudes/france-travail#ce-que-jai-fait' },
       { nom: 'RAG sourcé', mono: 'RAG' },
       // Un agent à appels d'outils et un serveur MCP, dans mibeko-dashboard
       // (app/Ai, app/Mcp) — vérifié le 23/09/2026.
       { nom: 'Agents IA & MCP', mono: 'MCP' },
-      { nom: 'OCR', mono: 'OCR' },
+      { nom: 'OCR', mono: 'OCR', preuve: '/etudes/mibeko#la-construction' },
     ],
   },
   {
     titre: 'Qualité & tests',
     precision: 'Tests automatisés et revues de code sur les missions comme sur mes produits.',
     technos: [
-      { nom: 'JUnit', mono: 'JUT' },
+      { nom: 'JUnit', mono: 'JUT', preuve: '/etudes/aife#ce-que-jai-fait' },
       // Les trois suites de Mibeko, lisibles dans ses dépôts publics.
       { nom: 'Pest', mono: 'PST' },
       { nom: 'Vitest', mono: 'VIT' },
       { nom: 'pytest', mono: 'PYT' },
       { nom: 'TDD', mono: 'TDD' },
       { nom: 'Tests d’intégration', mono: 'INT' },
-      { nom: 'Revues de code', mono: 'PR' },
+      { nom: 'Revues de code', mono: 'PR', preuve: '/etudes/aife#ce-que-jai-fait' },
     ],
   },
   {
     titre: 'Ops & production',
     precision: 'Ce que je mets en ligne, je le fais aussi tourner au quotidien.',
     technos: [
-      { nom: 'Docker', icone: 'docker', cle: true },
+      { nom: 'Docker', icone: 'docker', cle: true, preuve: '/realisations/tech/docker' },
       { nom: 'Git', mono: 'GIT' },
       { nom: 'Maven', icone: 'maven' },
       { nom: 'Gradle', icone: 'gradle' },
-      { nom: 'Ansible', icone: 'ansible', cle: true },
-      { nom: 'GitHub Actions', icone: 'github-actions', cle: true },
+      { nom: 'Ansible', icone: 'ansible', cle: true, preuve: '/etudes/mibeko#la-production' },
+      { nom: 'GitHub Actions', icone: 'github-actions', cle: true, preuve: '/realisations/tech/github-actions' },
       // OpenShift est une distribution de Kubernetes : c'est là, chez France
       // Travail, que se trouve l'usage réel. « Kubernetes / Helm » a été retiré
       // le 24/09/2026 : aucune preuve sur le site, et Helm n'était pas manipulé
       // personnellement. À rouvrir quand le cluster Raspberry Pi sera documenté.
-      { nom: 'OpenShift (Kubernetes)', icone: 'openshift' },
+      { nom: 'OpenShift (Kubernetes)', icone: 'openshift', preuve: '/etudes/france-travail#ce-que-jai-fait' },
       { nom: 'Kafka', mono: 'KFK' },
-      { nom: 'Traefik', icone: 'traefik' },
+      { nom: 'Traefik', icone: 'traefik', preuve: '/etudes/mibeko#la-production' },
       { nom: 'Linux', icone: 'linux' },
       // Auto-hébergé par un rôle Ansible de vps_infra, actif sur mibeko.fr.
       { nom: 'Umami', mono: 'UMI' },
-      { nom: 'AWS', mono: 'AWS' },
+      { nom: 'AWS', mono: 'AWS', preuve: '/etudes/aife#ce-que-jai-fait' },
     ],
   },
   {
     titre: 'Méthodes',
     precision: 'Travail collectif, livraison incrémentale et contraintes applicatives.',
     technos: [
-      { nom: 'SAFe', mono: 'SAF' },
+      { nom: 'SAFe', mono: 'SAF', preuve: '/etudes/aife' },
       { nom: 'Scrum', mono: 'SCR' },
-      { nom: 'PI planning', mono: 'PI' },
+      { nom: 'PI planning', mono: 'PI', preuve: '/etudes/aife#ce-que-jai-fait' },
       { nom: 'RGPD & sécurité applicative', mono: 'SEC' },
     ],
   },

@@ -90,6 +90,16 @@ contient que des liens absolus.
   compétences, là où le CV veut une liste à plat. Le gras de l'accroche est
   parti pour la même raison. Un profil ordonne toujours ses puces, sans
   emphase.
+- **Chaque ligne renvoie à sa preuve, y compris dans le PDF** (24/09/2026).
+  Sous une expérience, la rangée `liens` d'`Etape` (parcours.ts) mène aux
+  études de cas ; dans la stack, une techno qui a une `preuve` (stack.ts)
+  devient une puce soulignée qui mène à la page, ou à la section, qui la
+  montre. Une légende l'annonce, imprimée aussi : sur papier, c'est le seul
+  signe que ces puces sont cliquables. `npm test` vérifie que la page visée
+  nomme bien la techno (dans la section, si l'URL porte un fragment). Une
+  techno sans page qui la nomme reste sans lien : la liste de ces technos,
+  en tête de stack.ts, est la liste des preuves à écrire ou des lignes à
+  retirer.
 - **Une feuille A4 fait ~680 px CSS** : les règles « mobile » (< 48rem)
   s'appliquent à l'impression. Les zones tactiles de 44 px triplaient la
   hauteur des lignes de contact sur papier ; `@media print` les neutralise.

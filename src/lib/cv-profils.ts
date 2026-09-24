@@ -88,6 +88,9 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-tests',
       'mibeko-organisation',
       'mibeko-mesure',
+      // Masqué le 24/09/2026 pour tenir en deux pages après l'ajout des liens
+      // de preuve : l'OCR se lit déjà dans le point « ingestion » de Mibeko.
+      'kabim-ocr',
     ],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack confirmé',
     description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience. Java / Spring Boot · React / TypeScript · Python · Docker. ${dispo}`,

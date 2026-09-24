@@ -1231,9 +1231,12 @@ main > section:last-child {
  * 2. Pas d'ombre dure sur les puces. La signature du site perd sa force quand
  *    elle est appliquée vingt fois dans le même bloc — le liseré reste pour les
  *    cartes et les moments importants, la stack se contente de son trait.
- * 3. Les puces ne sont pas cliquables. Seules quelques technos ont une page de
- *    taxonomie (seuil de deux réalisations) : une rangée où un tiers des puces
- *    répond au clic et deux tiers non est plus frustrante qu'utile.
+ * 3. Une puce est cliquable quand sa techno a une `preuve` (stack.ts) : une
+ *    page qui la montre au travail, pas seulement une page de taxonomie.
+ *    Jusqu'au 24/09/2026, aucune ne l'était, faute de pages de taxonomie pour
+ *    la plupart des technos. Avec des preuves choisies une par une, la
+ *    majorité des puces de l'accueil répond au clic, et la différence se
+ *    voit sans survol : nom souligné pour les liens, comme `.chips a`.
  * 4. Aucune puce n'est mise en évidence, même sur un CV ciblé. Le
  *    surlignage des technos de l'en-tête (`.stack-puce-cible`) a été retiré
  *    le 24/09/2026 après relecture : il faisait lire une hiérarchie de
@@ -1288,6 +1291,42 @@ main > section:last-child {
   font-family: var(--mono);
   font-size: 0.8rem;
   color: var(--fg);
+}
+/* Le lien occupe toute la puce : c'est elle qu'on vise, pas le mot. Le
+   rembourrage passe donc de la puce au lien. */
+.stack-puce-lien {
+  align-items: stretch;
+  padding: 0;
+}
+.stack-puce-lien a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.65rem 0.3rem 0.5rem;
+  border-radius: inherit;
+  color: var(--accent);
+  text-decoration: none;
+}
+.stack-puce-lien .stack-nom {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.stack-puce-lien a:hover {
+  background: var(--mark-1);
+  color: var(--accent-strong);
+}
+@media (max-width: 48rem) {
+  /* 44 px au doigt, imposés au lien lui-même (voir `.chips a`). Les puces
+     sans lien de la même rangée s'étirent à la même hauteur. */
+  .stack-puce-lien a {
+    min-height: 2.75rem;
+  }
+}
+.cv-stack-legende {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 .icone-tech {
   flex: none;
@@ -3874,6 +3913,21 @@ a.illustration-lien:hover .illustration-scene {
   .stack-puce {
     border-width: 1px;
     padding: 0.05rem 0.3rem;
+    font-size: 8pt;
+  }
+  /* Le lien reste cliquable dans le PDF ; le soulignement, en noir, est ce
+     qui le signale sur papier (la légende l'annonce). La hauteur tactile de
+     la règle « mobile » ne s'applique pas à une feuille. */
+  .stack-puce-lien {
+    padding: 0;
+  }
+  .stack-puce-lien a {
+    min-height: 0;
+    padding: 0.05rem 0.3rem;
+    color: #000000;
+  }
+  .cv-stack-legende {
+    margin-top: 0.1rem;
     font-size: 8pt;
   }
   .icone-tech {

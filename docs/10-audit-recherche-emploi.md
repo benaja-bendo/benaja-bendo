@@ -253,3 +253,8 @@ grep -rhoE 'https://(github\.com/benaja-bendo|apps\.apple\.com|play\.google\.com
 
 Un lien de preuve mort est pire que l'absence de preuve : il transforme un
 argument en négligence visible.
+
+Les liens de preuve internes au site (compétences cliquables, études de cas
+sous une expérience du CV) n'ont pas besoin de cette commande : `npm test`
+vérifie depuis le 24/09/2026 que chaque page visée existe et nomme bien la
+techno qu'elle est censée prouver.

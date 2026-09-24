@@ -38,6 +38,12 @@ export interface Etape {
   points?: Point[];
   /** Étude de cas correspondante, si elle existe. */
   etude?: string;
+  /**
+   * Pages de preuve affichées sous l'intitulé, sur le CV : le lecteur clique
+   * et arrive sur la rubrique qui montre ce travail. URL absolues, pour que le
+   * PDF exporté garde des liens valides. Ajouté le 24/09/2026.
+   */
+  liens?: LienCV[];
 }
 
 /** Un lien de preuve affiché sur le CV : le lecteur doit pouvoir vérifier. */
@@ -86,6 +92,12 @@ export const EXPERIENCES: Etape[] = [
       },
     ],
     etude: 'france-travail',
+    // L'étude AIFE couvre aussi le projet aviation (même période, même
+    // client Capgemini) : deux liens suffisent pour les cinq points.
+    liens: [
+      { label: 'Étude de cas France Travail', url: 'https://benaja-bendo.fr/etudes/france-travail' },
+      { label: 'Étude de cas AIFE', url: 'https://benaja-bendo.fr/etudes/aife' },
+    ],
   },
   {
     id: 'kabimgroup',
