@@ -110,6 +110,12 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-ia-agentique',
       'mibeko-organisation',
       'mibeko-mesure',
+      // Masqués le 24/09/2026 pour tenir en deux pages après l'ajout des liens
+      // de preuve. Le détail reste à un clic : la rangée de liens sous
+      // KabimGroup mène à la réalisation Congo. C# / .NET reste cité dans le
+      // point « livraisons » de KabimGroup.
+      'kabim-ocr',
+      'infraone-sites',
     ],
     groupesStack: ['Back-end', 'Qualité & tests', 'Ops & production', 'Données & IA'],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot',
@@ -161,6 +167,9 @@ export const PROFILS: ProfilCV[] = [
       // pages. L'agent IA et le serveur MCP restent dans la stack et dans les
       // autres versions : c'est le point le moins « DevOps » de Mibeko.
       'mibeko-ia-agentique',
+      // Masqué le même jour, même raison ; la réalisation Congo, liée sous
+      // KabimGroup, garde le détail.
+      'kabim-ocr',
       'infraone-sites',
     ],
     groupesStack: ['Ops & production', 'Qualité & tests', 'Back-end', 'Front-end', 'Données & IA'],

@@ -123,6 +123,11 @@ export const EXPERIENCES: Etape[] = [
           'Relation client directe : recueil du besoin, rédaction des cahiers des charges, animation des réunions.',
       },
     ],
+    // Une seule rangée pour les deux expériences au Congo : elles mènent à la
+    // même page, et une seconde rangée faisait passer le CV à trois pages.
+    liens: [
+      { label: 'Réalisation : web et mobile au Congo', url: 'https://benaja-bendo.fr/realisations/congo-web-mobile' },
+    ],
   },
   {
     id: 'infraone',

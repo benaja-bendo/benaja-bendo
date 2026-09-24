@@ -25,12 +25,12 @@
  * l'URL porte un fragment) contient bien son nom. Préférer une page de
  * taxonomie (/realisations/tech/…) quand plusieurs réalisations l'utilisent.
  *
- * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Node.js, C# / .NET,
- * Angular, Vue, Flutter, React Native, MySQL, MongoDB, Firebase, TDD, Git,
- * Maven, Gradle, Kafka, Scrum, RGPD. Chacune attend une page qui la montre,
- * ou son retrait de la liste. (RAG, MCP, Pest, Vitest, pytest, tests
- * d'intégration, Linux et Umami en sont sortis le même jour, avec deux
- * paragraphes de l'étude Mibeko vérifiés dans ses dépôts.)
+ * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Angular, Vue,
+ * React Native, MySQL, MongoDB, Firebase, TDD, Git, Maven, Gradle, Kafka,
+ * Scrum, RGPD. Chacune attend une page qui la montre, ou son retrait de la
+ * liste. (Sortis le même jour : RAG, MCP, Pest, Vitest, pytest, tests
+ * d'intégration, Linux et Umami avec l'étude Mibeko ; C# / .NET, Node.js et
+ * Flutter avec la réalisation Congo, publiée.)
  */
 
 export interface Techno {
@@ -64,12 +64,12 @@ export const STACK: GroupeStack[] = [
       { nom: 'Laravel / PHP', icone: 'laravel', cle: true, preuve: '/etudes/mibeko#la-construction' },
       { nom: 'Python', icone: 'python', cle: true, preuve: '/realisations/tech/python' },
       { nom: 'FastAPI', icone: 'fastapi', preuve: '/etudes/mibeko#la-construction' },
-      { nom: 'Node.js', icone: 'nodejs' },
+      { nom: 'Node.js', icone: 'nodejs', preuve: '/realisations/congo-web-mobile' },
       // Expérience réelle (InfraOne, KabimGroup, 2020–2023) mais pas une
       // spécialité mise en avant : ni `cle`, ni tête de liste, ni mention dans
       // les en-têtes de CV. Décision du 23/09/2026 — à rouvrir si les offres
       // visées changent.
-      { nom: 'C# / .NET', mono: 'C#' },
+      { nom: 'C# / .NET', mono: 'C#', preuve: '/realisations/congo-web-mobile' },
     ],
   },
   {
@@ -92,7 +92,7 @@ export const STACK: GroupeStack[] = [
       // Retenu dans la variante compacte pour une raison de composition autant
       // que de fond : seul, « Mobile » laissait une colonne à une puce à côté
       // d'une colonne à quatre, et la grille se lisait comme un oubli.
-      { nom: 'Flutter', icone: 'flutter', cle: true },
+      { nom: 'Flutter', icone: 'flutter', cle: true, preuve: '/realisations/congo-web-mobile' },
       // Même icône que React : Meta réutilise le même logo pour les deux.
       { nom: 'React Native', icone: 'react' },
     ],

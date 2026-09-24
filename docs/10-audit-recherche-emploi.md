@@ -148,7 +148,7 @@ voit un bouton mort et le résultat reste atteignable.
 > fichiers que les sites d'emploi exigent, sans rien déployer. Voir
 > [docs/12](12-cv-par-profil.md).
 
-### 6. La promesse d'inventaire n'est pas tenue — ⏳ ouvert, décision à prendre
+### 6. La promesse d'inventaire n'est pas tenue — ✅ publiée le 24/09/2026
 
 `/realisations` annonce « un inventaire, pas une sélection » et « y compris
 quand la réponse n'est pas flatteuse ». Il contient quatre entrées, toutes
@@ -159,6 +159,12 @@ invisibles dans l'inventaire alors que le parcours les mentionne.
 Deux sorties honnêtes : publier cette entrée même imparfaite, ou changer le mot
 « inventaire ». La première est plus forte. Elle demande ce que toi seul peux
 écrire : quels projets nommer, pour quels clients, et ce que tu en retiens.
+
+**Publiée le 24/09/2026**, sans projet nommé : le corps reprend les faits déjà
+publics (parcours, CV), l'enseignement a été choisi par Bénaja, et
+`confidentiel: true` affiche « Mission client : aucun lien public ». Elle rend
+C# / .NET, Node.js et Flutter cliquables dans la stack. Nommer un ou deux
+projets reste possible plus tard, sans bloquer la page.
 
 ### 7. Deux détails qui coûtent cher — ✅ corrigés
 
@@ -208,10 +214,8 @@ Repris de l'audit archivé 09 quand c'est toujours vrai, et daté quand ça ne
 l'est plus.
 
 1. **La capture question → réponse → article.** Le premier gain du site.
-2. **Publier ou déclasser la réalisation Congo** (§6 ci-dessus). Le brouillon est
-   désormais aligné sur le CV de septembre 2026 — InfraOne System puis KabimGroup,
-   deux expériences salariées — mais il lui manque encore des projets nommables et
-   un enseignement avant publication.
+2. ~~**Publier ou déclasser la réalisation Congo**~~ : publiée le 24/09/2026
+   (§6 ci-dessus). Reste facultatif : nommer un ou deux projets.
 3. **Décider du sort de l'étude AIFE.** La phrase de stratégie en a été retirée
    le 14/08/2026. La mise à jour du 03/09/2026 précise désormais les API REST,
    les tests JUnit et le projet aviation de traitement de PDF sur AWS, mais la page
