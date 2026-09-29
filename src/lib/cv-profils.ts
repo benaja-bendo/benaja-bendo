@@ -31,7 +31,7 @@
  *
  * Mode d'emploi complet : docs/12-cv-par-profil.md.
  */
-import { DISPONIBILITE, EXPERIENCES, PROJETS, type Etape, type Point, type Projet } from './parcours';
+import { EXPERIENCES, PROJETS, type Etape, type Point, type Projet } from './parcours';
 import { STACK, nomsTechnos, stackOrdonnee, type GroupeStack } from './stack';
 
 export interface ProfilCV {
@@ -73,35 +73,32 @@ export interface ProfilCV {
   nomImpression: string;
 }
 
-const dispo = `Disponible en CDI à partir du ${DISPONIBILITE.texte}.`;
-
 export const PROFILS: ProfilCV[] = [
   {
     // Le CV général : toutes les compétences, sans accent particulier.
     role: 'Développeur fullstack confirmé',
     enTete: [['Java', 'Spring Boot'], ['React', 'TypeScript'], ['Python'], ['Docker']],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience, je conçois, fiabilise et fais vivre des applications métier, du besoin à la production. Chez Capgemini, j’ai automatisé un processus concernant plus de 400 collaborateurs. En parallèle, j’ai créé Mibeko, un SaaS juridique publié sur iOS et Android, dont je gère toute la technique : l’API, le traitement des documents, la mise en ligne automatique et les serveurs.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience. J’ai commencé à Pointe-Noire, au Congo, sur des applications web et mobiles, puis j’ai rejoint Capgemini à Bordeaux : Java / Spring Boot pour l’AIFE, puis France Travail, où un processus concernant plus de 400 collaborateurs est passé d’environ 10 jours à 48 heures. En parallèle, j’ai créé Mibeko, un SaaS juridique publié sur iOS et Android, dont je gère toute la technique.',
     masques: [
       'mibeko-livraison-web',
       'mibeko-livraison-mobile',
       'mibeko-tests',
       'mibeko-organisation',
       'mibeko-mesure',
-      // Masqué le 24/09/2026 pour tenir en deux pages après l'ajout des liens
-      // de preuve : l'OCR se lit déjà dans le point « ingestion » de Mibeko.
-      'kabim-ocr',
+      // Le point général d'InfraOne (30/09/2026) : InfraChecking et Nyota IT,
+      // qui le suivent, disent la même chose avec des projets nommés.
+      'infraone-logiciels-metier',
       // Masqués le même jour pour faire place à La Grenaille : sa stack se lit
       // sur la réalisation liée, Trouve Ton Profil garde la ligne qui dit mon
       // rôle, la recherche hybride reste dans l'étude Mibeko.
       'grenaille-stack',
       'ttp-solution',
       'mibeko-recherche',
-      'infraone-sites',
       'ft-pilotage',
     ],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack confirmé',
-    description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience. Java / Spring Boot · React / TypeScript · Python · Docker. ${dispo}`,
+    description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience. Java / Spring Boot · React / TypeScript · Python · Docker.`,
     nomImpression: 'CV-Benaja-Bendo-Matondo-Developpeur-Fullstack',
   },
   {
@@ -109,7 +106,7 @@ export const PROFILS: ProfilCV[] = [
     role: 'Développeur fullstack confirmé, spécialisé Java / Spring Boot',
     enTete: [['Java', 'Spring Boot'], ['API REST'], ['PostgreSQL'], ['JUnit'], ['OpenShift (Kubernetes)'], ['Docker']],
     accroche:
-      'Développeur fullstack confirmé avec 6 ans d’expérience, dont trois chez Capgemini, principalement en Java / Spring Boot&nbsp;: microservices pour les finances publiques (AIFE), puis refonte d’un service de collecte pour France Travail qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures. En parallèle, j’ai créé Mibeko, un SaaS juridique en production, dont je gère aussi les tests, la mise en ligne automatique et les serveurs.',
+      'Développeur fullstack confirmé avec 6 ans d’expérience. Après mes débuts au Congo, en .NET puis en Node.js et Laravel, j’ai passé trois ans chez Capgemini, principalement en Java / Spring Boot&nbsp;: microservices pour les finances publiques (AIFE), puis refonte d’un service de collecte pour France Travail qui a ramené un cycle concernant plus de 400 collaborateurs d’environ 10 jours à 48 heures. En parallèle, j’ai créé Mibeko, un SaaS juridique en production, dont je gère aussi les tests, la mise en ligne automatique et les serveurs.',
     prioritaires: ['ft-refonte', 'aife-microservices', 'ft-pilotage', 'mibeko-stack', 'mibeko-production'],
     masques: [
       'mibeko-livraison-web',
@@ -118,12 +115,11 @@ export const PROFILS: ProfilCV[] = [
       'mibeko-ia-agentique',
       'mibeko-organisation',
       'mibeko-mesure',
-      // Masqués le 24/09/2026 pour tenir en deux pages après l'ajout des liens
-      // de preuve. Le détail reste à un clic : la rangée de liens sous
-      // KabimGroup mène à la réalisation Congo. C# / .NET reste cité dans le
-      // point « livraisons » de KabimGroup.
-      'kabim-ocr',
-      'infraone-sites',
+      // Pour tenir en deux pages (revu le 30/09/2026). Le détail reste à un
+      // clic : la rangée de liens sous KabimGroup mène à la réalisation
+      // InfraOne / KabimGroup. .NET reste cité dans le point InfraChecking.
+      'infraone-logiciels-metier',
+      'infraone-nyota',
       // Pour La Grenaille (24/09/2026) : sa stack Node.js est hors sujet pour
       // ce profil, le détail d'ingestion Mibeko aussi.
       'grenaille-stack',
@@ -136,7 +132,7 @@ export const PROFILS: ProfilCV[] = [
     ],
     groupesStack: ['Back-end', 'Qualité & tests', 'Ops & production', 'Données & IA'],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack Java / Spring Boot',
-    description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience, dont trois en Java / Spring Boot chez Capgemini. API REST, PostgreSQL, JUnit, OpenShift, Docker. ${dispo}`,
+    description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience, dont trois en Java / Spring Boot chez Capgemini. API REST, PostgreSQL, JUnit, OpenShift, Docker.`,
     nomImpression: 'CV-Benaja-Bendo-Matondo-Developpeur-Java-Spring-Boot',
   },
   {
@@ -183,10 +179,10 @@ export const PROFILS: ProfilCV[] = [
       // pages. L'agent IA et le serveur MCP restent dans la stack et dans les
       // autres versions : c'est le point le moins « DevOps » de Mibeko.
       'mibeko-ia-agentique',
-      // Masqué le même jour, même raison ; la réalisation Congo, liée sous
-      // KabimGroup, garde le détail.
-      'kabim-ocr',
-      'infraone-sites',
+      // Même raison (revu le 30/09/2026) ; la réalisation InfraOne /
+      // KabimGroup, liée sous KabimGroup, garde le détail.
+      'infraone-logiciels-metier',
+      'infraone-nyota',
       // Pour La Grenaille (24/09/2026) : on garde sa chaîne de livraison et le
       // travail avec le client, pas la description du produit.
       'grenaille-solution',
@@ -201,7 +197,7 @@ export const PROFILS: ProfilCV[] = [
     ],
     groupesStack: ['Ops & production', 'Qualité & tests', 'Back-end', 'Front-end', 'Données & IA'],
     titre: 'CV de Bénaja Bendo-Matondo, développeur fullstack orienté DevOps',
-    description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience, orienté DevOps : CI/CD GitHub Actions, Docker, Ansible, OpenShift, tests automatisés. ${dispo}`,
+    description: `CV de Bénaja Bendo-Matondo, développeur fullstack confirmé avec 6 ans d’expérience, orienté DevOps : CI/CD GitHub Actions, Docker, Ansible, OpenShift, tests automatisés.`,
     nomImpression: 'CV-Benaja-Bendo-Matondo-Developpeur-Fullstack-DevOps',
   },
 ];

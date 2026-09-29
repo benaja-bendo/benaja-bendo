@@ -86,8 +86,25 @@ export default defineConfig({
   // ne les casse pas pour rendre l'arborescence plus élégante (docs/08 §3).
   // La vraie 301 est servie par Firebase (firebase.json) ; la page générée ici
   // est le filet de sécurité portable, y compris en `npm run preview`.
+  //
+  // ⚠️ La page générée par Astro est une redirection HTML : elle PERD le
+  // fragment (#la-construction…). Seule la 301 de Firebase le garde, et c'est
+  // elle que reçoivent les visiteurs. Toute entrée ajoutée ici doit donc
+  // l'être aussi dans firebase.json.
   redirects: {
-    '/mibeko': '/etudes/mibeko',
+    '/mibeko': '/realisations/mibeko',
+    // Études de cas fusionnées dans les réalisations le 30/09/2026 (docs/13
+    // §5). Leurs adresses figurent dans des CV déjà envoyés, avec des ancres
+    // (#ce-que-jai-fait, #la-construction, #la-production, #preuves-titre)
+    // que les pages de destination gardent.
+    '/etudes': '/realisations',
+    '/etudes/mibeko': '/realisations/mibeko',
+    '/etudes/france-travail': '/realisations/france-travail-collecte',
+    '/etudes/aife': '/realisations/aife-microservices',
+    // L'ancienne page de compatibilité. Ses ancres #aife et #france-travail
+    // sont portées par les lignes de /realisations (voir
+    // /notes/fragment-url-et-redirections).
+    '/experiences': '/realisations',
     // Renommée le 14/08/2026. Un CHEMIN se redirige côté serveur, contrairement
     // à un fragment (voir /notes/fragment-url-et-redirections) : la 301 est
     // donc réelle, servie par firebase.json, et cette entrée n'est que le
@@ -141,15 +158,12 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      // /experiences est une page de compatibilité : aucun lien du site n'y
-      // mène, et elle redit ce que disent les études de cas. Indexée, elle met
-      // le site en concurrence avec lui-même sur ses propres missions. Elle
-      // reste servie (des candidatures pointent dessus) mais porte un
-      // `noindex, follow` et sort du plan de site.
-      // Même traitement pour les variantes du CV (/cv/<profil>) : elles
-      // existent pour le lien envoyé avec une candidature, pas pour Google,
-      // qui y verrait trois fois le même CV. /cv lui-même reste indexé.
-      filter: (page) => !page.includes('/experiences') && !/\/cv\/[^/]+/.test(page),
+      // Les variantes du CV (/cv/<profil>) existent pour le lien envoyé avec
+      // une candidature, pas pour Google, qui y verrait trois fois le même
+      // CV : elles sortent du plan de site. /cv lui-même reste indexé.
+      // (/experiences y était aussi exclue ; c'est une redirection depuis le
+      // 30/09/2026, que l'intégration écarte d'elle-même.)
+      filter: (page) => !/\/cv\/[^/]+/.test(page),
     }),
   ],
 });

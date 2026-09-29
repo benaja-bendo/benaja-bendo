@@ -1,6 +1,7 @@
 ---
 titre: "Un fragment d’URL n’atteint jamais le serveur"
 date: 2026-08-14
+maj: 2026-09-30
 resume: "Impossible de rediriger /experiences#aife et /experiences#france-travail vers deux pages différentes : l’hébergeur ne voit que /experiences. La sortie n’est pas une règle de redirection, c’est une page de compatibilité."
 sujets: ["HTTP", "Firebase", "URLs"]
 statut: "stable"
@@ -38,3 +39,12 @@ Vrai pour toute redirection côté serveur, quel que soit l’hébergeur. Ce qu�
 serveur *peut* faire, c’est rediriger `/experiences` vers une page unique : le
 navigateur réappliquera alors le fragment à la destination, ce qui n’est utile que
 si les ancres existent encore à l’arrivée.
+
+## Mise à jour du 30/09/2026
+
+Les études de cas ont été fusionnées dans les réalisations, et la page
+`/experiences` a disparu. Elle redirige maintenant vers `/realisations`, où
+les lignes France Travail et AIFE portent les ancres `#france-travail` et
+`#aife`. C'est la solution décrite juste au-dessus : le serveur redirige le
+chemin, le navigateur réapplique le fragment, et les deux anciens liens
+tombent toujours au bon endroit.

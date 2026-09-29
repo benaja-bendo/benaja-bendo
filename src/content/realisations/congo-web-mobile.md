@@ -1,32 +1,48 @@
 ---
-nom: "Développement web & mobile au Congo"
-resume: "Sites d’entreprise et applications web et mobiles livrés à Pointe-Noire, de C# / ASP.NET Core et Xamarin à Laravel et Flutter."
-statut: "archive"
+nom: "InfraOne System et KabimGroup"
+resume: "Mes débuts de développeur à Pointe-Noire, de 2020 à 2023 : une application de badge pour les sous-traitants de Total, une application de commande de repas, puis un parseur de CV."
+statut: "termine"
 periode: "2020 – 2023"
-role: "Développeur fullstack salarié chez InfraOne System (2020–2021), puis développeur web & mobile salarié chez KabimGroup (2021–2023)"
-stack: ["C#", ".NET", "ASP.NET Core", "Xamarin", "Flutter", "Laravel", "Node.js", "OCR"]
+role: "Développeur fullstack chez InfraOne System (2020–2021), puis développeur web et mobile chez KabimGroup (fin 2021 à février 2023), salarié dans les deux cas"
+stack: ["C#", ".NET", "Xamarin", "Angular", "Laravel", "PHP", "Node.js", "OCR"]
 domaines: ["Mobile", "Back-end"]
-enseignement: "Au contact direct des clients, j’ai appris qu’un besoin mal compris coûte plus cher qu’un bug : le cahier des charges et les réunions font partie du travail, ils ne le précèdent pas."
+enseignement: "Au Congo, j’étais souvent en contact direct avec les clients. J’y ai appris à bien comprendre le besoin avant de coder : un besoin mal compris coûte plus cher qu’un bug."
 confidentiel: true
-ordre: 5
-maj: 2026-09-24
+type: "entreprise"
+ordre: 3
+maj: 2026-09-30
 ---
 
-Mes premières années de développeur en entreprise, à Pointe-Noire, dans deux
-sociétés.
+Mes premières années de développeur, à Pointe-Noire, dans deux entreprises.
 
-Chez **InfraOne System** (2020–2021), j’ai développé des logiciels métier en
-équipe, sur tout le cycle : recueil du besoin, développement, livraison et
-corrections en production. J’y ai aussi conçu des sites d’entreprise en
-C# / ASP.NET Core pour des entreprises sous-traitantes de Total E&P Congo.
+## InfraOne System (2020–2021)
 
-Chez **KabimGroup** (2021–2023), une startup, j’ai livré en production des
-applications web et mobiles avec Laravel, Flutter, Node.js, C# / .NET et
-Xamarin, en concevant et en intégrant leurs API REST. J’y ai construit la
-lecture automatique de documents clients (OCR) : extraire les informations
-qu’ils contiennent et les remettre en forme. J’étais aussi en relation directe
-avec les clients : recueil du besoin, rédaction des cahiers des charges,
-animation des réunions.
+J’y ai surtout travaillé en C# / .NET Core, en équipe, sur des applications
+très variées : du recueil du besoin jusqu’aux corrections en production.
 
-Missions pour des clients et des employeurs : je décris mon rôle et ce que
-j’ai fait, pas leurs données ni leurs systèmes.
+La principale s’appelait **InfraChecking**. C’est une application mobile,
+avec un back-end en .NET et Laravel, faite pour les sous-traitants de Total
+E&P Congo : elle leur permettait de badger leurs arrivées et leurs départs
+plus simplement.
+
+J’ai aussi travaillé sur **Nyota IT**, un projet d’application mobile pour
+commander des repas en ligne, un peu comme Uber Eats aujourd’hui. Côté
+technique : Xamarin pour le mobile, Laravel et .NET côté serveur, Angular pour
+la partie web.
+
+## KabimGroup (fin 2021 à février 2023)
+
+KabimGroup est une startup. J’y ai surtout travaillé sur un **parseur de CV** :
+un outil qui lit un CV automatiquement (OCR) et en ressort les informations
+utiles. Il était écrit en Node.js et en Laravel, avec son API REST. C’était
+avant l’arrivée des IA génératives, donc beaucoup de R&D.
+
+J’étais aussi en relation directe avec les clients : recueil du besoin,
+rédaction des cahiers des charges, animation des réunions.
+
+## Ce que je retrouve aujourd’hui
+
+La lecture automatique de documents, je l’ai retrouvée dans
+[Mibeko](/realisations/mibeko), cette fois avec un modèle de langage. Et le
+travail en direct avec le client, je le retrouve avec
+[La Grenaille](/realisations/la-grenaille).

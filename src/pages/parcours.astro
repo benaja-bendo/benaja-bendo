@@ -27,15 +27,15 @@ import { EXPERIENCES, FORMATION } from '../lib/parcours';
     <p class="eyebrow">Parcours</p>
     <h1>J’ai commencé par réparer des machines.</h1>
     <p class="lead">
-      Je construis maintenant des systèmes logiciels qui n’ont pas besoin de moi
-      pour tourner. Entre les deux, un fil conducteur&nbsp;: comprendre un problème
-      réel, construire l’outil qui le règle, et le faire tenir dans la durée.
+      Avant le code, j’ai fait une licence en maintenance industrielle, à
+      Pointe-Noire. Aujourd’hui, je suis développeur fullstack, avec six ans
+      d’expérience entre le Congo et la France.
     </p>
 
     <Illustration
       nom="academic-year-planner"
-      legende="Six ans, deux pays, un seul fil."
-      aide="De la maintenance industrielle à Pointe-Noire aux systèmes en production à Bordeaux."
+      legende="De Pointe-Noire à Bordeaux."
+      aide="De la maintenance industrielle au développement web et mobile."
       meta="2020 → 2026"
       taille="petit"
       class="illustration-cote"
@@ -68,72 +68,78 @@ import { EXPERIENCES, FORMATION } from '../lib/parcours';
     </ol>
 
     <div class="cta-row">
-      <a class="btn btn-primary" href="/realisations">Ce que j’ai construit</a>
+      <a class="btn btn-primary" href="/realisations">Mes réalisations</a>
       <a class="btn btn-ghost" href="/contact">Me contacter</a>
     </div>
   </section>
 
   <section class="container">
-    <p class="eyebrow">Le fil</p>
     <h2>Des machines au code</h2>
     <div class="prose">
       <h3>Les machines</h3>
       <p>
-        J’ai d’abord appris l’ingénierie des systèmes industriels à Pointe-Noire&nbsp;:
-        diagnostiquer une panne, remettre en marche, fiabiliser ce qui ne doit pas
-        s’arrêter. Cette manière de penser ne m’a jamais quitté&nbsp;: elle décrit assez
-        bien ce que fait un bon logiciel en production.
+        J’ai d’abord étudié la maintenance industrielle à Pointe-Noire&nbsp;:
+        trouver une panne, remettre une machine en marche, faire en sorte
+        qu’elle ne s’arrête plus. Je travaille encore un peu de la même façon
+        sur un logiciel en production.
       </p>
 
       <h3>Le code</h3>
+      {/* Revu le 30/09/2026 avec Bénaja : projets nommés, technos remises au
+          bon poste (Xamarin chez InfraOne, pas de Flutter chez KabimGroup),
+          Bachelor commencé en septembre 2023. */}
       <p>
-        J’ai commencé à développer au sein de Yekolab, puis comme développeur
-        fullstack salarié chez InfraOne System de 2020 à 2021 et développeur web
-        & mobile chez KabimGroup de 2021 à 2023. Chez InfraOne, j’ai conçu des
-        sites d’entreprise en C#&nbsp;/&nbsp;ASP.NET Core pour des entreprises
-        sous-traitantes de Total E&amp;P Congo. Chez KabimGroup, j’ai continué
-        avec C#&nbsp;/&nbsp;.NET tout en travaillant aussi avec Xamarin, Flutter,
-        Laravel, Node.js et le traitement documentaire par OCR. À Bordeaux, j’ai
-        poursuivi avec un Bachelor, puis un titre d’expert (Bac+5) en alternance
-        chez Capgemini, sur des systèmes des finances publiques et France Travail.
+        J’ai commencé à coder avec Yekolab, un incubateur de Pointe-Noire.
+        Chez InfraOne System (2020–2021), j’ai surtout travaillé en
+        C#&nbsp;/&nbsp;.NET, sur des applications très variées. La principale,
+        InfraChecking, permettait aux sous-traitants de Total E&amp;P Congo de
+        badger leurs arrivées et leurs départs plus simplement. J’ai aussi
+        travaillé sur Nyota IT, une application pour commander des repas en
+        ligne, un peu comme Uber Eats.
+      </p>
+      <p>
+        Chez KabimGroup (fin 2021 à février 2023), j’ai surtout construit un
+        parseur de CV&nbsp;: lire un CV automatiquement et en ressortir les
+        informations utiles, en Node.js et Laravel. C’était avant l’arrivée des
+        IA génératives, donc beaucoup de R&amp;D.
+      </p>
+      <p>
+        En septembre 2023, j’ai repris mes études à Bordeaux&nbsp;: un Bachelor,
+        puis un titre d’expert (Bac+5). En parallèle, j’étais chez Capgemini, en
+        stage puis en alternance, sur les finances publiques puis France Travail.
       </p>
 
-      <h3>Les outils</h3>
+      <h3>Capgemini et Mibeko</h3>
       <p>
-        Aujourd’hui, je développe des services Java / Spring Boot le jour, et
-        je fais vivre <a href="/realisations/mibeko">Mibeko</a> le reste du temps. C’est
-        un SaaS que j’ai créé pour rendre le droit congolais et OHADA consultable, et
-        qui tourne aujourd’hui en production. La boucle se referme&nbsp;: je me sers de tout ce que j’ai
-        appris en France pour construire un outil utile à mon pays d’origine.
+        Chez Capgemini, j’ai développé des services Java&nbsp;/&nbsp;Spring Boot. À
+        côté, j’ai créé <a href="/realisations/mibeko">Mibeko</a>, qui rend le
+        droit congolais et OHADA consultable, et qui tourne en production.
+        Mibeko, c’est un outil pour le Congo, construit avec ce que j’ai appris
+        en France.
       </p>
     </div>
   </section>
 
   <section class="container">
-    <p class="eyebrow">Ma manière de travailler</p>
-    <h2>Ce que je cherche dans un problème</h2>
+    <h2>Ma façon de travailler</h2>
     <div class="prose">
       <p>
-        Les problèmes qui m’intéressent sont ceux où la sortie doit
-        être <strong>vérifiable</strong>. Sur Mibeko, ce n’est pas la qualité de la
-        réponse qui m’a occupé le plus longtemps, c’est la traçabilité&nbsp;: pouvoir
-        remonter de chaque phrase à l’article dont elle vient. Sur un service
-        interne, ce n’est pas l’élégance du code, c’est de savoir si le geste
-        manuel a réellement disparu.
+        J’aime les problèmes où l’on peut vérifier le résultat. Sur Mibeko, ce
+        qui m’a demandé le plus de travail, c’est de pouvoir remonter de chaque
+        réponse à l’article de loi d’où elle vient. Sur un outil interne, c’est
+        de vérifier que le travail fait à la main a vraiment disparu.
       </p>
       <p>
-        Je préfère les contraintes posées tôt et tenues jusqu’au bout aux
-        contraintes négociées en cours de route. Ce site en est un exemple
-        volontairement excessif&nbsp;: une politique de sécurité stricte y
-        interdit tout style en ligne, ce qui m’a coûté une fonctionnalité
-        officielle du framework, mais m’a évité toutes les discussions
-        suivantes. Les détails sont dans
-        le <a href="/colophon">colophon</a> et dans les <a href="/notes">notes</a>.
+        Je préfère poser les contraintes tôt et les tenir jusqu’au bout. Sur ce
+        site, par exemple, une règle de sécurité stricte interdit tout style
+        écrit directement dans la page. Ça m’a coûté une fonctionnalité
+        d’Astro, mais je n’ai plus eu à en rediscuter ensuite. Le détail est
+        dans le <a href="/colophon">colophon</a> et dans les <a href="/notes">notes</a>.
       </p>
       <p>
-        Ce que je veux approfondir maintenant&nbsp;: continuer à faire tourner ce que je
-        construis. Écrire du code que quelqu’un déploie ailleurs et écrire du code
-        qu’on réveille soi-même à 23&nbsp;h ne produisent pas les mêmes décisions.
+        Ce que je veux continuer&nbsp;: faire tourner moi-même ce que je
+        construis. Quand c’est moi qui dois réparer si ça casse à 23&nbsp;h, je
+        ne prends pas les mêmes décisions.
       </p>
     </div>
   </section>

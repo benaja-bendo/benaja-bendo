@@ -44,19 +44,19 @@ test('les liens internes et leurs fragments ont une destination dans le build', 
   }
 });
 
-test('les scripts de page restent locaux au CV et à l’étude Mibeko', () => {
+test('les scripts de page restent locaux au CV et à la page Mibeko', () => {
   for (const [f, html] of pages) {
     const chemin = relative(racine, f);
     const scripts = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/gi)].map((m) => m[1]);
-    if (scripts.includes('/js/demo-mibeko.js')) assert.equal(chemin, 'etudes/mibeko/index.html');
+    if (scripts.includes('/js/demo-mibeko.js')) assert.equal(chemin, 'realisations/mibeko/index.html');
     if (scripts.includes('/js/cv.js')) assert.match(chemin, /^cv\/(?:[a-z0-9-]+\/)?index\.html$/);
     for (const script of scripts) assert.ok(existsSync(join(racine, script)), `${f} → ${script}`);
   }
-  assert.match(pages.get(join(racine, 'etudes/mibeko/index.html')), /src="\/js\/demo-mibeko.js"/);
+  assert.match(pages.get(join(racine, 'realisations/mibeko/index.html')), /src="\/js\/demo-mibeko.js"/);
 });
 
 test('la démo servie est complète, la commande est hors de l’image décorative', () => {
-  const html = pages.get(join(racine, 'etudes/mibeko/index.html'));
+  const html = pages.get(join(racine, 'realisations/mibeko/index.html'));
   assert.doesNotMatch(html, /\sdata-demo-pret(?:\s|=|>)/);
   assert.match(html, /class="assistant-bulle assistant-bulle-utilisateur"/);
   assert.match(html, /Article 123/);
@@ -149,10 +149,11 @@ test('chaque version du CV nomme son PDF, montre ses preuves et ne lie qu’en a
         if (fragment) assert.ok(ids.get(page).includes(fragment), `${chemin} → ${href} : section absente`);
       }
     }
-    // L'étape 2 du 24/09/2026 : sous l'expérience Capgemini, les études qui
+    // L'étape 2 du 24/09/2026 : sous l'expérience Capgemini, les pages qui
     // la prouvent ; dans la stack, des compétences cliquables et annoncées.
-    assert.match(article, /href="https:\/\/benaja-bendo\.fr\/etudes\/france-travail"/, chemin);
-    assert.match(article, /href="https:\/\/benaja-bendo\.fr\/etudes\/aife"/, chemin);
+    // (Pages de réalisation depuis la fusion des études, le 30/09/2026.)
+    assert.match(article, /href="https:\/\/benaja-bendo\.fr\/realisations\/france-travail-collecte"/, chemin);
+    assert.match(article, /href="https:\/\/benaja-bendo\.fr\/realisations\/aife-microservices"/, chemin);
     assert.match(article, /class="cv-stack-legende"/, chemin);
   }
   assert.equal(noms.size, pagesCV.length, 'deux versions du CV proposent le même nom de PDF');

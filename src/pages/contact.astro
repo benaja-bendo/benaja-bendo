@@ -1,19 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
 import Illustration from '../components/Illustration.astro';
+import Disponibilite from '../components/Disponibilite.astro';
 import { CONTACT, DISPONIBILITE } from '../lib/parcours';
 
 const intentions = [
   {
     titre: 'Vous recrutez',
+    etiquette: 'Un poste',
     index: '01',
-    resume:
-      'Vous cherchez un développeur fullstack confirmé capable de prendre un sujet métier, de le construire et de l’accompagner en production.',
+    resume: 'Vous cherchez un développeur fullstack confirmé, pour un CDI.',
+    // La disponibilité n'est plus répétée ici (30/09/2026) : elle est dite
+    // une fois, en tête de page.
     points: [
-      `Disponible en CDI à partir du ${DISPONIBILITE.texte}`,
       DISPONIBILITE.mobilite,
       `Java / Spring Boot · React / TypeScript`,
-      'CV web imprimable et parcours détaillé',
+      'Un CV en ligne, prêt à imprimer',
     ],
     href: `mailto:${CONTACT.email}?subject=Opportunité%20CDI`,
     cta: 'Présenter un poste',
@@ -22,13 +24,14 @@ const intentions = [
   },
   {
     titre: 'Vous avez un besoin technique',
+    etiquette: 'Un projet',
     index: '02',
     resume:
-      'Mon expérience répond surtout aux besoins qui relient produit, back-end et exploitation, avec un résultat concret à livrer.',
+      'Je peux surtout vous aider sur le back-end, la mise en ligne et les applications web ou mobiles.',
     points: [
-      'API ou service métier à construire ou fiabiliser',
-      'Processus manuel à automatiser et rendre observable',
-      'Produit web ou mobile à mener jusqu’en production',
+      'Une API ou un service à construire, ou à rendre fiable',
+      'Un travail fait à la main à automatiser',
+      'Une application web ou mobile à mettre en ligne',
     ],
     href: `mailto:${CONTACT.email}?subject=Besoin%20technique`,
     cta: 'Décrire le besoin',
@@ -40,7 +43,7 @@ const intentions = [
 
 <Base
   title="Contact · Bénaja Bendo-Matondo, développeur fullstack confirmé"
-  description={`Écrivez-moi à ${CONTACT.email}. Développeur fullstack confirmé, Java / Spring Boot · React / TypeScript, disponible en CDI à partir du ${DISPONIBILITE.texte}.`}
+  description={`Écrivez-moi à ${CONTACT.email}. Développeur fullstack confirmé, Java / Spring Boot · React / TypeScript.`}
 >
   <section class="hero container">
     <p class="eyebrow">Contact</p>
@@ -49,19 +52,16 @@ const intentions = [
     <div class="hero-proof">
       <p>
         {/* ⚠️ Ne pas couper la ligne entre les deux-points et le <a> : Astro
-            mange le saut de ligne et rend « technique :contact@… ». */}
-        Une offre, une mission ciblée ou une question technique&nbsp;: <a
+            mange le saut de ligne et rend « mail :contact@… ». */}
+        Pour une offre, un projet ou une question technique, le plus simple,
+        c’est un mail&nbsp;: <a
           href={`mailto:${CONTACT.email}`}
-        >{CONTACT.email}</a>. Pas de formulaire ni de suivi&nbsp;: votre message
-        arrive directement chez moi.
+        >{CONTACT.email}</a>.
       </p>
     </div>
 
-    <p class="lead">
-      Côté emploi&nbsp;: disponible en CDI à partir
-      du <mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark>.
-      Mobilité&nbsp;: {DISPONIBILITE.mobilite}.
-    </p>
+    <Disponibilite />
+    <p class="lead">Mobilité&nbsp;: {DISPONIBILITE.mobilite}.</p>
 
     <div class="cta-row">
       <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>
@@ -78,17 +78,12 @@ const intentions = [
   </section>
 
   <section class="container">
-    <p class="eyebrow">Deux points de départ</p>
-    <h2>Choisissez ce qui vous amène</h2>
-    <p class="lead muted">
-      Vous n’avez pas à parcourir tout le site avant d’écrire. Voici les faits
-      et les preuves utiles selon votre contexte.
-    </p>
+    <h2>Selon ce qui vous amène</h2>
     <div class="cards contact-intents">
       {intentions.map((intention) => (
         <article class="card intent-card">
           <div class="door-card-head">
-            <span class="period">Point de départ</span>
+            <span class="period">{intention.etiquette}</span>
             <span class="door-index" aria-hidden="true">{intention.index}</span>
           </div>
           <h3>{intention.titre}</h3>
@@ -106,23 +101,22 @@ const intentions = [
   </section>
 
   <section class="container">
-    <p class="eyebrow">Un message court suffit</p>
-    <h2>Les informations qui font gagner un aller-retour</h2>
+    <h2>Ce qui m’aide à vous répondre</h2>
     <div class="contact-briefs">
       <article>
         <p class="etiq">Pour un poste</p>
         <h3>Le cadre de travail</h3>
         <p>
-          L’entreprise, ce que construit l’équipe, la stack réellement utilisée,
-          le lieu et le rythme de présence attendu.
+          L’entreprise, ce que fait l’équipe, la stack, le lieu et le rythme de
+          télétravail.
         </p>
       </article>
       <article>
         <p class="etiq">Pour un besoin technique</p>
-        <h3>Le problème avant la solution</h3>
+        <h3>Le problème</h3>
         <p>
-          Ce qui bloque aujourd’hui, les utilisateurs concernés, l’échéance et
-          les contraintes déjà connues. Le choix technique peut venir ensuite.
+          Ce qui bloque aujourd’hui, qui est concerné, l’échéance et les
+          contraintes déjà connues.
         </p>
       </article>
     </div>
@@ -131,21 +125,20 @@ const intentions = [
       <p>
         {/* ⚠️ Aucun saut de ligne entre un mot et le <a> qui le suit : Astro
             mange l'espace et colle les deux (checklist de CLAUDE.md). */}
-        Pour juger avant d’écrire&nbsp;: le <a href="/cv">CV</a> synthétise, les <a
-          href="/realisations">réalisations</a> situent mon rôle, et <a
-          href="/etudes/mibeko#preuves-titre">l’étude Mibeko</a> relie le produit,
-        les stores et six dépôts publics.
+        Avant d’écrire, vous pouvez lire mon <a href="/cv">CV</a>, voir mes <a
+          href="/realisations">réalisations</a>, ou regarder <a
+          href="/realisations/mibeko#preuves-titre">le code de Mibeko</a>.
       </p>
       <p>
-        Si un message reste sans réponse, il est probablement tombé dans les
-        indésirables&nbsp;: relancez-moi via <a href="https://www.linkedin.com/in/benaja-bendo" rel="me noopener">LinkedIn</a>.
+        Si je ne réponds pas, votre message est peut-être tombé dans les
+        indésirables&nbsp;: relancez-moi sur <a href="https://www.linkedin.com/in/benaja-bendo" rel="me noopener">LinkedIn</a>.
       </p>
     </div>
 
     <Illustration
       nom="answer"
-      legende="Une réponse, pas un accusé de réception."
-      aide="Pas de formulaire, pas d’outil de suivi : le message arrive directement."
+      legende="Un mail suffit."
+      aide="Il arrive directement dans ma boîte."
       meta="contact"
       taille="petit"
       class="illustration-cote"

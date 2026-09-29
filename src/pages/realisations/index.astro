@@ -1,30 +1,47 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LigneRealisation from '../../components/LigneRealisation.astro';
-import { getRealisations, taxonomiesRealisations } from '../../lib/contenu';
+import {
+  TYPES_REALISATION,
+  getRealisations,
+  taxonomiesRealisations,
+} from '../../lib/contenu';
 
 const realisations = await getRealisations();
 const { domaines, techs } = await taxonomiesRealisations();
 const aDesFiltres = domaines.length > 0 || techs.length > 0;
+
+// Trois groupes, par type de travail (30/09/2026). L'ordre des entrées vient
+// de getRealisations(), déjà trié par groupe : on ne réordonne rien ici.
+const groupes = TYPES_REALISATION.map((type) => ({
+  ...type,
+  entrees: realisations.filter((r) => r.data.type === type.cle),
+})).filter((groupe) => groupe.entrees.length > 0);
+
+// /experiences#aife et /experiences#france-travail ont été envoyés dans des
+// candidatures. /experiences redirige ici depuis le 30/09/2026 et le
+// navigateur réapplique le fragment : ces deux lignes doivent donc porter
+// ces ancres (voir /notes/fragment-url-et-redirections).
+const ANCRES: Record<string, string> = {
+  'aife-microservices': 'aife',
+  'france-travail-collecte': 'france-travail',
+};
 ---
 
 <Base
   title="Réalisations · Bénaja Bendo-Matondo"
-  description="L’inventaire : produits, missions, outils. Pour chacun, le rôle exact que j’y ai tenu, son statut aujourd’hui et ce que j’en retiens."
+  description="Mes produits, mes postes en entreprise et les projets menés avec d’autres : pour chacun, mon rôle, où en est le projet et ce que j’en retiens."
 >
   <section class="container">
     <p class="eyebrow">Réalisations</p>
     <h1>Ce que j’ai construit</h1>
     <p class="lead">
-      Produits personnels et missions en équipe, avec pour chacun le contexte,
-      mon rôle réel et son état aujourd’hui.
+      Mes propres produits, mes postes en entreprise, au Congo puis en
+      France, et des projets menés avec d’autres.
     </p>
 
-    {/* A6 — le rail de filtres est passé du bas vers le haut le 25/08/2026. Les
-        pages /realisations/tech/… et /domaine/… étaient construites et indexées,
-        mais accessibles seulement DEPUIS une fiche : personne n'entrait par
-        elles, alors que « Java » ou « Spring Boot » est justement la façon dont
-        un recruteur cherche. Elles ne sont plus une sortie, elles sont l'entrée. */}
+    {/* A6 — le rail de filtres est passé du bas vers le haut le 25/08/2026 :
+        « Java » ou « Spring Boot » est la façon dont un recruteur cherche. */}
     {
       aDesFiltres && (
         <>
@@ -64,40 +81,38 @@ const aDesFiltres = domaines.length > 0 || techs.length > 0;
     }
   </section>
 
-  <section class="container">
-    <div class="lignes">
-      {
-        realisations.map((realisation) => (
-          <LigneRealisation realisation={realisation} />
-        ))
-      }
-    </div>
+  {
+    groupes.map((groupe) => (
+      <section class="container" aria-labelledby={`groupe-${groupe.cle}`}>
+        <h2 id={`groupe-${groupe.cle}`}>{groupe.label}</h2>
+        <div class="lignes">
+          {groupe.entrees.map((realisation) => (
+            <LigneRealisation
+              realisation={realisation}
+              niveau={3}
+              ancre={ANCRES[realisation.id]}
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  }
 
-    {/* Un index vide est un état possible, pas une page cassée : il le dit
-        plutôt que d'afficher une bande blanche (invariant n°5, en miniature). */}
-    {
-      realisations.length === 0 && (
-        <p class="etat-vide">
-          Rien de publié pour l’instant dans cet inventaire. Les études de cas
-          restent lisibles&nbsp;: <a href="/etudes">voir les études de cas</a>.
-        </p>
-      )
-    }
-  </section>
+  {/* Un index vide est un état possible, pas une page cassée. */}
+  {
+    realisations.length === 0 && (
+      <section class="container">
+        <p class="etat-vide">Rien de publié pour l’instant.</p>
+      </section>
+    )
+  }
 
-  {/* A8 — l'index se terminait sur le dernier élément de la liste, puis le pied
-      de page. Le lecteur qui avait tout lu, donc le plus convaincu, n'avait
-      rien à faire. */}
   <section class="container">
-    <p class="eyebrow">Et ensuite</p>
-    <h2>Voir le raisonnement, ou en parler</h2>
-    <p class="lead muted">
-      Les études de cas racontent les décisions que l’inventaire ne montre
-      pas&nbsp;: le problème, les compromis, ce que je ferais autrement.
-    </p>
+    <h2>Un poste ou un projet de ce genre&nbsp;?</h2>
+    <p class="lead muted">Le plus simple, c’est de m’écrire.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/etudes">Lire les études de cas</a>
-      <a class="btn btn-ghost" href="/contact">Parler d’un poste ou d’un besoin</a>
+      <a class="btn btn-primary" href="/contact">Me contacter</a>
+      <a class="btn btn-ghost" href="/cv">Voir le CV</a>
     </div>
     <p class="haut-de-page"><a href="#contenu">↑ Haut de page</a></p>
   </section>

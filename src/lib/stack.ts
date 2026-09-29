@@ -25,7 +25,7 @@
  * l'URL porte un fragment) contient bien son nom. Préférer une page de
  * taxonomie (/realisations/tech/…) quand plusieurs réalisations l'utilisent.
  *
- * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Angular, Vue,
+ * Sans preuve à ce jour (24/09/2026) : Hibernate / JPA, Vue,
  * React Native, MongoDB, Firebase, TDD, Git, Maven, Gradle, Kafka, Scrum,
  * RGPD. Chacune attend une page qui la montre, ou son retrait de la
  * liste. (Sortis le même jour : RAG, MCP, Pest, Vitest, pytest, tests
@@ -56,15 +56,15 @@ export interface GroupeStack {
 export const STACK: GroupeStack[] = [
   {
     titre: 'Back-end',
-    precision: 'Le cœur du métier, en entreprise comme sur mes propres produits.',
+    precision: 'Ce que je fais le plus, en entreprise comme sur mes projets.',
     technos: [
       { nom: 'Java', icone: 'java', cle: true, preuve: '/realisations/tech/java' },
       { nom: 'Spring Boot', icone: 'spring-boot', cle: true, preuve: '/realisations/tech/spring-boot' },
       { nom: 'Hibernate / JPA', mono: 'JPA' },
-      { nom: 'API REST', mono: 'API', preuve: '/etudes/aife#ce-que-jai-fait' },
-      { nom: 'Laravel / PHP', icone: 'laravel', cle: true, preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'API REST', mono: 'API', preuve: '/realisations/aife-microservices#ce-que-jai-fait' },
+      { nom: 'Laravel / PHP', icone: 'laravel', cle: true, preuve: '/realisations/mibeko#la-construction' },
       { nom: 'Python', icone: 'python', cle: true, preuve: '/realisations/tech/python' },
-      { nom: 'FastAPI', icone: 'fastapi', preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'FastAPI', icone: 'fastapi', preuve: '/realisations/mibeko#la-construction' },
       { nom: 'Node.js', icone: 'nodejs', preuve: '/realisations/la-grenaille' },
       // L'API de La Grenaille (Le-creuset-backend, public), avec l'accord du
       // fondeur. Pas d'icône libre dans le paquet vendorisé : monogramme.
@@ -78,11 +78,13 @@ export const STACK: GroupeStack[] = [
   },
   {
     titre: 'Front-end',
-    precision: 'Des interfaces livrées, pas des maquettes.',
+    precision: 'Des interfaces en production.',
     technos: [
-      { nom: 'TypeScript', icone: 'typescript', cle: true, preuve: '/etudes/mibeko' },
-      { nom: 'Angular', icone: 'angular', cle: true },
-      { nom: 'React', icone: 'react', cle: true, preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'TypeScript', icone: 'typescript', cle: true, preuve: '/realisations/mibeko' },
+      // Nyota IT chez InfraOne et Trouve Ton Profil (30/09/2026) : deux
+      // réalisations, donc une page de taxonomie.
+      { nom: 'Angular', icone: 'angular', cle: true, preuve: '/realisations/tech/angular' },
+      { nom: 'React', icone: 'react', cle: true, preuve: '/realisations/mibeko#la-construction' },
       { nom: 'Astro', icone: 'astro', preuve: '/realisations/tech/astro' },
       { nom: 'Vue', icone: 'vue' },
       { nom: 'HTML / CSS', mono: 'WEB', preuve: '/realisations/benaja-bendo-fr' },
@@ -90,81 +92,83 @@ export const STACK: GroupeStack[] = [
   },
   {
     titre: 'Mobile',
-    precision: 'Deux applications publiées sur l’App Store et le Play Store.',
+    precision: 'Des applications publiées sur l’App Store et Google Play.',
     technos: [
-      { nom: 'Kotlin Multiplatform', icone: 'kotlin', cle: true, preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'Kotlin Multiplatform', icone: 'kotlin', cle: true, preuve: '/realisations/mibeko#la-construction' },
       // Retenu dans la variante compacte pour une raison de composition autant
       // que de fond : seul, « Mobile » laissait une colonne à une puce à côté
       // d'une colonne à quatre, et la grille se lisait comme un oubli.
-      { nom: 'Flutter', icone: 'flutter', cle: true, preuve: '/realisations/congo-web-mobile' },
+      // L'application Android de bgrfacile. Flutter était attribué à tort à
+      // KabimGroup jusqu'au 30/09/2026.
+      { nom: 'Flutter', icone: 'flutter', cle: true, preuve: '/realisations/bgrfacile' },
       // Même icône que React : Meta réutilise le même logo pour les deux.
       { nom: 'React Native', icone: 'react' },
     ],
   },
   {
     titre: 'Données & IA',
-    precision: 'Recherche hybride et traçabilité de la source, sur Mibeko.',
+    precision: 'Surtout sur Mibeko : retrouver le bon article de loi et citer sa source.',
     technos: [
       { nom: 'PostgreSQL', icone: 'postgresql', cle: true, preuve: '/realisations/tech/postgresql' },
-      { nom: 'SQL', mono: 'SQL', preuve: '/etudes/aife#ce-que-jai-fait' },
-      { nom: 'pgvector', mono: 'pgv', cle: true, preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'SQL', mono: 'SQL', preuve: '/realisations/aife-microservices#ce-que-jai-fait' },
+      { nom: 'pgvector', mono: 'pgv', cle: true, preuve: '/realisations/mibeko#la-construction' },
       { nom: 'MySQL', icone: 'mysql', preuve: '/realisations/bgrfacile' },
       { nom: 'MongoDB', icone: 'mongodb' },
       { nom: 'Firebase', icone: 'firebase' },
-      { nom: 'Power BI', mono: 'BI', cle: true, preuve: '/etudes/france-travail#ce-que-jai-fait' },
-      { nom: 'RAG sourcé', mono: 'RAG', preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'Power BI', mono: 'BI', cle: true, preuve: '/realisations/france-travail-collecte#ce-que-jai-fait' },
+      { nom: 'RAG sourcé', mono: 'RAG', preuve: '/realisations/mibeko#la-construction' },
       // Un agent à appels d'outils et un serveur MCP, dans mibeko-dashboard
       // (app/Ai, app/Mcp) — vérifié le 23/09/2026.
-      { nom: 'Agents IA & MCP', mono: 'MCP', preuve: '/etudes/mibeko#la-construction' },
-      { nom: 'OCR', mono: 'OCR', preuve: '/etudes/mibeko#la-construction' },
+      { nom: 'Agents IA & MCP', mono: 'MCP', preuve: '/realisations/mibeko#la-construction' },
+      { nom: 'OCR', mono: 'OCR', preuve: '/realisations/mibeko#la-construction' },
     ],
   },
   {
     titre: 'Qualité & tests',
-    precision: 'Tests automatisés et revues de code sur les missions comme sur mes produits.',
+    precision: 'Des tests automatiques et des revues de code, en mission comme sur mes projets.',
     technos: [
-      { nom: 'JUnit', mono: 'JUT', preuve: '/etudes/aife#ce-que-jai-fait' },
+      { nom: 'JUnit', mono: 'JUT', preuve: '/realisations/aife-microservices#ce-que-jai-fait' },
       // 189 tests sur l'API de La Grenaille, comptés le 24/09/2026.
       { nom: 'Jest', mono: 'JST', preuve: '/realisations/la-grenaille' },
       // Les trois suites de Mibeko, lisibles dans ses dépôts publics.
-      { nom: 'Pest', mono: 'PST', preuve: '/etudes/mibeko#la-production' },
-      { nom: 'Vitest', mono: 'VIT', preuve: '/etudes/mibeko#la-production' },
-      { nom: 'pytest', mono: 'PYT', preuve: '/etudes/mibeko#la-production' },
+      { nom: 'Pest', mono: 'PST', preuve: '/realisations/mibeko#la-production' },
+      { nom: 'Vitest', mono: 'VIT', preuve: '/realisations/mibeko#la-production' },
+      { nom: 'pytest', mono: 'PYT', preuve: '/realisations/mibeko#la-production' },
       { nom: 'TDD', mono: 'TDD' },
-      { nom: 'Tests d’intégration', mono: 'INT', preuve: '/etudes/mibeko#la-production' },
-      { nom: 'Revues de code', mono: 'PR', preuve: '/etudes/aife#ce-que-jai-fait' },
+      { nom: 'Tests d’intégration', mono: 'INT', preuve: '/realisations/mibeko#la-production' },
+      { nom: 'Revues de code', mono: 'PR', preuve: '/realisations/aife-microservices#ce-que-jai-fait' },
     ],
   },
   {
     titre: 'Ops & production',
-    precision: 'Ce que je mets en ligne, je le fais aussi tourner au quotidien.',
+    precision: 'Je mets en ligne ce que je construis, et je le fais tourner.',
     technos: [
       { nom: 'Docker', icone: 'docker', cle: true, preuve: '/realisations/tech/docker' },
       { nom: 'Git', mono: 'GIT' },
       { nom: 'Maven', icone: 'maven' },
       { nom: 'Gradle', icone: 'gradle' },
-      { nom: 'Ansible', icone: 'ansible', cle: true, preuve: '/etudes/mibeko#la-production' },
+      { nom: 'Ansible', icone: 'ansible', cle: true, preuve: '/realisations/mibeko#la-production' },
       { nom: 'GitHub Actions', icone: 'github-actions', cle: true, preuve: '/realisations/tech/github-actions' },
       // OpenShift est une distribution de Kubernetes : c'est là, chez France
       // Travail, que se trouve l'usage réel. « Kubernetes / Helm » a été retiré
       // le 24/09/2026 : aucune preuve sur le site, et Helm n'était pas manipulé
       // personnellement. À rouvrir quand le cluster Raspberry Pi sera documenté.
-      { nom: 'OpenShift (Kubernetes)', icone: 'openshift', preuve: '/etudes/france-travail#ce-que-jai-fait' },
+      { nom: 'OpenShift (Kubernetes)', icone: 'openshift', preuve: '/realisations/france-travail-collecte#ce-que-jai-fait' },
       { nom: 'Kafka', mono: 'KFK' },
-      { nom: 'Traefik', icone: 'traefik', preuve: '/etudes/mibeko#la-production' },
-      { nom: 'Linux', icone: 'linux', preuve: '/etudes/mibeko#la-production' },
+      { nom: 'Traefik', icone: 'traefik', preuve: '/realisations/mibeko#la-production' },
+      { nom: 'Linux', icone: 'linux', preuve: '/realisations/mibeko#la-production' },
       // Auto-hébergé par un rôle Ansible de vps_infra, actif sur mibeko.fr.
-      { nom: 'Umami', mono: 'UMI', preuve: '/etudes/mibeko#la-production' },
-      { nom: 'AWS', mono: 'AWS', preuve: '/etudes/aife#ce-que-jai-fait' },
+      { nom: 'Umami', mono: 'UMI', preuve: '/realisations/mibeko#la-production' },
+      { nom: 'AWS', mono: 'AWS', preuve: '/realisations/aife-microservices#ce-que-jai-fait' },
     ],
   },
   {
     titre: 'Méthodes',
-    precision: 'Travail collectif, livraison incrémentale et contraintes applicatives.',
+    precision: 'Le travail en équipe, les livraisons régulières et la sécurité.',
     technos: [
-      { nom: 'SAFe', mono: 'SAF', preuve: '/etudes/aife' },
+      { nom: 'SAFe', mono: 'SAF', preuve: '/realisations/aife-microservices' },
       { nom: 'Scrum', mono: 'SCR' },
-      { nom: 'PI planning', mono: 'PI', preuve: '/etudes/aife#ce-que-jai-fait' },
+      { nom: 'PI planning', mono: 'PI', preuve: '/realisations/aife-microservices#ce-que-jai-fait' },
       { nom: 'RGPD & sécurité applicative', mono: 'SEC' },
     ],
   },

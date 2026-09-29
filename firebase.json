@@ -11,12 +11,37 @@
     "redirects": [
       {
         "source": "/mibeko",
-        "destination": "/etudes/mibeko",
+        "destination": "/realisations/mibeko",
         "type": 301
       },
       {
         "source": "/a-propos",
         "destination": "/parcours",
+        "type": 301
+      },
+      {
+        "source": "/etudes",
+        "destination": "/realisations",
+        "type": 301
+      },
+      {
+        "source": "/etudes/mibeko",
+        "destination": "/realisations/mibeko",
+        "type": 301
+      },
+      {
+        "source": "/etudes/france-travail",
+        "destination": "/realisations/france-travail-collecte",
+        "type": 301
+      },
+      {
+        "source": "/etudes/aife",
+        "destination": "/realisations/aife-microservices",
+        "type": 301
+      },
+      {
+        "source": "/experiences",
+        "destination": "/realisations",
         "type": 301
       }
     ],

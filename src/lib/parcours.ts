@@ -36,8 +36,6 @@ export interface Etape {
   ou: string;
   /** Détail de mission, pour le CV uniquement. */
   points?: Point[];
-  /** Étude de cas correspondante, si elle existe. */
-  etude?: string;
   /**
    * Pages de preuve affichées sous l'intitulé, sur le CV : le lecteur clique
    * et arrive sur la rubrique qui montre ce travail. URL absolues, pour que le
@@ -91,12 +89,11 @@ export const EXPERIENCES: Etape[] = [
           'Aviation, projet agile en équipe de 8 : conception d’un outil de traitement de gros volumes de documents PDF avec recherche assistée par IA, sur AWS (Python, Lambda, S3, PostgreSQL).',
       },
     ],
-    etude: 'france-travail',
-    // L'étude AIFE couvre aussi le projet aviation (même période, même
+    // La page AIFE couvre aussi le projet aviation (même période, même
     // client Capgemini) : deux liens suffisent pour les cinq points.
     liens: [
-      { label: 'Étude de cas France Travail', url: 'https://benaja-bendo.fr/etudes/france-travail' },
-      { label: 'Étude de cas AIFE', url: 'https://benaja-bendo.fr/etudes/aife' },
+      { label: 'Réalisation France Travail', url: 'https://benaja-bendo.fr/realisations/france-travail-collecte' },
+      { label: 'Réalisation AIFE', url: 'https://benaja-bendo.fr/realisations/aife-microservices' },
     ],
   },
   {
@@ -104,29 +101,26 @@ export const EXPERIENCES: Etape[] = [
     quand: '2021–2023',
     quoi: 'Développeur web et mobile chez KabimGroup (startup)',
     ou: 'Pointe-Noire, Congo · salarié',
+    // Revu le 30/09/2026 avec Bénaja : fin 2021 à février 2023, surtout un
+    // parseur de CV en Node.js et Laravel. Flutter, C# / .NET et Xamarin
+    // étaient attribués à tort à ce poste : C# / .NET et Xamarin sont chez
+    // InfraOne, Flutter sur bgrfacile.
     points: [
-      // C# / .NET est cité ici, et en dernier : c'est une expérience réelle,
-      // pas la spécialité mise en avant (décision du 23/09/2026).
       {
-        id: 'kabim-livraisons',
+        id: 'kabim-parseur',
         texte:
-          'Applications web et mobiles livrées en production (Laravel, Flutter, Node.js et C# / .NET), avec conception et intégration d’API REST.',
-      },
-      {
-        id: 'kabim-ocr',
-        texte:
-          'Lecture automatique de documents clients (OCR) : extraction et mise en forme des informations qu’ils contiennent.',
+          'Parseur de CV en Node.js et Laravel, avec son API REST : lire un CV automatiquement (OCR) et en extraire les informations utiles. Beaucoup de R&D, avant l’arrivée des IA génératives.',
       },
       {
         id: 'kabim-relation-client',
         texte:
-          'Relation client directe : recueil du besoin, rédaction des cahiers des charges, animation des réunions.',
+          'Relation client directe : recueil du besoin, cahiers des charges, animation des réunions.',
       },
     ],
     // Une seule rangée pour les deux expériences au Congo : elles mènent à la
     // même page, et une seconde rangée faisait passer le CV à trois pages.
     liens: [
-      { label: 'Réalisation : web et mobile au Congo', url: 'https://benaja-bendo.fr/realisations/congo-web-mobile' },
+      { label: 'Réalisation : InfraOne System et KabimGroup', url: 'https://benaja-bendo.fr/realisations/congo-web-mobile' },
     ],
   },
   {
@@ -134,16 +128,26 @@ export const EXPERIENCES: Etape[] = [
     quand: '2020–2021',
     quoi: 'Développeur fullstack chez InfraOne System',
     ou: 'Pointe-Noire, Congo · salarié',
+    // Revu le 30/09/2026 avec Bénaja. InfraChecking remplace « sites
+    // d'entreprise en ASP.NET Core pour des sous-traitants de Total » : même
+    // client, décrit cette fois par le projet lui-même. C# / .NET est cité
+    // ici : c'est une expérience réelle, pas la spécialité mise en avant
+    // (décision du 23/09/2026).
     points: [
       {
         id: 'infraone-logiciels-metier',
         texte:
-          'Développement de logiciels métier en équipe, sur l’ensemble du cycle : recueil du besoin, développement, livraison et corrections en production.',
+          'Développement en équipe, surtout en C# / .NET Core, sur des applications très variées, du recueil du besoin aux corrections en production.',
       },
       {
-        id: 'infraone-sites',
+        id: 'infraone-infrachecking',
         texte:
-          'Conception de sites d’entreprise en C# / ASP.NET Core pour des entreprises sous-traitantes de Total E&P Congo.',
+          'InfraChecking : une application mobile pour que les sous-traitants de Total E&P Congo badgent leurs arrivées et leurs départs plus simplement (back-end .NET et Laravel).',
+      },
+      {
+        id: 'infraone-nyota',
+        texte:
+          'Nyota IT : projet d’appli de commande de repas, un peu comme Uber Eats (Xamarin, Laravel, Angular).',
       },
     ],
   },
@@ -173,7 +177,7 @@ export const PROJETS: Projet[] = [
         label: 'Google Play',
         url: 'https://play.google.com/store/apps/details?id=cg.mibeko.app',
       },
-      { label: 'Code et étude de cas', url: 'https://benaja-bendo.fr/etudes/mibeko' },
+      { label: 'Code et détails', url: 'https://benaja-bendo.fr/realisations/mibeko' },
     ],
     points: [
       {
@@ -199,7 +203,7 @@ export const PROJETS: Projet[] = [
       {
         id: 'mibeko-production',
         texte:
-          'Mise en production et exploitation : ~730 tests unitaires et d’intégration, CI/CD GitHub Actions (tests et mise en ligne automatiques), serveur administré avec Docker, Ansible et Traefik.',
+          'Mise en production et exploitation : chaque modification est testée automatiquement avant sa mise en ligne (CI/CD GitHub Actions) ; serveur administré avec Docker, Ansible et Traefik.',
       },
       {
         id: 'mibeko-livraison-web',
@@ -219,7 +223,7 @@ export const PROJETS: Projet[] = [
       {
         id: 'mibeko-ia-agentique',
         texte:
-          'IA agentique encadrée : un agent IA cherche lui-même les articles utiles, et un serveur MCP (accès standard pour assistants IA) permet de chercher, lire ou signaler une anomalie. L’IA signale ; un humain corrige et publie.',
+          'IA agentique encadrée : un agent IA cherche lui-même les articles utiles, et un serveur MCP (accès standard pour assistants IA) permet de chercher, lire ou signaler une anomalie, qu’un humain corrige.',
       },
       {
         id: 'mibeko-organisation',
@@ -251,12 +255,12 @@ export const PROJETS: Projet[] = [
       {
         id: 'grenaille-solution',
         texte:
-          'Site public et espace professionnel pour les bijoutiers : suivi du métal précieux confié à la fonderie (solde en grammes par métal), commandes, factures et modèles 3D affichés dans le navigateur.',
+          'Site public et espace professionnel pour les bijoutiers : suivi du métal précieux confié à la fonderie (solde en grammes par métal), commandes, factures et modèles 3D.',
       },
       {
         id: 'grenaille-stack',
         texte:
-          'Front React / TypeScript, API NestJS (Node.js) avec Prisma et PostgreSQL ; environ 200 tests automatisés (Jest, Vitest) ; mise en ligne automatique par GitHub Actions et Docker.',
+          'Front React / TypeScript, API NestJS (Node.js) avec Prisma et PostgreSQL ; tests automatisés (Jest, Vitest) avant chaque mise en ligne, faite par GitHub Actions et Docker.',
       },
       {
         id: 'grenaille-client',
@@ -283,7 +287,7 @@ export const PROJETS: Projet[] = [
       {
         id: 'ttp-contribution',
         texte:
-          'Mon rôle : collaborateur technique. Je participe au développement en Angular / TypeScript aux côtés du fondateur, qui pilote le produit et l’architecture.',
+          'Développement en Angular / TypeScript ; le fondateur pilote le produit et l’architecture.',
       },
     ],
   },
@@ -300,15 +304,18 @@ export const FORMATION: Etape[] = [
     ou: 'EPSI Bordeaux · obtenu en 2026',
   },
   {
+    // Corrigé le 30/09/2026 : commencé le 1er septembre 2023 (et non en
+    // 2022), après la fin de KabimGroup en février 2023. L'ancienne période
+    // faisait chevaucher le Bachelor à Bordeaux et le poste à Pointe-Noire.
     id: 'epsi-bachelor',
-    quand: '2022–2023',
+    quand: '2023–2024',
     quoi: 'Bachelor Concepteur Développeur d’Applications',
-    ou: 'EPSI Bordeaux · obtenu en septembre 2023',
+    ou: 'EPSI Bordeaux · obtenu en 2024',
   },
   // Yekolab figurait dans les expériences, sous « Reconversion vers le
   // développement ». C'était une formation : placée ici, elle comble aussi le
-  // creux apparent entre la licence (2019) et le bachelor (2022), relevé à la
-  // relecture du CV le 23/09/2026.
+  // creux apparent entre la licence (2019) et les premiers postes (2020),
+  // relevé à la relecture du CV le 23/09/2026.
   {
     id: 'yekolab',
     quand: '2019–2020',
@@ -328,9 +335,18 @@ export const FORMATION: Etape[] = [
  * -------------------------------------------------------------------------- */
 
 export const DISPONIBILITE = {
-  /** Date de disponibilité CDI, en clair et en ISO. */
-  texte: '28 septembre 2026',
-  iso: '2026-09-28',
+  /**
+   * LA phrase de disponibilité, affichée telle quelle. Jusqu'au 30/09/2026,
+   * le site affichait une date (« à partir du 28 septembre 2026 ») : une
+   * fois passée, elle faisait vieillir chaque page. « Dès maintenant » reste
+   * vrai jusqu'à la signature ; ce jour-là, on change cette ligne et elle
+   * seule (puis le README et LinkedIn).
+   *
+   * Volontairement affichée à quatre endroits seulement : pied de page, haut
+   * de l'accueil et contact (composant Disponibilite.astro), en-tête du CV.
+   * Voir docs/13-refonte-contenu.md §1.
+   */
+  texte: 'Disponible dès maintenant pour un CDI',
   lieu: 'Bordeaux et ses alentours',
   // Des villes nommées plutôt que « France entière » (24/09/2026) : une liste
   // courte se lit comme un choix réel, et un recruteur qui cherche par ville

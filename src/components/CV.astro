@@ -59,8 +59,7 @@ const site = new URL('/', Astro.site).href;
       <p class="cv-role">{profil.role}</p>
       <p class="cv-stack-cle">{cv.ligneEnTete}</p>
       <p class="cv-situation">
-        {DISPONIBILITE.mobilite} · 6 ans d’expérience · disponible en CDI à
-        partir du <time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time>
+        {DISPONIBILITE.mobilite} · 6 ans d’expérience · {DISPONIBILITE.texte}
       </p>
     </div>
 
@@ -180,7 +179,7 @@ const site = new URL('/', Astro.site).href;
     {/* Imprimée aussi : sur le PDF, c'est la seule indication que les
         puces soulignées sont cliquables. */}
     <p class="cv-stack-legende">
-      Les compétences soulignées mènent à leur preuve sur {CONTACT.site}.
+      Les compétences soulignées mènent à un projet sur {CONTACT.site}.
     </p>
     <StackVisuelle groupes={cv.stack} dense liensAbsolus />
   </section>
@@ -210,12 +209,10 @@ const site = new URL('/', Astro.site).href;
   {/* Bloc écran uniquement : à l'impression, il n'aurait aucun sens sur le
       papier qu'il vient de produire. */}
   <aside class="cv-export">
-    <p class="etiq">Emporter ce CV</p>
+    <p class="etiq">Le CV en PDF</p>
     <p>
-      Il n’y a pas de fichier à télécharger, et c’est volontaire&nbsp;: un PDF
-      déposé quelque part se périme sans prévenir, cette page non. Le bouton
-      ci-dessous ouvre la fenêtre d’impression, où «&nbsp;Enregistrer au format
-      PDF&nbsp;» donne un fichier propre : format A4, sans menu ni décor.
+      Ce bouton ouvre la fenêtre d’impression. Choisissez «&nbsp;Enregistrer
+      au format PDF&nbsp;» pour avoir le CV en A4, sans menu ni décor.
     </p>
     <div class="cta-row">
       <button class="btn btn-primary cv-imprimer" type="button" data-imprimer>

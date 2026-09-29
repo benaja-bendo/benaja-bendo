@@ -4,7 +4,11 @@ import Base from '../../layouts/Base.astro';
 import Statut from '../../components/Statut.astro';
 import Taxo from '../../components/Taxo.astro';
 import Preuves from '../../components/Preuves.astro';
+import Sommaire from '../../components/Sommaire.astro';
 import Suite from '../../components/Suite.astro';
+import Illustration from '../../components/Illustration.astro';
+import MibekoProof from '../../components/MibekoProof.astro';
+import FranceTravailImpact from '../../components/FranceTravailImpact.astro';
 import {
   STATUTS_REALISATION,
   formatDate,
@@ -14,6 +18,39 @@ import {
   voisinage,
   type Realisation,
 } from '../../lib/contenu';
+
+/**
+ * Une page par projet.
+ *
+ * Depuis le 30/09/2026, c'est aussi la seule : les études de cas, qui
+ * redisaient chaque fiche en plus long, ont été fusionnées ici (docs/13 §5).
+ * Ce gabarit reprend donc ce qui leur était propre : les chiffres en tête, le
+ * sommaire quand le texte est long, et les visuels de Mibeko et de France
+ * Travail. Les anciennes adresses /etudes/… redirigent vers ces pages, avec
+ * leurs ancres (astro.config.mjs, firebase.json).
+ */
+
+/**
+ * Une illustration éditoriale par projet, quand elle explique quelque chose de
+ * précis (docs/05 §2). Déclarée ici plutôt que dans le frontmatter : c'est une
+ * décision de mise en page, pas un fait sur le travail.
+ */
+const ILLUSTRATIONS: Record<string, { nom: string; legende: string; aide: string; meta: string; tag: string }> = {
+  mibeko: {
+    nom: 'balance-sheet',
+    legende: 'Chaque réponse renvoie à sa source.',
+    aide: 'Sur un outil juridique, il faut pouvoir retrouver le texte d’origine.',
+    meta: 'principe',
+    tag: 'article cité',
+  },
+  'france-travail-collecte': {
+    nom: 'add-for-reporting',
+    legende: 'Des tableaux de bord utilisés tous les jours.',
+    aide: 'Deux applications fragiles refondues en un seul service.',
+    meta: 'principe',
+    tag: 'tableaux de bord',
+  },
+};
 
 export async function getStaticPaths() {
   const realisations = await getRealisations();
@@ -29,12 +66,12 @@ interface Props {
 
 const { realisation } = Astro.props;
 const { data } = realisation;
-const { Content } = await render(realisation);
+const { Content, headings } = await render(realisation);
 const statut = STATUTS_REALISATION[data.statut];
 const { aUnePage } = await taxonomiesRealisations();
+const illustration = ILLUSTRATIONS[realisation.id];
 
-// A1 — même raison que sur les études : une fiche se terminait sur un unique
-// retour en arrière.
+// L'ordre des voisins est celui de la page Réalisations (groupe, puis ordre).
 const realisations = await getRealisations();
 const voisins = voisinage(
   realisations,
@@ -45,8 +82,9 @@ const voisins = voisinage(
 ---
 
 <Base
-  title={`${data.nom} (réalisation) | Bénaja Bendo-Matondo`}
+  title={`${data.nom} | Bénaja Bendo-Matondo`}
   description={data.resume}
+  script={realisation.id === 'mibeko' ? '/js/demo-mibeko.js' : undefined}
 >
   <section class="container">
     <p class="eyebrow">Réalisation · {data.periode}</p>
@@ -67,7 +105,7 @@ const voisins = voisinage(
         <dd>{data.role}</dd>
       </div>
       <div>
-        <dt>Preuve</dt>
+        <dt>Liens</dt>
         <dd>
           {
             data.liens.length > 0 ? (
@@ -77,21 +115,64 @@ const voisins = voisinage(
                 </a>
               ))
             ) : data.preuves.length > 0 ? (
-              // Produit hors ligne mais code public (bgrfacile) : « Aucune »
-              // contredisait la section « Juger sur pièces » juste en dessous.
-              <a href="#preuves-titre">Dépôts publics, plus bas</a>
+              // Produit hors ligne mais code public (bgrfacile).
+              <a href="#preuves-titre">Le code, plus bas</a>
             ) : data.confidentiel ? (
-              <span class="muted">Mission client : aucun lien public</span>
+              <span class="muted">Mission pour un client : pas de lien public</span>
             ) : (
-              <span class="muted">Aucune</span>
+              <span class="muted">Aucun</span>
             )
           }
         </dd>
       </div>
     </dl>
 
-    <div class="prose">
-      <Content />
+    {/* Dit une fois, ici, et plus en bas de chaque texte (30/09/2026). */}
+    {
+      data.confidentiel && (
+        <p class="note-cadre">
+          Je parle ici de mon travail, pas des données ni du code du client.
+        </p>
+      )
+    }
+
+    {
+      data.chiffres.length > 0 && (
+        <ul class="stats">
+          {data.chiffres.map((chiffre) => (
+            <li>
+              <span class="value">{chiffre.valeur}</span>
+              <span class="label">{chiffre.label}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      illustration && (
+        <Illustration
+          nom={illustration.nom}
+          legende={illustration.legende}
+          aide={illustration.aide}
+          meta={illustration.meta}
+          tag={illustration.tag}
+          taille="petit"
+          class="illustration-cote"
+        />
+      )
+    }
+
+    {realisation.id === 'mibeko' && <MibekoProof />}
+    {realisation.id === 'france-travail-collecte' && <FranceTravailImpact />}
+
+    {/* Le sommaire se masque de lui-même sous trois sections (Sommaire.astro) :
+        une fiche courte n'en a pas besoin. */}
+    <div class="fiche-corps">
+      <Sommaire titres={headings} />
+      <div class="prose">
+        <Content />
+      </div>
     </div>
 
     <div class="retenu retenu-bloc">
@@ -99,24 +180,13 @@ const voisins = voisinage(
       <p>{data.enseignement}</p>
     </div>
 
-    {
-      data.etude && (
-        <div class="cta-row">
-          <a class="btn btn-primary" href={`/etudes/${data.etude}`}>
-            Lire l’étude de cas
-          </a>
-        </div>
-      )
-    }
-
     <Preuves preuves={data.preuves} />
   </section>
 
   <section class="container">
-    <p class="eyebrow">Repères</p>
-    <h2>Technologies et domaines</h2>
+    <h2>Technos et domaines</h2>
 
-    <h3 class="section-gap">Stack</h3>
+    <h3 class="section-gap">Technos</h3>
     <Taxo
       valeurs={data.stack}
       base="/realisations/tech"
@@ -133,7 +203,7 @@ const voisins = voisinage(
     />
 
     <p class="relecture">
-      Fiche relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>.
+      Page relue le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>.
     </p>
   </section>
 
@@ -141,5 +211,10 @@ const voisins = voisinage(
     voisinage={voisins}
     indexHref="/realisations"
     indexLabel="Toutes les réalisations"
+    action={{
+      href: '/contact',
+      label: 'Me contacter',
+      aide: 'Un poste ou un projet de ce genre ? Écrivez-moi.',
+    }}
   />
 </Base>

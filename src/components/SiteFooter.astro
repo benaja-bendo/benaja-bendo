@@ -1,4 +1,5 @@
 ---
+import Disponibilite from './Disponibilite.astro';
 import { estActif, navigationPrincipale } from '../lib/contenu';
 import { DISPONIBILITE } from '../lib/parcours';
 
@@ -30,10 +31,7 @@ const path = Astro.url.pathname;
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-block">
-      <p class="footer-status">
-        <span class="dot" aria-hidden="true"></span>
-        Disponible en CDI à partir du <strong>{DISPONIBILITE.texte}</strong>
-      </p>
+      <Disponibilite />
       <p class="footer-loc">{DISPONIBILITE.lieu}, France</p>
     </div>
 

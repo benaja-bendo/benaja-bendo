@@ -6,7 +6,6 @@ import { getCollection, type CollectionEntry } from 'astro:content';
  */
 
 export type Realisation = CollectionEntry<'realisations'>;
-export type Etude = CollectionEntry<'etudes'>;
 export type Note = CollectionEntry<'notes'>;
 
 /** `brouillon: true` retire d'un coup des routes, des index, du RSS et du sitemap. */
@@ -39,25 +38,35 @@ function applique<T extends object>(data: T, champs: (keyof T)[]): void {
   }
 }
 
+/**
+ * Les trois groupes de la page Réalisations, dans l'ordre de lecture.
+ * Classés par type de travail et non par pays (30/09/2026) : un lecteur
+ * voyait « la France » d'un côté et « le Congo » de l'autre.
+ */
+export const TYPES_REALISATION: {
+  cle: Realisation['data']['type'];
+  label: string;
+}[] = [
+  { cle: 'produit', label: 'Mes produits' },
+  { cle: 'entreprise', label: 'En entreprise' },
+  // Ni « clients » ni « prestations » : La Grenaille est un service rendu,
+  // sans statut écrit, et Trouve Ton Profil un projet où je suis collaborateur.
+  { cle: 'avec-autres', label: 'Avec d’autres porteurs de projet' },
+];
+
+/**
+ * L'ordre des réalisations est celui de la page Réalisations : groupe, puis
+ * `ordre` dans le groupe. Le voisinage (précédent / suivant) en dépend, et
+ * « suivant » doit dire la même chose sur une fiche et dans l'index.
+ */
 export async function getRealisations(): Promise<Realisation[]> {
   const entrees = await getCollection('realisations', publie);
   for (const { data } of entrees) {
     applique(data, ['nom', 'resume', 'periode', 'role', 'enseignement']);
-  }
-  return entrees.sort(
-    (a, b) =>
-      Number(b.data.epingle) - Number(a.data.epingle) ||
-      a.data.ordre - b.data.ordre,
-  );
-}
-
-export async function getEtudes(): Promise<Etude[]> {
-  const entrees = await getCollection('etudes', publie);
-  for (const { data } of entrees) {
-    applique(data, ['titre', 'sousTitre', 'periode', 'resume']);
     for (const chiffre of data.chiffres) applique(chiffre, ['label']);
   }
-  return entrees.sort((a, b) => a.data.ordre - b.data.ordre);
+  const rang = (r: Realisation) => TYPES_REALISATION.findIndex((t) => t.cle === r.data.type);
+  return entrees.sort((a, b) => rang(a) - rang(b) || a.data.ordre - b.data.ordre);
 }
 
 /** Les notes se lisent de la plus récente à la plus ancienne. */
@@ -207,17 +216,12 @@ export const dateISO = (date: Date) => date.toISOString().slice(0, 10);
  * moindre mot de contenu.
  */
 export async function navigationPrincipale() {
-  const [realisations, etudes, notes] = await Promise.all([
-    getRealisations(),
-    getEtudes(),
-    getNotes(),
-  ]);
+  const [realisations, notes] = await Promise.all([getRealisations(), getNotes()]);
 
   return [
     { href: '/realisations', label: 'Réalisations', actif: realisations.length > 0 },
-    // « Études » seul se lit « parcours scolaire » en français : un relecteur a
-    // cliqué en cherchant les diplômes et a trouvé Mibeko. L'URL ne bouge pas.
-    { href: '/etudes', label: 'Études de cas', actif: etudes.length > 0 },
+    // « Études de cas » a quitté la navigation le 30/09/2026 : fusionnée dans
+    // les réalisations, elle redit la même chose (docs/13 §5).
     { href: '/notes', label: 'Notes', actif: notes.length > 0 },
     // « Parcours » et non « À propos » : c'est le mot qu'on cherche quand on
     // veut savoir d'où vient quelqu'un, et c'est déjà celui que le site employait
@@ -248,8 +252,8 @@ export function estActif(chemin: string, href: string): boolean {
  * retour en arrière.
  *
  * L'ordre des voisins est celui de la collection, jamais un ordre inventé ici :
- * les réalisations suivent `epingle` puis `ordre`, les études `ordre`, les notes
- * la date décroissante. « Suivant » veut donc dire « l'entrée d'après dans la
+ * les réalisations suivent leur groupe puis `ordre`, les notes la date
+ * décroissante. « Suivant » veut donc dire « l'entrée d'après dans la
  * lecture », ce qui est aussi ce que montre l'index.
  * -------------------------------------------------------------------------- */
 

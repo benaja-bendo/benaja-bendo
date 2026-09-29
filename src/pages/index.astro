@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import Statut from '../components/Statut.astro';
 import SourceIllustration from '../components/SourceIllustration.astro';
 import StackVisuelle from '../components/StackVisuelle.astro';
-import { CONTACT, DISPONIBILITE } from '../lib/parcours';
+import Disponibilite from '../components/Disponibilite.astro';
+import { CONTACT } from '../lib/parcours';
 import {
   STATUTS_REALISATION,
   getRealisations,
@@ -21,12 +22,15 @@ const travaux = ['mibeko', 'france-travail-collecte']
 
 <Base
   title="Bénaja Bendo-Matondo, développeur fullstack confirmé"
-  description="Développeur fullstack confirmé, 6 ans d’expérience. Java / Spring Boot · React / TypeScript. Services métier fiabilisés chez Capgemini et Mibeko, créé et mené jusqu’en production."
+  description="Développeur fullstack confirmé avec 6 ans d’expérience, surtout en Java / Spring Boot et React / TypeScript. Passé par Capgemini, créateur de Mibeko."
 >
   <section class="hero container">
     <div class="hero-layout">
       <div class="hero-copy">
-        <p class="eyebrow">Produit · back-end · production</p>
+        {/* La disponibilité prend la place du sur-titre « Produit · back-end ·
+            production » (30/09/2026) : c'est la seule information du haut de
+            page qui change la décision d'écrire. */}
+        <Disponibilite />
         {/* Trait d'union insécable (U+2011) : sur 375 px, `text-wrap: balance`
             coupait volontiers « Bénaja Bendo- / Matondo » — une césure sur son
             propre nom, en première ligne de la page d'accueil. */}
@@ -35,9 +39,12 @@ const travaux = ['mibeko', 'france-travail-collecte']
           <span class="role">Développeur fullstack confirmé</span>
         </h1>
 
+        {/* Réécrit le 30/09/2026 à partir d'une phrase dictée par Bénaja
+            (docs/13 §2) : sa voix, corrigée, pas une formule. */}
         <p class="hero-value">
-          Avec 6 ans d’expérience, je transforme des processus métier fragiles
-          en services fiables et je porte des produits jusqu’en production.
+          Avec six ans d’expérience, je suis aujourd’hui capable de travailler
+          sur des projets complexes et de rendre fiable un produit bancal.
+          J’utilise surtout Java&nbsp;/&nbsp;Spring Boot et React.
         </p>
 
         {/* La mission citée ici doit être la mission EN COURS. La version
@@ -46,18 +53,20 @@ const travaux = ['mibeko', 'france-travail-collecte']
             en 2024 d'après notre propre étude de cas. Un lecteur qui enchaînait
             l'accueil puis /etudes voyait l'écart de deux ans — exactement ce que
             la règle de contenu n°1 interdit. */}
-        <div class="hero-proof hero-proof-split" aria-label="Deux preuves de travail">
+        <div class="hero-proof hero-proof-split" aria-label="Deux projets">
           <div class="hero-proof-item">
-            <p class="hero-proof-label">Produit créé et en production</p>
+            <p class="hero-proof-label">Mon produit</p>
             <p>
-              <a href="/etudes/mibeko">Mibeko</a>&nbsp;: assistant juridique sourcé, <mark>créé et mené</mark> jusqu’aux deux stores, avec environ 730 tests automatisés.
+              <a href="/realisations/mibeko">Mibeko</a>&nbsp;: une application pour
+              que les gens au Congo accèdent facilement aux textes de loi. Je l’ai <mark>créée et publiée</mark> sur l’App Store et Google Play.
             </p>
           </div>
           <div class="hero-proof-item">
-            <p class="hero-proof-label">Expérience en équipe</p>
+            <p class="hero-proof-label">En entreprise</p>
             <p>
-              Chez <strong>Capgemini</strong>&nbsp;: un cycle concernant plus de 400
-              collaborateurs ramené d’environ 10 jours à 48 heures, avec Java&nbsp;/&nbsp;Spring Boot.
+              Chez <strong>Capgemini</strong>, pour France Travail&nbsp;: un cycle
+              qui concernait plus de 400 collaborateurs est passé d’environ
+              10 jours à 48 heures, avec Java&nbsp;/&nbsp;Spring Boot.
             </p>
           </div>
         </div>
@@ -67,7 +76,7 @@ const travaux = ['mibeko', 'france-travail-collecte']
             qu'on peut ouvrir et un dépôt qu'on peut lire sont des preuves de
             premier rang, pas des mentions légales : elles arrivent donc dans le
             premier écran. Trois liens, pas six — au-delà, plus rien ne ressort. */}
-        <ul class="hero-liens" aria-label="Preuves ouvrables">
+        <ul class="hero-liens" aria-label="Liens">
           <li><a href="https://mibeko.fr" rel="noopener">mibeko.fr ↗</a></li>
           <li><a href={`https://${CONTACT.github}`} rel="me noopener">GitHub ↗</a></li>
           {/* Forme `www.` comme le pied de page et /contact : `CONTACT.linkedin`
@@ -78,25 +87,26 @@ const travaux = ['mibeko', 'france-travail-collecte']
         </ul>
 
         <dl class="hero-facts" aria-label="Repères rapides">
+          {/* 30/09/2026 : le nombre de tests (« ~730 ») et la date de
+              disponibilité ont quitté ces cases. Le premier ne dit rien à un
+              lecteur non technique ; la seconde est passée en tête de page. */}
           <div>
             <dt>6 ans</dt>
-            <dd>d’expérience terrain</dd>
+            <dd>d’expérience, de Pointe-Noire à Bordeaux</dd>
           </div>
           <div>
-            <dt>~730</dt>
-            <dd>tests automatisés sur Mibeko</dd>
+            <dt>iOS + Android</dt>
+            <dd>Mibeko publié sur les deux stores</dd>
           </div>
           <div>
-            {/* A7 — le fait le plus décisif du site ne menait nulle part. Chaque
-                mention de la disponibilité ouvre désormais /contact. */}
-            <dt><a href="/contact"><time datetime={DISPONIBILITE.iso}>{DISPONIBILITE.texte}</time></a></dt>
-            <dd>Disponible en CDI</dd>
+            <dt>6 dépôts</dt>
+            <dd>de code public pour Mibeko</dd>
           </div>
         </dl>
 
         <div class="cta-row">
-          <a class="btn btn-primary" href="#travaux-selectionnes">Voir les preuves</a>
-          <a class="btn btn-ghost" href="/cv">Consulter le CV</a>
+          <a class="btn btn-primary" href="#travaux-selectionnes">Voir mes projets</a>
+          <a class="btn btn-ghost" href="/cv">Voir le CV</a>
         </div>
       </div>
 
@@ -107,19 +117,19 @@ const travaux = ['mibeko', 'france-travail-collecte']
   </section>
 
   <section class="container" id="travaux-selectionnes">
-    <p class="eyebrow">Travaux sélectionnés</p>
-    <h2>Deux contextes, deux preuves</h2>
+    {/* Plus de sur-titre au-dessus des sections (30/09/2026) : un sur-titre
+        par section donnait au site l'allure d'une page générée. Il n'en
+        reste qu'un, en haut de chaque page (docs/13 §2). */}
+    <h2>Deux projets pour commencer</h2>
     <p class="lead muted">
-      Un produit public pour juger l’autonomie de bout en bout. Une mission en
-      entreprise pour juger l’impact dans un cadre collectif et confidentiel.
+      Mibeko, une application que j’ai créée pour le Congo. Et ma mission chez
+      Capgemini pour France Travail, en équipe.
     </p>
 
     <div class="cards cards-selection">
       {travaux.map((travail, index) => {
         const statut = STATUTS_REALISATION[travail.data.statut];
-        const href = travail.data.etude
-          ? `/etudes/${travail.data.etude}`
-          : `/realisations/${travail.id}`;
+        const href = `/realisations/${travail.id}`;
         return (
           <article
             class:list={[
@@ -142,7 +152,7 @@ const travaux = ['mibeko', 'france-travail-collecte']
             <p class="card-statut">
               <Statut label={statut.label} ton={statut.ton} />
             </p>
-            <a href={href}>Lire l’étude de cas →</a>
+            <a href={href}>Voir le projet →</a>
           </article>
         );
       })}
@@ -153,52 +163,47 @@ const travaux = ['mibeko', 'france-travail-collecte']
     </div>
 
     <p class="section-link">
-      <a href="/realisations">Voir tout l’inventaire des réalisations →</a>
+      <a href="/realisations">Voir toutes mes réalisations →</a>
     </p>
   </section>
 
   {/* La stack vient après les preuves : elle permet le scan par mots-clés sans
       demander au lecteur de croire une liste avant d'avoir vu le travail. */}
   <section class="container">
-    <p class="eyebrow">Compétences en contexte</p>
-    <h2>Une stack reliée à du travail réel</h2>
+    <h2>Les technos que j’utilise</h2>
     <p class="lead muted">
-      Java, Spring Boot, React, Kotlin, Laravel et l’exploitation qui les fait
-      tenir. Chaque technologie ci-dessous est utilisée dans une mission ou un
-      produit décrit sur ce site&nbsp;; celles qui sont soulignées mènent à la
-      page qui les montre au travail.
+      Toutes viennent d’un projet ou d’une mission présentés sur ce site.
+      Celles qui sont soulignées mènent à la page où je les ai utilisées.
     </p>
     <StackVisuelle variante="compacte" />
     <p class="section-link">
-      <a href="/cv">Voir la stack complète dans le CV →</a>
+      <a href="/cv">La liste complète est dans le CV →</a>
     </p>
   </section>
 
   <section class="container">
-    <p class="eyebrow">En deux mots</p>
     <h2>J’ai commencé par réparer des machines</h2>
     <div class="prose">
       <p>
-        Licence de génie des systèmes industriels à Pointe-Noire, puis le
-        développement chez InfraOne System et KabimGroup, avant Capgemini à
-        Bordeaux. Le fil conducteur n’a pas bougé&nbsp;:
-        comprendre un problème réel, construire l’outil qui le règle, et le
-        faire tenir dans la durée.
+        Avant le code, j’ai fait une licence en maintenance industrielle à
+        Pointe-Noire. J’ai ensuite été développeur chez InfraOne System puis
+        KabimGroup, avant de venir à Bordeaux pour mes études et Capgemini.
       </p>
-      <p class="section-link"><a href="/parcours">Lire le parcours →</a></p>
+      <p class="section-link"><a href="/parcours">Lire mon parcours →</a></p>
     </div>
   </section>
 
+  {/* Plus de date ici (30/09/2026) : la disponibilité est dite une fois, en
+      haut de page. Cette fin de page reste vraie avant comme après une
+      signature. */}
   <section class="container">
-    <p class="eyebrow">Pratique</p>
-    <h2>Disponibilité</h2>
+    <h2>Un poste ou un projet&nbsp;?</h2>
     <p class="lead">
-      Je termine mon alternance chez Capgemini et je serai disponible en CDI à
-      partir du <a href="/contact"><mark class="mark-time mark-ponct">{DISPONIBILITE.texte}</mark></a>,
-      à&nbsp;{DISPONIBILITE.lieu}.
+      Le plus simple, c’est de m’écrire. Mon CV est aussi en ligne, prêt à
+      imprimer.
     </p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/contact">Parler d’un poste ou d’un besoin</a>
+      <a class="btn btn-primary" href="/contact">Me contacter</a>
       <a class="btn btn-ghost" href="/cv">Voir le CV</a>
     </div>
   </section>

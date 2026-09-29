@@ -16,7 +16,7 @@ import type { CollectionEntry } from 'astro:content';
  * Le groupement suit l'ordre dans lequel on vérifie quelque chose : d'abord le
  * produit tourne, ensuite il est livré, enfin le code se lit.
  */
-type Preuve = CollectionEntry<'etudes'>['data']['preuves'][number];
+type Preuve = CollectionEntry<'realisations'>['data']['preuves'][number];
 
 interface Props {
   preuves: Preuve[];
@@ -24,23 +24,23 @@ interface Props {
   titre?: string;
 }
 
-const { preuves, titre = 'Juger sur pièces' } = Astro.props;
+const { preuves, titre = 'Liens publics' } = Astro.props;
 
 const FAMILLES = [
   {
     cle: 'produit' as const,
     label: 'Le produit en ligne',
-    aide: 'Ce qui tourne, accessible sans compte.',
+    aide: 'Accessible sans compte.',
   },
   {
     cle: 'application' as const,
-    label: 'Les applications publiées',
-    aide: 'Les fiches officielles, sur les deux stores.',
+    label: 'Les applications',
+    aide: 'Les fiches sur l’App Store et Google Play.',
   },
   {
     cle: 'code' as const,
-    label: 'Le code source',
-    aide: 'Dépôts publics, avec leur historique, leurs tests et leur CI.',
+    label: 'Le code',
+    aide: 'Dépôts publics, avec leur historique et leurs tests.',
   },
 ];
 
@@ -53,11 +53,7 @@ const groupes = FAMILLES.map((famille) => ({
 {
   groupes.length > 0 && (
     <section class="preuves" aria-labelledby="preuves-titre">
-      <p class="eyebrow">Vérifiable</p>
       <h2 id="preuves-titre">{titre}</h2>
-      <p class="lead muted">
-        Tout ce qui suit est public. Rien n’oblige à me croire sur parole.
-      </p>
 
       {groupes.map((groupe) => (
         <div class="preuves-groupe">

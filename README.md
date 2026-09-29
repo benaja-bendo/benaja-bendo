@@ -5,11 +5,11 @@
 [benaja-bendo.fr](https://www.benaja-bendo.fr) · [LinkedIn](https://www.linkedin.com/in/benaja-bendo) · [contact@benaja-bendo.fr](mailto:contact@benaja-bendo.fr)
 
 Je conçois, je fiabilise et je fais tourner en production des produits complets :
-API, interfaces web, apps mobiles et l'infrastructure qui les porte. Chez **Capgemini** depuis 2023
+API, interfaces web, apps mobiles et l'infrastructure qui les porte. Trois ans chez **Capgemini**
 (AIFE puis France Travail) et, en parallèle, créateur de
 **[Mibeko](https://mibeko.fr)**, un SaaS LegalTech en production depuis décembre 2025.
 
-🟢 Disponible en **CDI à partir du 28 septembre 2026**.
+🟢 Disponible dès maintenant pour un **CDI**.
 
 ## 🛠️ Stack
 
@@ -38,8 +38,8 @@ plupart sont lisibles dans les dépôts ci-dessous.
 | [`vps_infra`](https://github.com/benaja-bendo/vps_infra) | L'infrastructure qui porte tout ça, en Infrastructure as Code | Ansible, Docker, Traefik |
 | [`benaja-bendo`](https://github.com/benaja-bendo/benaja-bendo) | Ce dépôt : mon site, 100 % statique, CSP stricte, un seul fichier JS | Astro |
 
-Ce que Mibeko prouve concrètement : ~730 tests automatisés, CI/CD GitHub Actions,
-déploiement continu, apps publiées sur l'App Store et le Play Store, et un assistant IA
+Ce que Mibeko prouve concrètement : chaque modification testée automatiquement avant sa
+mise en ligne (CI/CD GitHub Actions), déploiement continu, apps publiées sur l'App Store et le Play Store, et un assistant IA
 qui **cite l'article exact d'où vient chaque réponse**.
 
 ## 💼 Expérience
@@ -50,14 +50,15 @@ qui **cite l'article exact d'où vient chaque réponse**.
   d’environ 10 jours à 48 heures**, plus les tableaux de bord Power BI utilisés au quotidien.
   **AIFE** (finances publiques) : microservices Java / Spring Boot, équipe backend de 10,
   agilité à l'échelle.
-- **KabimGroup**, Pointe-Noire · *2021 → 2023, salarié*
-  Applications web et mobiles (Laravel, Flutter, Node.js et C# / .NET), API REST,
-  parseurs OCR et relation client directe, du besoin à la mise en production.
+- **KabimGroup**, Pointe-Noire · *fin 2021 → février 2023, salarié*
+  Un parseur de CV en Node.js et Laravel (lecture automatique par OCR, API REST),
+  avant l'arrivée des IA génératives, et relation client directe.
 - **InfraOne System**, Pointe-Noire · *2020 → 2021, salarié*
-  Logiciels métier développés en équipe, et sites d’entreprise en C# / ASP.NET Core
-  pour des entreprises sous-traitantes de Total E&P Congo.
+  Surtout du C# / .NET Core : InfraChecking, une application mobile de badge pour les
+  sous-traitants de Total E&P Congo, et Nyota IT, une application de commande de repas
+  (Xamarin, Laravel, Angular).
 - **EPSI Bordeaux** : titre RNCP niveau 7 (Bac+5), obtenu en 2026 ; Bachelor
-  Concepteur Développeur d'Applications obtenu en 2023. Avant le code : une licence en
+  Concepteur Développeur d'Applications obtenu en 2024. Avant le code : une licence en
   maintenance industrielle, et des machines à réparer.
 
 À côté, j'écris des jeux navigateur en Phaser 3 dont **l'art pixel est intégralement
@@ -65,4 +66,4 @@ généré par code**, sans aucune image importée.
 
 <sub>🇬🇧 Fullstack developer with six years of experience (Java / Spring Boot · React / TypeScript), based in Bordeaux, France.
 I design, ship and operate <a href="https://mibeko.fr">Mibeko</a>, a LegalTech SaaS in
-production since December 2025. Available for a permanent role from 28 September 2026.</sub>
+production since December 2025. Available now for a permanent role.</sub>

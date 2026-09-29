@@ -23,9 +23,10 @@ preuves:
     url: "https://github.com/benaja-bendo/bgrfacile"
     quoi: "Le site de 2023 : Laravel, React via Inertia, MySQL."
     famille: "code"
-enseignement: "J’ai recommencé bgrfacile plusieurs fois, en cherchant chaque fois une meilleure base. J’en retiens qu’une version livrée et améliorée vaut mieux qu’une nouvelle version parfaite : c’est ce que j’applique aujourd’hui sur Mibeko."
-ordre: 6
-maj: 2026-09-24
+enseignement: "J’ai recommencé bgrfacile plusieurs fois, en cherchant chaque fois une meilleure base. Avec le recul, j’aurais dû livrer plus tôt et améliorer ensuite. C’est ce que je fais aujourd’hui sur Mibeko."
+type: "produit"
+ordre: 2
+maj: 2026-09-30
 ---
 
 bgrfacile est parti d’une idée simple : aider les élèves congolais à trouver

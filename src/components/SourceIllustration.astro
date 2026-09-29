@@ -3,11 +3,11 @@ interface Props {
   href?: string;
 }
 
-const { href = '/etudes/mibeko' } = Astro.props;
+const { href = '/realisations/mibeko' } = Astro.props;
 ---
 
 <figure class="source-illustration">
-  <a class="source-illustration-link" href={href} aria-label="Voir l’étude de cas Mibeko">
+  <a class="source-illustration-link" href={href} aria-label="Voir le projet Mibeko">
     <span class="source-illustration-stage" aria-hidden="true">
       <span class="source-illustration-meta">trace_01</span>
       <span class="source-illustration-tag source-illustration-tag-in">document</span>
@@ -24,7 +24,7 @@ const { href = '/etudes/mibeko' } = Astro.props;
     </span>
   </a>
   <figcaption>
-    <strong>La réponse garde le chemin vers sa source.</strong>
-    <span>Le principe qui guide Mibeko, rendu visible.</span>
+    <strong>Chaque réponse garde le lien vers sa source.</strong>
+    <span>C’est le principe de Mibeko.</span>
   </figcaption>
 </figure>

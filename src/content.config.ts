@@ -5,10 +5,16 @@ import { z } from 'astro/zod';
 /**
  * Modèle de contenu — voir docs/08-plan-contenu.md §4.
  *
- * Trois collections, trois niveaux de finition assumés :
- *   realisations : l'inventaire. Court, factuel, avec un enseignement obligatoire.
- *   etudes       : les décisions derrière quelques réalisations. Format long.
+ * Deux collections :
+ *   realisations : une page par projet. Courte quand il y a peu à dire,
+ *                  longue quand il y a de la matière (Mibeko, France Travail).
+ *                  Un enseignement obligatoire.
  *   notes        : la mémoire de travail. Daté, statué, publiable court.
+ *
+ * Il y en avait trois jusqu'au 30/09/2026 : les études de cas (`etudes`)
+ * doublonnaient leurs fiches. Elles ont été fusionnées dans les réalisations,
+ * et leurs adresses redirigent (astro.config.mjs, firebase.json). Voir
+ * docs/13-refonte-contenu.md §5.
  *
  * `brouillon: true` exclut une entrée de TOUTES les routes et du RSS (helpers
  * dans src/lib/contenu.ts) : c'est le seul mécanisme de non-publication.
@@ -61,39 +67,23 @@ const realisations = defineCollection({
     preuves: z.array(preuve).default([]),
     /** Obligatoire : sans lui, l'inventaire redevient un CV en liste. */
     enseignement: z.string(),
-    /** Identifiant de l'étude de cas associée, si elle existe. */
-    etude: z.string().optional(),
-    epingle: z.boolean().default(false),
+    /**
+     * Le type de travail, qui range la page Réalisations en trois groupes
+     * (TYPES_REALISATION dans src/lib/contenu.ts). Un classement par type et
+     * non par pays : les postes au Congo et chez Capgemini sont côte à côte.
+     */
+    type: z.enum(['produit', 'entreprise', 'avec-autres']),
+    /** Quelques chiffres, affichés en tête de page. Venus des études de cas. */
+    chiffres: z
+      .array(z.object({ valeur: z.string(), label: z.string() }))
+      .default([]),
+    /** Ordre dans son groupe. */
     ordre: z.number().default(50),
     /** Date de dernière relecture, affichée. */
     maj: z.coerce.date(),
     brouillon: z.boolean().default(false),
     /** Mission client : aucun lien public exigé, périmètre borné à la place. */
     confidentiel: z.boolean().default(false),
-  }),
-});
-
-const etudes = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/etudes' }),
-  schema: z.object({
-    titre: z.string(),
-    sousTitre: z.string().optional(),
-    periode: z.string(),
-    resume: z.string(),
-    tags: z.array(z.string()).default([]),
-    stack: z.array(z.string()).default([]),
-    chiffres: z
-      .array(z.object({ valeur: z.string(), label: z.string() }))
-      .default([]),
-    liens: z.array(lien).default([]),
-    /** Liens vérifiables — dépôts, fiches de stores, produit en ligne. */
-    preuves: z.array(preuve).default([]),
-    /** Réalisation dont cette étude approfondit les décisions. */
-    realisation: z.string().optional(),
-    confidentiel: z.boolean().default(false),
-    ordre: z.number().default(0),
-    maj: z.coerce.date(),
-    brouillon: z.boolean().default(false),
   }),
 });
 
@@ -118,4 +108,4 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { realisations, etudes, notes };
+export const collections = { realisations, notes };

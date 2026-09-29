@@ -1,0 +1,22 @@
+---
+import { DISPONIBILITE } from '../lib/parcours';
+
+/**
+ * La pastille de disponibilité : un pixel vert et une phrase.
+ *
+ * Un seul composant pour le pied de page, le haut de l'accueil et le contact,
+ * et une seule source pour la phrase (DISPONIBILITE.texte). Le 28/09/2026, la
+ * date affichée est devenue du passé sur une douzaine d'endroits écrits à la
+ * main : il n'en reste que quatre, tous branchés ici ou sur la constante.
+ * Voir docs/13-refonte-contenu.md §1.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: classe } = Astro.props;
+---
+
+<p class:list={['dispo', classe]}>
+  <span class="dot" aria-hidden="true"></span>{DISPONIBILITE.texte}
+</p>

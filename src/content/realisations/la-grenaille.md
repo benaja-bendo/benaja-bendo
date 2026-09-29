@@ -19,17 +19,16 @@ preuves:
     famille: "code"
   - label: "Le-creuset-backend"
     url: "https://github.com/benaja-bendo/Le-creuset-backend"
-    quoi: "L’API : NestJS, Prisma, PostgreSQL, 189 tests Jest, mise en ligne par GitHub Actions et Docker."
+    quoi: "L’API : NestJS, Prisma, PostgreSQL, tests Jest, mise en ligne par GitHub Actions et Docker."
     famille: "code"
   - label: "vps_infra"
     url: "https://github.com/benaja-bendo/vps_infra"
     quoi: "Le serveur, configuré en Ansible : le même dépôt d’infrastructure que Mibeko."
     famille: "code"
-enseignement: "Travailler pour quelqu’un qui connaît son métier mieux que moi m’a appris à poser les questions avant d’écrire le code : le compte poids ne s’invente pas, il s’apprend auprès du fondeur."
-# Après France Travail (2), avant AIFE (3) : un travail en production pour un
-# vrai client passe devant une mission terminée.
-ordre: 2.5
-maj: 2026-09-24
+enseignement: "Le fondeur connaît son métier bien mieux que moi. J’ai appris à poser les bonnes questions avant d’écrire le code, surtout pour le compte poids."
+type: "avec-autres"
+ordre: 1
+maj: 2026-09-30
 ---
 
 La Grenaille est une fonderie de bijoux. Elle fond des pièces à la cire
@@ -47,8 +46,8 @@ et sa bibliothèque de moules et de fichiers 3D, qu’il peut afficher en 3D dan
 son navigateur. La fonderie a son propre espace d’administration.
 
 Côté technique : un front React / TypeScript, une API NestJS (Node.js) avec
-Prisma et PostgreSQL. Environ 200 tests automatisés (Jest pour l’API, Vitest
-pour le front) tournent avant chaque mise en production : s’ils passent,
+Prisma et PostgreSQL. Des tests automatisés (Jest pour l’API, Vitest pour le
+front) tournent avant chaque mise en production : s’ils passent,
 GitHub Actions construit une image Docker et la déploie sur un serveur
 configuré en Ansible, avec le même dépôt d’infrastructure que Mibeko.
 

@@ -4,8 +4,9 @@ Site personnel de Bénaja Bendo-Matondo. **Astro 7, 100 % statique, JavaScript v
 Le site est une **mémoire professionnelle publique** : il documente ce que Bénaja
 construit, les décisions prises et les apprentissages à retrouver. Il doit aussi permettre
 à un pair, un recruteur ou un client de comprendre rapidement son travail, sans réduire
-le site à un CV en ligne. Disponibilité CDI : **28/09/2026** (fait daté à réviser, pas
-raison d'être du site).
+le site à un CV en ligne. Disponibilité CDI : **dès maintenant** depuis le 28/09/2026,
+une seule phrase dans `DISPONIBILITE.texte` (fait à réviser à la signature, pas raison
+d'être du site). Chantier de contenu en cours : [docs/13](docs/13-refonte-contenu.md).
 
 ## Commandes
 
@@ -26,6 +27,7 @@ npm run cv:pdf   # build + un PDF par version du CV dans output/pdf/ (Chrome loc
 | Comment on écrit (ton, mots bannis) | `docs/02` *(local)* §4 |
 | **Le site comme outil de recherche d'emploi** (preuves, CV, stack) | [docs/10-audit-recherche-emploi.md](docs/10-audit-recherche-emploi.md) |
 | **Les versions du CV** (profils, contrôles, export PDF, ajouter un profil) | [docs/12-cv-par-profil.md](docs/12-cv-par-profil.md) |
+| **La refonte du contenu** (ton, voix de Bénaja, disponibilité, fusion études / réalisations) | [docs/13-refonte-contenu.md](docs/13-refonte-contenu.md) |
 | **Design : tokens, composants, règles** | [docs/05-design-system-papier-pixels.md](docs/05-design-system-papier-pixels.md) |
 | Ce qui reste à faire / à mettre à jour | [docs/06-chantiers-futurs.md](docs/06-chantiers-futurs.md) |
 | **Contenu : quoi écrire, dans quel ordre, quand ouvrir une rubrique** | [docs/08-plan-contenu.md](docs/08-plan-contenu.md) |

@@ -2007,16 +2007,22 @@ main > section:last-child {
   gap: 1.5rem;
   flex-wrap: wrap;
 }
-.footer-status {
+/* La disponibilité (composant Disponibilite.astro) : pied de page, haut de
+   l'accueil, contact. Une seule classe, pour que la pastille soit la même
+   partout. */
+.dispo {
   margin: 0;
   color: var(--fg);
   font-weight: 600;
+}
+.hero .dispo {
+  margin-bottom: 0.85rem;
 }
 /* Pastille de disponibilité : un carré. Un pixel, pas une LED.
    M7 — et il COMMUTE, il ne respire pas : `steps(1)` sur un cycle de 2,4 s pose
    puis retire un halo d'un seul coup. Une pulsation lissée aurait fait la LED
    que docs/05 §4 refuse ; une commutation nette reste dans la grammaire pixel. */
-.footer-status .dot {
+.dispo .dot {
   display: inline-block;
   width: 0.6rem;
   height: 0.6rem;
@@ -3076,7 +3082,7 @@ a:hover {
  * Sommaire d'un contenu long
  * ========================================================================== */
 
-.etude-corps {
+.fiche-corps {
   display: grid;
   gap: 2rem;
   margin-top: 1.75rem;
@@ -3123,7 +3129,7 @@ a:hover {
    reste collant pendant la lecture. En dessous, il redevient un bloc en tête de
    contenu — un sommaire replié qu'il faut ouvrir n'est jamais consulté. */
 @media (min-width: 68rem) {
-  .etude-corps {
+  .fiche-corps {
     grid-template-columns: minmax(0, 44rem) minmax(0, 1fr);
     align-items: start;
   }
@@ -3133,7 +3139,7 @@ a:hover {
     position: sticky;
     top: 5.5rem;
   }
-  .etude-corps > .prose {
+  .fiche-corps > .prose {
     grid-column: 1;
     grid-row: 1;
   }
