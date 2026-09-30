@@ -200,6 +200,24 @@ test('chaque compétence cliquable mène à une page qui la nomme', () => {
 // Le site vise aussi des lecteurs non techniques ; virgule, deux-points,
 // parenthèses ou point font le même travail plus simplement. Les commentaires
 // du code source ne sont pas publiés et ne sont donc pas concernés.
+// Ajouté le 30/09/2026 : un remplacement trop large avait transformé
+// `'/notes/x': '/articles/x'` en `'/articles/x': '/articles/x'` dans
+// astro.config.mjs. La vraie page était remplacée par une redirection vers
+// elle-même, et aucun autre test ne l'a vu (le lien de la page menait bien à
+// une page existante : elle-même).
+test('une redirection mène à une vraie page, jamais à elle-même ni à une autre redirection', () => {
+  const redirection = (html) => html.match(/<meta http-equiv="refresh" content="0;url=([^"]+)"/)?.[1];
+  for (const [f, html] of pages) {
+    const cible = redirection(html);
+    if (!cible) continue;
+    const origine = relative(racine, f);
+    const { page } = destination(cible, f);
+    assert.ok(page, `${origine} → ${cible} : destination absente du build`);
+    assert.notEqual(page, f, `${origine} redirige vers elle-même`);
+    assert.equal(redirection(pages.get(page)), undefined, `${origine} → ${cible} : la destination est elle-même une redirection`);
+  }
+});
+
 test('aucun tiret cadratin dans les pages ni dans le flux RSS', () => {
   const publies = fichiers(racine).filter((f) => /\.(html|xml)$/.test(f));
   for (const f of publies) {

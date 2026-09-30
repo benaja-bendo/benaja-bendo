@@ -9,7 +9,8 @@ import { z } from 'astro/zod';
  *   realisations : une page par projet. Courte quand il y a peu à dire,
  *                  longue quand il y a de la matière (Mibeko, France Travail).
  *                  Un enseignement obligatoire.
- *   notes        : la mémoire de travail. Daté, statué, publiable court.
+ *   notes        : les articles (rubrique « Articles », /articles, depuis le
+ *                  30/09/2026). Datés, statués, courts ou longs.
  *
  * Il y en avait trois jusqu'au 30/09/2026 : les études de cas (`etudes`)
  * doublonnaient leurs fiches. Elles ont été fusionnées dans les réalisations,
@@ -101,6 +102,11 @@ const notes = defineCollection({
       .default('fragment'),
     /** `article` reste un format de note, pas une collection à part. */
     format: z.enum(['note', 'article']).default('note'),
+    /**
+     * Le projet dont parle l'article (identifiant d'une réalisation). Affiché
+     * en tête d'article ; un identifiant inconnu arrête le build.
+     */
+    projet: z.string().optional(),
     /** Identifiant de la note qui remplace celle-ci, si elle est obsolète. */
     remplaceePar: z.string().optional(),
     sources: z.array(lien).default([]),

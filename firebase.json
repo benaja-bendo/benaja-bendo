@@ -53,6 +53,16 @@
         "source": "/realisations/tech/astro",
         "destination": "/colophon",
         "type": 301
+      },
+      {
+        "source": "/notes",
+        "destination": "/articles",
+        "type": 301
+      },
+      {
+        "source": "/notes/:chemin*",
+        "destination": "/articles/:chemin*",
+        "type": 301
       }
     ],
     "headers": [

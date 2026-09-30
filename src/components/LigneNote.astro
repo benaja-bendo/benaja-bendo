@@ -6,6 +6,7 @@ import {
   dateISO,
   formatDate,
   sujetsNotes,
+  tempsDeLecture,
   type Note,
 } from '../lib/contenu';
 
@@ -22,28 +23,29 @@ const { aUnePage } = await sujetsNotes();
 <article class="ligne">
   <div class="ligne-tete">
     {/* h2 : même raison que dans LigneRealisation — la ligne suit le h1 de la
-        page (index des notes, /notes/sujet/…). */}
+        page (index des articles, /articles/sujet/…). */}
     <h2 class="ligne-titre">
-      <a href={`/notes/${id}`}>{data.titre}</a>
+      <a href={`/articles/${id}`}>{data.titre}</a>
     </h2>
     <Statut label={statut.label} ton={statut.ton} />
   </div>
 
   <p class="ligne-periode">
     <time datetime={dateISO(data.date)}>{formatDate(data.date)}</time>
-    {data.maj && <> · relue le {formatDate(data.maj)}</>}
+    {data.maj && <> · relu le {formatDate(data.maj)}</>}
+    {` · ${tempsDeLecture(note.body ?? '')} min de lecture`}
   </p>
 
   <p class="ligne-resume">{data.resume}</p>
 
   <Taxo
     valeurs={data.sujets}
-    base="/notes/sujet"
+    base="/articles/sujet"
     aUnePage={aUnePage}
-    etiquette={`Sujets de la note : ${data.titre}`}
+    etiquette={`Sujets de l’article : ${data.titre}`}
   />
 
   <p class="ligne-liens">
-    <a href={`/notes/${id}`}>Lire la note →</a>
+    <a href={`/articles/${id}`}>Lire l’article →</a>
   </p>
 </article>

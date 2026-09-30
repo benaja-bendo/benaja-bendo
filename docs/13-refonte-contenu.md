@@ -28,7 +28,8 @@ tableau de suivi ci-dessous, dans le même commit.*
 | 6. Ton : réécriture page par page | ✅ 30/09/2026 en grande partie : accueil, parcours, contact, réalisations, composants. Restent le colophon, les notes et le README. Vérification visuelle faite le 30/09 (clair / sombre, mobile / desktop) |
 | Mise en ligne des étapes 1 à 6 | ✅ 30/09/2026, commit bd2412f, déployé par GitHub Actions ; les 301 vérifiées en production |
 | 7. Pages et blocs à retirer ou réduire | ✅ 30/09/2026 (détail en §6) |
-| 8. Notes → Articles | À faire |
+| Mise en ligne de l'étape 7 | ✅ 30/09/2026, commit 6daa0bc |
+| 8. Notes → Articles | ✅ structure le 30/09/2026 : /articles (301 depuis /notes), temps de lecture, sommaire, lien vers le projet. Premier article : Bénaja l'écrit, guide en docs/14 et brouillon prêt |
 | 9. Visuels, photo, mouvement | Plus tard |
 
 ---

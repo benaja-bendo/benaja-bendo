@@ -69,6 +69,15 @@ export async function getRealisations(): Promise<Realisation[]> {
   return entrees.sort((a, b) => rang(a) - rang(b) || a.data.ordre - b.data.ordre);
 }
 
+/**
+ * Minutes de lecture d'un texte Markdown, à 200 mots par minute, une au
+ * minimum. Le code compte aussi : il se lit, lui aussi.
+ */
+export function tempsDeLecture(texte: string): number {
+  const mots = texte.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(mots / 200));
+}
+
 /** Les notes se lisent de la plus récente à la plus ancienne. */
 export async function getNotes(): Promise<Note[]> {
   const entrees = await getCollection('notes', publie);
@@ -170,19 +179,19 @@ export const STATUTS_NOTE: Record<
     aide: 'Noté au vol, utile mais pas relu en profondeur.',
   },
   testee: {
-    label: 'Testée',
+    label: 'Testé',
     ton: 'vif',
-    aide: 'Vérifiée au moins une fois dans un cas réel.',
+    aide: 'Vérifié au moins une fois dans un cas réel.',
   },
   stable: {
     label: 'Stable',
     ton: 'vif',
-    aide: 'Vérifiée, et toujours valable à la dernière relecture.',
+    aide: 'Vérifié, et toujours valable à la dernière relecture.',
   },
   obsolete: {
     label: 'Obsolète',
     ton: 'alerte',
-    aide: 'Conservée pour mémoire : ne plus s’y fier telle quelle.',
+    aide: 'Conservé pour mémoire : ne plus s’y fier tel quel.',
   },
 };
 
@@ -222,7 +231,8 @@ export async function navigationPrincipale() {
     { href: '/realisations', label: 'Réalisations', actif: realisations.length > 0 },
     // « Études de cas » a quitté la navigation le 30/09/2026 : fusionnée dans
     // les réalisations, elle redit la même chose (docs/13 §5).
-    { href: '/notes', label: 'Notes', actif: notes.length > 0 },
+    // « Articles » depuis le 30/09/2026 (docs/13 §7) ; /notes redirige ici.
+    { href: '/articles', label: 'Articles', actif: notes.length > 0 },
     // « Parcours » et non « À propos » : c'est le mot qu'on cherche quand on
     // veut savoir d'où vient quelqu'un, et c'est déjà celui que le site employait
     // dans ses propres liens (« Lire le parcours → », « Le parcours complet »).

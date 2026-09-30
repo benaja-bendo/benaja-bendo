@@ -8,19 +8,20 @@ const { sujets } = await sujetsNotes();
 ---
 
 <Base
-  title="Notes · Bénaja Bendo-Matondo"
-  description="Mes notes techniques, datées : des problèmes rencontrés et la façon dont je les ai réglés."
+  title="Articles · Bénaja Bendo-Matondo"
+  description="Mes articles techniques, datés : des problèmes rencontrés en construisant mes projets, et la façon dont je les ai réglés."
 >
   <section class="container">
-    <p class="eyebrow">Notes</p>
-    <h1>Mes notes techniques</h1>
+    <p class="eyebrow">Articles</p>
+    <h1>Mes articles</h1>
     <p class="lead">
-      Des problèmes que j’ai rencontrés et la façon dont je les ai réglés,
-      datés pour qu’on sache s’ils sont encore à jour.
+      Des problèmes que j’ai rencontrés en construisant mes projets, et la
+      façon dont je les ai réglés. Chaque article est daté, pour qu’on sache
+      s’il est encore à jour.
     </p>
 
     {/* A6 — même déplacement que sur /realisations : les sujets ouvrent la
-        rubrique au lieu de la clore. On cherche une note par son sujet
+        rubrique au lieu de la clore. On cherche un article par son sujet
         (« CSP », « HTTP »), pas en descendant une liste chronologique. */}
     {
       sujets.length > 0 && (
@@ -29,7 +30,7 @@ const { sujets } = await sujetsNotes();
           <ul class="chips chips-compte" aria-label="Sujets">
             {sujets.map((groupe) => (
               <li>
-                <a href={`/notes/sujet/${groupe.slug}`}>
+                <a href={`/articles/sujet/${groupe.slug}`}>
                   {groupe.label}
                   <span class="compte">{groupe.entrees.length}</span>
                 </a>
@@ -49,7 +50,7 @@ const { sujets } = await sujetsNotes();
     {
       notes.length === 0 && (
         <p class="etat-vide">
-          Aucune note publiée pour l’instant. Une note paraît quand elle aide à
+          Aucun article publié pour l’instant. Un article paraît quand il aide à
           retrouver ou comprendre quelque chose, pas à date fixe.
         </p>
       )
@@ -58,7 +59,7 @@ const { sujets } = await sujetsNotes();
 
   {/* A8 — une sortie qui avance, en plus du flux RSS. */}
   <section class="container">
-    <h2>Suivre les nouvelles notes</h2>
+    <h2>Suivre les nouveaux articles</h2>
     <p class="lead muted">Elles arrivent aussi dans le flux RSS, avec mes réalisations.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/rss.xml">Suivre en RSS</a>

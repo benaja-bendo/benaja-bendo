@@ -103,15 +103,20 @@ export default defineConfig({
     '/etudes/aife': '/realisations/aife-microservices',
     // L'ancienne page de compatibilité. Ses ancres #aife et #france-travail
     // sont portées par les lignes de /realisations (voir
-    // /notes/fragment-url-et-redirections).
+    // /articles/fragment-url-et-redirections).
     '/experiences': '/realisations',
     // La fiche « benaja-bendo.fr » a été retirée le 30/09/2026 : le colophon
     // dit la même chose. Sa page et celle de la techno Astro (qui n'avait plus
     // qu'une réalisation) sont liées depuis les puces des CV déjà envoyés.
     '/realisations/benaja-bendo-fr': '/colophon',
     '/realisations/tech/astro': '/colophon',
+    // « Notes » est devenu « Articles » le 30/09/2026 (docs/13 §7). Firebase
+    // redirige tout /notes/… d'une seule règle ; ici, une entrée par page.
+    '/notes': '/articles',
+    '/notes/api-fonts-astro-csp': '/articles/api-fonts-astro-csp',
+    '/notes/fragment-url-et-redirections': '/articles/fragment-url-et-redirections',
     // Renommée le 14/08/2026. Un CHEMIN se redirige côté serveur, contrairement
-    // à un fragment (voir /notes/fragment-url-et-redirections) : la 301 est
+    // à un fragment (voir /articles/fragment-url-et-redirections) : la 301 est
     // donc réelle, servie par firebase.json, et cette entrée n'est que le
     // filet portable pour `npm run preview`.
     '/a-propos': '/parcours',

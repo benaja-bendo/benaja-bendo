@@ -55,5 +55,5 @@ règle le problème : une page qui parle d’un attribut n’en contient pas un.
 ## Les limites
 
 Constaté sur Astro 7.2 en août 2026, avec `build.inlineStylesheets: 'never'`. Si
-l’intégration se met à émettre un CSS externe, cette note devient obsolète : c’est
+l’intégration se met à émettre un CSS externe, cet article devient obsolète : c’est
 la première chose à revérifier avant de la citer.

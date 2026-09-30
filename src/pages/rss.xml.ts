@@ -3,7 +3,7 @@ import type { APIContext } from 'astro';
 import { getNotes, getRealisations } from '../lib/contenu';
 
 /**
- * Le flux suit ce qui se publie : les notes et les réalisations. Les
+ * Le flux suit ce qui se publie : les articles et les réalisations. Les
  * brouillons en sont exclus par les helpers, pas par un filtre local — il n'y a
  * qu'une seule règle de publication dans le projet.
  *
@@ -17,7 +17,7 @@ export async function GET(context: APIContext) {
     ...notes.map((note) => ({
       title: note.data.titre,
       description: note.data.resume,
-      link: `/notes/${note.id}`,
+      link: `/articles/${note.id}`,
       pubDate: note.data.date,
       categories: note.data.sujets,
     })),
@@ -32,7 +32,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Bénaja Bendo-Matondo',
-    description: 'Mes réalisations et mes notes techniques.',
+    description: 'Mes réalisations et mes articles techniques.',
     site: context.site!,
     items,
     customData: '<language>fr-fr</language>',

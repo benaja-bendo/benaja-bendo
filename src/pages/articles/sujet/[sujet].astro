@@ -22,13 +22,13 @@ const { groupe } = Astro.props;
 ---
 
 <Base
-  title={`Notes : ${groupe.label} | Bénaja Bendo-Matondo`}
-  description={`Les notes de Bénaja Bendo-Matondo sur le sujet « ${groupe.label} ».`}
+  title={`Articles : ${groupe.label} | Bénaja Bendo-Matondo`}
+  description={`Les articles de Bénaja Bendo-Matondo sur le sujet « ${groupe.label} ».`}
 >
   <section class="container">
     <p class="eyebrow">Sujet</p>
     <h1>{groupe.label}</h1>
-    <p class="lead">{groupe.entrees.length} notes sur ce sujet.</p>
+    <p class="lead">{groupe.entrees.length} articles sur ce sujet.</p>
   </section>
 
   <section class="container">
@@ -36,6 +36,6 @@ const { groupe } = Astro.props;
       {groupe.entrees.map((note) => <LigneNote note={note} />)}
     </div>
 
-    <p class="retour"><a href="/notes">← Toutes les notes</a></p>
+    <p class="retour"><a href="/articles">← Tous les articles</a></p>
   </section>
 </Base>

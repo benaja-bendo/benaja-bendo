@@ -28,6 +28,7 @@ npm run cv:pdf   # build + un PDF par version du CV dans output/pdf/ (Chrome loc
 | **Le site comme outil de recherche d'emploi** (preuves, CV, stack) | [docs/10-audit-recherche-emploi.md](docs/10-audit-recherche-emploi.md) |
 | **Les versions du CV** (profils, contrôles, export PDF, ajouter un profil) | [docs/12-cv-par-profil.md](docs/12-cv-par-profil.md) |
 | **La refonte du contenu** (ton, voix de Bénaja, disponibilité, fusion études / réalisations) | [docs/13-refonte-contenu.md](docs/13-refonte-contenu.md) |
+| Le premier article (plan, faits vérifiés, brouillon à remplir) | [docs/14-guide-article-mibeko-sources.md](docs/14-guide-article-mibeko-sources.md) |
 | **Design : tokens, composants, règles** | [docs/05-design-system-papier-pixels.md](docs/05-design-system-papier-pixels.md) |
 | Ce qui reste à faire / à mettre à jour | [docs/06-chantiers-futurs.md](docs/06-chantiers-futurs.md) |
 | **Contenu : quoi écrire, dans quel ordre, quand ouvrir une rubrique** | [docs/08-plan-contenu.md](docs/08-plan-contenu.md) |
@@ -138,9 +139,11 @@ src/
   components/            # SiteHeader, SiteFooter, Preuves, StackVisuelle, IconeTech…
   pages/                 # index, contact, parcours, colophon, 404, rss.xml.ts
                          # + cv/[...profil].astro (/cv et ses variantes, gabarit components/CV.astro)
-                         # + realisations/, etudes/, notes/ (index, [slug], taxonomies)
-                         # /mibeko et /a-propos ne sont que des redirections (astro.config.mjs)
-  content/{realisations,etudes,notes}/   # collections, schéma Zod dans content.config.ts
+                         # + realisations/, articles/ (index, [slug], taxonomies)
+                         # /mibeko, /a-propos, /etudes/*, /experiences, /notes/* ne sont
+                         # que des redirections (astro.config.mjs ET firebase.json)
+  content/{realisations,notes}/   # collections, schéma Zod dans content.config.ts
+                                  # (`notes` = la rubrique Articles, /articles)
   assets/illustrations/  # SVG éditoriaux, inlinés par <Illustration/> (jamais dans public/)
   lib/                   # contenu.ts (accès + navigation + voisinage), stack.ts, parcours.ts,
                          # cv-profils.ts (versions du CV : sélection et ordre, jamais de fait),

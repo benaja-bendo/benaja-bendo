@@ -1,0 +1,177 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Statut from '../../components/Statut.astro';
+import Taxo from '../../components/Taxo.astro';
+import Sommaire from '../../components/Sommaire.astro';
+import Suite from '../../components/Suite.astro';
+import Illustration from '../../components/Illustration.astro';
+import {
+  STATUTS_NOTE,
+  dateISO,
+  formatDate,
+  getNotes,
+  getRealisations,
+  sujetsNotes,
+  tempsDeLecture,
+  voisinage,
+  type Note,
+} from '../../lib/contenu';
+
+/**
+ * Un article. La rubrique s'appelait « Notes » jusqu'au 30/09/2026 (docs/13
+ * §7) : les adresses /notes/… redirigent ici. La collection garde son nom
+ * interne, `notes`, pour ne pas toucher au contenu déjà écrit.
+ *
+ * Ajouts de l'étape 8 : le temps de lecture, le sommaire (il se masque tout
+ * seul sous trois sections) et le lien vers le projet dont parle l'article,
+ * quand il y en a un (`projet` dans le frontmatter).
+ */
+
+/**
+ * Une illustration ne se pose que si elle explique une idée précise (docs/05
+ * §2). Ici : la CSP est la seule chose du site qui parle de menace.
+ */
+const ILLUSTRATIONS: Record<string, { nom: string; legende: string; aide: string; meta: string }> = {
+  'api-fonts-astro-csp': {
+    nom: 'attacker-hood',
+    legende: 'Une règle de sécurité stricte a un coût.',
+    aide: 'Elle bloque tout style injecté, mais aussi certains outils d’Astro.',
+    meta: 'csp',
+  },
+};
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { data } = note;
+const { Content, headings } = await render(note);
+const statut = STATUTS_NOTE[data.statut];
+const { aUnePage } = await sujetsNotes();
+const minutes = tempsDeLecture(note.body ?? '');
+
+// Un article obsolète doit pointer son remplaçant, sinon il induit en erreur.
+const notes = await getNotes();
+const remplacant = data.remplaceePar
+  ? notes.find((n) => n.id === data.remplaceePar)
+  : undefined;
+
+// Le projet cité doit exister : une faute de frappe arrête le build plutôt
+// que de publier un lien mort.
+const projet = data.projet
+  ? (await getRealisations()).find((r) => r.id === data.projet)
+  : undefined;
+if (data.projet && !projet) {
+  throw new Error(`[articles] « ${note.id} » cite le projet « ${data.projet} », absent des réalisations.`);
+}
+
+// On passe d'un article au suivant sans repasser par l'index. L'ordre est
+// celui de la collection : du plus récent au plus ancien.
+const voisins = voisinage(notes, note.id, '/articles', (n) => n.data.titre);
+
+const illustration = ILLUSTRATIONS[note.id];
+---
+
+<Base title={`${data.titre} | Bénaja Bendo-Matondo`} description={data.resume}>
+  <section class="container">
+    <p class="eyebrow">
+      Article · <time datetime={dateISO(data.date)}>{formatDate(data.date)}</time> · {minutes}&nbsp;min de lecture
+    </p>
+    <h1>{data.titre}</h1>
+
+    <p class="note-statut">
+      <Statut label={statut.label} ton={statut.ton} />
+      <span class="muted">{statut.aide}</span>
+    </p>
+
+    {
+      remplacant && (
+        <p class="note-cadre">
+          Cet article est remplacé par{' '}
+          <a href={`/articles/${remplacant.id}`}>{remplacant.data.titre}</a>.
+        </p>
+      )
+    }
+
+    <p class="lead">{data.resume}</p>
+
+    {
+      projet && (
+        <p class="champ">
+          <span class="etiq">Projet</span>
+          <a href={`/realisations/${projet.id}`}>{projet.data.nom}</a>
+        </p>
+      )
+    }
+
+    {
+      illustration && (
+        <Illustration
+          nom={illustration.nom}
+          legende={illustration.legende}
+          aide={illustration.aide}
+          meta={illustration.meta}
+          taille="petit"
+          class="illustration-cote"
+        />
+      )
+    }
+
+    <div class="fiche-corps">
+      <Sommaire titres={headings} />
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+
+    {
+      data.sources.length > 0 && (
+        <div class="prose">
+          <h2>Sources</h2>
+          <ul>
+            {data.sources.map((source) => (
+              <li>
+                <a href={source.url} rel="noopener">
+                  {source.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="container">
+    <h2>Sujets</h2>
+    <Taxo
+      valeurs={data.sujets}
+      base="/articles/sujet"
+      aUnePage={aUnePage}
+      etiquette="Sujets"
+    />
+
+    <p class="relecture">
+      Écrit le <time datetime={dateISO(data.date)}>{formatDate(data.date)}</time>{
+        data.maj && (
+          <>
+            , relu le <time datetime={dateISO(data.maj)}>{formatDate(data.maj)}</time>
+          </>
+        )
+      }.
+    </p>
+  </section>
+
+  <Suite
+    voisinage={voisins}
+    indexHref="/articles"
+    indexLabel="Tous les articles"
+  />
+</Base>
