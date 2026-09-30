@@ -25,7 +25,7 @@ tableau de suivi ci-dessous, dans le même commit.*
 | 3. CV et parcours : Congo et France d'un seul tenant, faits corrigés | ✅ 30/09/2026, à relire par Bénaja |
 | 4. Fiche Trouve Ton Profil | ✅ 30/09/2026, « Ce que j'en retiens » à réécrire par Bénaja |
 | 5. Fusion des études de cas dans les réalisations | ✅ 30/09/2026 (accord donné) : 301 dans firebase.json, ancres conservées, pages groupées par type |
-| 6. Ton : réécriture page par page | ✅ 30/09/2026 en grande partie : accueil, parcours, contact, réalisations, composants. Restent le colophon, les notes et le README. Vérification visuelle faite le 30/09 (clair / sombre, mobile / desktop) |
+| 6. Ton : réécriture page par page | ✅ 30/09/2026 : accueil, parcours, contact, réalisations, composants, puis colophon (étape 7), les deux articles et le README. Formules « X, pas Y » : 33 → 8, toutes des précisions factuelles ; sur-titres : 36 → 11, en haut de page |
 | Mise en ligne des étapes 1 à 6 | ✅ 30/09/2026, commit bd2412f, déployé par GitHub Actions ; les 301 vérifiées en production |
 | 7. Pages et blocs à retirer ou réduire | ✅ 30/09/2026 (détail en §6) |
 | Mise en ligne de l'étape 7 | ✅ 30/09/2026, commit 6daa0bc |
@@ -294,12 +294,10 @@ fait sur LinkedIn, où chaque article est partagé. Aucun rythme promis.
 
 ---
 
-## Point ouvert : l'ancre au chargement
+## Point clos : l'ancre au chargement
 
-Constaté le 30/09/2026 dans le navigateur intégré de Claude Code : une adresse
-avec ancre (`/realisations/mibeko#la-construction`) ouvre la page en haut,
-sans descendre à la section. Un changement d'ancre dans la page, lui,
-fonctionne. Le site en ligne se comporte pareil (`/etudes/mibeko#…`) : ce
-n'est pas lié à la fusion. À vérifier dans un vrai Chrome ou Safari avant de
-chercher une cause (pistes : `scroll-behavior: smooth` sur `html`, transitions
-de page `@view-transition`).
+Constaté le 30/09/2026 : dans les onglets pilotés par Claude (navigateur
+intégré, puis Chrome), une adresse avec ancre s'ouvrait en haut de page. Test
+témoin le même jour sur une page MDN (`/fr/docs/Web/HTML/Element/a#exemples`) :
+même comportement, et `document.visibilityState` vaut `hidden`. Chrome ne fait
+pas défiler un onglet caché : ce n'est pas un défaut du site. Rien à corriger.
