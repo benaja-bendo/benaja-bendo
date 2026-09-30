@@ -50,7 +50,7 @@ qui **cite l'article exact d'où vient chaque réponse**.
   d’environ 10 jours à 48 heures**, plus les tableaux de bord Power BI utilisés au quotidien.
   **AIFE** (finances publiques) : microservices Java / Spring Boot, équipe backend de 10,
   agilité à l'échelle.
-- **KabimGroup**, Pointe-Noire · *fin 2021 → février 2023, salarié*
+- **KabimGroup**, Pointe-Noire · *2021 → 2022, salarié*
   Un parseur de CV en Node.js et Laravel (lecture automatique par OCR, API REST),
   avant l'arrivée des IA génératives, et relation client directe.
 - **InfraOne System**, Pointe-Noire · *2020 → 2021, salarié*
@@ -58,7 +58,7 @@ qui **cite l'article exact d'où vient chaque réponse**.
   sous-traitants de Total E&P Congo, et Nyota IT, une application de commande de repas
   (Xamarin, Laravel, Angular).
 - **EPSI Bordeaux** : titre RNCP niveau 7 (Bac+5), obtenu en 2026 ; Bachelor
-  Concepteur Développeur d'Applications obtenu en 2024. Avant le code : une licence en
+  Concepteur Développeur d'Applications obtenu en 2023. Avant le code : une licence en
   maintenance industrielle, et des machines à réparer.
 
 À côté, j'écris des jeux navigateur en Phaser 3 dont **l'art pixel est intégralement

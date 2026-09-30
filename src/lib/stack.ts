@@ -69,7 +69,7 @@ export const STACK: GroupeStack[] = [
       // L'API de La Grenaille (Le-creuset-backend, public), avec l'accord du
       // fondeur. Pas d'icône libre dans le paquet vendorisé : monogramme.
       { nom: 'NestJS', mono: 'NST', preuve: '/realisations/la-grenaille' },
-      // Expérience réelle (InfraOne, KabimGroup, 2020–2023) mais pas une
+      // Expérience réelle (InfraOne, 2020–2021) mais pas une
       // spécialité mise en avant : ni `cle`, ni tête de liste, ni mention dans
       // les en-têtes de CV. Décision du 23/09/2026 — à rouvrir si les offres
       // visées changent.

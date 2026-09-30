@@ -98,10 +98,11 @@ export const EXPERIENCES: Etape[] = [
   },
   {
     id: 'kabimgroup',
-    quand: '2021–2023',
+    quand: '2021–2022',
     quoi: 'Développeur web et mobile chez KabimGroup (startup)',
     ou: 'Pointe-Noire, Congo · salarié',
-    // Revu le 30/09/2026 avec Bénaja : fin 2021 à février 2023, surtout un
+    // Revu le 30/09/2026 avec Bénaja : septembre 2021 à juin 2022 (dates
+    // confirmées par lui ce jour-là, LinkedIn corrigé), surtout un
     // parseur de CV en Node.js et Laravel. Flutter, C# / .NET et Xamarin
     // étaient attribués à tort à ce poste : C# / .NET et Xamarin sont chez
     // InfraOne, Flutter sur bgrfacile.
@@ -304,13 +305,14 @@ export const FORMATION: Etape[] = [
     ou: 'EPSI Bordeaux · obtenu en 2026',
   },
   {
-    // Corrigé le 30/09/2026 : commencé le 1er septembre 2023 (et non en
-    // 2022), après la fin de KabimGroup en février 2023. L'ancienne période
-    // faisait chevaucher le Bachelor à Bordeaux et le poste à Pointe-Noire.
+    // Septembre 2022 à septembre 2023, confirmé par Bénaja le 30/09/2026
+    // (LinkedIn fait foi). Une première correction du même jour avait décalé
+    // ces dates d'un an à tort ; le vrai chevauchement venait de KabimGroup,
+    // qui se termine en juin 2022 et non en 2023.
     id: 'epsi-bachelor',
-    quand: '2023–2024',
+    quand: '2022–2023',
     quoi: 'Bachelor Concepteur Développeur d’Applications',
-    ou: 'EPSI Bordeaux · obtenu en 2024',
+    ou: 'EPSI Bordeaux · obtenu en septembre 2023',
   },
   // Yekolab figurait dans les expériences, sous « Reconversion vers le
   // développement ». C'était une formation : placée ici, elle comble aussi le

@@ -1,9 +1,9 @@
 ---
 nom: "InfraOne System et KabimGroup"
-resume: "Mes débuts de développeur à Pointe-Noire, de 2020 à 2023 : une application de badge pour les sous-traitants de Total, une application de commande de repas, puis un parseur de CV."
+resume: "Mes débuts de développeur à Pointe-Noire, de 2020 à 2022 : une application de badge pour les sous-traitants de Total, une application de commande de repas, puis un parseur de CV."
 statut: "termine"
-periode: "2020 – 2023"
-role: "Développeur fullstack chez InfraOne System (2020–2021), puis développeur web et mobile chez KabimGroup (fin 2021 à février 2023), salarié dans les deux cas"
+periode: "2020 – 2022"
+role: "Développeur fullstack chez InfraOne System (2020–2021), puis développeur web et mobile chez KabimGroup (2021–2022), salarié dans les deux cas"
 stack: ["C#", ".NET", "Xamarin", "Angular", "Laravel", "PHP", "Node.js", "OCR"]
 domaines: ["Mobile", "Back-end"]
 enseignement: "Au Congo, j’étais souvent en contact direct avec les clients. J’y ai appris à bien comprendre le besoin avant de coder : un besoin mal compris coûte plus cher qu’un bug."
@@ -30,7 +30,7 @@ commander des repas en ligne, un peu comme Uber Eats aujourd’hui. Côté
 technique : Xamarin pour le mobile, Laravel et .NET côté serveur, Angular pour
 la partie web.
 
-## KabimGroup (fin 2021 à février 2023)
+## KabimGroup (2021–2022)
 
 KabimGroup est une startup. J’y ai surtout travaillé sur un **parseur de CV** :
 un outil qui lit un CV automatiquement (OCR) et en ressort les informations

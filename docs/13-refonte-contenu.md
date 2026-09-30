@@ -160,9 +160,9 @@ fort, et vérifiable dans les workflows.
 
 | Fait | Avant sur le site | Correct |
 | --- | --- | --- |
-| KabimGroup | 2021–2023, Laravel, Flutter, Node.js, C# / .NET, Xamarin | Fin 2021 à février 2023. Surtout un **parseur de CV** (lecture automatique, OCR), en **Node.js et Laravel**, beaucoup de R&D, avant l'arrivée des IA génératives |
+| KabimGroup | 2021–2023, Laravel, Flutter, Node.js, C# / .NET, Xamarin | **Septembre 2021 à juin 2022**. Surtout un **parseur de CV** (lecture automatique, OCR), en **Node.js et Laravel**, beaucoup de R&D, avant l'arrivée des IA génératives |
 | InfraOne System | Logiciels métier ; sites d'entreprise en ASP.NET Core pour des sous-traitants de Total | 2020–2021, surtout en **C# / .NET Core**, applications variées. Principale : **InfraChecking**, application mobile (back-end .NET et Laravel) pour que les sous-traitants de Total E&P Congo badgent leurs arrivées et départs. Aussi **Nyota IT**, projet d'application de commande de repas façon Uber Eats (Xamarin, Laravel, .NET, Angular) |
-| Bachelor EPSI | 2022–2023, obtenu en septembre 2023 | **Septembre 2023 à 2024**, obtenu en 2024 |
+| Bachelor EPSI | 2022–2023, obtenu en septembre 2023 | **Inchangé** : septembre 2022 à septembre 2023 |
 | Flutter | Attribué à KabimGroup | Uniquement bgrfacile (application Android) |
 
 La ligne « sites d'entreprise en ASP.NET Core pour des sous-traitants de
@@ -180,8 +180,15 @@ rétablir si c'était un travail distinct.
 4. La réalisation s'appelle « InfraOne System et KabimGroup » (même adresse,
    `/realisations/congo-web-mobile`, pour ne casser aucun lien envoyé).
 
-**Reste à reporter sur LinkedIn** : fin de KabimGroup (février 2023), dates du
-Bachelor, fin de Capgemini, disponibilité.
+**Correction du même jour.** Une première réponse avait placé la fin de
+KabimGroup en février 2023 et le Bachelor en 2023–2024. En relisant LinkedIn,
+Bénaja a rectifié : KabimGroup s'arrête en juin 2022, le Bachelor commence en
+septembre 2022, le stage Capgemini en janvier 2023 et l'alternance en
+septembre 2023. Le site a été remis d'accord avec ces dates.
+
+**LinkedIn aligné le 30/09/2026** : disponibilité, dates de KabimGroup,
+descriptions de KabimGroup, InfraOne et Mibeko. Le Bachelor y était déjà
+juste.
 
 ---
 
