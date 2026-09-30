@@ -746,6 +746,11 @@ main > section:last-child {
   flex-wrap: wrap;
   margin-top: 1.75rem;
 }
+/* Un texte qui suit une rangée de boutons (page Contact) : même respiration
+   qu'au-dessus des boutons, sinon il se colle à leur ombre. */
+.cta-row + .prose {
+  margin-top: 1.75rem;
+}
 
 /* =============================================================================
  * Boutons — bordure pleine + ombre dure ; au survol ils se soulèvent,
@@ -935,66 +940,8 @@ main > section:last-child {
   min-height: 2.75rem;
 }
 
-/* Contact : les cartes organisent les intentions du lecteur, pas les canaux.
-   L'email devient l'action ; le CV et les réalisations restent les preuves. */
-.intent-card .card-resume {
-  color: var(--muted);
-}
-.intent-card ul {
-  margin-top: 0.75rem;
-  padding-right: 1.25rem;
-}
-.intent-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem 1rem;
-  flex-wrap: wrap;
-  margin-top: auto;
-  padding-block: 1.25rem;
-  border-top: 1px solid var(--rule);
-}
-.card .intent-actions a {
-  margin-top: 0;
-}
-.card .intent-actions .btn {
-  padding: 0.6rem 1rem;
-  text-decoration: none;
-}
-.card .intent-actions .intent-proof {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding: 0;
-  font-family: var(--mono);
-  font-size: 0.82rem;
-}
-.contact-briefs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.75rem;
-}
-.contact-briefs article {
-  padding: 1.25rem;
-  background: var(--surface-2);
-  border: var(--edge) solid var(--border);
-  border-radius: var(--radius-sm);
-  box-shadow: none;
-}
-.contact-briefs h3 {
-  margin: 0.35rem 0 0.65rem;
-  font-size: 1.08rem;
-}
-.contact-briefs p:last-child {
-  margin: 0;
-  color: var(--muted);
-}
-.contact-secondary {
-  margin-top: 1.75rem;
-}
 @media (max-width: 42rem) {
-  .cards-selection,
-  .contact-briefs {
+  .cards-selection {
     grid-template-columns: 1fr;
   }
 }
@@ -1110,8 +1057,7 @@ main > section:last-child {
     margin: 0 -0.75rem;
     padding-inline: 0.75rem;
   }
-  .footer-links a,
-  .legende a {
+  .footer-links a {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
@@ -1577,31 +1523,6 @@ main > section:last-child {
     align-items: center;
     min-height: 2.75rem;
   }
-}
-
-/* Légende des statuts de notes */
-.legende {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1.25rem;
-  margin: 1.75rem 0 0;
-  padding: 0;
-}
-.legende > div {
-  padding-left: 0.9rem;
-  border-left: 6px solid var(--rule);
-}
-.legende dt {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.legende dd {
-  margin: 0.25rem 0 0;
-  color: var(--muted);
-  font-size: 0.95rem;
 }
 
 /* Encadré de mise au point (confidentialité, note remplacée) : l'ambre en aplat,

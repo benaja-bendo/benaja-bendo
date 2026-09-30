@@ -1,44 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
-import Illustration from '../components/Illustration.astro';
 import Disponibilite from '../components/Disponibilite.astro';
 import { CONTACT, DISPONIBILITE } from '../lib/parcours';
 
-const intentions = [
-  {
-    titre: 'Vous recrutez',
-    etiquette: 'Un poste',
-    index: '01',
-    resume: 'Vous cherchez un développeur fullstack confirmé, pour un CDI.',
-    // La disponibilité n'est plus répétée ici (30/09/2026) : elle est dite
-    // une fois, en tête de page.
-    points: [
-      DISPONIBILITE.mobilite,
-      `Java / Spring Boot · React / TypeScript`,
-      'Un CV en ligne, prêt à imprimer',
-    ],
-    href: `mailto:${CONTACT.email}?subject=Opportunité%20CDI`,
-    cta: 'Présenter un poste',
-    preuveHref: '/cv',
-    preuve: 'Consulter le CV',
-  },
-  {
-    titre: 'Vous avez un besoin technique',
-    etiquette: 'Un projet',
-    index: '02',
-    resume:
-      'Je peux surtout vous aider sur le back-end, la mise en ligne et les applications web ou mobiles.',
-    points: [
-      'Une API ou un service à construire, ou à rendre fiable',
-      'Un travail fait à la main à automatiser',
-      'Une application web ou mobile à mettre en ligne',
-    ],
-    href: `mailto:${CONTACT.email}?subject=Besoin%20technique`,
-    cta: 'Décrire le besoin',
-    preuveHref: '/realisations',
-    preuve: 'Voir les réalisations',
-  },
-];
+/**
+ * Contact, en un seul écran (30/09/2026, docs/13 §6).
+ *
+ * La page avait trois sections et trois rangées de boutons : deux cartes
+ * « Vous recrutez / Vous avez un besoin technique », un encart « ce qui m'aide
+ * à vous répondre » et une illustration. Il en reste l'essentiel : l'adresse,
+ * la disponibilité, deux boutons qui préremplissent l'objet du mail selon ce
+ * qui amène le lecteur, et ce qu'il est utile d'y mettre.
+ */
+const LINKEDIN = 'https://www.linkedin.com/in/benaja-bendo';
 ---
 
 <Base
@@ -64,89 +38,25 @@ const intentions = [
     <p class="lead">Mobilité&nbsp;: {DISPONIBILITE.mobilite}.</p>
 
     <div class="cta-row">
-      <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>
-        Écrire un email
+      <a class="btn btn-primary" href={`mailto:${CONTACT.email}?subject=Opportunité%20CDI`}>
+        Présenter un poste
       </a>
-      <a
-        class="btn btn-ghost"
-        href="https://www.linkedin.com/in/benaja-bendo"
-        rel="me noopener"
-      >
-        LinkedIn
+      <a class="btn btn-ghost" href={`mailto:${CONTACT.email}?subject=Besoin%20technique`}>
+        Décrire un projet
       </a>
     </div>
-  </section>
 
-  <section class="container">
-    <h2>Selon ce qui vous amène</h2>
-    <div class="cards contact-intents">
-      {intentions.map((intention) => (
-        <article class="card intent-card">
-          <div class="door-card-head">
-            <span class="period">{intention.etiquette}</span>
-            <span class="door-index" aria-hidden="true">{intention.index}</span>
-          </div>
-          <h3>{intention.titre}</h3>
-          <p class="card-resume">{intention.resume}</p>
-          <ul>
-            {intention.points.map((point) => <li>{point}</li>)}
-          </ul>
-          <div class="intent-actions">
-            <a class="btn btn-primary" href={intention.href}>{intention.cta}</a>
-            <a class="intent-proof" href={intention.preuveHref}>{intention.preuve} →</a>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="container">
-    <h2>Ce qui m’aide à vous répondre</h2>
-    <div class="contact-briefs">
-      <article>
-        <p class="etiq">Pour un poste</p>
-        <h3>Le cadre de travail</h3>
-        <p>
-          L’entreprise, ce que fait l’équipe, la stack, le lieu et le rythme de
-          télétravail.
-        </p>
-      </article>
-      <article>
-        <p class="etiq">Pour un besoin technique</p>
-        <h3>Le problème</h3>
-        <p>
-          Ce qui bloque aujourd’hui, qui est concerné, l’échéance et les
-          contraintes déjà connues.
-        </p>
-      </article>
-    </div>
-
-    <div class="prose contact-secondary">
+    <div class="prose">
       <p>
-        {/* ⚠️ Aucun saut de ligne entre un mot et le <a> qui le suit : Astro
-            mange l'espace et colle les deux (checklist de CLAUDE.md). */}
-        Avant d’écrire, vous pouvez lire mon <a href="/cv">CV</a>, voir mes <a
-          href="/realisations">réalisations</a>, ou regarder <a
-          href="/realisations/mibeko#preuves-titre">le code de Mibeko</a>.
+        Pour un poste, dites-moi l’entreprise, ce que fait l’équipe, la stack,
+        le lieu et le rythme de télétravail. Pour un projet, ce qui bloque
+        aujourd’hui, qui est concerné et l’échéance.
       </p>
       <p>
+        {/* ⚠️ Aucun saut de ligne entre un mot et le <a> qui le suit. */}
         Si je ne réponds pas, votre message est peut-être tombé dans les
-        indésirables&nbsp;: relancez-moi sur <a href="https://www.linkedin.com/in/benaja-bendo" rel="me noopener">LinkedIn</a>.
+        indésirables&nbsp;: relancez-moi sur <a href={LINKEDIN} rel="me noopener">LinkedIn</a>.
       </p>
-    </div>
-
-    <Illustration
-      nom="answer"
-      legende="Un mail suffit."
-      aide="Il arrive directement dans ma boîte."
-      meta="contact"
-      taille="petit"
-      class="illustration-cote"
-    />
-
-    <div class="cta-row">
-      <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>Écrire un email</a>
-      <a class="btn btn-ghost" href="/cv">Voir le CV</a>
     </div>
   </section>
 </Base>

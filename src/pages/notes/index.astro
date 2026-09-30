@@ -1,11 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LigneNote from '../../components/LigneNote.astro';
-import { STATUTS_NOTE, getNotes, sujetsNotes } from '../../lib/contenu';
+import { getNotes, sujetsNotes } from '../../lib/contenu';
 
 const notes = await getNotes();
 const { sujets } = await sujetsNotes();
-const legende = Object.values(STATUTS_NOTE);
 ---
 
 <Base
@@ -55,25 +54,6 @@ const legende = Object.values(STATUTS_NOTE);
         </p>
       )
     }
-  </section>
-
-  <section class="container">
-    <p class="eyebrow">Lire les statuts</p>
-    <h2>Ce que vaut une note</h2>
-    <p class="lead muted">
-      Le niveau de finition est affiché parce qu’il change ce que vous pouvez
-      en faire.
-    </p>
-    <dl class="legende">
-      {
-        legende.map((statut) => (
-          <div>
-            <dt>{statut.label}</dt>
-            <dd>{statut.aide}</dd>
-          </div>
-        ))
-      }
-    </dl>
   </section>
 
   {/* A8 — une sortie qui avance, en plus du flux RSS. */}

@@ -26,7 +26,8 @@ tableau de suivi ci-dessous, dans le même commit.*
 | 4. Fiche Trouve Ton Profil | ✅ 30/09/2026, « Ce que j'en retiens » à réécrire par Bénaja |
 | 5. Fusion des études de cas dans les réalisations | ✅ 30/09/2026 (accord donné) : 301 dans firebase.json, ancres conservées, pages groupées par type |
 | 6. Ton : réécriture page par page | ✅ 30/09/2026 en grande partie : accueil, parcours, contact, réalisations, composants. Restent le colophon, les notes et le README. Vérification visuelle faite le 30/09 (clair / sombre, mobile / desktop) |
-| 7. Pages et blocs à retirer ou réduire | À faire |
+| Mise en ligne des étapes 1 à 6 | ✅ 30/09/2026, commit bd2412f, déployé par GitHub Actions ; les 301 vérifiées en production |
+| 7. Pages et blocs à retirer ou réduire | ✅ 30/09/2026 (détail en §6) |
 | 8. Notes → Articles | À faire |
 | 9. Visuels, photo, mouvement | Plus tard |
 
@@ -225,6 +226,11 @@ France / Congo :
 ---
 
 ## 6. Pages et blocs à retirer ou réduire
+
+*Fait le 30/09/2026. La fiche « benaja-bendo.fr » et la page de la techno
+Astro (qui n'avait plus qu'une réalisation) redirigent vers `/colophon` :
+leurs adresses sont dans les puces des CV déjà envoyés. L'illustration de la
+page Contact (`answer.svg`) a été retirée avec l'encart qui la portait.*
 
 | Quoi | Proposition |
 | --- | --- |

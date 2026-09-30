@@ -43,6 +43,16 @@
         "source": "/experiences",
         "destination": "/realisations",
         "type": 301
+      },
+      {
+        "source": "/realisations/benaja-bendo-fr",
+        "destination": "/colophon",
+        "type": 301
+      },
+      {
+        "source": "/realisations/tech/astro",
+        "destination": "/colophon",
+        "type": 301
       }
     ],
     "headers": [

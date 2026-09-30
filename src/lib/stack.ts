@@ -85,9 +85,10 @@ export const STACK: GroupeStack[] = [
       // réalisations, donc une page de taxonomie.
       { nom: 'Angular', icone: 'angular', cle: true, preuve: '/realisations/tech/angular' },
       { nom: 'React', icone: 'react', cle: true, preuve: '/realisations/mibeko#la-construction' },
-      { nom: 'Astro', icone: 'astro', preuve: '/realisations/tech/astro' },
+      // Le colophon, depuis le retrait de la fiche du site (30/09/2026).
+      { nom: 'Astro', icone: 'astro', preuve: '/colophon' },
       { nom: 'Vue', icone: 'vue' },
-      { nom: 'HTML / CSS', mono: 'WEB', preuve: '/realisations/benaja-bendo-fr' },
+      { nom: 'HTML / CSS', mono: 'WEB', preuve: '/colophon' },
     ],
   },
   {

@@ -8,8 +8,11 @@ import {
 } from '../../lib/contenu';
 
 const realisations = await getRealisations();
-const { domaines, techs } = await taxonomiesRealisations();
-const aDesFiltres = domaines.length > 0 || techs.length > 0;
+// Seul le filtre par technologie reste en tête (30/09/2026) : sur mobile, les
+// deux rails prenaient tout le premier écran avant le premier projet, et
+// « Back-end » ou « Web » n'aident pas à chercher. Les pages par domaine
+// existent toujours, liées depuis chaque fiche.
+const { techs } = await taxonomiesRealisations();
 
 // Trois groupes, par type de travail (30/09/2026). L'ordre des entrées vient
 // de getRealisations(), déjà trié par groupe : on ne réordonne rien ici.
@@ -43,40 +46,20 @@ const ANCRES: Record<string, string> = {
     {/* A6 — le rail de filtres est passé du bas vers le haut le 25/08/2026 :
         « Java » ou « Spring Boot » est la façon dont un recruteur cherche. */}
     {
-      aDesFiltres && (
-        <>
-          {domaines.length > 0 && (
-            <div class="filtres">
-              <p class="etiq">Par domaine</p>
-              <ul class="chips chips-compte" aria-label="Domaines">
-                {domaines.map((groupe) => (
-                  <li>
-                    <a href={`/realisations/domaine/${groupe.slug}`}>
-                      {groupe.label}
-                      <span class="compte">{groupe.entrees.length}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {techs.length > 0 && (
-            <div class="filtres">
-              <p class="etiq">Par technologie</p>
-              <ul class="chips chips-compte" aria-label="Technologies">
-                {techs.map((groupe) => (
-                  <li>
-                    <a href={`/realisations/tech/${groupe.slug}`}>
-                      {groupe.label}
-                      <span class="compte">{groupe.entrees.length}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </>
+      techs.length > 0 && (
+        <div class="filtres">
+          <p class="etiq">Par technologie</p>
+          <ul class="chips chips-compte" aria-label="Technologies">
+            {techs.map((groupe) => (
+              <li>
+                <a href={`/realisations/tech/${groupe.slug}`}>
+                  {groupe.label}
+                  <span class="compte">{groupe.entrees.length}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       )
     }
   </section>

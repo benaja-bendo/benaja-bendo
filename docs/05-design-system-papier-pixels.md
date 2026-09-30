@@ -276,16 +276,15 @@ localement, recolorées par les tokens. Le composant `<Illustration/>` porte la 
 la prop `legende` est **obligatoire** — si on ne sait pas écrire ce que le dessin
 apporte, c'est qu'il n'apporte rien.
 
-**Ce qui est en place** (sept dessins, Koboyo Icons, `currentColor`, aucun `style=`) :
+**Ce qui est en place** (six dessins, Koboyo Icons, `currentColor`, aucun `style=`) :
 
 | Fichier | Où | Ce qu'il explique |
 | --- | --- | --- |
-| `citation-footnote` | accueil | la réponse garde le chemin vers sa source |
-| `balance-sheet` | `/etudes/mibeko` | le droit d'un côté, l'article cité de l'autre |
-| `add-for-reporting` | `/etudes/france-travail` | des tableaux de bord qu'on assemble |
+| `citation-footnote` | accueil | chaque réponse garde le lien vers sa source |
+| `balance-sheet` | `/realisations/mibeko` | chaque réponse renvoie à sa source |
+| `add-for-reporting` | `/realisations/france-travail-collecte` | des tableaux de bord utilisés tous les jours |
 | `attacker-hood` | note sur la CSP | la seule page qui parle de menace |
 | `academic-year-planner` | `/parcours` | une chronologie |
-| `answer` | `/contact` | une réponse, pas un accusé de réception |
 | `bald-person-looking-confused` | `/404` | la fantaisie autorisée, une seule fois |
 
 **La règle sur les personnages.** Un **objet** rendu grand, en teal, tenu par un
